@@ -1,0 +1,2646 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: devrel@onesignal.com
+    name: OneSignal DevRel
+    url: https://onesignal.com
+  description: A powerful way to send personalized messages at scale and build effective
+    customer engagement strategies. Learn more at onesignal.com
+  termsOfService: https://onesignal.com/tos
+  title: OneSignal
+  version: 1.0.2
+servers:
+- url: https://onesignal.com/api/v1
+paths:
+  /notifications:
+    get:
+      description: View the details of multiple notifications
+      operationId: get_notifications
+      parameters:
+      - description: The app ID that you want to view notifications from
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: How many notifications to return.  Max is 50.  Default is 50.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Page offset.  Default is 0.  Results are sorted by queued_at
+          in descending order.  queued_at is a representation of the time that the
+          notification was queued at.
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: |
+          Kind of notifications returned:
+            * unset - All notification types (default)
+            * `0` - Dashboard only
+            * `1` - API only
+            * `3` - Automated only
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          enum:
+          - 0
+          - 1
+          - 3
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationSlice'
+          description: OK
+      security:
+      - app_key: []
+      summary: View notifications
+    post:
+      description: |
+        Sends notifications to your users
+      operationId: create_notification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: "OK, invalid_player_ids, invalid_external_user_ids or No Subscribed\
+            \ Players\nIf a message was successfully created, you will get a 200 response\
+            \ and an id for the notification.\nIf the 200 response contains \"invalid_player_ids\"\
+            \ or \"invalid_external_user_ids\" this will mark devices that exist in\
+            \ the provided app_id but are no longer subscribed.\nIf no id is returned,\
+            \ then a message was not created and the targeted User IDs do not exist\
+            \ under the provided app_id.\nAny User IDs sent in the request that do\
+            \ not exist under the specified app_id will be ignored.\n"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+          description: Bad Request
+      security:
+      - app_key: []
+      summary: Create notification
+  /notifications/{notification_id}:
+    delete:
+      description: Used to stop a scheduled or currently outgoing notification
+      operationId: cancel_notification
+      parameters:
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+          description: OK
+      security:
+      - app_key: []
+      summary: Stop a scheduled or currently outgoing notification
+    get:
+      description: View the details of a single notification and outcomes associated
+        with it
+      operationId: get_notification
+      parameters:
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Notification'
+                - $ref: '#/components/schemas/DeliveryData'
+                - $ref: '#/components/schemas/OutcomesData'
+                - properties:
+                    remaining:
+                      description: Number of notifications that have not been sent
+                        out yet. This can mean either our system is still processing
+                        the notification or you have delayed options set.
+                      type: integer
+                    successful:
+                      description: Number of notifications that were successfully
+                        delivered.
+                      type: integer
+                    failed:
+                      description: Number of notifications that could not be delivered
+                        due to those devices being unsubscribed.
+                      type: integer
+                    errored:
+                      description: Number of notifications that could not be delivered
+                        due to an error. You can find more information by viewing
+                        the notification in the dashboard.
+                      type: integer
+                    converted:
+                      description: Number of users who have clicked / tapped on your
+                        notification.
+                      type: integer
+                    queued_at:
+                      description: Unix timestamp indicating when the notification
+                        was created.
+                      type: integer
+                    send_after:
+                      description: Unix timestamp indicating when notification delivery
+                        should begin.
+                      type: integer
+                    completed_at:
+                      description: Unix timestamp indicating when notification delivery
+                        completed. The delivery duration from start to finish can
+                        be calculated with completed_at - send_after.
+                      type: integer
+                    platform_delivery_stats:
+                      $ref: '#/components/schemas/PlatformDeliveryData'
+                    received:
+                      description: Confirmed Deliveries number of devices that received
+                        the push notification. Paid Feature Only. Free accounts will
+                        see 0.
+                      type: integer
+                    throttle_rate_per_minute:
+                      description: "number of push notifications sent per minute.\
+                        \ Paid Feature Only. If throttling is not enabled for the\
+                        \ app or the notification, and for free accounts, null is\
+                        \ returned. Refer to Throttling for more details."
+                      type: integer
+                  type: object
+          description: OK
+      security:
+      - app_key: []
+      summary: View notification
+  /apps:
+    get:
+      description: View the details of all of your current OneSignal apps
+      operationId: get_apps
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+      security:
+      - user_key: []
+      summary: View apps
+    post:
+      description: Creates a new OneSignal app
+      operationId: create_app
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/App'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: OK
+      security:
+      - user_key: []
+      summary: Create an app
+  /apps/{app_id}:
+    get:
+      description: View the details of a single OneSignal app
+      operationId: get_app
+      parameters:
+      - description: An app id
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: OK
+      security:
+      - user_key: []
+      summary: View an app
+    put:
+      description: Updates the name or configuration settings of an existing OneSignal
+        app
+      operationId: update_app
+      parameters:
+      - description: An app id
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/App'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: OK
+      security:
+      - user_key: []
+      summary: Update an app
+  /notifications/{notification_id}/history:
+    post:
+      description: "-> View the devices sent a message - OneSignal Paid Plan Required\
+        \ This method will return all devices that were sent the given notification_id\
+        \ of an Email or Push Notification if used within 7 days of the date sent.\
+        \ After 7 days of the sending date, the message history data will be unavailable.\
+        \ After a successful response is received, the destination url may be polled\
+        \ until the file becomes available. Most exports are done in ~1-3 minutes,\
+        \ so setting a poll interval of 10 seconds should be adequate. For use cases\
+        \ that are not meant to be consumed by a script, an email will be sent to\
+        \ the supplied email address. &#x1F6A7; Requirements A OneSignal Paid Plan.\
+        \ Turn on Send History via OneSignal API in Settings -> Analytics. Cannot\
+        \ get data before this was turned on. Must be called within 7 days after sending\
+        \ the message. Messages targeting under 1000 recipients will not have \"sent\"\
+        \ events recorded, but will show \"clicked\" events. Requires your OneSignal\
+        \ App's REST API Key, available in Keys & IDs."
+      operationId: get_notification_history
+      parameters:
+      - description: The "id" of the message found in the Notification object
+        explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/get_notification_request_body'
+        content:
+          application/json:
+            schema:
+              properties:
+                events:
+                  description: "-> \"sent\" - All the devices by player_id that were\
+                    \ sent the specified notification_id.  Notifications targeting\
+                    \ under 1000 recipients will not have \"sent\" events recorded,\
+                    \ but will show \"clicked\" events. \"clicked\" - All the devices\
+                    \ by `player_id` that clicked the specified notification_id."
+                  enum:
+                  - sent
+                  - clicked
+                  type: string
+                email:
+                  description: The email address you would like the report sent.
+                  type: string
+                app_id:
+                  type: string
+              required:
+              - id
+              title: get_notification_request_body
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+          description: Bad Request
+      security:
+      - app_key: []
+      summary: Notification History
+  /apps/{app_id}/users/{external_user_id}:
+    put:
+      description: "Update an existing device's tags in one of your OneSignal apps\
+        \ using the External User ID.\nWarning - Android SDK Data Synchronization\n\
+        Tags added through the Android SDK tagging methods may not update if using\
+        \ the API to change or update the same tag.\nFor example, if you use SDK method\
+        \ sendTag(\"key\", \"value1\") then update the tag value to \"value2\" with\
+        \ this API endpoint. You will not be able to set the value back to \"value1\"\
+        \ through the SDK, you will need to change it to something different through\
+        \ the SDK to be reset.\nRecommendations if using this Endpoint on Android\
+        \ Mobile Apps:\n1 - Do not use the same tag keys for SDK and API updates\n\
+        2 - If you want to use the same key for both SDK and API updates, call the\
+        \ SDK getTags method first to update the device's tags.\nThis is only applicable\
+        \ on the Android Mobile App SDKs.\n&#128216;\nDeleting Tags\nTo delete a tag,\
+        \ include its key and set its value to blank. Omitting a key/value will not\
+        \ delete it.\nFor example, if I wanted to delete two existing tags rank and\
+        \ category while simultaneously adding a new tag class, the tags JSON would\
+        \ look like the following:\n\"tags\": {\n   \"rank\": \"\",\n   \"category\"\
+        : \"\",\n   \"class\": \"my_new_value\"\n}\n"
+      operationId: update_player_tags
+      parameters:
+      - description: The OneSignal App ID the user record is found under.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The External User ID mapped to teh device record in OneSignal.  Must
+          be actively set on the device to be updated.
+        explode: false
+        in: path
+        name: external_user_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/update_player_tags_request_body'
+        content:
+          application/json:
+            schema:
+              properties:
+                tags:
+                  description: "Custom tags for the device record.  Only support string\
+                    \ key value pairs.  Does not support arrays or other nested objects.\
+                    \  Example `{\"foo\":\"bar\",\"this\":\"that\"}`.\nLimitations:\n\
+                    - 100 tags per call\n- Android SDK users: tags cannot be removed\
+                    \ or changed via API if set through SDK sendTag methods.\nRecommended\
+                    \ to only tag devices with 1 kilobyte of ata\nPlease consider\
+                    \ using your own Database to save more than 1 kilobyte of data.\
+                    \  See: Internal Database & CRM\n"
+                  type: object
+              title: update_player_tags_request_body
+              type: object
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+          description: OK
+      security:
+      - app_key: []
+      summary: Edit tags with external user id
+  /apps/{app_id}/segments:
+    post:
+      description: "Create segments visible and usable in the dashboard and API -\
+        \ Required: OneSignal Paid Plan\nThe Create Segment method is used when you\
+        \ want your server to programmatically create a segment instead of using the\
+        \ OneSignal Dashboard UI. Just like creating Segments from the dashboard you\
+        \ can pass in filters with multiple \"AND\" or \"OR\" operator's.\n&#x1F6A7;\n\
+        Does Not Update Segments\nThis endpoint will only create segments, it does\
+        \ not edit or update currently created Segments. You will need to use the\
+        \ Delete Segments endpoint and re-create it with this endpoint to edit.\n"
+      operationId: create_segments
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Segment'
+        required: false
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+          description: Bad Request
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+          description: Conflict
+      security:
+      - app_key: []
+      summary: Create Segments
+  /apps/{app_id}/segments/{segment_id}:
+    delete:
+      description: "Delete segments (not user devices) - Required: OneSignal Paid\
+        \ Plan\nYou can delete a segment under your app by calling this API. You must\
+        \ provide an API key in the Authorization header that has admin access on\
+        \ the app.\nThe segment_id can be found in the URL of the segment when viewing\
+        \ it in the dashboard.\n"
+      operationId: delete_segments
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The segment_id can be found in the URL of the segment when viewing
+          it in the dashboard.
+        explode: false
+        in: path
+        name: segment_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_3'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+          description: Not Found
+      security:
+      - app_key: []
+      summary: Delete Segments
+  /apps/{app_id}/outcomes:
+    get:
+      description: "View the details of all the outcomes associated with your app\n\
+        \n&#x1F6A7;\nRequires Authentication Key\nRequires your OneSignal App's REST\
+        \ API Key, available in Keys & IDs.\n\n&#x1F6A7;\nOutcome Data Limitations\n\
+        Outcomes are only accessible for around 30 days before deleted from our servers.\
+        \ You will need to export this data every month if you want to keep it.\n"
+      operationId: get_outcomes
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "Required\nComma-separated list of names and the value (sum/count)\
+          \ for the returned outcome data.\nNote: Clicks only support count aggregation.\n\
+          For out-of-the-box OneSignal outcomes such as click and session duration,\
+          \ please use the \"os\" prefix with two underscores. For other outcomes,\
+          \ please use the name specified by the user.\nExample:os__session_duration.count,os__click.count,CustomOutcomeName.sum\n"
+        explode: true
+        in: query
+        name: outcome_names
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: "Optional\nIf outcome names contain any commas, then please specify\
+          \ only one value at a time.\nExample: outcome_names[]=os__click.count&outcome_names[]=Sales,\
+          \ Purchase.count\nwhere \"Sales, Purchase\" is the custom outcomes with\
+          \ a comma in the name.\n"
+        explode: true
+        in: query
+        name: "outcome_names[]"
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Optional\nTime range for the returned data. The values can be\
+          \ 1h (for the last 1 hour data), 1d (for the last 1 day data), or 1mo (for\
+          \ the last 1 month data).\nDefault is 1h if the parameter is omitted.\n"
+        explode: true
+        in: query
+        name: outcome_time_range
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Optional\nPlatform id. Refer device's platform ids for values.\n\
+          Example:\noutcome_platform=0 for iOS\noutcome_platform=7,8 for Safari and\
+          \ Firefox\nDefault is data from all platforms if the parameter is omitted.\n"
+        explode: true
+        in: query
+        name: outcome_platforms
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Optional\nAttribution type for the outcomes. The values can\
+          \ be direct or influenced or unattributed.\nExample: outcome_attribution=direct\n\
+          Default is total (returns direct+influenced+unattributed) if the parameter\
+          \ is omitted.\n"
+        explode: true
+        in: query
+        name: outcome_attribution
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutcomesData'
+          description: OK
+      security:
+      - app_key: []
+      summary: View Outcomes
+  /players:
+    get:
+      description: "View the details of multiple devices in one of your OneSignal\
+        \ apps\nUnavailable for Apps Over 80,000 Users\nFor performance reasons, this\
+        \ method is not available for larger apps. Larger apps should use the CSV\
+        \ export API endpoint, which is much more performant.\n"
+      operationId: get_players
+      parameters:
+      - description: The app ID that you want to view players from
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: How many devices to return. Max is 300. Default is 300
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Result offset. Default is 0. Results are sorted by id;
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerSlice'
+          description: OK
+      security:
+      - app_key: []
+      summary: View devices
+    post:
+      description: "Register a new device to one of your OneSignal apps\n&#x1F6A7;\n\
+        Don't use this\nThis API endpoint is designed to be used from our open source\
+        \ Mobile and Web Push SDKs. It is not designed for developers to use it directly,\
+        \ unless instructed to do so by OneSignal support.\nIf you use this method\
+        \ instead of our SDKs, many OneSignal features such as conversion tracking,\
+        \ timezone tracking, language detection, and rich-push won't work out of the\
+        \ box. It will also make it harder to identify possible setup issues.\nThis\
+        \ method is used to register a new device with OneSignal.\nIf a device is\
+        \ already registered with the specified identifier, then this will update\
+        \ the existing device record instead of creating a new one.\nThe returned\
+        \ player is a player / user ID. Use the returned ID to send push notifications\
+        \ to this specific user later, or to include this player when sending to a\
+        \ set of users.\n&#x1F6A7;\niOS\nMust set test_type to 1 when building your\
+        \ iOS app as development. Omit this field in your production app builds.\n"
+      operationId: create_player
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+          description: OK
+      security:
+      - app_key: []
+      summary: Add a device
+  /players/{player_id}:
+    delete:
+      description: "Delete player - Required:\nUsed to delete a single, specific Player\
+        \ ID record from a specific OneSignal app.\n"
+      operationId: delete_player
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The OneSignal player_id
+        explode: false
+        in: path
+        name: player_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_3'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+          description: Not Found
+      security:
+      - app_key: []
+      summary: Delete a user record
+    get:
+      description: View the details of an existing device in one of your OneSignal
+        apps
+      operationId: get_player
+      parameters:
+      - description: Your app_id for this device
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Player's OneSignal ID
+        explode: false
+        in: path
+        name: player_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Email - Only required if you have enabled Identity Verification
+          and device_type is email (11).
+        explode: true
+        in: query
+        name: email_auth_hash
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: OK
+      security:
+      - app_key: []
+      summary: View device
+    put:
+      description: Update an existing device in one of your OneSignal apps
+      operationId: update_player
+      parameters:
+      - description: Player's OneSignal ID
+        explode: false
+        in: path
+        name: player_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+          description: OK
+      security:
+      - app_key: []
+      summary: Edit device
+  /players/csv_export?app_id={app_id}:
+    post:
+      description: "Generate a compressed CSV export of all of your current user data\n\
+        This method can be used to generate a compressed CSV export of all of your\
+        \ current user data. It is a much faster alternative than retrieving this\
+        \ data using the /players API endpoint.\nThe file will be compressed using\
+        \ GZip.\nThe file may take several minutes to generate depending on the number\
+        \ of users in your app.\nThe URL generated will be available for 3 days and\
+        \ includes random v4 uuid as part of the resource name to be unguessable.\n\
+        &#x1F6A7;\n403 Error Responses          You can test if it is complete by\
+        \ making a GET request to the csv_file_url value. This file may take time\
+        \ to generate depending on how many device records are being pulled. If the\
+        \ file is not ready, a 403 error will be returned. Otherwise the file itself\
+        \ will be returned.\n&#x1F6A7;\nRequires Authentication Key\nRequires your\
+        \ OneSignal App's REST API Key, available in Keys & IDs.\n&#x1F6A7;\nConcurrent\
+        \ Exports\nOnly one concurrent export is allowed per OneSignal account. Please\
+        \ ensure you have successfully downloaded the .csv.gz file before exporting\
+        \ another app.\nCSV File Format:\n- Default Columns:\n  | Field | Details\
+        \ |\n  | --- | --- |\n  | id | OneSignal Player Id |\n  | identifier | Push\
+        \ Token |\n  | session_count | Number of times they visited the app or site\n\
+        \  | language | Device language code |\n  | timezone | Number of seconds away\
+        \ from UTC. Example: -28800 |\n  | game_version | Version of your mobile app\
+        \ gathered from Android Studio versionCode in your App/build.gradle and iOS\
+        \ uses kCFBundleVersionKey in Xcode. |\n  | device_os | Device Operating System\
+        \ Version. Example: 80 = Chrome 80, 9 = Android 9 |\n  | device_type | Device\
+        \ Operating System Type |\n  | device_model | Device Hardware String Code.\
+        \ Example: Mobile Web Subscribers will have `Linux armv` |\n  | ad_id | Based\
+        \ on the Google Advertising Id for Android, identifierForVendor for iOS. OptedOut\
+        \ means user turned off Advertising tracking on the device. |\n  | tags |\
+        \ Current OneSignal Data Tags on the device. |\n  | last_active | Date and\
+        \ time the user last opened the mobile app or visited the site. |\n  | playtime\
+        \ | Total amount of time in seconds the user had the mobile app open. |\n\
+        \  | amount_spent | \tMobile only - amount spent in USD on In-App Purchases.\
+        \ | \n  | created_at | Date and time the device record was created in OneSignal.\
+        \ Mobile - first time they opened the app with OneSignal SDK. Web - first\
+        \ time the user subscribed to the site. |\n  | invalid_identifier | t = unsubscribed,\
+        \ f = subscibed |\n  | badge_count | Current number of badges on the device\
+        \ |\n- Extra Columns:\n  | Field | Details |\n  | --- | --- |\n  | external_user_id\
+        \ | Your User Id set on the device |\n  | notification_types | Notification\
+        \ types |\n  | location | Location points (Latitude and Longitude) set on\
+        \ the device. |\n  | country | Country code |\n  | rooted | Android device\
+        \ rooted or not |\n  | ip | IP Address of the device if being tracked. See\
+        \ Handling Personal Data. |\n  | web_auth | Web Only authorization key. |\n\
+        \  | web_p256 | Web Only p256 key. |\n"
+      operationId: export_players
+      parameters:
+      - description: The app ID that you want to export devices from
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/export_players_request_body'
+        content:
+          application/json:
+            schema:
+              properties:
+                extra_fields:
+                  description: "Additional fields that you wish to include. Currently\
+                    \ supports location, country, rooted, notification_types, ip,\
+                    \ external_user_id, web_auth, and web_p256."
+                  items:
+                    type: string
+                  type: array
+                last_active_since:
+                  description: Export all devices with a last_active timestamp greater
+                    than this time.  Unixtime in seconds.
+                  type: integer
+                segment_name:
+                  description: Export al ldevices belonging to the segment.
+                  type: string
+              title: export_players_request_body
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Bad Request
+      security:
+      - app_key: []
+      summary: CSV export
+components:
+  requestBodies:
+    get_notification_request_body:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/get_notification_request_body'
+      required: true
+    update_player_tags_request_body:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/update_player_tags_request_body'
+      required: false
+    export_players_request_body:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/export_players_request_body'
+  schemas:
+    App:
+      example:
+        apns_p12: apns_p12
+        safari_site_origin: safari_site_origin
+        apns_p12_password: apns_p12_password
+        created_at: 2000-01-23T04:56:07.000+00:00
+        safari_icon_64_64: safari_icon_64_64
+        chrome_web_sub_domain: chrome_web_sub_domain
+        gcm_key: gcm_key
+        chrome_key: chrome_key
+        safari_push_id: safari_push_id
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        apns_certificates: apns_certificates
+        safari_apns_p12: safari_apns_p12
+        safari_icon_128_128: safari_icon_128_128
+        id: id
+        android_gcm_sender_id: android_gcm_sender_id
+        safari_icon_32_32: safari_icon_32_32
+        additional_data_is_root_payload: true
+        apns_env: sandbox
+        players: 0
+        messageable_players: 6
+        chrome_web_origin: chrome_web_origin
+        basic_auth_key: basic_auth_key
+        site_name: site_name
+        safari_icon_16_16: safari_icon_16_16
+        chrome_web_default_notification_icon: chrome_web_default_notification_icon
+        organization_id: organization_id
+        name: name
+        safari_apns_certificates: safari_apns_certificates
+        safari_apns_p12_password: safari_apns_p12_password
+        safari_icon_256_256: safari_icon_256_256
+      properties:
+        id:
+          readOnly: true
+          type: string
+        name:
+          description: "The name of your app, as displayed on your apps list on the\
+            \ dashboard.  This can be renamed."
+          type: string
+        players:
+          readOnly: true
+          type: integer
+        messageable_players:
+          readOnly: true
+          type: integer
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        android_gcm_sender_id:
+          description: "Android: Your Google Project number.  Also known as Sender\
+            \ ID."
+          type: string
+          writeOnly: true
+        gcm_key:
+          description: "Android: Your Google Push Messaging Auth Key"
+          type: string
+        chrome_web_origin:
+          description: "Chrome (All Browsers except Safari) (Recommended): The URL\
+            \ to your website.  This field is required if you wish to enable web push\
+            \ and specify other web push parameters."
+          type: string
+        chrome_key:
+          description: Not for web push.  Your Google Push Messaging Auth Key if you
+            use Chrome Apps / Extensions.
+          type: string
+        chrome_web_default_notification_icon:
+          description: "Chrome (All Browsers except Safari): Your default notification\
+            \ icon. Should be 256x256 pixels, min 80x80."
+          type: string
+        chrome_web_sub_domain:
+          description: "Chrome (All Browsers except Safari): A subdomain of your choice\
+            \ in order to support Web Push on non-HTTPS websites. This field must\
+            \ be set in order for the chrome_web_gcm_sender_id property to be processed."
+          type: string
+        apns_env:
+          description: "iOS: Either sandbox or production"
+          enum:
+          - sandbox
+          - production
+          type: string
+        apns_p12:
+          description: "iOS: Your apple push notification p12 certificate file, converted\
+            \ to a string and Base64 encoded."
+          type: string
+          writeOnly: true
+        apns_p12_password:
+          description: "iOS: Required if using p12 certificate.  Password for the\
+            \ apns_p12 file."
+          type: string
+          writeOnly: true
+        apns_certificates:
+          readOnly: true
+          type: string
+        safari_apns_certificates:
+          readOnly: true
+          type: string
+        safari_apns_p12:
+          description: "Safari: Your apple push notification p12 certificate file\
+            \ for Safari Push Notifications, converted to a string and Base64 encoded."
+          type: string
+          writeOnly: true
+        safari_apns_p12_password:
+          description: "Safari: Password for safari_apns_p12 file"
+          type: string
+          writeOnly: true
+        safari_site_origin:
+          description: "Safari (Recommended): The hostname to your website including\
+            \ http(s)://"
+          type: string
+        safari_push_id:
+          readOnly: true
+          type: string
+        safari_icon_16_16:
+          readOnly: true
+          type: string
+        safari_icon_32_32:
+          readOnly: true
+          type: string
+        safari_icon_64_64:
+          readOnly: true
+          type: string
+        safari_icon_128_128:
+          readOnly: true
+          type: string
+        safari_icon_256_256:
+          description: "Safari: A url for a 256x256 png notification icon. This is\
+            \ the only Safari icon URL you need to provide."
+          type: string
+        site_name:
+          description: "All Browsers (Recommended): The Site Name. Requires both chrome_web_origin\
+            \ and safari_site_origin to be set to add or update it."
+          type: string
+        basic_auth_key:
+          readOnly: true
+          type: string
+        organization_id:
+          description: The Id of the Organization you would like to add this app to.
+          type: string
+          writeOnly: true
+        additional_data_is_root_payload:
+          description: "iOS: Notification data (additional data) values will be added\
+            \ to the root of the apns payload when sent to the device.  Ignore if\
+            \ you're not using any other plugins, or not using OneSignal SDK methods\
+            \ to read the payload."
+          type: boolean
+          writeOnly: true
+      required:
+      - id
+      type: object
+    Apps:
+      items:
+        $ref: '#/components/schemas/App'
+      type: array
+    SegmentNotificationTarget:
+      properties:
+        included_segments:
+          description: "The segment names you want to target. Users in these segments\
+            \ will receive a notification. This targeting parameter is only compatible\
+            \ with excluded_segments.\nExample: [\"Active Users\", \"Inactive Users\"\
+            ]\n"
+          items:
+            type: string
+          type: array
+        excluded_segments:
+          description: "Segment that will be excluded when sending. Users in these\
+            \ segments will not receive a notification, even if they were included\
+            \ in included_segments. This targeting parameter is only compatible with\
+            \ included_segments.\nExample: [\"Active Users\", \"Inactive Users\"]\n"
+          items:
+            type: string
+          type: array
+      type: object
+    FilterNotificationTarget:
+      properties:
+        last_session:
+          description: "relation = \">\" or \"<\"\nhours_ago = number of hours before\
+            \ or after the users last session. Example: \"1.1\"\n"
+          type: string
+        first_session:
+          description: "relation = \">\" or \"<\"\nhours_ago = number of hours before\
+            \ or after the users first session. Example: \"1.1\"\n"
+          type: string
+        session_count:
+          description: "relation = \">\", \"<\", \"=\" or \"!=\"\nvalue = number sessions.\
+            \ Example: \"1\"\n"
+          type: string
+        session_time:
+          description: "relation = \">\", \"<\", \"=\" or \"!=\"\nvalue = Time in\
+            \ seconds the user has been in your app. Example: \"3600\"\n"
+          type: string
+        amount_spent:
+          description: "relation = \">\", \"<\", or \"=\"\nvalue = Amount in USD a\
+            \ user has spent on IAP (In App Purchases). Example: \"0.99\"\n"
+          type: string
+        bought_sku:
+          description: "relation = \">\", \"<\" or \"=\"\nkey = SKU purchased in your\
+            \ app as an IAP (In App Purchases). Example: \"com.domain.100coinpack\"\
+            \nvalue = value of SKU to compare to. Example: \"0.99\"\n"
+          type: string
+        tag:
+          description: "relation = \">\", \"<\", \"=\", \"!=\", \"exists\", \"not_exists\"\
+            , \"time_elapsed_gt\" (paid plan only) or \"time_elapsed_lt\" (paid plan\
+            \ only) See Time Operators\nkey = Tag key to compare.\nvalue = Tag value\
+            \ to compare. Not required for \"exists\" or \"not_exists\". Example:\
+            \ See Formatting Filters\n"
+          type: string
+        language:
+          description: "relation = \"=\" or \"!=\"\nvalue = 2 character language code.\
+            \ Example: \"en\". For a list of all language codes see Language & Localization.\n"
+          type: string
+        app_version:
+          description: "relation = \">\", \"<\", \"=\" or \"!=\"\nvalue = app version.\
+            \ Example: \"1.0.0\"\n"
+          type: string
+        location:
+          description: |
+            radius = in meters
+            lat = latitude
+            long = longitude
+          type: string
+        email:
+          description: |
+            value = email address
+            Only for sending Push Notifications
+            Use this for targeting push subscribers associated with an email set with all SDK setEmail methods
+            To send emails to specific email addresses use include_email_tokens parameter
+          type: string
+        country:
+          description: "relation = \"=\"\nvalue = 2-digit Country code\nExample: \"\
+            field\": \"country\", \"relation\": \"=\", \"value\", \"US\"\n"
+          type: string
+      type: object
+    PlayerNotificationTarget:
+      properties:
+        include_player_ids:
+          description: "Specific playerids to send your notification to. _Does not\
+            \ require API Auth Key.\nDo not combine with other targeting parameters.\
+            \ Not compatible with any other targeting parameters.\nExample: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"\
+            ]\nLimit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_external_user_ids:
+          description: "Target specific devices by custom user IDs assigned via API.\n\
+            Not compatible with any other targeting parameters\nExample: [\"custom-id-assigned-by-api\"\
+            ]\nREQUIRED: REST API Key Authentication\nLimit of 2,000 entries per REST\
+            \ API call.\nNote: If targeting push, email, or sms subscribers with same\
+            \ ids, use with channel_for_external_user_ids to indicate you are sending\
+            \ a push or email or sms.\n"
+          items:
+            type: string
+          type: array
+        include_email_tokens:
+          description: "Recommended for Sending Emails - Target specific email addresses.\n\
+            If an email does not correspond to an existing user, a new user will be\
+            \ created.\nExample: nick@catfac.ts\nLimit of 2,000 entries per REST API\
+            \ call\n"
+          items:
+            type: string
+          type: array
+        include_phone_numbers:
+          description: "Recommended for Sending SMS - Target specific phone numbers.\
+            \ The phone number should be in the E.164 format. Phone number should\
+            \ be an existing subscriber on OneSignal. Refer our docs to learn how\
+            \ to add phone numbers to OneSignal.\nExample phone number: +1999999999\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_ios_tokens:
+          description: "Not Recommended: Please consider using include_player_ids\
+            \ or include_external_user_ids instead.\nTarget using iOS device tokens.\n\
+            Warning: Only works with Production tokens.\nAll non-alphanumeric characters\
+            \ must be removed from each token. If a token does not correspond to an\
+            \ existing user, a new user will be created.\nExample: ce777617da7f548fe7a9ab6febb56cf39fba6d38203...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_wp_wns_uris:
+          description: "Not Recommended: Please consider using include_player_ids\
+            \ or include_external_user_ids instead.\nTarget using Windows URIs. If\
+            \ a token does not correspond to an existing user, a new user will be\
+            \ created.\nExample: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_amazon_reg_ids:
+          description: "Not Recommended: Please consider using include_player_ids\
+            \ or include_external_user_ids instead.\nTarget using Amazon ADM registration\
+            \ IDs. If a token does not correspond to an existing user, a new user\
+            \ will be created.\nExample: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_chrome_reg_ids:
+          description: "Not Recommended: Please consider using include_player_ids\
+            \ or include_external_user_ids instead.\nTarget using Chrome App registration\
+            \ IDs. If a token does not correspond to an existing user, a new user\
+            \ will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_chrome_web_reg_ids:
+          description: "Not Recommended: Please consider using include_player_ids\
+            \ or include_external_user_ids instead.\nTarget using Chrome Web Push\
+            \ registration IDs. If a token does not correspond to an existing user,\
+            \ a new user will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_android_reg_ids:
+          description: "Not Recommended: Please consider using include_player_ids\
+            \ or include_external_user_ids instead.\nTarget using Android device registration\
+            \ IDs. If a token does not correspond to an existing user, a new user\
+            \ will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+      type: object
+    NotificationTarget:
+      anyOf:
+      - $ref: '#/components/schemas/SegmentNotificationTarget'
+      - $ref: '#/components/schemas/FilterNotificationTarget'
+      - $ref: '#/components/schemas/PlayerNotificationTarget'
+    Notification:
+      allOf:
+      - $ref: '#/components/schemas/NotificationTarget'
+      - $ref: '#/components/schemas/Notification_allOf'
+      - required:
+        - app_id
+    Button:
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        icon:
+          type: string
+      required:
+      - id
+      type: object
+    Buttons:
+      items:
+        $ref: '#/components/schemas/Button'
+      type: array
+    StringMap:
+      properties:
+        en:
+          description: Text in English.  Will be used as a fallback
+          type: string
+        ar:
+          description: Text in Arabic.
+          type: string
+        bs:
+          description: Text in Bosnian.
+          type: string
+        bg:
+          description: Text in Bulgarian.
+          type: string
+        ca:
+          description: Text in Catalan.
+          type: string
+        zh-Hans:
+          description: Text in Chinese (Simplified).
+          type: string
+        zh-Hant:
+          description: Text in Chinese (Traditional).
+          type: string
+        zh:
+          description: Alias for zh-Hans.
+          type: string
+        hr:
+          description: Text in Croatian.
+          type: string
+        cs:
+          description: Text in Czech.
+          type: string
+        da:
+          description: Text in Danish.
+          type: string
+        nl:
+          description: Text in Dutch.
+          type: string
+        et:
+          description: Text in Estonian.
+          type: string
+        fi:
+          description: Text in Finnish.
+          type: string
+        fr:
+          description: Text in French.
+          type: string
+        ka:
+          description: Text in Georgian.
+          type: string
+        de:
+          description: Text in German.
+          type: string
+        el:
+          description: Text in Greek.
+          type: string
+        hi:
+          description: Text in Hindi.
+          type: string
+        he:
+          description: Text in Hebrew.
+          type: string
+        hu:
+          description: Text in Hungarian.
+          type: string
+        id:
+          description: Text in Indonesian.
+          type: string
+        it:
+          description: Text in Italian.
+          type: string
+        ja:
+          description: Text in Japanese.
+          type: string
+        ko:
+          description: Text in Korean.
+          type: string
+        lv:
+          description: Text in Latvian.
+          type: string
+        lt:
+          description: Text in Lithuanian.
+          type: string
+        ms:
+          description: Text in Malay.
+          type: string
+        nb:
+          description: Text in Norwegian.
+          type: string
+        pl:
+          description: Text in Polish.
+          type: string
+        fa:
+          description: Text in Persian.
+          type: string
+        pt:
+          description: Text in Portugese.
+          type: string
+        pa:
+          description: Text in Punjabi.
+          type: string
+        ro:
+          description: Text in Romanian.
+          type: string
+        ru:
+          description: Text in Russian.
+          type: string
+        sr:
+          description: Text in Serbian.
+          type: string
+        sk:
+          description: Text in Slovak.
+          type: string
+        es:
+          description: Text in Spanish.
+          type: string
+        sv:
+          description: Text in Swedish.
+          type: string
+        th:
+          description: Text in Thai.
+          type: string
+        tr:
+          description: Text in Turkish.
+          type: string
+        uk:
+          description: Text in Ukrainian.
+          type: string
+        vi:
+          description: Text in Vietnamese.
+          type: string
+      required:
+      - en
+      type: object
+    Notifications:
+      items:
+        $ref: '#/components/schemas/Notification'
+      type: array
+    NotificationSlice:
+      example:
+        offset: 6
+        total_count: 0
+        limit: 1
+        notifications:
+        - null
+        - null
+      properties:
+        total_count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+        notifications:
+          items:
+            $ref: '#/components/schemas/Notification'
+          type: array
+      type: object
+    PlatformDeliveryData:
+      description: Hash of delivery statistics broken out by target device platform.
+      properties:
+        edge_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        chrome_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        firefox_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        safari_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        android:
+          $ref: '#/components/schemas/DeliveryData'
+        ios:
+          $ref: '#/components/schemas/DeliveryData'
+      type: object
+    DeliveryData:
+      properties:
+        successful:
+          type: integer
+        failed:
+          type: integer
+        errored:
+          type: integer
+        converted:
+          type: integer
+        received:
+          type: integer
+      type: object
+    Purchase:
+      properties:
+        sku:
+          description: The unique identifier of the purchased item.
+          type: string
+        amount:
+          description: "The amount, in USD, spent purchasing the item."
+          type: number
+        iso:
+          description: The 3-letter ISO 4217 currency code. Required for correct storage
+            and conversion of amount.
+          type: string
+      required:
+      - amount
+      - iso
+      - sku
+      type: object
+    OutcomeData:
+      example:
+        aggregation: sum
+        id: id
+        value: 0
+      properties:
+        id:
+          type: string
+        value:
+          type: integer
+        aggregation:
+          enum:
+          - sum
+          - count
+          type: string
+      required:
+      - aggregation
+      - id
+      - value
+      type: object
+    OutcomesData:
+      example:
+        outcomes:
+        - aggregation: sum
+          id: id
+          value: 0
+        - aggregation: sum
+          id: id
+          value: 0
+      properties:
+        outcomes:
+          items:
+            $ref: '#/components/schemas/OutcomeData'
+          type: array
+      type: object
+    Filter:
+      properties:
+        field:
+          description: Name of the field to use as the first operand in the filter
+            expression.
+          type: string
+        key:
+          description: "If `field` is `tag`, this field is *required* to specify `key`\
+            \ inside the tags."
+          type: string
+        value:
+          description: Constant value to use as the second operand in the filter expression.  This
+            value is *required* when the relation operator is a binary operator.
+          type: string
+        relation:
+          description: Operator of a filter expression.
+          enum:
+          - '>'
+          - <
+          - =
+          - '!='
+          - exists
+          - not_exists
+          - time_elapsed_gt
+          - time_elapsed_lt
+          type: string
+      required:
+      - field
+      - relation
+      type: object
+    Operator:
+      properties:
+        operator:
+          description: "Strictly, this must be either `\"OR\"`, or `\"AND\"`.  It\
+            \ can be used to compose Filters as part of a Filters object."
+          enum:
+          - OR
+          - AND
+          type: string
+      type: object
+    FilterExpressions:
+      anyOf:
+      - $ref: '#/components/schemas/Filter'
+      - $ref: '#/components/schemas/Operator'
+    Segment:
+      example:
+        name: name
+        id: id
+        filters:
+        - null
+        - null
+      properties:
+        id:
+          description: "UUID of the segment.  If left empty, it will be assigned automaticaly."
+          type: string
+        name:
+          description: Name of the segment.  You'll see this name on the Web UI.
+          type: string
+        filters:
+          description: "Filter or operators the segment will have.  For a list of\
+            \ available filters with details, please see Send to Users Based on Filters."
+          items:
+            $ref: '#/components/schemas/FilterExpressions'
+          type: array
+      required:
+      - filters
+      - name
+      type: object
+    Player:
+      example:
+        country: country
+        external_user_id_auth_hash: external_user_id_auth_hash
+        device_model: device_model
+        timezone: 5
+        created_at: 7
+        device_type: 5
+        language: language
+        playtime: 9
+        long: 1.2315135367772556
+        amount_spent: amount_spent
+        id: id
+        app_id: app_id
+        lat: 1.0246457001441578
+        identifier: identifier
+        game_version: game_version
+        notification_types: 4
+        device_os: device_os
+        email_auth_hash: email_auth_hash
+        test_type: 7
+        external_user_id: external_user_id
+        tags: "{}"
+        ad_id: ad_id
+        session_count: 2
+        sdk: sdk
+        last_active: 2
+        invalid_identifier: true
+        badge_count: 3
+      properties:
+        id:
+          description: The device's OneSignal ID
+          readOnly: true
+          type: string
+        invalid_identifier:
+          description: "If true, this is the equivalent of a user being Unsubscribed"
+          readOnly: true
+          type: boolean
+        app_id:
+          type: string
+        device_type:
+          description: |
+            Required
+            The device's platform:
+              0 = iOS
+              1 = Android
+              2 = Amazon
+              3 = WindowsPhone (MPNS)
+              4 = Chrome Apps / Extensions
+              5 = Chrome Web Push
+              6 = Windows (WNS)
+              7 = Safari
+              8 = Firefox
+              9 = MacOS
+              10 = Alexa
+              11 = Email
+              13 = For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM
+              14 = SMS
+          type: integer
+        external_user_id:
+          description: a custom user ID
+          type: string
+        external_user_id_auth_hash:
+          description: Only required if you have enabled Identity Verification and
+            device_type is NOT 11 email.
+          type: string
+        email_auth_hash:
+          description: Email - Only required if you have enabled Identity Verification
+            and device_type is email (11).
+          type: string
+        identifier:
+          description: "Recommended: For Push Notifications, this is the Push Token\
+            \ Identifier from Google or Apple. For Apple Push identifiers, you must\
+            \ strip all non alphanumeric characters.\nExamples:\niOS: 7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0\n\
+            Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV...\n\
+            For Email Addresses, set the full email address email@email.com and make\
+            \ sure to set device_type to 11.\n"
+          type: string
+        language:
+          description: "Language code. Typically lower case two letters, except for\
+            \ Chinese where it must be one of zh-Hans or zh-Hant. Example: en\n"
+          type: string
+        timezone:
+          description: "Number of seconds away from UTC. Example: -28800\n"
+          type: integer
+        game_version:
+          description: "Version of your app. Example: 1.1\n"
+          type: string
+        device_model:
+          description: "Device make and model. Example: iPhone5,1\n"
+          type: string
+        device_os:
+          description: "Device operating system version. Example: 7.0.4\n"
+          type: string
+        ad_id:
+          description: |
+            The ad id for the device's platform:
+            Android = Advertising Id
+            iOS = identifierForVendor
+            WP8.0 = DeviceUniqueId
+            WP8.1 = AdvertisingId
+          type: string
+        sdk:
+          description: Name and version of the sdk/plugin that's calling this API
+            method (if any)
+          type: string
+        session_count:
+          description: "Number of times the user has played the game, defaults to\
+            \ 1"
+          type: integer
+        tags:
+          description: "Custom tags for the player. Only support string and integer\
+            \ key value pairs. Does not support arrays or other nested objects. Setting\
+            \ a tag value to null or an empty string will remove the tag. Example:\
+            \ {\"foo\":\"bar\",\"this\":\"that\"}\nLimitations:\n- 100 tags per call\n\
+            - Android SDK users: tags cannot be removed or changed via API if set\
+            \ through SDK sendTag methods.\nRecommended to only tag devices with 1\
+            \ kilobyte of data\nPlease consider using your own Database to save more\
+            \ than 1 kilobyte of data. See: Internal Database & CRM\n"
+          type: object
+        amount_spent:
+          description: "Amount the user has spent in USD, up to two decimal places"
+          type: string
+        created_at:
+          description: Unixtime when the player joined the game
+          type: integer
+        playtime:
+          description: Seconds player was running your app.
+          type: integer
+        badge_count:
+          description: "Current iOS badge count displayed on the app icon\nNOTE: Not\
+            \ supported for apps created after June 2018, since badge count for apps\
+            \ created after this date are handled on the client.\n"
+          type: integer
+        last_active:
+          description: Unixtime when the player was last active
+          type: integer
+        notification_types:
+          description: |
+            1 = subscribed
+            -2 = unsubscribed
+            iOS - These values are set each time the user opens the app from the SDK. Use the SDK function set Subscription instead.
+            Android - You may set this but you can no longer use the SDK method setSubscription later in your app as it will create synchronization issues.
+          type: integer
+        test_type:
+          description: |
+            This is used in deciding whether to use your iOS Sandbox or Production push certificate when sending a push when both have been uploaded. Set to the iOS provisioning profile that was used to build your app.
+            1 = Development
+            2 = Ad-Hoc
+            Omit this field for App Store builds.
+          type: integer
+        long:
+          description: "Longitude of the device, used for geotagging to segment on."
+          type: number
+        lat:
+          description: "Latitude of the device, used for geotagging to segment on."
+          type: number
+        country:
+          description: Country code in the ISO 3166-1 Alpha 2 format
+          type: string
+      required:
+      - app_id
+      - device_type
+      - id
+      type: object
+    Players:
+      items:
+        $ref: '#/components/schemas/Player'
+      type: array
+    PlayerSlice:
+      example:
+        offset: 6
+        total_count: 0
+        players:
+        - country: country
+          external_user_id_auth_hash: external_user_id_auth_hash
+          device_model: device_model
+          timezone: 5
+          created_at: 7
+          device_type: 5
+          language: language
+          playtime: 9
+          long: 1.2315135367772556
+          amount_spent: amount_spent
+          id: id
+          app_id: app_id
+          lat: 1.0246457001441578
+          identifier: identifier
+          game_version: game_version
+          notification_types: 4
+          device_os: device_os
+          email_auth_hash: email_auth_hash
+          test_type: 7
+          external_user_id: external_user_id
+          tags: "{}"
+          ad_id: ad_id
+          session_count: 2
+          sdk: sdk
+          last_active: 2
+          invalid_identifier: true
+          badge_count: 3
+        - country: country
+          external_user_id_auth_hash: external_user_id_auth_hash
+          device_model: device_model
+          timezone: 5
+          created_at: 7
+          device_type: 5
+          language: language
+          playtime: 9
+          long: 1.2315135367772556
+          amount_spent: amount_spent
+          id: id
+          app_id: app_id
+          lat: 1.0246457001441578
+          identifier: identifier
+          game_version: game_version
+          notification_types: 4
+          device_os: device_os
+          email_auth_hash: email_auth_hash
+          test_type: 7
+          external_user_id: external_user_id
+          tags: "{}"
+          ad_id: ad_id
+          session_count: 2
+          sdk: sdk
+          last_active: 2
+          invalid_identifier: true
+          badge_count: 3
+        limit: 1
+      properties:
+        total_count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+        players:
+          items:
+            $ref: '#/components/schemas/Player'
+          type: array
+      type: object
+    InvalidIdentifierError:
+      properties:
+        invalid_external_user_ids:
+          description: Returned if using include_external_user_ids
+          items:
+            type: string
+          type: array
+        invalid_player_ids:
+          description: Returned if using include_player_ids and some were valid and
+            others were not.
+          items:
+            type: string
+          type: array
+      type: object
+    NoSubscribersError:
+      description: |
+        Returned if no subscribed players.
+      items:
+        type: string
+      type: array
+    Notification200Errors:
+      oneOf:
+      - $ref: '#/components/schemas/InvalidIdentifierError'
+      - $ref: '#/components/schemas/NoSubscribersError'
+    inline_response_200:
+      example:
+        recipients: 0
+        external_id: external_id
+        id: id
+        errors: null
+      properties:
+        id:
+          type: string
+        recipients:
+          description: Estimated number of subscribers targetted by notification.
+          type: integer
+        external_id:
+          type: string
+        errors:
+          $ref: '#/components/schemas/Notification200Errors'
+      required:
+      - id
+      - recipients
+      type: object
+    inline_response_400:
+      properties:
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    inline_response_200_1:
+      example:
+        success: success
+      properties:
+        success:
+          type: string
+      type: object
+    get_notification_request_body:
+      properties:
+        events:
+          description: "-> \"sent\" - All the devices by player_id that were sent\
+            \ the specified notification_id.  Notifications targeting under 1000 recipients\
+            \ will not have \"sent\" events recorded, but will show \"clicked\" events.\
+            \ \"clicked\" - All the devices by `player_id` that clicked the specified\
+            \ notification_id."
+          enum:
+          - sent
+          - clicked
+          type: string
+        email:
+          description: The email address you would like the report sent.
+          type: string
+        app_id:
+          type: string
+      required:
+      - id
+      title: get_notification_request_body
+      type: object
+    inline_response_200_2:
+      example:
+        success: success
+        destination_url: destination_url
+      properties:
+        success:
+          type: string
+        destination_url:
+          type: string
+      type: object
+    inline_response_400_1:
+      properties:
+        success:
+          type: string
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    update_player_tags_request_body:
+      properties:
+        tags:
+          description: "Custom tags for the device record.  Only support string key\
+            \ value pairs.  Does not support arrays or other nested objects.  Example\
+            \ `{\"foo\":\"bar\",\"this\":\"that\"}`.\nLimitations:\n- 100 tags per\
+            \ call\n- Android SDK users: tags cannot be removed or changed via API\
+            \ if set through SDK sendTag methods.\nRecommended to only tag devices\
+            \ with 1 kilobyte of ata\nPlease consider using your own Database to save\
+            \ more than 1 kilobyte of data.  See: Internal Database & CRM\n"
+          type: object
+      title: update_player_tags_request_body
+      type: object
+    inline_response_200_3:
+      example:
+        success: true
+      properties:
+        success:
+          type: boolean
+      type: object
+    inline_response_201:
+      example:
+        success: true
+        id: id
+      properties:
+        success:
+          type: boolean
+        id:
+          description: UUID of created segment
+          type: string
+      type: object
+    inline_response_400_2:
+      properties:
+        success:
+          type: boolean
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    inline_response_400_3:
+      properties:
+        erorrs:
+          items:
+            type: string
+          type: array
+      type: object
+    inline_response_200_4:
+      example:
+        success: true
+        id: id
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
+      type: object
+    export_players_request_body:
+      properties:
+        extra_fields:
+          description: "Additional fields that you wish to include. Currently supports\
+            \ location, country, rooted, notification_types, ip, external_user_id,\
+            \ web_auth, and web_p256."
+          items:
+            type: string
+          type: array
+        last_active_since:
+          description: Export all devices with a last_active timestamp greater than
+            this time.  Unixtime in seconds.
+          type: integer
+        segment_name:
+          description: Export al ldevices belonging to the segment.
+          type: string
+      title: export_players_request_body
+      type: object
+    inline_response_200_5:
+      example:
+        csv_file_url: csv_file_url
+      properties:
+        csv_file_url:
+          type: string
+      type: object
+    Notification_allOf_android_background_layout:
+      description: "Channel: Push Notifications\nPlatform: Android\nAllowing setting\
+        \ a background image for the notification. This is a JSON object containing\
+        \ the following keys. See our Background Image documentation for image sizes.\n"
+      properties:
+        image:
+          description: "Asset file, android resource name, or URL to remote image."
+          type: string
+        headings_color:
+          description: Title text color ARGB Hex format. Example(Blue) "FF0000FF".
+          type: string
+        contents_color:
+          description: Body text color ARGB Hex format. Example(Red) "FFFF0000".
+          type: string
+      type: object
+      writeOnly: true
+    Notification_allOf:
+      properties:
+        id:
+          type: string
+        value:
+          readOnly: true
+          type: integer
+        aggregation:
+          enum:
+          - sum
+          - count
+          readOnly: true
+          type: string
+        isIos:
+          default: true
+          description: Indicates whether to send to all devices registered under your
+            app's Apple iOS platform.
+          type: boolean
+          writeOnly: true
+        isAndroid:
+          description: Indicates whether to send to all devices registered under your
+            app's Google Android platform.
+          type: boolean
+          writeOnly: true
+        isHuawei:
+          description: Indicates whether to send to all devices registered under your
+            app's Huawei Android platform.
+          type: boolean
+          writeOnly: true
+        isAnyWeb:
+          description: "Indicates whether to send to all subscribed web browser users,\
+            \ including Chrome, Firefox, and Safari.\nYou may use this instead as\
+            \ a combined flag instead of separately enabling isChromeWeb, isFirefox,\
+            \ and isSafari, though the three options are equivalent to this one.\n"
+          type: boolean
+          writeOnly: true
+        isChromeWeb:
+          description: "Indicates whether to send to all Google Chrome, Chrome on\
+            \ Android, and Mozilla Firefox users registered under your Chrome & Firefox\
+            \ web push platform."
+          type: boolean
+          writeOnly: true
+        isFirefox:
+          description: Indicates whether to send to all Mozilla Firefox desktop users
+            registered under your Firefox web push platform.
+          type: boolean
+          writeOnly: true
+        isSafari:
+          description: Does not support iOS Safari. Indicates whether to send to all
+            Apple's Safari desktop users registered under your Safari web push platform.
+            Read more iOS Safari
+          type: boolean
+          writeOnly: true
+        isWP_WNS:
+          description: Indicates whether to send to all devices registered under your
+            app's Windows platform.
+          type: boolean
+          writeOnly: true
+        isAdm:
+          description: Indicates whether to send to all devices registered under your
+            app's Amazon Fire platform.
+          type: boolean
+          writeOnly: true
+        isChrome:
+          description: |
+            This flag is not used for web push Please see isChromeWeb for sending to web push users. This flag only applies to Google Chrome Apps & Extensions.
+            Indicates whether to send to all devices registered under your app's Google Chrome Apps & Extension platform.
+          type: boolean
+          writeOnly: true
+        channel_for_external_user_ids:
+          description: "Indicates if the message type when targeting with include_external_user_ids\
+            \ for cases where an email, sms, and/or push subscribers have the same\
+            \ external user id.\nExample: Use the string \"push\" to indicate you\
+            \ are sending a push notification or the string \"email\"for sending emails\
+            \ or \"sms\"for sending SMS.\n"
+          type: string
+          writeOnly: true
+        app_id:
+          description: "Required: Your OneSignal Application ID, which can be found\
+            \ in Keys & IDs.\nIt is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434.\n"
+          type: string
+          writeOnly: true
+        external_id:
+          description: "Correlation and idempotency key.\nA request received with\
+            \ this parameter will first look for another notification with the same\
+            \ external_id. If one exists, a notification will not be sent, and result\
+            \ of the previous operation will instead be returned. Therefore, if you\
+            \ plan on using this feature, it's important to use a good source of randomness\
+            \ to generate the UUID passed here.\nThis key is only idempotent for 30\
+            \ days. After 30 days, the notification could be removed from our system\
+            \ and a notification with the same external_id will be sent again.\n \
+            \ See Idempotent Notification Requests for more details\nwriteOnly: true\n"
+          type: string
+        contents:
+          allOf:
+          - $ref: '#/components/schemas/StringMap'
+          - description: "Required unless content_available=true or template_id is\
+              \ set.\nThe message's content (excluding the title), a map of language\
+              \ codes to text for each language.\nEach hash must have a language code\
+              \ string for a key, mapped to the localized text you would like users\
+              \ to receive for that language.\nThis field supports inline substitutions.\n\
+              English must be included in the hash.\nExample: {\"en\": \"English Message\"\
+              , \"es\": \"Spanish Message\"}\n"
+            writeOnly: true
+        headings:
+          allOf:
+          - $ref: '#/components/schemas/StringMap'
+          - description: "The message's title, a map of language codes to text for\
+              \ each language. Each hash must have a language code string for a key,\
+              \ mapped to the localized text you would like users to receive for that\
+              \ language.\nThis field supports inline substitutions.\nExample: {\"\
+              en\": \"English Title\", \"es\": \"Spanish Title\"}\n"
+            writeOnly: true
+        subtitle:
+          allOf:
+          - $ref: '#/components/schemas/StringMap'
+          - description: "The message's subtitle, a map of language codes to text\
+              \ for each language. Each hash must have a language code string for\
+              \ a key, mapped to the localized text you would like users to receive\
+              \ for that language.\nThis field supports inline substitutions.\nExample:\
+              \ {\"en\": \"English Subtitle\", \"es\": \"Spanish Subtitle\"}\n"
+            writeOnly: true
+        data:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nA custom map\
+            \ of data that is passed back to your app. Same as using Additional Data\
+            \ within the dashboard. Can use up to 2048 bytes of data.\nExample: {\"\
+            abc\": 123, \"foo\": \"bar\", \"event_performed\": true, \"amount\": 12.1}\n"
+          type: object
+          writeOnly: true
+        huawei_msg_type:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nUse \"data\"\
+            \ or \"message\" depending on the type of notification you are sending.\
+            \ More details in Data & Background Notifications.\n"
+          type: string
+          writeOnly: true
+        url:
+          description: "Channel: Push Notifications\nPlatform: All\nThe URL to open\
+            \ in the browser when a user clicks on the notification.\nNote: iOS needs\
+            \ https or updated NSAppTransportSecurity in plist\nThis field supports\
+            \ inline substitutions.\nOmit if including web_url or app_url\nExample:\
+            \ https://onesignal.com\n"
+          type: string
+          writeOnly: true
+        web_url:
+          description: "Channel: Push Notifications\nPlatform: All Browsers\nSame\
+            \ as url but only sent to web push platforms.\nIncluding Chrome, Firefox,\
+            \ Safari, Opera, etc.\nExample: https://onesignal.com\n"
+          type: string
+          writeOnly: true
+        app_url:
+          description: "Channel: Push Notifications\nPlatform: All Browsers\nSame\
+            \ as url but only sent to web push platforms.\nIncluding iOS, Android,\
+            \ macOS, Windows, ChromeApps, etc.\nExample: https://onesignal.com\n"
+          type: string
+          writeOnly: true
+        ios_attachments:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+\nAdds media\
+            \ attachments to notifications. Set as JSON object, key as a media id\
+            \ of your choice and the value as a valid local filename or URL. User\
+            \ must press and hold on the notification to view.\nDo not set mutable_content\
+            \ to download attachments. The OneSignal SDK does this automatically\n\
+            Example: {\"id1\": \"https://domain.com/image.jpg\"}\n"
+          type: object
+          writeOnly: true
+        template_id:
+          description: "Channel: Push Notifications\nPlatform: All\nUse a template\
+            \ you setup on our dashboard. The template_id is the UUID found in the\
+            \ URL when viewing a template on our dashboard.\nExample: be4a8044-bbd6-11e4-a581-000c2940e62c\n"
+          type: string
+          writeOnly: true
+        content_available:
+          description: "Channel: Push Notifications\nPlatform: iOS\nSending true wakes\
+            \ your app from background to run custom native code (Apple interprets\
+            \ this as content-available=1). Note: Not applicable if the app is in\
+            \ the \"force-quit\" state (i.e app was swiped away). Omit the contents\
+            \ field to prevent displaying a visible notification.\n"
+          type: boolean
+          writeOnly: true
+        mutable_content:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+\nAlways defaults\
+            \ to true and cannot be turned off. Allows tracking of notification receives\
+            \ and changing of the notification content in your app before it is displayed.\
+            \ Triggers didReceive(_:withContentHandler:) on your UNNotificationServiceExtension.\n"
+          type: boolean
+          writeOnly: true
+        target_content_identifier:
+          description: "Channel: Push Notifications\nPlatform: iOS 13+\nUse to target\
+            \ a specific experience in your App Clip, or to target your notification\
+            \ to a specific window in a multi-scene App.\n"
+          type: string
+          writeOnly: true
+        big_picture:
+          description: "Channel: Push Notifications\nPlatform: Android\nPicture to\
+            \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          type: string
+          writeOnly: true
+        huawei_big_picture:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nPicture to\
+            \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          type: string
+          writeOnly: true
+        adm_big_picture:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nPicture to\
+            \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          type: string
+          writeOnly: true
+        chrome_big_picture:
+          description: "Channel: Push Notifications\nPlatform: ChromeApp\nLarge picture\
+            \ to display below the notification text. Must be a local URL.\n"
+          type: string
+          writeOnly: true
+        chrome_web_image:
+          description: "Channel: Push Notifications\nPlatform: Chrome 56+\nSets the\
+            \ web push notification's large image to be shown below the notification's\
+            \ title and text. Please see Web Push Notification Icons.\n"
+          type: string
+          writeOnly: true
+        buttons:
+          description: "Channel: Push Notifications\nPlatform: iOS 8.0+, Android 4.1+,\
+            \ and derivatives like Amazon Buttons to add to the notification. Icon\
+            \ only works for Android.\nButtons show in reverse order of array position\
+            \ i.e. Last item in array shows as first button on device.\nExample: [{\"\
+            id\": \"id2\", \"text\": \"second button\", \"icon\": \"ic_menu_share\"\
+            }, {\"id\": \"id1\", \"text\": \"first button\", \"icon\": \"ic_menu_send\"\
+            }]\n"
+          items:
+            $ref: '#/components/schemas/Button'
+          type: array
+          writeOnly: true
+        web_buttons:
+          description: "Channel: Push Notifications\nPlatform: Chrome 48+\nAdd action\
+            \ buttons to the notification. The id field is required.\nExample: [{\"\
+            id\": \"like-button\", \"text\": \"Like\", \"icon\": \"http://i.imgur.com/N8SN8ZS.png\"\
+            , \"url\": \"https://yoursite.com\"}, {\"id\": \"read-more-button\", \"\
+            text\": \"Read more\", \"icon\": \"http://i.imgur.com/MIxJp1L.png\", \"\
+            url\": \"https://yoursite.com\"}]\n"
+          items:
+            $ref: '#/components/schemas/Button'
+          type: array
+          writeOnly: true
+        ios_category:
+          description: "Channel: Push Notifications\nPlatform: iOS\nCategory APS payload,\
+            \ use with registerUserNotificationSettings:categories in your Objective-C\
+            \ / Swift code.\nExample: calendar category which contains actions like\
+            \ accept and decline\niOS 10+ This will trigger your UNNotificationContentExtension\
+            \ whose ID matches this category.\n"
+          type: string
+          writeOnly: true
+        android_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Android\nThe Android\
+            \ Oreo Notification Category to send the notification under. See the Category\
+            \ documentation on creating one and getting it's id.\n"
+          type: string
+          writeOnly: true
+        huawei_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nThe Android\
+            \ Oreo Notification Category to send the notification under. See the Category\
+            \ documentation on creating one and getting it's id.\n"
+          type: string
+          writeOnly: true
+        existing_android_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Android\nUse this if\
+            \ you have client side Android Oreo Channels you have already defined\
+            \ in your app with code.\n"
+          type: string
+          writeOnly: true
+        huawei_existing_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nUse this if\
+            \ you have client side Android Oreo Channels you have already defined\
+            \ in your app with code.\n"
+          type: string
+          writeOnly: true
+        android_background_layout:
+          $ref: '#/components/schemas/Notification_allOf_android_background_layout'
+        small_icon:
+          description: "Channel: Push Notifications\nPlatform: Android\nIcon shown\
+            \ in the status bar and on the top left of the notification.\nIf not set\
+            \ a bell icon will be used or ic_stat_onesignal_default if you have set\
+            \ this resource name.\nSee: How to create small icons\n"
+          type: string
+          writeOnly: true
+        huawei_small_icon:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nIcon shown\
+            \ in the status bar and on the top left of the notification.\nUse an Android\
+            \ resource path (E.g. /drawable/small_icon).\nDefaults to your app icon\
+            \ if not set.\n"
+          type: string
+          writeOnly: true
+        large_icon:
+          description: "Channel: Push Notifications\nPlatform: Android\nCan be a drawable\
+            \ resource name or a URL.\nSee: How to create large icons\n"
+          type: string
+          writeOnly: true
+        huawei_large_icon:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nCan be a drawable\
+            \ resource name or a URL.\nSee: How to create large icons\n"
+          type: string
+          writeOnly: true
+        adm_small_icon:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nIf not set\
+            \ a bell icon will be used or ic_stat_onesignal_default if you have set\
+            \ this resource name.\nSee: How to create small icons\n"
+          type: string
+          writeOnly: true
+        adm_large_icon:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nIf blank the\
+            \ small_icon is used. Can be a drawable resource name or a URL.\nSee:\
+            \ How to create large icons\n"
+          type: string
+          writeOnly: true
+        chrome_web_icon:
+          description: "Channel: Push Notifications\nPlatform: Chrome\nSets the web\
+            \ push notification's icon. An image URL linking to a valid image. Common\
+            \ image types are supported; GIF will not animate. We recommend 256x256\
+            \ (at least 80x80) to display well on high DPI devices. Firefox will also\
+            \ use this icon, unless you specify firefox_icon.\n"
+          type: string
+        chrome_web_badge:
+          description: "Channel: Push Notifications\nPlatform: Chrome\nSets the web\
+            \ push notification icon for Android devices in the notification shade.\
+            \ Please see Web Push Notification Badge.\n"
+          type: string
+          writeOnly: true
+        firefox_icon:
+          description: "Channel: Push Notifications\nPlatform: Firefox\nNot recommended\
+            \ Few people need to set Firefox-specific icons. We recommend setting\
+            \ chrome_web_icon instead, which Firefox will also use.\nSets the web\
+            \ push notification's icon for Firefox. An image URL linking to a valid\
+            \ image. Common image types are supported; GIF will not animate. We recommend\
+            \ 256x256 (at least 80x80) to display well on high DPI devices.\n"
+          type: string
+          writeOnly: true
+        chrome_icon:
+          description: "Channel: Push Notifications\nPlatform: ChromeApp\nThis flag\
+            \ is not used for web push For web push, please see chrome_web_icon instead.\n\
+            The local URL to an icon to use. If blank, the app icon will be used.\n"
+          type: string
+          writeOnly: true
+        ios_sound:
+          description: "Channel: Push Notifications\nPlatform: iOS\nSound file that\
+            \ is included in your app to play instead of the default device notification\
+            \ sound. Pass nil to disable vibration and sound for the notification.\n\
+            Example: \"notification.wav\"\n"
+          type: string
+          writeOnly: true
+        android_sound:
+          description: "Channel: Push Notifications\nPlatform: Android\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\nSound file that is included in your app to\
+            \ play instead of the default device notification sound. Pass nil to disable\
+            \ sound for the notification.\nNOTE: Leave off file extension for Android.\n\
+            Example: \"notification\"\n"
+          type: string
+          writeOnly: true
+        huawei_sound:
+          description: "Channel: Push Notifications\nPlatform: Huawei\n&#9888;&#65039;Deprecated,\
+            \ this field ONLY works on EMUI 5 (Android 7 based) and older devices.\n\
+            Please also set Notification Categories / Channels noted above to support\
+            \ EMUI 8 (Android 8 based) devices.\nSound file that is included in your\
+            \ app to play instead of the default device notification sound. NOTE:\
+            \ Leave off file extension for and include the full path.\n\nExample:\
+            \ \"/res/raw/notification\"\n"
+          type: string
+          writeOnly: true
+        adm_sound:
+          description: "Channel: Push Notifications\nPlatform: Amazon\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\nSound file that is included in your app to\
+            \ play instead of the default device notification sound. Pass nil to disable\
+            \ sound for the notification.\nNOTE: Leave off file extension for Android.\n\
+            Example: \"notification\"\n"
+          type: string
+          writeOnly: true
+        wp_wns_sound:
+          description: "Channel: Push Notifications\nPlatform: Windows\nSound file\
+            \ that is included in your app to play instead of the default device notification\
+            \ sound.\nExample: \"notification.wav\"\n"
+          type: string
+          writeOnly: true
+        android_led_color:
+          description: "Channel: Push Notifications\nPlatform: Android\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\nSets the devices LED notification light if\
+            \ the device has one. ARGB Hex format.\nExample(Blue): \"FF0000FF\"\n"
+          type: string
+          writeOnly: true
+        huawei_led_color:
+          description: "Channel: Push Notifications\nPlatform: Huawei\n&#9888;&#65039;Deprecated,\
+            \ this field ONLY works on EMUI 5 (Android 7 based) and older devices.\n\
+            Please also set Notification Categories / Channels noted above to support\
+            \ EMUI 8 (Android 8 based) devices.\nSets the devices LED notification\
+            \ light if the device has one. RGB Hex format.\nExample(Blue): \"0000FF\"\
+            \n"
+          type: string
+          writeOnly: true
+        android_accent_color:
+          description: "Channel: Push Notifications\nPlatform: Android\nSets the background\
+            \ color of the notification circle to the left of the notification text.\
+            \ Only applies to apps targeting Android API level 21+ on Android 5.0+\
+            \ devices.\nExample(Red): \"FFFF0000\"\n"
+          type: string
+          writeOnly: true
+        huawei_accent_color:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nAccent Color\
+            \ used on Action Buttons and Group overflow count.\nUses RGB Hex value\
+            \ (E.g. #9900FF).\nDefaults to device's theme color if not set.\n"
+          type: string
+          writeOnly: true
+        android_visibility:
+          description: "Channel: Push Notifications\nPlatform: Android 5.0_\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\n1 = Public (default) (Shows the full message\
+            \ on the lock screen unless the user has disabled all notifications from\
+            \ showing on the lock screen. Please consider the user and mark private\
+            \ if the contents are.)\n0 = Private (Hides message contents on lock screen\
+            \ if the user set \"Hide sensitive notification content\" in the system\
+            \ settings)\n-1 = Secret (Notification does not show on the lock screen\
+            \ at all)\n"
+          type: integer
+          writeOnly: true
+        huawei_visibility:
+          description: "Channel: Push Notifications\nPlatform: Huawei\n&#9888;&#65039;Deprecated,\
+            \ this field ONLY works on EMUI 5 (Android 7 based) and older devices.\n\
+            Please also set Notification Categories / Channels noted above to support\
+            \ EMUI 8 (Android 8 based) devices.\n1 = Public (default) (Shows the full\
+            \ message on the lock screen unless the user has disabled all notifications\
+            \ from showing on the lock screen. Please consider the user and mark private\
+            \ if the contents are.)\n0 = Private (Hides message contents on lock screen\
+            \ if the user set \"Hide sensitive notification content\" in the system\
+            \ settings)\n-1 = Secret (Notification does not show on the lock screen\
+            \ at all)\n"
+          type: integer
+          writeOnly: true
+        ios_badgeType:
+          description: "Channel: Push Notifications\nPlatform: iOS\nDescribes whether\
+            \ to set or increase/decrease your app's iOS badge count by the ios_badgeCount\
+            \ specified count. Can specify None, SetTo, or Increase.\n`None` leaves\
+            \ the count unaffected.\n`SetTo` directly sets the badge count to the\
+            \ number specified in ios_badgeCount.\n`Increase` adds the number specified\
+            \ in ios_badgeCount to the total. Use a negative number to decrease the\
+            \ badge count.\n"
+          type: string
+          writeOnly: true
+        ios_badgeCount:
+          description: "Channel: Push Notifications\nPlatform: iOS\nUsed with ios_badgeType,\
+            \ describes the value to set or amount to increase/decrease your app's\
+            \ iOS badge count by.\nYou can use a negative number to decrease the badge\
+            \ count when used with an ios_badgeType of Increase.\n"
+          type: integer
+          writeOnly: true
+        collapse_id:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+, Android\n\
+            Only one notification with the same id will be shown on the device. Use\
+            \ the same id to update an existing notification instead of showing a\
+            \ new one. Limit of 64 characters.\n"
+          type: string
+          writeOnly: true
+        web_push_topic:
+          description: "Channel: Push Notifications\nPlatform: All Browsers\nDisplay\
+            \ multiple notifications at once with different topics.\n"
+          type: string
+        apns_alert:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+\niOS can localize\
+            \ push notification messages on the client using special parameters such\
+            \ as loc-key. When using the Create Notification endpoint, you must include\
+            \ these parameters inside of a field called apns_alert. Please see Apple's\
+            \ guide on localizing push notifications to learn more.\n"
+          type: object
+          writeOnly: true
+        send_after:
+          description: "Channel: All\nSchedule notification for future delivery. API\
+            \ defaults to UTC -1100\nExamples: All examples are the exact same date\
+            \ & time.\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\"\n\"September 24th\
+            \ 2015, 2:00:00 pm UTC-07:00\"\n\"2015-09-24 14:00:00 GMT-0700\"\n\"Sept\
+            \ 24 2015 14:00:00 GMT-0700\"\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific\
+            \ Daylight Time)\"\nNote: SMS currently only supports send_after parameter.\n"
+          type: string
+          writeOnly: true
+        delayed_option:
+          description: "Channel: All\nPossible values are:\ntimezone (Deliver at a\
+            \ specific time-of-day in each users own timezone)\nlast-active Same as\
+            \ Intelligent Delivery . (Deliver at the same time of day as each user\
+            \ last used your app).\nIf send_after is used, this takes effect after\
+            \ the send_after time has elapsed.\n"
+          type: string
+          writeOnly: true
+        delivery_time_of_day:
+          description: "Channel: All\nUse with delayed_option=timezone.\nExamples:\
+            \ \"9:00AM\"\n\"21:45\"\n\"9:45:30\"\n"
+          type: string
+          writeOnly: true
+        ttl:
+          description: "Channel: Push Notifications\nPlatform: iOS, Android, Chrome,\
+            \ Firefox, Safari, ChromeWeb\nTime To Live - In seconds. The notification\
+            \ will be expired if the device does not come back online within this\
+            \ time. The default is 259,200 seconds (3 days).\nMax value to set is\
+            \ 2419200 seconds (28 days).\n"
+          type: integer
+          writeOnly: true
+        priority:
+          description: "Channel: Push Notifications\nPlatform: Android, Chrome, ChromeWeb\n\
+            Delivery priority through the push server (example GCM/FCM). Pass 10 for\
+            \ high priority or any other integer for normal priority. Defaults to\
+            \ normal priority for Android and high for iOS. For Android 6.0+ devices\
+            \ setting priority to high will wake the device out of doze mode.\n"
+          type: integer
+          writeOnly: true
+        apns_push_type_override:
+          description: "Channel: Push Notifications\nPlatform: iOS\nvalid values:\
+            \ voip\nSet the value to voip for sending VoIP Notifications\nThis field\
+            \ maps to the APNS header apns-push-type.\nNote: alert and background\
+            \ are automatically set by OneSignal\n"
+          type: string
+          writeOnly: true
+        throttle_rate_per_minute:
+          description: "Channel: All\nApps with throttling enabled:\n  - the parameter\
+            \ value will be used to override the default application throttling value\
+            \ set from the dashboard settings.\n  - parameter value 0 indicates not\
+            \ to apply throttling to the notification.\n  - if the parameter is not\
+            \ passed then the default app throttling value will be applied to the\
+            \ notification.\nApps with throttling disabled:\n  - this parameter can\
+            \ be used to throttle delivery for the notification even though throttling\
+            \ is not enabled at the application level.\nRefer to throttling for more\
+            \ details.\n"
+          type: string
+          writeOnly: true
+        android_group:
+          description: "Channel: Push Notifications\nPlatform: Android\nNotifications\
+            \ with the same group will be stacked together using Android's Notification\
+            \ Grouping feature.\n"
+          type: string
+          writeOnly: true
+        android_group_message:
+          description: "Channel: Push Notifications\nPlatform: Android\nNote: This\
+            \ only works for Android 6 and older. Android 7+ allows full expansion\
+            \ of all message.\nSummary message to display when 2+ notifications are\
+            \ stacked together. Default is \"# new messages\". Include $[notif_count]\
+            \ in your message and it will be replaced with the current number.\nLanguages\
+            \ - The value of each key is the message that will be sent to users for\
+            \ that language. \"en\" (English) is required. The key of each hash is\
+            \ either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified\
+            \ or Traditional Chinese. Read more: supported languages.\nExample: {\"\
+            en\": \"You have $[notif_count] new messages\"}\n"
+          type: string
+          writeOnly: true
+        adm_group:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nNotifications\
+            \ with the same group will be stacked together using Android's Notification\
+            \ Grouping feature.\n"
+          type: string
+          writeOnly: true
+        adm_group_message:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nSummary message\
+            \ to display when 2+ notifications are stacked together. Default is \"\
+            # new messages\". Include $[notif_count] in your message and it will be\
+            \ replaced with the current number. \"en\" (English) is required. The\
+            \ key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant\
+            \ for Simplified or Traditional Chinese. The value of each key is the\
+            \ message that will be sent to users for that language.\nExample: {\"\
+            en\": \"You have $[notif_count] new messages\"}\n"
+          type: object
+          writeOnly: true
+        thread_id:
+          description: "Channel: Push Notifications\nPlatform: iOS 12+\nThis parameter\
+            \ is supported in iOS 12 and above. It allows you to group related notifications\
+            \ together.\nIf two notifications have the same thread-id, they will both\
+            \ be added to the same group.\n"
+          type: string
+          writeOnly: true
+        summary_arg:
+          description: "Channel: Push Notifications\nPlatform: iOS 12+\nWhen using\
+            \ thread_id to create grouped notifications in iOS 12+, you can also control\
+            \ the summary. For example, a grouped notification can say \"12 more notifications\
+            \ from John Doe\".\nThe summary_arg lets you set the name of the person/thing\
+            \ the notifications are coming from, and will show up as \"X more notifications\
+            \ from summary_arg\"\n"
+          type: string
+          writeOnly: true
+        summary_arg_count:
+          description: "Channel: Push Notifications\nPlatform: iOS 12+\nWhen using\
+            \ thread_id, you can also control the count of the number of notifications\
+            \ in the group. For example, if the group already has 12 notifications,\
+            \ and you send a new notification with summary_arg_count = 2, the new\
+            \ total will be 14 and the summary will be \"14 more notifications from\
+            \ summary_arg\"\n"
+          type: integer
+          writeOnly: true
+        email_subect:
+          description: "Channel: Email\nRequired.  The subject of the email.\n"
+          type: string
+          writeOnly: true
+        email_body:
+          description: "Channel: Email\nRequired unless template_id is set.\nHTML\
+            \ suported\nThe body of the email you wish to send. Typically, customers\
+            \ include their own HTML templates here. Must include [unsubscribe_url]\
+            \ in an <a> tag somewhere in the email.\nNote: any malformed HTML content\
+            \ will be sent to users. Please double-check your HTML is valid.\n"
+          type: string
+          writeOnly: true
+        email_from_name:
+          description: "Channel: Email\nThe name the email is from. If not specified,\
+            \ will default to \"from name\" set in the OneSignal Dashboard Email Settings.\n"
+          type: string
+          writeOnly: true
+        email_from_address:
+          description: "Channel: Email\nThe email address the email is from. If not\
+            \ specified, will default to \"from email\" set in the OneSignal Dashboard\
+            \ Email Settings.\n"
+          type: string
+          writeOnly: true
+        sms_from:
+          description: "Channel: SMS\nPhone Number used to send SMS. Should be a registered\
+            \ Twilio phone number in E.164 format.\n"
+          type: string
+          writeOnly: true
+        sms_media_urls:
+          description: "Channel: SMS\nURLs for the media files to be attached to the\
+            \ SMS content.\nLimit: 10 media urls with a total max. size of 5MBs.\n"
+          items:
+            type: string
+          type: array
+          writeOnly: true
+      type: object
+  securitySchemes:
+    app_key:
+      scheme: bearer
+      type: http
+    user_key:
+      scheme: bearer
+      type: http
