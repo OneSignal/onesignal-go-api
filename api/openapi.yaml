@@ -2601,7 +2601,7 @@ components:
             \ summary_arg\"\n"
           type: integer
           writeOnly: true
-        email_subect:
+        email_subject:
           description: "Channel: Email\nRequired.  The subject of the email.\n"
           type: string
           writeOnly: true
