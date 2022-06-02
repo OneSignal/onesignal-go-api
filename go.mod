@@ -1,4 +1,4 @@
-module github.com/OneSignal/onesignal-go-client
+module github.com/OneSignal/onesignal-go-api
 
 go 1.13
 
