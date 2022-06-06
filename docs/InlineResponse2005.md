@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CsvFileUrl** | Pointer to **string** |  | [optional] 
+**Success** | Pointer to **bool** |  | [optional] 
+**Id** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -25,30 +26,55 @@ NewInlineResponse2005WithDefaults instantiates a new InlineResponse2005 object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetCsvFileUrl
+### GetSuccess
 
-`func (o *InlineResponse2005) GetCsvFileUrl() string`
+`func (o *InlineResponse2005) GetSuccess() bool`
 
-GetCsvFileUrl returns the CsvFileUrl field if non-nil, zero value otherwise.
+GetSuccess returns the Success field if non-nil, zero value otherwise.
 
-### GetCsvFileUrlOk
+### GetSuccessOk
 
-`func (o *InlineResponse2005) GetCsvFileUrlOk() (*string, bool)`
+`func (o *InlineResponse2005) GetSuccessOk() (*bool, bool)`
 
-GetCsvFileUrlOk returns a tuple with the CsvFileUrl field if it's non-nil, zero value otherwise
+GetSuccessOk returns a tuple with the Success field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCsvFileUrl
+### SetSuccess
 
-`func (o *InlineResponse2005) SetCsvFileUrl(v string)`
+`func (o *InlineResponse2005) SetSuccess(v bool)`
 
-SetCsvFileUrl sets CsvFileUrl field to given value.
+SetSuccess sets Success field to given value.
 
-### HasCsvFileUrl
+### HasSuccess
 
-`func (o *InlineResponse2005) HasCsvFileUrl() bool`
+`func (o *InlineResponse2005) HasSuccess() bool`
 
-HasCsvFileUrl returns a boolean if a field has been set.
+HasSuccess returns a boolean if a field has been set.
+
+### GetId
+
+`func (o *InlineResponse2005) GetId() string`
+
+GetId returns the Id field if non-nil, zero value otherwise.
+
+### GetIdOk
+
+`func (o *InlineResponse2005) GetIdOk() (*string, bool)`
+
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetId
+
+`func (o *InlineResponse2005) SetId(v string)`
+
+SetId sets Id field to given value.
+
+### HasId
+
+`func (o *InlineResponse2005) HasId() bool`
+
+HasId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

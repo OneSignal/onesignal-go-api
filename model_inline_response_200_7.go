@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -15,35 +15,35 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse2003 struct for InlineResponse2003
-type InlineResponse2003 struct {
-	Success *bool `json:"success,omitempty"`
+// InlineResponse2007 struct for InlineResponse2007
+type InlineResponse2007 struct {
+	Success *string `json:"success,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse2003 InlineResponse2003
+type _InlineResponse2007 InlineResponse2007
 
-// NewInlineResponse2003 instantiates a new InlineResponse2003 object
+// NewInlineResponse2007 instantiates a new InlineResponse2007 object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse2003() *InlineResponse2003 {
-	this := InlineResponse2003{}
+func NewInlineResponse2007() *InlineResponse2007 {
+	this := InlineResponse2007{}
 	return &this
 }
 
-// NewInlineResponse2003WithDefaults instantiates a new InlineResponse2003 object
+// NewInlineResponse2007WithDefaults instantiates a new InlineResponse2007 object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse2003WithDefaults() *InlineResponse2003 {
-	this := InlineResponse2003{}
+func NewInlineResponse2007WithDefaults() *InlineResponse2007 {
+	this := InlineResponse2007{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse2003) GetSuccess() bool {
+func (o *InlineResponse2007) GetSuccess() string {
 	if o == nil || o.Success == nil {
-		var ret bool
+		var ret string
 		return ret
 	}
 	return *o.Success
@@ -51,7 +51,7 @@ func (o *InlineResponse2003) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2003) GetSuccessOk() (*bool, bool) {
+func (o *InlineResponse2007) GetSuccessOk() (*string, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *InlineResponse2003) GetSuccessOk() (*bool, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse2003) HasSuccess() bool {
+func (o *InlineResponse2007) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -67,12 +67,12 @@ func (o *InlineResponse2003) HasSuccess() bool {
 	return false
 }
 
-// SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *InlineResponse2003) SetSuccess(v bool) {
+// SetSuccess gets a reference to the given string and assigns it to the Success field.
+func (o *InlineResponse2007) SetSuccess(v string) {
 	o.Success = &v
 }
 
-func (o InlineResponse2003) MarshalJSON() ([]byte, error) {
+func (o InlineResponse2007) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -85,11 +85,11 @@ func (o InlineResponse2003) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse2003) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse2003 := _InlineResponse2003{}
+func (o *InlineResponse2007) UnmarshalJSON(bytes []byte) (err error) {
+	varInlineResponse2007 := _InlineResponse2007{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse2003); err == nil {
-		*o = InlineResponse2003(varInlineResponse2003)
+	if err = json.Unmarshal(bytes, &varInlineResponse2007); err == nil {
+		*o = InlineResponse2007(varInlineResponse2007)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -102,38 +102,38 @@ func (o *InlineResponse2003) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse2003 struct {
-	value *InlineResponse2003
+type NullableInlineResponse2007 struct {
+	value *InlineResponse2007
 	isSet bool
 }
 
-func (v NullableInlineResponse2003) Get() *InlineResponse2003 {
+func (v NullableInlineResponse2007) Get() *InlineResponse2007 {
 	return v.value
 }
 
-func (v *NullableInlineResponse2003) Set(val *InlineResponse2003) {
+func (v *NullableInlineResponse2007) Set(val *InlineResponse2007) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse2003) IsSet() bool {
+func (v NullableInlineResponse2007) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse2003) Unset() {
+func (v *NullableInlineResponse2007) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse2003(val *InlineResponse2003) *NullableInlineResponse2003 {
-	return &NullableInlineResponse2003{value: val, isSet: true}
+func NewNullableInlineResponse2007(val *InlineResponse2007) *NullableInlineResponse2007 {
+	return &NullableInlineResponse2007{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse2003) MarshalJSON() ([]byte, error) {
+func (v NullableInlineResponse2007) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse2003) UnmarshalJSON(src []byte) error {
+func (v *NullableInlineResponse2007) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

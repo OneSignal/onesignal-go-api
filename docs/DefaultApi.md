@@ -48,7 +48,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -125,11 +125,11 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
-    app := *openapiclient.NewApp("Id_example") // App | 
+    app := *onesignal.NewApp("Id_example") // App | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -196,11 +196,11 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
-    notification := *openapiclient.NewNotification("AppId_example") // Notification | 
+    notification := *onesignal.NewNotification("AppId_example") // Notification | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -247,7 +247,7 @@ Name | Type | Description  | Notes
 
 ## CreatePlayer
 
-> InlineResponse2004 CreatePlayer(ctx).Player(player).Execute()
+> InlineResponse2005 CreatePlayer(ctx).Player(player).Execute()
 
 Add a device
 
@@ -267,11 +267,11 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
-    player := *openapiclient.NewPlayer("Id_example", "AppId_example", int32(123)) // Player | 
+    player := *onesignal.NewPlayer("Id_example", int32(123)) // Player | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -284,7 +284,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreatePlayer``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CreatePlayer`: InlineResponse2004
+    // response from `CreatePlayer`: InlineResponse2005
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreatePlayer`: %v\n", resp)
 }
 ```
@@ -304,7 +304,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2004**](InlineResponse2004.md)
+[**InlineResponse2005**](InlineResponse2005.md)
 
 ### HTTP request headers
 
@@ -338,12 +338,12 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    segment := *openapiclient.NewSegment("Name_example", []openapiclient.FilterExpressions{*openapiclient.NewFilterExpressions("Field_example", "Relation_example")}) // Segment |  (optional)
+    segment := *onesignal.NewSegment("Name_example", []onesignal.FilterExpressions{*onesignal.NewFilterExpressions("Field_example", "Relation_example")}) // Segment |  (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -395,7 +395,7 @@ Name | Type | Description  | Notes
 
 ## DeletePlayer
 
-> InlineResponse2001 DeletePlayer(ctx, playerId).AppId(appId).Execute()
+> InlineResponse2007 DeletePlayer(ctx, playerId).AppId(appId).Execute()
 
 Delete a user record
 
@@ -415,7 +415,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -433,7 +433,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeletePlayer``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `DeletePlayer`: InlineResponse2001
+    // response from `DeletePlayer`: InlineResponse2007
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeletePlayer`: %v\n", resp)
 }
 ```
@@ -458,7 +458,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**InlineResponse2007**](InlineResponse2007.md)
 
 ### HTTP request headers
 
@@ -472,7 +472,7 @@ Name | Type | Description  | Notes
 
 ## DeleteSegments
 
-> InlineResponse2003 DeleteSegments(ctx, appId, segmentId).Execute()
+> InlineResponse2001 DeleteSegments(ctx, appId, segmentId).Execute()
 
 Delete Segments
 
@@ -492,7 +492,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -510,7 +510,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSegments``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `DeleteSegments`: InlineResponse2003
+    // response from `DeleteSegments`: InlineResponse2001
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteSegments`: %v\n", resp)
 }
 ```
@@ -536,7 +536,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2003**](InlineResponse2003.md)
+[**InlineResponse2001**](InlineResponse2001.md)
 
 ### HTTP request headers
 
@@ -550,7 +550,7 @@ Name | Type | Description  | Notes
 
 ## ExportPlayers
 
-> InlineResponse2005 ExportPlayers(ctx, appId).ExportPlayersRequestBody(exportPlayersRequestBody).Execute()
+> InlineResponse2008 ExportPlayers(ctx, appId).ExportPlayersRequestBody(exportPlayersRequestBody).Execute()
 
 CSV export
 
@@ -570,12 +570,12 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     appId := "appId_example" // string | The app ID that you want to export devices from
-    exportPlayersRequestBody := *openapiclient.NewExportPlayersRequestBody() // ExportPlayersRequestBody |  (optional)
+    exportPlayersRequestBody := *onesignal.NewExportPlayersRequestBody() // ExportPlayersRequestBody |  (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -588,7 +588,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportPlayers``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ExportPlayers`: InlineResponse2005
+    // response from `ExportPlayers`: InlineResponse2008
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ExportPlayers`: %v\n", resp)
 }
 ```
@@ -613,7 +613,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2005**](InlineResponse2005.md)
+[**InlineResponse2008**](InlineResponse2008.md)
 
 ### HTTP request headers
 
@@ -647,7 +647,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -702,7 +702,7 @@ Name | Type | Description  | Notes
 
 ## GetApps
 
-> string GetApps(ctx).Execute()
+> []App GetApps(ctx).Execute()
 
 View apps
 
@@ -722,7 +722,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -738,7 +738,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApps``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetApps`: string
+    // response from `GetApps`: []App
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetApps`: %v\n", resp)
 }
 ```
@@ -754,7 +754,7 @@ Other parameters are passed through a pointer to a apiGetAppsRequest struct via 
 
 ### Return type
 
-**string**
+[**[]App**](App.md)
 
 ### HTTP request headers
 
@@ -768,7 +768,7 @@ Other parameters are passed through a pointer to a apiGetAppsRequest struct via 
 
 ## GetNotification
 
-> Notification GetNotification(ctx, notificationId).AppId(appId).Execute()
+> NotificationWithMeta GetNotification(ctx, notificationId).AppId(appId).Execute()
 
 View notification
 
@@ -788,7 +788,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -806,7 +806,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetNotification`: Notification
+    // response from `GetNotification`: NotificationWithMeta
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetNotification`: %v\n", resp)
 }
 ```
@@ -831,7 +831,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Notification**](Notification.md)
+[**NotificationWithMeta**](NotificationWithMeta.md)
 
 ### HTTP request headers
 
@@ -865,12 +865,12 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     notificationId := "notificationId_example" // string | The \"id\" of the message found in the Notification object
-    getNotificationRequestBody := *openapiclient.NewGetNotificationRequestBody() // GetNotificationRequestBody | 
+    getNotificationRequestBody := *onesignal.NewGetNotificationRequestBody() // GetNotificationRequestBody | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -942,12 +942,12 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     appId := "appId_example" // string | The app ID that you want to view notifications from
-    limit := "limit_example" // string | How many notifications to return.  Max is 50.  Default is 50. (optional)
+    limit := int32(56) // int32 | How many notifications to return.  Max is 50.  Default is 50. (optional)
     offset := int32(56) // int32 | Page offset.  Default is 0.  Results are sorted by queued_at in descending order.  queued_at is a representation of the time that the notification was queued at. (optional)
     kind := int32(56) // int32 | Kind of notifications returned:   * unset - All notification types (default)   * `0` - Dashboard only   * `1` - API only   * `3` - Automated only  (optional)
 
@@ -979,7 +979,7 @@ Other parameters are passed through a pointer to a apiGetNotificationsRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **appId** | **string** | The app ID that you want to view notifications from | 
- **limit** | **string** | How many notifications to return.  Max is 50.  Default is 50. | 
+ **limit** | **int32** | How many notifications to return.  Max is 50.  Default is 50. | 
  **offset** | **int32** | Page offset.  Default is 0.  Results are sorted by queued_at in descending order.  queued_at is a representation of the time that the notification was queued at. | 
  **kind** | **int32** | Kind of notifications returned:   * unset - All notification types (default)   * &#x60;0&#x60; - Dashboard only   * &#x60;1&#x60; - API only   * &#x60;3&#x60; - Automated only  | 
 
@@ -1019,7 +1019,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -1104,7 +1104,7 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
@@ -1183,12 +1183,12 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     appId := "appId_example" // string | The app ID that you want to view players from
-    limit := "limit_example" // string | How many devices to return. Max is 300. Default is 300 (optional)
+    limit := int32(56) // int32 | How many devices to return. Max is 300. Default is 300 (optional)
     offset := int32(56) // int32 | Result offset. Default is 0. Results are sorted by id; (optional)
 
     configuration := onesignal.NewConfiguration()
@@ -1219,7 +1219,7 @@ Other parameters are passed through a pointer to a apiGetPlayersRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **appId** | **string** | The app ID that you want to view players from | 
- **limit** | **string** | How many devices to return. Max is 300. Default is 300 | 
+ **limit** | **int32** | How many devices to return. Max is 300. Default is 300 | 
  **offset** | **int32** | Result offset. Default is 0. Results are sorted by id; | 
 
 ### Return type
@@ -1258,12 +1258,12 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     appId := "appId_example" // string | An app id
-    app := *openapiclient.NewApp("Id_example") // App | 
+    app := *onesignal.NewApp("Id_example") // App | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1335,12 +1335,12 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     playerId := "playerId_example" // string | Player's OneSignal ID
-    player := *openapiclient.NewPlayer("Id_example", "AppId_example", int32(123)) // Player | 
+    player := *onesignal.NewPlayer("Id_example", int32(123)) // Player | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1392,7 +1392,7 @@ Name | Type | Description  | Notes
 
 ## UpdatePlayerTags
 
-> InlineResponse2003 UpdatePlayerTags(ctx, appId, externalUserId).UpdatePlayerTagsRequestBody(updatePlayerTagsRequestBody).Execute()
+> InlineResponse2001 UpdatePlayerTags(ctx, appId, externalUserId).UpdatePlayerTagsRequestBody(updatePlayerTagsRequestBody).Execute()
 
 Edit tags with external user id
 
@@ -1412,13 +1412,13 @@ import (
     "fmt"
     "os"
 
-    "onesignal"
+    "github.com/OneSignal/onesignal-go-api"
 )
 
 func main() {
     appId := "appId_example" // string | The OneSignal App ID the user record is found under.
     externalUserId := "externalUserId_example" // string | The External User ID mapped to teh device record in OneSignal.  Must be actively set on the device to be updated.
-    updatePlayerTagsRequestBody := *openapiclient.NewUpdatePlayerTagsRequestBody() // UpdatePlayerTagsRequestBody |  (optional)
+    updatePlayerTagsRequestBody := *onesignal.NewUpdatePlayerTagsRequestBody() // UpdatePlayerTagsRequestBody |  (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1431,7 +1431,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdatePlayerTags``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `UpdatePlayerTags`: InlineResponse2003
+    // response from `UpdatePlayerTags`: InlineResponse2001
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdatePlayerTags`: %v\n", resp)
 }
 ```
@@ -1458,7 +1458,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2003**](InlineResponse2003.md)
+[**InlineResponse2001**](InlineResponse2001.md)
 
 ### HTTP request headers
 

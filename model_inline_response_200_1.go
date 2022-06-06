@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,7 +17,7 @@ import (
 
 // InlineResponse2001 struct for InlineResponse2001
 type InlineResponse2001 struct {
-	Success *string `json:"success,omitempty"`
+	Success *bool `json:"success,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -41,9 +41,9 @@ func NewInlineResponse2001WithDefaults() *InlineResponse2001 {
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse2001) GetSuccess() string {
+func (o *InlineResponse2001) GetSuccess() bool {
 	if o == nil || o.Success == nil {
-		var ret string
+		var ret bool
 		return ret
 	}
 	return *o.Success
@@ -51,7 +51,7 @@ func (o *InlineResponse2001) GetSuccess() string {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2001) GetSuccessOk() (*string, bool) {
+func (o *InlineResponse2001) GetSuccessOk() (*bool, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *InlineResponse2001) HasSuccess() bool {
 	return false
 }
 
-// SetSuccess gets a reference to the given string and assigns it to the Success field.
-func (o *InlineResponse2001) SetSuccess(v string) {
+// SetSuccess gets a reference to the given bool and assigns it to the Success field.
+func (o *InlineResponse2001) SetSuccess(v bool) {
 	o.Success = &v
 }
 

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **TotalCount** | Pointer to **int32** |  | [optional] 
 **Offset** | Pointer to **int32** |  | [optional] 
 **Limit** | Pointer to **int32** |  | [optional] 
-**Notifications** | Pointer to [**[]Notification**](Notification.md) |  | [optional] 
+**Notifications** | Pointer to [**[]NotificationWithMeta**](NotificationWithMeta.md) |  | [optional] 
 
 ## Methods
 
@@ -105,20 +105,20 @@ HasLimit returns a boolean if a field has been set.
 
 ### GetNotifications
 
-`func (o *NotificationSlice) GetNotifications() []Notification`
+`func (o *NotificationSlice) GetNotifications() []NotificationWithMeta`
 
 GetNotifications returns the Notifications field if non-nil, zero value otherwise.
 
 ### GetNotificationsOk
 
-`func (o *NotificationSlice) GetNotificationsOk() (*[]Notification, bool)`
+`func (o *NotificationSlice) GetNotificationsOk() (*[]NotificationWithMeta, bool)`
 
 GetNotificationsOk returns a tuple with the Notifications field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNotifications
 
-`func (o *NotificationSlice) SetNotifications(v []Notification)`
+`func (o *NotificationSlice) SetNotifications(v []NotificationWithMeta)`
 
 SetNotifications sets Notifications field to given value.
 

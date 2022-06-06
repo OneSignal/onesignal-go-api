@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -18,7 +18,7 @@ import (
 // StringMap struct for StringMap
 type StringMap struct {
 	// Text in English.  Will be used as a fallback
-	En string `json:"en"`
+	En *string `json:"en,omitempty"`
 	// Text in Arabic.
 	Ar *string `json:"ar,omitempty"`
 	// Text in Bosnian.
@@ -112,9 +112,8 @@ type _StringMap StringMap
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStringMap(en string) *StringMap {
+func NewStringMap() *StringMap {
 	this := StringMap{}
-	this.En = en
 	return &this
 }
 
@@ -126,28 +125,36 @@ func NewStringMapWithDefaults() *StringMap {
 	return &this
 }
 
-// GetEn returns the En field value
+// GetEn returns the En field value if set, zero value otherwise.
 func (o *StringMap) GetEn() string {
-	if o == nil {
+	if o == nil || o.En == nil {
 		var ret string
 		return ret
 	}
-
-	return o.En
+	return *o.En
 }
 
-// GetEnOk returns a tuple with the En field value
+// GetEnOk returns a tuple with the En field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StringMap) GetEnOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.En == nil {
 		return nil, false
 	}
-	return &o.En, true
+	return o.En, true
 }
 
-// SetEn sets field value
+// HasEn returns a boolean if a field has been set.
+func (o *StringMap) HasEn() bool {
+	if o != nil && o.En != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEn gets a reference to the given string and assigns it to the En field.
 func (o *StringMap) SetEn(v string) {
-	o.En = v
+	o.En = &v
 }
 
 // GetAr returns the Ar field value if set, zero value otherwise.
@@ -1496,7 +1503,7 @@ func (o *StringMap) SetVi(v string) {
 
 func (o StringMap) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
+	if o.En != nil {
 		toSerialize["en"] = o.En
 	}
 	if o.Ar != nil {

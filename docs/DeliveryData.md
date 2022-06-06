@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Successful** | Pointer to **int32** |  | [optional] 
-**Failed** | Pointer to **int32** |  | [optional] 
-**Errored** | Pointer to **int32** |  | [optional] 
-**Converted** | Pointer to **int32** |  | [optional] 
-**Received** | Pointer to **int32** |  | [optional] 
+**Successful** | Pointer to **NullableInt32** |  | [optional] 
+**Failed** | Pointer to **NullableInt32** |  | [optional] 
+**Errored** | Pointer to **NullableInt32** |  | [optional] 
+**Converted** | Pointer to **NullableInt32** |  | [optional] 
+**Received** | Pointer to **NullableInt32** |  | [optional] 
 
 ## Methods
 
@@ -54,6 +54,16 @@ SetSuccessful sets Successful field to given value.
 
 HasSuccessful returns a boolean if a field has been set.
 
+### SetSuccessfulNil
+
+`func (o *DeliveryData) SetSuccessfulNil(b bool)`
+
+ SetSuccessfulNil sets the value for Successful to be an explicit nil
+
+### UnsetSuccessful
+`func (o *DeliveryData) UnsetSuccessful()`
+
+UnsetSuccessful ensures that no value is present for Successful, not even an explicit nil
 ### GetFailed
 
 `func (o *DeliveryData) GetFailed() int32`
@@ -79,6 +89,16 @@ SetFailed sets Failed field to given value.
 
 HasFailed returns a boolean if a field has been set.
 
+### SetFailedNil
+
+`func (o *DeliveryData) SetFailedNil(b bool)`
+
+ SetFailedNil sets the value for Failed to be an explicit nil
+
+### UnsetFailed
+`func (o *DeliveryData) UnsetFailed()`
+
+UnsetFailed ensures that no value is present for Failed, not even an explicit nil
 ### GetErrored
 
 `func (o *DeliveryData) GetErrored() int32`
@@ -104,6 +124,16 @@ SetErrored sets Errored field to given value.
 
 HasErrored returns a boolean if a field has been set.
 
+### SetErroredNil
+
+`func (o *DeliveryData) SetErroredNil(b bool)`
+
+ SetErroredNil sets the value for Errored to be an explicit nil
+
+### UnsetErrored
+`func (o *DeliveryData) UnsetErrored()`
+
+UnsetErrored ensures that no value is present for Errored, not even an explicit nil
 ### GetConverted
 
 `func (o *DeliveryData) GetConverted() int32`
@@ -129,6 +159,16 @@ SetConverted sets Converted field to given value.
 
 HasConverted returns a boolean if a field has been set.
 
+### SetConvertedNil
+
+`func (o *DeliveryData) SetConvertedNil(b bool)`
+
+ SetConvertedNil sets the value for Converted to be an explicit nil
+
+### UnsetConverted
+`func (o *DeliveryData) UnsetConverted()`
+
+UnsetConverted ensures that no value is present for Converted, not even an explicit nil
 ### GetReceived
 
 `func (o *DeliveryData) GetReceived() int32`
@@ -154,6 +194,16 @@ SetReceived sets Received field to given value.
 
 HasReceived returns a boolean if a field has been set.
 
+### SetReceivedNil
+
+`func (o *DeliveryData) SetReceivedNil(b bool)`
+
+ SetReceivedNil sets the value for Received to be an explicit nil
+
+### UnsetReceived
+`func (o *DeliveryData) UnsetReceived()`
+
+UnsetReceived ensures that no value is present for Received, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

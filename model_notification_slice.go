@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -20,7 +20,7 @@ type NotificationSlice struct {
 	TotalCount *int32 `json:"total_count,omitempty"`
 	Offset *int32 `json:"offset,omitempty"`
 	Limit *int32 `json:"limit,omitempty"`
-	Notifications []Notification `json:"notifications,omitempty"`
+	Notifications []NotificationWithMeta `json:"notifications,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -140,9 +140,9 @@ func (o *NotificationSlice) SetLimit(v int32) {
 }
 
 // GetNotifications returns the Notifications field value if set, zero value otherwise.
-func (o *NotificationSlice) GetNotifications() []Notification {
+func (o *NotificationSlice) GetNotifications() []NotificationWithMeta {
 	if o == nil || o.Notifications == nil {
-		var ret []Notification
+		var ret []NotificationWithMeta
 		return ret
 	}
 	return o.Notifications
@@ -150,7 +150,7 @@ func (o *NotificationSlice) GetNotifications() []Notification {
 
 // GetNotificationsOk returns a tuple with the Notifications field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationSlice) GetNotificationsOk() ([]Notification, bool) {
+func (o *NotificationSlice) GetNotificationsOk() ([]NotificationWithMeta, bool) {
 	if o == nil || o.Notifications == nil {
 		return nil, false
 	}
@@ -166,8 +166,8 @@ func (o *NotificationSlice) HasNotifications() bool {
 	return false
 }
 
-// SetNotifications gets a reference to the given []Notification and assigns it to the Notifications field.
-func (o *NotificationSlice) SetNotifications(v []Notification) {
+// SetNotifications gets a reference to the given []NotificationWithMeta and assigns it to the Notifications field.
+func (o *NotificationSlice) SetNotifications(v []NotificationWithMeta) {
 	o.Notifications = v
 }
 
