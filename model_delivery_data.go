@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,11 +17,11 @@ import (
 
 // DeliveryData struct for DeliveryData
 type DeliveryData struct {
-	Successful *int32 `json:"successful,omitempty"`
-	Failed *int32 `json:"failed,omitempty"`
-	Errored *int32 `json:"errored,omitempty"`
-	Converted *int32 `json:"converted,omitempty"`
-	Received *int32 `json:"received,omitempty"`
+	Successful NullableInt32 `json:"successful,omitempty"`
+	Failed NullableInt32 `json:"failed,omitempty"`
+	Errored NullableInt32 `json:"errored,omitempty"`
+	Converted NullableInt32 `json:"converted,omitempty"`
+	Received NullableInt32 `json:"received,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -44,182 +44,232 @@ func NewDeliveryDataWithDefaults() *DeliveryData {
 	return &this
 }
 
-// GetSuccessful returns the Successful field value if set, zero value otherwise.
+// GetSuccessful returns the Successful field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DeliveryData) GetSuccessful() int32 {
-	if o == nil || o.Successful == nil {
+	if o == nil || o.Successful.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Successful
+	return *o.Successful.Get()
 }
 
 // GetSuccessfulOk returns a tuple with the Successful field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DeliveryData) GetSuccessfulOk() (*int32, bool) {
-	if o == nil || o.Successful == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Successful, true
+	return o.Successful.Get(), o.Successful.IsSet()
 }
 
 // HasSuccessful returns a boolean if a field has been set.
 func (o *DeliveryData) HasSuccessful() bool {
-	if o != nil && o.Successful != nil {
+	if o != nil && o.Successful.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSuccessful gets a reference to the given int32 and assigns it to the Successful field.
+// SetSuccessful gets a reference to the given NullableInt32 and assigns it to the Successful field.
 func (o *DeliveryData) SetSuccessful(v int32) {
-	o.Successful = &v
+	o.Successful.Set(&v)
+}
+// SetSuccessfulNil sets the value for Successful to be an explicit nil
+func (o *DeliveryData) SetSuccessfulNil() {
+	o.Successful.Set(nil)
 }
 
-// GetFailed returns the Failed field value if set, zero value otherwise.
+// UnsetSuccessful ensures that no value is present for Successful, not even an explicit nil
+func (o *DeliveryData) UnsetSuccessful() {
+	o.Successful.Unset()
+}
+
+// GetFailed returns the Failed field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DeliveryData) GetFailed() int32 {
-	if o == nil || o.Failed == nil {
+	if o == nil || o.Failed.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Failed
+	return *o.Failed.Get()
 }
 
 // GetFailedOk returns a tuple with the Failed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DeliveryData) GetFailedOk() (*int32, bool) {
-	if o == nil || o.Failed == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Failed, true
+	return o.Failed.Get(), o.Failed.IsSet()
 }
 
 // HasFailed returns a boolean if a field has been set.
 func (o *DeliveryData) HasFailed() bool {
-	if o != nil && o.Failed != nil {
+	if o != nil && o.Failed.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetFailed gets a reference to the given int32 and assigns it to the Failed field.
+// SetFailed gets a reference to the given NullableInt32 and assigns it to the Failed field.
 func (o *DeliveryData) SetFailed(v int32) {
-	o.Failed = &v
+	o.Failed.Set(&v)
+}
+// SetFailedNil sets the value for Failed to be an explicit nil
+func (o *DeliveryData) SetFailedNil() {
+	o.Failed.Set(nil)
 }
 
-// GetErrored returns the Errored field value if set, zero value otherwise.
+// UnsetFailed ensures that no value is present for Failed, not even an explicit nil
+func (o *DeliveryData) UnsetFailed() {
+	o.Failed.Unset()
+}
+
+// GetErrored returns the Errored field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DeliveryData) GetErrored() int32 {
-	if o == nil || o.Errored == nil {
+	if o == nil || o.Errored.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Errored
+	return *o.Errored.Get()
 }
 
 // GetErroredOk returns a tuple with the Errored field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DeliveryData) GetErroredOk() (*int32, bool) {
-	if o == nil || o.Errored == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Errored, true
+	return o.Errored.Get(), o.Errored.IsSet()
 }
 
 // HasErrored returns a boolean if a field has been set.
 func (o *DeliveryData) HasErrored() bool {
-	if o != nil && o.Errored != nil {
+	if o != nil && o.Errored.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetErrored gets a reference to the given int32 and assigns it to the Errored field.
+// SetErrored gets a reference to the given NullableInt32 and assigns it to the Errored field.
 func (o *DeliveryData) SetErrored(v int32) {
-	o.Errored = &v
+	o.Errored.Set(&v)
+}
+// SetErroredNil sets the value for Errored to be an explicit nil
+func (o *DeliveryData) SetErroredNil() {
+	o.Errored.Set(nil)
 }
 
-// GetConverted returns the Converted field value if set, zero value otherwise.
+// UnsetErrored ensures that no value is present for Errored, not even an explicit nil
+func (o *DeliveryData) UnsetErrored() {
+	o.Errored.Unset()
+}
+
+// GetConverted returns the Converted field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DeliveryData) GetConverted() int32 {
-	if o == nil || o.Converted == nil {
+	if o == nil || o.Converted.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Converted
+	return *o.Converted.Get()
 }
 
 // GetConvertedOk returns a tuple with the Converted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DeliveryData) GetConvertedOk() (*int32, bool) {
-	if o == nil || o.Converted == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Converted, true
+	return o.Converted.Get(), o.Converted.IsSet()
 }
 
 // HasConverted returns a boolean if a field has been set.
 func (o *DeliveryData) HasConverted() bool {
-	if o != nil && o.Converted != nil {
+	if o != nil && o.Converted.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetConverted gets a reference to the given int32 and assigns it to the Converted field.
+// SetConverted gets a reference to the given NullableInt32 and assigns it to the Converted field.
 func (o *DeliveryData) SetConverted(v int32) {
-	o.Converted = &v
+	o.Converted.Set(&v)
+}
+// SetConvertedNil sets the value for Converted to be an explicit nil
+func (o *DeliveryData) SetConvertedNil() {
+	o.Converted.Set(nil)
 }
 
-// GetReceived returns the Received field value if set, zero value otherwise.
+// UnsetConverted ensures that no value is present for Converted, not even an explicit nil
+func (o *DeliveryData) UnsetConverted() {
+	o.Converted.Unset()
+}
+
+// GetReceived returns the Received field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DeliveryData) GetReceived() int32 {
-	if o == nil || o.Received == nil {
+	if o == nil || o.Received.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Received
+	return *o.Received.Get()
 }
 
 // GetReceivedOk returns a tuple with the Received field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DeliveryData) GetReceivedOk() (*int32, bool) {
-	if o == nil || o.Received == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Received, true
+	return o.Received.Get(), o.Received.IsSet()
 }
 
 // HasReceived returns a boolean if a field has been set.
 func (o *DeliveryData) HasReceived() bool {
-	if o != nil && o.Received != nil {
+	if o != nil && o.Received.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetReceived gets a reference to the given int32 and assigns it to the Received field.
+// SetReceived gets a reference to the given NullableInt32 and assigns it to the Received field.
 func (o *DeliveryData) SetReceived(v int32) {
-	o.Received = &v
+	o.Received.Set(&v)
+}
+// SetReceivedNil sets the value for Received to be an explicit nil
+func (o *DeliveryData) SetReceivedNil() {
+	o.Received.Set(nil)
+}
+
+// UnsetReceived ensures that no value is present for Received, not even an explicit nil
+func (o *DeliveryData) UnsetReceived() {
+	o.Received.Unset()
 }
 
 func (o DeliveryData) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Successful != nil {
-		toSerialize["successful"] = o.Successful
+	if o.Successful.IsSet() {
+		toSerialize["successful"] = o.Successful.Get()
 	}
-	if o.Failed != nil {
-		toSerialize["failed"] = o.Failed
+	if o.Failed.IsSet() {
+		toSerialize["failed"] = o.Failed.Get()
 	}
-	if o.Errored != nil {
-		toSerialize["errored"] = o.Errored
+	if o.Errored.IsSet() {
+		toSerialize["errored"] = o.Errored.Get()
 	}
-	if o.Converted != nil {
-		toSerialize["converted"] = o.Converted
+	if o.Converted.IsSet() {
+		toSerialize["converted"] = o.Converted.Get()
 	}
-	if o.Received != nil {
-		toSerialize["received"] = o.Received
+	if o.Received.IsSet() {
+		toSerialize["received"] = o.Received.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {

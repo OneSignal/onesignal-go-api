@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -378,7 +378,7 @@ func (r ApiCreatePlayerRequest) Player(player Player) ApiCreatePlayerRequest {
 	return r
 }
 
-func (r ApiCreatePlayerRequest) Execute() (*InlineResponse2004, *http.Response, error) {
+func (r ApiCreatePlayerRequest) Execute() (*InlineResponse2005, *http.Response, error) {
 	return r.ApiService.CreatePlayerExecute(r)
 }
 
@@ -409,13 +409,13 @@ func (a *DefaultApiService) CreatePlayer(ctx context.Context) ApiCreatePlayerReq
 }
 
 // Execute executes the request
-//  @return InlineResponse2004
-func (a *DefaultApiService) CreatePlayerExecute(r ApiCreatePlayerRequest) (*InlineResponse2004, *http.Response, error) {
+//  @return InlineResponse2005
+func (a *DefaultApiService) CreatePlayerExecute(r ApiCreatePlayerRequest) (*InlineResponse2005, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2004
+		localVarReturnValue  *InlineResponse2005
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreatePlayer")
@@ -636,7 +636,7 @@ func (r ApiDeletePlayerRequest) AppId(appId string) ApiDeletePlayerRequest {
 	return r
 }
 
-func (r ApiDeletePlayerRequest) Execute() (*InlineResponse2001, *http.Response, error) {
+func (r ApiDeletePlayerRequest) Execute() (*InlineResponse2007, *http.Response, error) {
 	return r.ApiService.DeletePlayerExecute(r)
 }
 
@@ -660,13 +660,13 @@ func (a *DefaultApiService) DeletePlayer(ctx context.Context, playerId string) A
 }
 
 // Execute executes the request
-//  @return InlineResponse2001
-func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*InlineResponse2001, *http.Response, error) {
+//  @return InlineResponse2007
+func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*InlineResponse2007, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2001
+		localVarReturnValue  *InlineResponse2007
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeletePlayer")
@@ -685,6 +685,135 @@ func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*Inli
 	}
 
 	localVarQueryParams.Add("app_id", parameterToString(*r.appId, ""))
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v InlineResponse4003
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse2007
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteSegmentsRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	segmentId string
+}
+
+func (r ApiDeleteSegmentsRequest) Execute() (*InlineResponse2001, *http.Response, error) {
+	return r.ApiService.DeleteSegmentsExecute(r)
+}
+
+/*
+DeleteSegments Delete Segments
+
+Delete segments (not user devices) - Required: OneSignal Paid Plan
+You can delete a segment under your app by calling this API. You must provide an API key in the Authorization header that has admin access on the app.
+The segment_id can be found in the URL of the segment when viewing it in the dashboard.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
+ @param segmentId The segment_id can be found in the URL of the segment when viewing it in the dashboard.
+ @return ApiDeleteSegmentsRequest
+*/
+func (a *DefaultApiService) DeleteSegments(ctx context.Context, appId string, segmentId string) ApiDeleteSegmentsRequest {
+	return ApiDeleteSegmentsRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		segmentId: segmentId,
+	}
+}
+
+// Execute executes the request
+//  @return InlineResponse2001
+func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*InlineResponse2001, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InlineResponse2001
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSegments")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/segments/{segment_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"segment_id"+"}", url.PathEscape(parameterToString(r.segmentId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -758,135 +887,6 @@ func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*Inli
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDeleteSegmentsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	segmentId string
-}
-
-func (r ApiDeleteSegmentsRequest) Execute() (*InlineResponse2003, *http.Response, error) {
-	return r.ApiService.DeleteSegmentsExecute(r)
-}
-
-/*
-DeleteSegments Delete Segments
-
-Delete segments (not user devices) - Required: OneSignal Paid Plan
-You can delete a segment under your app by calling this API. You must provide an API key in the Authorization header that has admin access on the app.
-The segment_id can be found in the URL of the segment when viewing it in the dashboard.
-
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
- @param segmentId The segment_id can be found in the URL of the segment when viewing it in the dashboard.
- @return ApiDeleteSegmentsRequest
-*/
-func (a *DefaultApiService) DeleteSegments(ctx context.Context, appId string, segmentId string) ApiDeleteSegmentsRequest {
-	return ApiDeleteSegmentsRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		segmentId: segmentId,
-	}
-}
-
-// Execute executes the request
-//  @return InlineResponse2003
-func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*InlineResponse2003, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2003
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSegments")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/segments/{segment_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"segment_id"+"}", url.PathEscape(parameterToString(r.segmentId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v InlineResponse4003
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse2003
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiExportPlayersRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
@@ -899,7 +899,7 @@ func (r ApiExportPlayersRequest) ExportPlayersRequestBody(exportPlayersRequestBo
 	return r
 }
 
-func (r ApiExportPlayersRequest) Execute() (*InlineResponse2005, *http.Response, error) {
+func (r ApiExportPlayersRequest) Execute() (*InlineResponse2008, *http.Response, error) {
 	return r.ApiService.ExportPlayersExecute(r)
 }
 
@@ -966,13 +966,13 @@ func (a *DefaultApiService) ExportPlayers(ctx context.Context, appId string) Api
 }
 
 // Execute executes the request
-//  @return InlineResponse2005
-func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*InlineResponse2005, *http.Response, error) {
+//  @return InlineResponse2008
+func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*InlineResponse2008, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2005
+		localVarReturnValue  *InlineResponse2008
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ExportPlayers")
@@ -1160,7 +1160,7 @@ type ApiGetAppsRequest struct {
 	ApiService *DefaultApiService
 }
 
-func (r ApiGetAppsRequest) Execute() (string, *http.Response, error) {
+func (r ApiGetAppsRequest) Execute() ([]App, *http.Response, error) {
 	return r.ApiService.GetAppsExecute(r)
 }
 
@@ -1180,13 +1180,13 @@ func (a *DefaultApiService) GetApps(ctx context.Context) ApiGetAppsRequest {
 }
 
 // Execute executes the request
-//  @return string
-func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) (string, *http.Response, error) {
+//  @return []App
+func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) ([]App, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  string
+		localVarReturnValue  []App
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetApps")
@@ -1266,7 +1266,7 @@ func (r ApiGetNotificationRequest) AppId(appId string) ApiGetNotificationRequest
 	return r
 }
 
-func (r ApiGetNotificationRequest) Execute() (*Notification, *http.Response, error) {
+func (r ApiGetNotificationRequest) Execute() (*NotificationWithMeta, *http.Response, error) {
 	return r.ApiService.GetNotificationExecute(r)
 }
 
@@ -1288,13 +1288,13 @@ func (a *DefaultApiService) GetNotification(ctx context.Context, notificationId 
 }
 
 // Execute executes the request
-//  @return Notification
-func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) (*Notification, *http.Response, error) {
+//  @return NotificationWithMeta
+func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) (*NotificationWithMeta, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Notification
+		localVarReturnValue  *NotificationWithMeta
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetNotification")
@@ -1494,7 +1494,7 @@ type ApiGetNotificationsRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	appId *string
-	limit *string
+	limit *int32
 	offset *int32
 	kind *int32
 }
@@ -1506,7 +1506,7 @@ func (r ApiGetNotificationsRequest) AppId(appId string) ApiGetNotificationsReque
 }
 
 // How many notifications to return.  Max is 50.  Default is 50.
-func (r ApiGetNotificationsRequest) Limit(limit string) ApiGetNotificationsRequest {
+func (r ApiGetNotificationsRequest) Limit(limit int32) ApiGetNotificationsRequest {
 	r.limit = &limit
 	return r
 }
@@ -1921,7 +1921,7 @@ type ApiGetPlayersRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	appId *string
-	limit *string
+	limit *int32
 	offset *int32
 }
 
@@ -1932,7 +1932,7 @@ func (r ApiGetPlayersRequest) AppId(appId string) ApiGetPlayersRequest {
 }
 
 // How many devices to return. Max is 300. Default is 300
-func (r ApiGetPlayersRequest) Limit(limit string) ApiGetPlayersRequest {
+func (r ApiGetPlayersRequest) Limit(limit int32) ApiGetPlayersRequest {
 	r.limit = &limit
 	return r
 }
@@ -2291,7 +2291,7 @@ func (r ApiUpdatePlayerTagsRequest) UpdatePlayerTagsRequestBody(updatePlayerTags
 	return r
 }
 
-func (r ApiUpdatePlayerTagsRequest) Execute() (*InlineResponse2003, *http.Response, error) {
+func (r ApiUpdatePlayerTagsRequest) Execute() (*InlineResponse2001, *http.Response, error) {
 	return r.ApiService.UpdatePlayerTagsExecute(r)
 }
 
@@ -2332,13 +2332,13 @@ func (a *DefaultApiService) UpdatePlayerTags(ctx context.Context, appId string, 
 }
 
 // Execute executes the request
-//  @return InlineResponse2003
-func (a *DefaultApiService) UpdatePlayerTagsExecute(r ApiUpdatePlayerTagsRequest) (*InlineResponse2003, *http.Response, error) {
+//  @return InlineResponse2001
+func (a *DefaultApiService) UpdatePlayerTagsExecute(r ApiUpdatePlayerTagsRequest) (*InlineResponse2001, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2003
+		localVarReturnValue  *InlineResponse2001
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdatePlayerTags")

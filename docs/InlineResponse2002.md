@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Success** | Pointer to **string** |  | [optional] 
+**Success** | Pointer to **bool** |  | [optional] 
 **DestinationUrl** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetSuccess
 
-`func (o *InlineResponse2002) GetSuccess() string`
+`func (o *InlineResponse2002) GetSuccess() bool`
 
 GetSuccess returns the Success field if non-nil, zero value otherwise.
 
 ### GetSuccessOk
 
-`func (o *InlineResponse2002) GetSuccessOk() (*string, bool)`
+`func (o *InlineResponse2002) GetSuccessOk() (*bool, bool)`
 
 GetSuccessOk returns a tuple with the Success field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSuccess
 
-`func (o *InlineResponse2002) SetSuccess(v string)`
+`func (o *InlineResponse2002) SetSuccess(v bool)`
 
 SetSuccess sets Success field to given value.
 

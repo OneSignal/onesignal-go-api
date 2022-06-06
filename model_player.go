@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -21,7 +21,7 @@ type Player struct {
 	Id string `json:"id"`
 	// If true, this is the equivalent of a user being Unsubscribed
 	InvalidIdentifier *bool `json:"invalid_identifier,omitempty"`
-	AppId string `json:"app_id"`
+	AppId *string `json:"app_id,omitempty"`
 	// Required The device's platform:   0 = iOS   1 = Android   2 = Amazon   3 = WindowsPhone (MPNS)   4 = Chrome Apps / Extensions   5 = Chrome Web Push   6 = Windows (WNS)   7 = Safari   8 = Firefox   9 = MacOS   10 = Alexa   11 = Email   13 = For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 = SMS 
 	DeviceType int32 `json:"device_type"`
 	// a custom user ID
@@ -35,7 +35,7 @@ type Player struct {
 	// Language code. Typically lower case two letters, except for Chinese where it must be one of zh-Hans or zh-Hant. Example: en 
 	Language *string `json:"language,omitempty"`
 	// Number of seconds away from UTC. Example: -28800 
-	Timezone *int32 `json:"timezone,omitempty"`
+	Timezone NullableInt32 `json:"timezone,omitempty"`
 	// Version of your app. Example: 1.1 
 	GameVersion *string `json:"game_version,omitempty"`
 	// Device make and model. Example: iPhone5,1 
@@ -51,11 +51,11 @@ type Player struct {
 	// Custom tags for the player. Only support string and integer key value pairs. Does not support arrays or other nested objects. Setting a tag value to null or an empty string will remove the tag. Example: {\"foo\":\"bar\",\"this\":\"that\"} Limitations: - 100 tags per call - Android SDK users: tags cannot be removed or changed via API if set through SDK sendTag methods. Recommended to only tag devices with 1 kilobyte of data Please consider using your own Database to save more than 1 kilobyte of data. See: Internal Database & CRM 
 	Tags map[string]interface{} `json:"tags,omitempty"`
 	// Amount the user has spent in USD, up to two decimal places
-	AmountSpent *string `json:"amount_spent,omitempty"`
+	AmountSpent *float32 `json:"amount_spent,omitempty"`
 	// Unixtime when the player joined the game
-	CreatedAt *int32 `json:"created_at,omitempty"`
+	CreatedAt *int64 `json:"created_at,omitempty"`
 	// Seconds player was running your app.
-	Playtime *int32 `json:"playtime,omitempty"`
+	Playtime *int64 `json:"playtime,omitempty"`
 	// Current iOS badge count displayed on the app icon NOTE: Not supported for apps created after June 2018, since badge count for apps created after this date are handled on the client. 
 	BadgeCount *int32 `json:"badge_count,omitempty"`
 	// Unixtime when the player was last active
@@ -63,7 +63,7 @@ type Player struct {
 	// 1 = subscribed -2 = unsubscribed iOS - These values are set each time the user opens the app from the SDK. Use the SDK function set Subscription instead. Android - You may set this but you can no longer use the SDK method setSubscription later in your app as it will create synchronization issues. 
 	NotificationTypes *int32 `json:"notification_types,omitempty"`
 	// This is used in deciding whether to use your iOS Sandbox or Production push certificate when sending a push when both have been uploaded. Set to the iOS provisioning profile that was used to build your app. 1 = Development 2 = Ad-Hoc Omit this field for App Store builds. 
-	TestType *int32 `json:"test_type,omitempty"`
+	TestType NullableInt32 `json:"test_type,omitempty"`
 	// Longitude of the device, used for geotagging to segment on.
 	Long *float32 `json:"long,omitempty"`
 	// Latitude of the device, used for geotagging to segment on.
@@ -79,10 +79,9 @@ type _Player Player
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPlayer(id string, appId string, deviceType int32) *Player {
+func NewPlayer(id string, deviceType int32) *Player {
 	this := Player{}
 	this.Id = id
-	this.AppId = appId
 	this.DeviceType = deviceType
 	return &this
 }
@@ -151,28 +150,36 @@ func (o *Player) SetInvalidIdentifier(v bool) {
 	o.InvalidIdentifier = &v
 }
 
-// GetAppId returns the AppId field value
+// GetAppId returns the AppId field value if set, zero value otherwise.
 func (o *Player) GetAppId() string {
-	if o == nil {
+	if o == nil || o.AppId == nil {
 		var ret string
 		return ret
 	}
-
-	return o.AppId
+	return *o.AppId
 }
 
-// GetAppIdOk returns a tuple with the AppId field value
+// GetAppIdOk returns a tuple with the AppId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Player) GetAppIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.AppId == nil {
 		return nil, false
 	}
-	return &o.AppId, true
+	return o.AppId, true
 }
 
-// SetAppId sets field value
+// HasAppId returns a boolean if a field has been set.
+func (o *Player) HasAppId() bool {
+	if o != nil && o.AppId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAppId gets a reference to the given string and assigns it to the AppId field.
 func (o *Player) SetAppId(v string) {
-	o.AppId = v
+	o.AppId = &v
 }
 
 // GetDeviceType returns the DeviceType field value
@@ -359,36 +366,46 @@ func (o *Player) SetLanguage(v string) {
 	o.Language = &v
 }
 
-// GetTimezone returns the Timezone field value if set, zero value otherwise.
+// GetTimezone returns the Timezone field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetTimezone() int32 {
-	if o == nil || o.Timezone == nil {
+	if o == nil || o.Timezone.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Timezone
+	return *o.Timezone.Get()
 }
 
 // GetTimezoneOk returns a tuple with the Timezone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetTimezoneOk() (*int32, bool) {
-	if o == nil || o.Timezone == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Timezone, true
+	return o.Timezone.Get(), o.Timezone.IsSet()
 }
 
 // HasTimezone returns a boolean if a field has been set.
 func (o *Player) HasTimezone() bool {
-	if o != nil && o.Timezone != nil {
+	if o != nil && o.Timezone.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTimezone gets a reference to the given int32 and assigns it to the Timezone field.
+// SetTimezone gets a reference to the given NullableInt32 and assigns it to the Timezone field.
 func (o *Player) SetTimezone(v int32) {
-	o.Timezone = &v
+	o.Timezone.Set(&v)
+}
+// SetTimezoneNil sets the value for Timezone to be an explicit nil
+func (o *Player) SetTimezoneNil() {
+	o.Timezone.Set(nil)
+}
+
+// UnsetTimezone ensures that no value is present for Timezone, not even an explicit nil
+func (o *Player) UnsetTimezone() {
+	o.Timezone.Unset()
 }
 
 // GetGameVersion returns the GameVersion field value if set, zero value otherwise.
@@ -616,9 +633,9 @@ func (o *Player) SetTags(v map[string]interface{}) {
 }
 
 // GetAmountSpent returns the AmountSpent field value if set, zero value otherwise.
-func (o *Player) GetAmountSpent() string {
+func (o *Player) GetAmountSpent() float32 {
 	if o == nil || o.AmountSpent == nil {
-		var ret string
+		var ret float32
 		return ret
 	}
 	return *o.AmountSpent
@@ -626,7 +643,7 @@ func (o *Player) GetAmountSpent() string {
 
 // GetAmountSpentOk returns a tuple with the AmountSpent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Player) GetAmountSpentOk() (*string, bool) {
+func (o *Player) GetAmountSpentOk() (*float32, bool) {
 	if o == nil || o.AmountSpent == nil {
 		return nil, false
 	}
@@ -642,15 +659,15 @@ func (o *Player) HasAmountSpent() bool {
 	return false
 }
 
-// SetAmountSpent gets a reference to the given string and assigns it to the AmountSpent field.
-func (o *Player) SetAmountSpent(v string) {
+// SetAmountSpent gets a reference to the given float32 and assigns it to the AmountSpent field.
+func (o *Player) SetAmountSpent(v float32) {
 	o.AmountSpent = &v
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *Player) GetCreatedAt() int32 {
+func (o *Player) GetCreatedAt() int64 {
 	if o == nil || o.CreatedAt == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.CreatedAt
@@ -658,7 +675,7 @@ func (o *Player) GetCreatedAt() int32 {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Player) GetCreatedAtOk() (*int32, bool) {
+func (o *Player) GetCreatedAtOk() (*int64, bool) {
 	if o == nil || o.CreatedAt == nil {
 		return nil, false
 	}
@@ -674,15 +691,15 @@ func (o *Player) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given int32 and assigns it to the CreatedAt field.
-func (o *Player) SetCreatedAt(v int32) {
+// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+func (o *Player) SetCreatedAt(v int64) {
 	o.CreatedAt = &v
 }
 
 // GetPlaytime returns the Playtime field value if set, zero value otherwise.
-func (o *Player) GetPlaytime() int32 {
+func (o *Player) GetPlaytime() int64 {
 	if o == nil || o.Playtime == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.Playtime
@@ -690,7 +707,7 @@ func (o *Player) GetPlaytime() int32 {
 
 // GetPlaytimeOk returns a tuple with the Playtime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Player) GetPlaytimeOk() (*int32, bool) {
+func (o *Player) GetPlaytimeOk() (*int64, bool) {
 	if o == nil || o.Playtime == nil {
 		return nil, false
 	}
@@ -706,8 +723,8 @@ func (o *Player) HasPlaytime() bool {
 	return false
 }
 
-// SetPlaytime gets a reference to the given int32 and assigns it to the Playtime field.
-func (o *Player) SetPlaytime(v int32) {
+// SetPlaytime gets a reference to the given int64 and assigns it to the Playtime field.
+func (o *Player) SetPlaytime(v int64) {
 	o.Playtime = &v
 }
 
@@ -807,36 +824,46 @@ func (o *Player) SetNotificationTypes(v int32) {
 	o.NotificationTypes = &v
 }
 
-// GetTestType returns the TestType field value if set, zero value otherwise.
+// GetTestType returns the TestType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetTestType() int32 {
-	if o == nil || o.TestType == nil {
+	if o == nil || o.TestType.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.TestType
+	return *o.TestType.Get()
 }
 
 // GetTestTypeOk returns a tuple with the TestType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetTestTypeOk() (*int32, bool) {
-	if o == nil || o.TestType == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.TestType, true
+	return o.TestType.Get(), o.TestType.IsSet()
 }
 
 // HasTestType returns a boolean if a field has been set.
 func (o *Player) HasTestType() bool {
-	if o != nil && o.TestType != nil {
+	if o != nil && o.TestType.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTestType gets a reference to the given int32 and assigns it to the TestType field.
+// SetTestType gets a reference to the given NullableInt32 and assigns it to the TestType field.
 func (o *Player) SetTestType(v int32) {
-	o.TestType = &v
+	o.TestType.Set(&v)
+}
+// SetTestTypeNil sets the value for TestType to be an explicit nil
+func (o *Player) SetTestTypeNil() {
+	o.TestType.Set(nil)
+}
+
+// UnsetTestType ensures that no value is present for TestType, not even an explicit nil
+func (o *Player) UnsetTestType() {
+	o.TestType.Unset()
 }
 
 // GetLong returns the Long field value if set, zero value otherwise.
@@ -943,7 +970,7 @@ func (o Player) MarshalJSON() ([]byte, error) {
 	if o.InvalidIdentifier != nil {
 		toSerialize["invalid_identifier"] = o.InvalidIdentifier
 	}
-	if true {
+	if o.AppId != nil {
 		toSerialize["app_id"] = o.AppId
 	}
 	if true {
@@ -964,8 +991,8 @@ func (o Player) MarshalJSON() ([]byte, error) {
 	if o.Language != nil {
 		toSerialize["language"] = o.Language
 	}
-	if o.Timezone != nil {
-		toSerialize["timezone"] = o.Timezone
+	if o.Timezone.IsSet() {
+		toSerialize["timezone"] = o.Timezone.Get()
 	}
 	if o.GameVersion != nil {
 		toSerialize["game_version"] = o.GameVersion
@@ -1006,8 +1033,8 @@ func (o Player) MarshalJSON() ([]byte, error) {
 	if o.NotificationTypes != nil {
 		toSerialize["notification_types"] = o.NotificationTypes
 	}
-	if o.TestType != nil {
-		toSerialize["test_type"] = o.TestType
+	if o.TestType.IsSet() {
+		toSerialize["test_type"] = o.TestType.Get()
 	}
 	if o.Long != nil {
 		toSerialize["long"] = o.Long

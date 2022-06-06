@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**En** | **string** | Text in English.  Will be used as a fallback | 
+**En** | Pointer to **string** | Text in English.  Will be used as a fallback | [optional] 
 **Ar** | Pointer to **string** | Text in Arabic. | [optional] 
 **Bs** | Pointer to **string** | Text in Bosnian. | [optional] 
 **Bg** | Pointer to **string** | Text in Bulgarian. | [optional] 
@@ -52,7 +52,7 @@ Name | Type | Description | Notes
 
 ### NewStringMap
 
-`func NewStringMap(en string, ) *StringMap`
+`func NewStringMap() *StringMap`
 
 NewStringMap instantiates a new StringMap object
 This constructor will assign default values to properties that have it defined,
@@ -86,6 +86,11 @@ and a boolean to check if the value has been set.
 
 SetEn sets En field to given value.
 
+### HasEn
+
+`func (o *StringMap) HasEn() bool`
+
+HasEn returns a boolean if a field has been set.
 
 ### GetAr
 

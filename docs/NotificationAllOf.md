@@ -7,16 +7,16 @@ Name | Type | Description | Notes
 **Id** | Pointer to **string** |  | [optional] 
 **Value** | Pointer to **int32** |  | [optional] [readonly] 
 **Aggregation** | Pointer to **string** |  | [optional] [readonly] 
-**IsIos** | Pointer to **bool** | Indicates whether to send to all devices registered under your app&#39;s Apple iOS platform. | [optional] [default to true]
-**IsAndroid** | Pointer to **bool** | Indicates whether to send to all devices registered under your app&#39;s Google Android platform. | [optional] 
-**IsHuawei** | Pointer to **bool** | Indicates whether to send to all devices registered under your app&#39;s Huawei Android platform. | [optional] 
-**IsAnyWeb** | Pointer to **bool** | Indicates whether to send to all subscribed web browser users, including Chrome, Firefox, and Safari. You may use this instead as a combined flag instead of separately enabling isChromeWeb, isFirefox, and isSafari, though the three options are equivalent to this one.  | [optional] 
-**IsChromeWeb** | Pointer to **bool** | Indicates whether to send to all Google Chrome, Chrome on Android, and Mozilla Firefox users registered under your Chrome &amp; Firefox web push platform. | [optional] 
-**IsFirefox** | Pointer to **bool** | Indicates whether to send to all Mozilla Firefox desktop users registered under your Firefox web push platform. | [optional] 
-**IsSafari** | Pointer to **bool** | Does not support iOS Safari. Indicates whether to send to all Apple&#39;s Safari desktop users registered under your Safari web push platform. Read more iOS Safari | [optional] 
-**IsWPWNS** | Pointer to **bool** | Indicates whether to send to all devices registered under your app&#39;s Windows platform. | [optional] 
-**IsAdm** | Pointer to **bool** | Indicates whether to send to all devices registered under your app&#39;s Amazon Fire platform. | [optional] 
-**IsChrome** | Pointer to **bool** | This flag is not used for web push Please see isChromeWeb for sending to web push users. This flag only applies to Google Chrome Apps &amp; Extensions. Indicates whether to send to all devices registered under your app&#39;s Google Chrome Apps &amp; Extension platform.  | [optional] 
+**IsIos** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Apple iOS platform. | [optional] [default to true]
+**IsAndroid** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Google Android platform. | [optional] 
+**IsHuawei** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Huawei Android platform. | [optional] 
+**IsAnyWeb** | Pointer to **NullableBool** | Indicates whether to send to all subscribed web browser users, including Chrome, Firefox, and Safari. You may use this instead as a combined flag instead of separately enabling isChromeWeb, isFirefox, and isSafari, though the three options are equivalent to this one.  | [optional] 
+**IsChromeWeb** | Pointer to **NullableBool** | Indicates whether to send to all Google Chrome, Chrome on Android, and Mozilla Firefox users registered under your Chrome &amp; Firefox web push platform. | [optional] 
+**IsFirefox** | Pointer to **NullableBool** | Indicates whether to send to all Mozilla Firefox desktop users registered under your Firefox web push platform. | [optional] 
+**IsSafari** | Pointer to **NullableBool** | Does not support iOS Safari. Indicates whether to send to all Apple&#39;s Safari desktop users registered under your Safari web push platform. Read more iOS Safari | [optional] 
+**IsWPWNS** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Windows platform. | [optional] 
+**IsAdm** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Amazon Fire platform. | [optional] 
+**IsChrome** | Pointer to **NullableBool** | This flag is not used for web push Please see isChromeWeb for sending to web push users. This flag only applies to Google Chrome Apps &amp; Extensions. Indicates whether to send to all devices registered under your app&#39;s Google Chrome Apps &amp; Extension platform.  | [optional] 
 **ChannelForExternalUserIds** | Pointer to **string** | Indicates if the message type when targeting with include_external_user_ids for cases where an email, sms, and/or push subscribers have the same external user id. Example: Use the string \&quot;push\&quot; to indicate you are sending a push notification or the string \&quot;email\&quot;for sending emails or \&quot;sms\&quot;for sending SMS.  | [optional] 
 **AppId** | Pointer to **string** | Required: Your OneSignal Application ID, which can be found in Keys &amp; IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434.  | [optional] 
 **ExternalId** | Pointer to **string** | Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it&#39;s important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true  | [optional] 
@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **AppUrl** | Pointer to **string** | Channel: Push Notifications Platform: All Browsers Same as url but only sent to web push platforms. Including iOS, Android, macOS, Windows, ChromeApps, etc. Example: https://onesignal.com  | [optional] 
 **IosAttachments** | Pointer to **map[string]interface{}** | Channel: Push Notifications Platform: iOS 10+ Adds media attachments to notifications. Set as JSON object, key as a media id of your choice and the value as a valid local filename or URL. User must press and hold on the notification to view. Do not set mutable_content to download attachments. The OneSignal SDK does this automatically Example: {\&quot;id1\&quot;: \&quot;https://domain.com/image.jpg\&quot;}  | [optional] 
 **TemplateId** | Pointer to **string** | Channel: Push Notifications Platform: All Use a template you setup on our dashboard. The template_id is the UUID found in the URL when viewing a template on our dashboard. Example: be4a8044-bbd6-11e4-a581-000c2940e62c  | [optional] 
-**ContentAvailable** | Pointer to **bool** | Channel: Push Notifications Platform: iOS Sending true wakes your app from background to run custom native code (Apple interprets this as content-available&#x3D;1). Note: Not applicable if the app is in the \&quot;force-quit\&quot; state (i.e app was swiped away). Omit the contents field to prevent displaying a visible notification.  | [optional] 
+**ContentAvailable** | Pointer to **NullableBool** | Channel: Push Notifications Platform: iOS Sending true wakes your app from background to run custom native code (Apple interprets this as content-available&#x3D;1). Note: Not applicable if the app is in the \&quot;force-quit\&quot; state (i.e app was swiped away). Omit the contents field to prevent displaying a visible notification.  | [optional] 
 **MutableContent** | Pointer to **bool** | Channel: Push Notifications Platform: iOS 10+ Always defaults to true and cannot be turned off. Allows tracking of notification receives and changing of the notification content in your app before it is displayed. Triggers didReceive(_:withContentHandler:) on your UNNotificationServiceExtension.  | [optional] 
 **TargetContentIdentifier** | Pointer to **string** | Channel: Push Notifications Platform: iOS 13+ Use to target a specific experience in your App Clip, or to target your notification to a specific window in a multi-scene App.  | [optional] 
 **BigPicture** | Pointer to **string** | Channel: Push Notifications Platform: Android Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
@@ -65,18 +65,18 @@ Name | Type | Description | Notes
 **HuaweiLedColor** | Pointer to **string** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. Sets the devices LED notification light if the device has one. RGB Hex format. Example(Blue): \&quot;0000FF\&quot;  | [optional] 
 **AndroidAccentColor** | Pointer to **string** | Channel: Push Notifications Platform: Android Sets the background color of the notification circle to the left of the notification text. Only applies to apps targeting Android API level 21+ on Android 5.0+ devices. Example(Red): \&quot;FFFF0000\&quot;  | [optional] 
 **HuaweiAccentColor** | Pointer to **string** | Channel: Push Notifications Platform: Huawei Accent Color used on Action Buttons and Group overflow count. Uses RGB Hex value (E.g. #9900FF). Defaults to device&#39;s theme color if not set.  | [optional] 
-**AndroidVisibility** | Pointer to **int32** | Channel: Push Notifications Platform: Android 5.0_ &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. 1 &#x3D; Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 &#x3D; Private (Hides message contents on lock screen if the user set \&quot;Hide sensitive notification content\&quot; in the system settings) -1 &#x3D; Secret (Notification does not show on the lock screen at all)  | [optional] 
-**HuaweiVisibility** | Pointer to **int32** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. 1 &#x3D; Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 &#x3D; Private (Hides message contents on lock screen if the user set \&quot;Hide sensitive notification content\&quot; in the system settings) -1 &#x3D; Secret (Notification does not show on the lock screen at all)  | [optional] 
+**AndroidVisibility** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Android 5.0_ &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. 1 &#x3D; Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 &#x3D; Private (Hides message contents on lock screen if the user set \&quot;Hide sensitive notification content\&quot; in the system settings) -1 &#x3D; Secret (Notification does not show on the lock screen at all)  | [optional] 
+**HuaweiVisibility** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. 1 &#x3D; Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 &#x3D; Private (Hides message contents on lock screen if the user set \&quot;Hide sensitive notification content\&quot; in the system settings) -1 &#x3D; Secret (Notification does not show on the lock screen at all)  | [optional] 
 **IosBadgeType** | Pointer to **string** | Channel: Push Notifications Platform: iOS Describes whether to set or increase/decrease your app&#39;s iOS badge count by the ios_badgeCount specified count. Can specify None, SetTo, or Increase. &#x60;None&#x60; leaves the count unaffected. &#x60;SetTo&#x60; directly sets the badge count to the number specified in ios_badgeCount. &#x60;Increase&#x60; adds the number specified in ios_badgeCount to the total. Use a negative number to decrease the badge count.  | [optional] 
-**IosBadgeCount** | Pointer to **int32** | Channel: Push Notifications Platform: iOS Used with ios_badgeType, describes the value to set or amount to increase/decrease your app&#39;s iOS badge count by. You can use a negative number to decrease the badge count when used with an ios_badgeType of Increase.  | [optional] 
+**IosBadgeCount** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: iOS Used with ios_badgeType, describes the value to set or amount to increase/decrease your app&#39;s iOS badge count by. You can use a negative number to decrease the badge count when used with an ios_badgeType of Increase.  | [optional] 
 **CollapseId** | Pointer to **string** | Channel: Push Notifications Platform: iOS 10+, Android Only one notification with the same id will be shown on the device. Use the same id to update an existing notification instead of showing a new one. Limit of 64 characters.  | [optional] 
 **WebPushTopic** | Pointer to **string** | Channel: Push Notifications Platform: All Browsers Display multiple notifications at once with different topics.  | [optional] 
 **ApnsAlert** | Pointer to **map[string]interface{}** | Channel: Push Notifications Platform: iOS 10+ iOS can localize push notification messages on the client using special parameters such as loc-key. When using the Create Notification endpoint, you must include these parameters inside of a field called apns_alert. Please see Apple&#39;s guide on localizing push notifications to learn more.  | [optional] 
-**SendAfter** | Pointer to **string** | Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date &amp; time. \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\&quot; \&quot;September 24th 2015, 2:00:00 pm UTC-07:00\&quot; \&quot;2015-09-24 14:00:00 GMT-0700\&quot; \&quot;Sept 24 2015 14:00:00 GMT-0700\&quot; \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\&quot; Note: SMS currently only supports send_after parameter.  | [optional] 
+**SendAfter** | Pointer to **time.Time** | Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date &amp; time. \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\&quot; \&quot;September 24th 2015, 2:00:00 pm UTC-07:00\&quot; \&quot;2015-09-24 14:00:00 GMT-0700\&quot; \&quot;Sept 24 2015 14:00:00 GMT-0700\&quot; \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\&quot; Note: SMS currently only supports send_after parameter.  | [optional] 
 **DelayedOption** | Pointer to **string** | Channel: All Possible values are: timezone (Deliver at a specific time-of-day in each users own timezone) last-active Same as Intelligent Delivery . (Deliver at the same time of day as each user last used your app). If send_after is used, this takes effect after the send_after time has elapsed.  | [optional] 
 **DeliveryTimeOfDay** | Pointer to **string** | Channel: All Use with delayed_option&#x3D;timezone. Examples: \&quot;9:00AM\&quot; \&quot;21:45\&quot; \&quot;9:45:30\&quot;  | [optional] 
-**Ttl** | Pointer to **int32** | Channel: Push Notifications Platform: iOS, Android, Chrome, Firefox, Safari, ChromeWeb Time To Live - In seconds. The notification will be expired if the device does not come back online within this time. The default is 259,200 seconds (3 days). Max value to set is 2419200 seconds (28 days).  | [optional] 
-**Priority** | Pointer to **int32** | Channel: Push Notifications Platform: Android, Chrome, ChromeWeb Delivery priority through the push server (example GCM/FCM). Pass 10 for high priority or any other integer for normal priority. Defaults to normal priority for Android and high for iOS. For Android 6.0+ devices setting priority to high will wake the device out of doze mode.  | [optional] 
+**Ttl** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: iOS, Android, Chrome, Firefox, Safari, ChromeWeb Time To Live - In seconds. The notification will be expired if the device does not come back online within this time. The default is 259,200 seconds (3 days). Max value to set is 2419200 seconds (28 days).  | [optional] 
+**Priority** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Android, Chrome, ChromeWeb Delivery priority through the push server (example GCM/FCM). Pass 10 for high priority or any other integer for normal priority. Defaults to normal priority for Android and high for iOS. For Android 6.0+ devices setting priority to high will wake the device out of doze mode.  | [optional] 
 **ApnsPushTypeOverride** | Pointer to **string** | Channel: Push Notifications Platform: iOS valid values: voip Set the value to voip for sending VoIP Notifications This field maps to the APNS header apns-push-type. Note: alert and background are automatically set by OneSignal  | [optional] 
 **ThrottleRatePerMinute** | Pointer to **string** | Channel: All Apps with throttling enabled:   - the parameter value will be used to override the default application throttling value set from the dashboard settings.   - parameter value 0 indicates not to apply throttling to the notification.   - if the parameter is not passed then the default app throttling value will be applied to the notification. Apps with throttling disabled:   - this parameter can be used to throttle delivery for the notification even though throttling is not enabled at the application level. Refer to throttling for more details.  | [optional] 
 **AndroidGroup** | Pointer to **string** | Channel: Push Notifications Platform: Android Notifications with the same group will be stacked together using Android&#39;s Notification Grouping feature.  | [optional] 
@@ -86,7 +86,7 @@ Name | Type | Description | Notes
 **ThreadId** | Pointer to **string** | Channel: Push Notifications Platform: iOS 12+ This parameter is supported in iOS 12 and above. It allows you to group related notifications together. If two notifications have the same thread-id, they will both be added to the same group.  | [optional] 
 **SummaryArg** | Pointer to **string** | Channel: Push Notifications Platform: iOS 12+ When using thread_id to create grouped notifications in iOS 12+, you can also control the summary. For example, a grouped notification can say \&quot;12 more notifications from John Doe\&quot;. The summary_arg lets you set the name of the person/thing the notifications are coming from, and will show up as \&quot;X more notifications from summary_arg\&quot;  | [optional] 
 **SummaryArgCount** | Pointer to **int32** | Channel: Push Notifications Platform: iOS 12+ When using thread_id, you can also control the count of the number of notifications in the group. For example, if the group already has 12 notifications, and you send a new notification with summary_arg_count &#x3D; 2, the new total will be 14 and the summary will be \&quot;14 more notifications from summary_arg\&quot;  | [optional] 
-**EmailSubect** | Pointer to **string** | Channel: Email Required.  The subject of the email.  | [optional] 
+**EmailSubject** | Pointer to **string** | Channel: Email Required.  The subject of the email.  | [optional] 
 **EmailBody** | Pointer to **string** | Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an &lt;a&gt; tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid.  | [optional] 
 **EmailFromName** | Pointer to **string** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **EmailFromAddress** | Pointer to **string** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
@@ -212,6 +212,16 @@ SetIsIos sets IsIos field to given value.
 
 HasIsIos returns a boolean if a field has been set.
 
+### SetIsIosNil
+
+`func (o *NotificationAllOf) SetIsIosNil(b bool)`
+
+ SetIsIosNil sets the value for IsIos to be an explicit nil
+
+### UnsetIsIos
+`func (o *NotificationAllOf) UnsetIsIos()`
+
+UnsetIsIos ensures that no value is present for IsIos, not even an explicit nil
 ### GetIsAndroid
 
 `func (o *NotificationAllOf) GetIsAndroid() bool`
@@ -237,6 +247,16 @@ SetIsAndroid sets IsAndroid field to given value.
 
 HasIsAndroid returns a boolean if a field has been set.
 
+### SetIsAndroidNil
+
+`func (o *NotificationAllOf) SetIsAndroidNil(b bool)`
+
+ SetIsAndroidNil sets the value for IsAndroid to be an explicit nil
+
+### UnsetIsAndroid
+`func (o *NotificationAllOf) UnsetIsAndroid()`
+
+UnsetIsAndroid ensures that no value is present for IsAndroid, not even an explicit nil
 ### GetIsHuawei
 
 `func (o *NotificationAllOf) GetIsHuawei() bool`
@@ -262,6 +282,16 @@ SetIsHuawei sets IsHuawei field to given value.
 
 HasIsHuawei returns a boolean if a field has been set.
 
+### SetIsHuaweiNil
+
+`func (o *NotificationAllOf) SetIsHuaweiNil(b bool)`
+
+ SetIsHuaweiNil sets the value for IsHuawei to be an explicit nil
+
+### UnsetIsHuawei
+`func (o *NotificationAllOf) UnsetIsHuawei()`
+
+UnsetIsHuawei ensures that no value is present for IsHuawei, not even an explicit nil
 ### GetIsAnyWeb
 
 `func (o *NotificationAllOf) GetIsAnyWeb() bool`
@@ -287,6 +317,16 @@ SetIsAnyWeb sets IsAnyWeb field to given value.
 
 HasIsAnyWeb returns a boolean if a field has been set.
 
+### SetIsAnyWebNil
+
+`func (o *NotificationAllOf) SetIsAnyWebNil(b bool)`
+
+ SetIsAnyWebNil sets the value for IsAnyWeb to be an explicit nil
+
+### UnsetIsAnyWeb
+`func (o *NotificationAllOf) UnsetIsAnyWeb()`
+
+UnsetIsAnyWeb ensures that no value is present for IsAnyWeb, not even an explicit nil
 ### GetIsChromeWeb
 
 `func (o *NotificationAllOf) GetIsChromeWeb() bool`
@@ -312,6 +352,16 @@ SetIsChromeWeb sets IsChromeWeb field to given value.
 
 HasIsChromeWeb returns a boolean if a field has been set.
 
+### SetIsChromeWebNil
+
+`func (o *NotificationAllOf) SetIsChromeWebNil(b bool)`
+
+ SetIsChromeWebNil sets the value for IsChromeWeb to be an explicit nil
+
+### UnsetIsChromeWeb
+`func (o *NotificationAllOf) UnsetIsChromeWeb()`
+
+UnsetIsChromeWeb ensures that no value is present for IsChromeWeb, not even an explicit nil
 ### GetIsFirefox
 
 `func (o *NotificationAllOf) GetIsFirefox() bool`
@@ -337,6 +387,16 @@ SetIsFirefox sets IsFirefox field to given value.
 
 HasIsFirefox returns a boolean if a field has been set.
 
+### SetIsFirefoxNil
+
+`func (o *NotificationAllOf) SetIsFirefoxNil(b bool)`
+
+ SetIsFirefoxNil sets the value for IsFirefox to be an explicit nil
+
+### UnsetIsFirefox
+`func (o *NotificationAllOf) UnsetIsFirefox()`
+
+UnsetIsFirefox ensures that no value is present for IsFirefox, not even an explicit nil
 ### GetIsSafari
 
 `func (o *NotificationAllOf) GetIsSafari() bool`
@@ -362,6 +422,16 @@ SetIsSafari sets IsSafari field to given value.
 
 HasIsSafari returns a boolean if a field has been set.
 
+### SetIsSafariNil
+
+`func (o *NotificationAllOf) SetIsSafariNil(b bool)`
+
+ SetIsSafariNil sets the value for IsSafari to be an explicit nil
+
+### UnsetIsSafari
+`func (o *NotificationAllOf) UnsetIsSafari()`
+
+UnsetIsSafari ensures that no value is present for IsSafari, not even an explicit nil
 ### GetIsWPWNS
 
 `func (o *NotificationAllOf) GetIsWPWNS() bool`
@@ -387,6 +457,16 @@ SetIsWPWNS sets IsWPWNS field to given value.
 
 HasIsWPWNS returns a boolean if a field has been set.
 
+### SetIsWPWNSNil
+
+`func (o *NotificationAllOf) SetIsWPWNSNil(b bool)`
+
+ SetIsWPWNSNil sets the value for IsWPWNS to be an explicit nil
+
+### UnsetIsWPWNS
+`func (o *NotificationAllOf) UnsetIsWPWNS()`
+
+UnsetIsWPWNS ensures that no value is present for IsWPWNS, not even an explicit nil
 ### GetIsAdm
 
 `func (o *NotificationAllOf) GetIsAdm() bool`
@@ -412,6 +492,16 @@ SetIsAdm sets IsAdm field to given value.
 
 HasIsAdm returns a boolean if a field has been set.
 
+### SetIsAdmNil
+
+`func (o *NotificationAllOf) SetIsAdmNil(b bool)`
+
+ SetIsAdmNil sets the value for IsAdm to be an explicit nil
+
+### UnsetIsAdm
+`func (o *NotificationAllOf) UnsetIsAdm()`
+
+UnsetIsAdm ensures that no value is present for IsAdm, not even an explicit nil
 ### GetIsChrome
 
 `func (o *NotificationAllOf) GetIsChrome() bool`
@@ -437,6 +527,16 @@ SetIsChrome sets IsChrome field to given value.
 
 HasIsChrome returns a boolean if a field has been set.
 
+### SetIsChromeNil
+
+`func (o *NotificationAllOf) SetIsChromeNil(b bool)`
+
+ SetIsChromeNil sets the value for IsChrome to be an explicit nil
+
+### UnsetIsChrome
+`func (o *NotificationAllOf) UnsetIsChrome()`
+
+UnsetIsChrome ensures that no value is present for IsChrome, not even an explicit nil
 ### GetChannelForExternalUserIds
 
 `func (o *NotificationAllOf) GetChannelForExternalUserIds() string`
@@ -817,6 +917,16 @@ SetContentAvailable sets ContentAvailable field to given value.
 
 HasContentAvailable returns a boolean if a field has been set.
 
+### SetContentAvailableNil
+
+`func (o *NotificationAllOf) SetContentAvailableNil(b bool)`
+
+ SetContentAvailableNil sets the value for ContentAvailable to be an explicit nil
+
+### UnsetContentAvailable
+`func (o *NotificationAllOf) UnsetContentAvailable()`
+
+UnsetContentAvailable ensures that no value is present for ContentAvailable, not even an explicit nil
 ### GetMutableContent
 
 `func (o *NotificationAllOf) GetMutableContent() bool`
@@ -1692,6 +1802,16 @@ SetAndroidVisibility sets AndroidVisibility field to given value.
 
 HasAndroidVisibility returns a boolean if a field has been set.
 
+### SetAndroidVisibilityNil
+
+`func (o *NotificationAllOf) SetAndroidVisibilityNil(b bool)`
+
+ SetAndroidVisibilityNil sets the value for AndroidVisibility to be an explicit nil
+
+### UnsetAndroidVisibility
+`func (o *NotificationAllOf) UnsetAndroidVisibility()`
+
+UnsetAndroidVisibility ensures that no value is present for AndroidVisibility, not even an explicit nil
 ### GetHuaweiVisibility
 
 `func (o *NotificationAllOf) GetHuaweiVisibility() int32`
@@ -1717,6 +1837,16 @@ SetHuaweiVisibility sets HuaweiVisibility field to given value.
 
 HasHuaweiVisibility returns a boolean if a field has been set.
 
+### SetHuaweiVisibilityNil
+
+`func (o *NotificationAllOf) SetHuaweiVisibilityNil(b bool)`
+
+ SetHuaweiVisibilityNil sets the value for HuaweiVisibility to be an explicit nil
+
+### UnsetHuaweiVisibility
+`func (o *NotificationAllOf) UnsetHuaweiVisibility()`
+
+UnsetHuaweiVisibility ensures that no value is present for HuaweiVisibility, not even an explicit nil
 ### GetIosBadgeType
 
 `func (o *NotificationAllOf) GetIosBadgeType() string`
@@ -1767,6 +1897,16 @@ SetIosBadgeCount sets IosBadgeCount field to given value.
 
 HasIosBadgeCount returns a boolean if a field has been set.
 
+### SetIosBadgeCountNil
+
+`func (o *NotificationAllOf) SetIosBadgeCountNil(b bool)`
+
+ SetIosBadgeCountNil sets the value for IosBadgeCount to be an explicit nil
+
+### UnsetIosBadgeCount
+`func (o *NotificationAllOf) UnsetIosBadgeCount()`
+
+UnsetIosBadgeCount ensures that no value is present for IosBadgeCount, not even an explicit nil
 ### GetCollapseId
 
 `func (o *NotificationAllOf) GetCollapseId() string`
@@ -1844,20 +1984,20 @@ HasApnsAlert returns a boolean if a field has been set.
 
 ### GetSendAfter
 
-`func (o *NotificationAllOf) GetSendAfter() string`
+`func (o *NotificationAllOf) GetSendAfter() time.Time`
 
 GetSendAfter returns the SendAfter field if non-nil, zero value otherwise.
 
 ### GetSendAfterOk
 
-`func (o *NotificationAllOf) GetSendAfterOk() (*string, bool)`
+`func (o *NotificationAllOf) GetSendAfterOk() (*time.Time, bool)`
 
 GetSendAfterOk returns a tuple with the SendAfter field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSendAfter
 
-`func (o *NotificationAllOf) SetSendAfter(v string)`
+`func (o *NotificationAllOf) SetSendAfter(v time.Time)`
 
 SetSendAfter sets SendAfter field to given value.
 
@@ -1942,6 +2082,16 @@ SetTtl sets Ttl field to given value.
 
 HasTtl returns a boolean if a field has been set.
 
+### SetTtlNil
+
+`func (o *NotificationAllOf) SetTtlNil(b bool)`
+
+ SetTtlNil sets the value for Ttl to be an explicit nil
+
+### UnsetTtl
+`func (o *NotificationAllOf) UnsetTtl()`
+
+UnsetTtl ensures that no value is present for Ttl, not even an explicit nil
 ### GetPriority
 
 `func (o *NotificationAllOf) GetPriority() int32`
@@ -1967,6 +2117,16 @@ SetPriority sets Priority field to given value.
 
 HasPriority returns a boolean if a field has been set.
 
+### SetPriorityNil
+
+`func (o *NotificationAllOf) SetPriorityNil(b bool)`
+
+ SetPriorityNil sets the value for Priority to be an explicit nil
+
+### UnsetPriority
+`func (o *NotificationAllOf) UnsetPriority()`
+
+UnsetPriority ensures that no value is present for Priority, not even an explicit nil
 ### GetApnsPushTypeOverride
 
 `func (o *NotificationAllOf) GetApnsPushTypeOverride() string`
@@ -2192,30 +2352,30 @@ SetSummaryArgCount sets SummaryArgCount field to given value.
 
 HasSummaryArgCount returns a boolean if a field has been set.
 
-### GetEmailSubect
+### GetEmailSubject
 
-`func (o *NotificationAllOf) GetEmailSubect() string`
+`func (o *NotificationAllOf) GetEmailSubject() string`
 
-GetEmailSubect returns the EmailSubect field if non-nil, zero value otherwise.
+GetEmailSubject returns the EmailSubject field if non-nil, zero value otherwise.
 
-### GetEmailSubectOk
+### GetEmailSubjectOk
 
-`func (o *NotificationAllOf) GetEmailSubectOk() (*string, bool)`
+`func (o *NotificationAllOf) GetEmailSubjectOk() (*string, bool)`
 
-GetEmailSubectOk returns a tuple with the EmailSubect field if it's non-nil, zero value otherwise
+GetEmailSubjectOk returns a tuple with the EmailSubject field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEmailSubect
+### SetEmailSubject
 
-`func (o *NotificationAllOf) SetEmailSubect(v string)`
+`func (o *NotificationAllOf) SetEmailSubject(v string)`
 
-SetEmailSubect sets EmailSubect field to given value.
+SetEmailSubject sets EmailSubject field to given value.
 
-### HasEmailSubect
+### HasEmailSubject
 
-`func (o *NotificationAllOf) HasEmailSubect() bool`
+`func (o *NotificationAllOf) HasEmailSubject() bool`
 
-HasEmailSubect returns a boolean if a field has been set.
+HasEmailSubject returns a boolean if a field has been set.
 
 ### GetEmailBody
 
