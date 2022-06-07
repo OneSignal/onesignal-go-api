@@ -1,4 +1,4 @@
-module github.com/GIT_USER_ID/GIT_REPO_ID
+module github.com/OneSignal/onesignal-go-api
 
 go 1.13
 
