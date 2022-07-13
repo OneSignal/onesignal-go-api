@@ -15,33 +15,33 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse2007 struct for InlineResponse2007
-type InlineResponse2007 struct {
+// DeletePlayerSuccessResponse struct for DeletePlayerSuccessResponse
+type DeletePlayerSuccessResponse struct {
 	Success *string `json:"success,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse2007 InlineResponse2007
+type _DeletePlayerSuccessResponse DeletePlayerSuccessResponse
 
-// NewInlineResponse2007 instantiates a new InlineResponse2007 object
+// NewDeletePlayerSuccessResponse instantiates a new DeletePlayerSuccessResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse2007() *InlineResponse2007 {
-	this := InlineResponse2007{}
+func NewDeletePlayerSuccessResponse() *DeletePlayerSuccessResponse {
+	this := DeletePlayerSuccessResponse{}
 	return &this
 }
 
-// NewInlineResponse2007WithDefaults instantiates a new InlineResponse2007 object
+// NewDeletePlayerSuccessResponseWithDefaults instantiates a new DeletePlayerSuccessResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse2007WithDefaults() *InlineResponse2007 {
-	this := InlineResponse2007{}
+func NewDeletePlayerSuccessResponseWithDefaults() *DeletePlayerSuccessResponse {
+	this := DeletePlayerSuccessResponse{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse2007) GetSuccess() string {
+func (o *DeletePlayerSuccessResponse) GetSuccess() string {
 	if o == nil || o.Success == nil {
 		var ret string
 		return ret
@@ -51,7 +51,7 @@ func (o *InlineResponse2007) GetSuccess() string {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2007) GetSuccessOk() (*string, bool) {
+func (o *DeletePlayerSuccessResponse) GetSuccessOk() (*string, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *InlineResponse2007) GetSuccessOk() (*string, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse2007) HasSuccess() bool {
+func (o *DeletePlayerSuccessResponse) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -68,11 +68,11 @@ func (o *InlineResponse2007) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given string and assigns it to the Success field.
-func (o *InlineResponse2007) SetSuccess(v string) {
+func (o *DeletePlayerSuccessResponse) SetSuccess(v string) {
 	o.Success = &v
 }
 
-func (o InlineResponse2007) MarshalJSON() ([]byte, error) {
+func (o DeletePlayerSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -85,11 +85,11 @@ func (o InlineResponse2007) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse2007) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse2007 := _InlineResponse2007{}
+func (o *DeletePlayerSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varDeletePlayerSuccessResponse := _DeletePlayerSuccessResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse2007); err == nil {
-		*o = InlineResponse2007(varInlineResponse2007)
+	if err = json.Unmarshal(bytes, &varDeletePlayerSuccessResponse); err == nil {
+		*o = DeletePlayerSuccessResponse(varDeletePlayerSuccessResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -102,38 +102,38 @@ func (o *InlineResponse2007) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse2007 struct {
-	value *InlineResponse2007
+type NullableDeletePlayerSuccessResponse struct {
+	value *DeletePlayerSuccessResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse2007) Get() *InlineResponse2007 {
+func (v NullableDeletePlayerSuccessResponse) Get() *DeletePlayerSuccessResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse2007) Set(val *InlineResponse2007) {
+func (v *NullableDeletePlayerSuccessResponse) Set(val *DeletePlayerSuccessResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse2007) IsSet() bool {
+func (v NullableDeletePlayerSuccessResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse2007) Unset() {
+func (v *NullableDeletePlayerSuccessResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse2007(val *InlineResponse2007) *NullableInlineResponse2007 {
-	return &NullableInlineResponse2007{value: val, isSet: true}
+func NewNullableDeletePlayerSuccessResponse(val *DeletePlayerSuccessResponse) *NullableDeletePlayerSuccessResponse {
+	return &NullableDeletePlayerSuccessResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse2007) MarshalJSON() ([]byte, error) {
+func (v NullableDeletePlayerSuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse2007) UnmarshalJSON(src []byte) error {
+func (v *NullableDeletePlayerSuccessResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -1,4 +1,4 @@
-# InlineResponse2001
+# UpdatePlayerTagsSuccessResponse
 
 ## Properties
 
@@ -8,45 +8,45 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewInlineResponse2001
+### NewUpdatePlayerTagsSuccessResponse
 
-`func NewInlineResponse2001() *InlineResponse2001`
+`func NewUpdatePlayerTagsSuccessResponse() *UpdatePlayerTagsSuccessResponse`
 
-NewInlineResponse2001 instantiates a new InlineResponse2001 object
+NewUpdatePlayerTagsSuccessResponse instantiates a new UpdatePlayerTagsSuccessResponse object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewInlineResponse2001WithDefaults
+### NewUpdatePlayerTagsSuccessResponseWithDefaults
 
-`func NewInlineResponse2001WithDefaults() *InlineResponse2001`
+`func NewUpdatePlayerTagsSuccessResponseWithDefaults() *UpdatePlayerTagsSuccessResponse`
 
-NewInlineResponse2001WithDefaults instantiates a new InlineResponse2001 object
+NewUpdatePlayerTagsSuccessResponseWithDefaults instantiates a new UpdatePlayerTagsSuccessResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetSuccess
 
-`func (o *InlineResponse2001) GetSuccess() bool`
+`func (o *UpdatePlayerTagsSuccessResponse) GetSuccess() bool`
 
 GetSuccess returns the Success field if non-nil, zero value otherwise.
 
 ### GetSuccessOk
 
-`func (o *InlineResponse2001) GetSuccessOk() (*bool, bool)`
+`func (o *UpdatePlayerTagsSuccessResponse) GetSuccessOk() (*bool, bool)`
 
 GetSuccessOk returns a tuple with the Success field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSuccess
 
-`func (o *InlineResponse2001) SetSuccess(v bool)`
+`func (o *UpdatePlayerTagsSuccessResponse) SetSuccess(v bool)`
 
 SetSuccess sets Success field to given value.
 
 ### HasSuccess
 
-`func (o *InlineResponse2001) HasSuccess() bool`
+`func (o *UpdatePlayerTagsSuccessResponse) HasSuccess() bool`
 
 HasSuccess returns a boolean if a field has been set.
 

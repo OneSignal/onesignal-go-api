@@ -15,34 +15,35 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse2005 struct for InlineResponse2005
-type InlineResponse2005 struct {
+// CreateSegmentSuccessResponse struct for CreateSegmentSuccessResponse
+type CreateSegmentSuccessResponse struct {
 	Success *bool `json:"success,omitempty"`
+	// UUID of created segment
 	Id *string `json:"id,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse2005 InlineResponse2005
+type _CreateSegmentSuccessResponse CreateSegmentSuccessResponse
 
-// NewInlineResponse2005 instantiates a new InlineResponse2005 object
+// NewCreateSegmentSuccessResponse instantiates a new CreateSegmentSuccessResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse2005() *InlineResponse2005 {
-	this := InlineResponse2005{}
+func NewCreateSegmentSuccessResponse() *CreateSegmentSuccessResponse {
+	this := CreateSegmentSuccessResponse{}
 	return &this
 }
 
-// NewInlineResponse2005WithDefaults instantiates a new InlineResponse2005 object
+// NewCreateSegmentSuccessResponseWithDefaults instantiates a new CreateSegmentSuccessResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse2005WithDefaults() *InlineResponse2005 {
-	this := InlineResponse2005{}
+func NewCreateSegmentSuccessResponseWithDefaults() *CreateSegmentSuccessResponse {
+	this := CreateSegmentSuccessResponse{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse2005) GetSuccess() bool {
+func (o *CreateSegmentSuccessResponse) GetSuccess() bool {
 	if o == nil || o.Success == nil {
 		var ret bool
 		return ret
@@ -52,7 +53,7 @@ func (o *InlineResponse2005) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2005) GetSuccessOk() (*bool, bool) {
+func (o *CreateSegmentSuccessResponse) GetSuccessOk() (*bool, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -60,7 +61,7 @@ func (o *InlineResponse2005) GetSuccessOk() (*bool, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse2005) HasSuccess() bool {
+func (o *CreateSegmentSuccessResponse) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -69,12 +70,12 @@ func (o *InlineResponse2005) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *InlineResponse2005) SetSuccess(v bool) {
+func (o *CreateSegmentSuccessResponse) SetSuccess(v bool) {
 	o.Success = &v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *InlineResponse2005) GetId() string {
+func (o *CreateSegmentSuccessResponse) GetId() string {
 	if o == nil || o.Id == nil {
 		var ret string
 		return ret
@@ -84,7 +85,7 @@ func (o *InlineResponse2005) GetId() string {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2005) GetIdOk() (*string, bool) {
+func (o *CreateSegmentSuccessResponse) GetIdOk() (*string, bool) {
 	if o == nil || o.Id == nil {
 		return nil, false
 	}
@@ -92,7 +93,7 @@ func (o *InlineResponse2005) GetIdOk() (*string, bool) {
 }
 
 // HasId returns a boolean if a field has been set.
-func (o *InlineResponse2005) HasId() bool {
+func (o *CreateSegmentSuccessResponse) HasId() bool {
 	if o != nil && o.Id != nil {
 		return true
 	}
@@ -101,11 +102,11 @@ func (o *InlineResponse2005) HasId() bool {
 }
 
 // SetId gets a reference to the given string and assigns it to the Id field.
-func (o *InlineResponse2005) SetId(v string) {
+func (o *CreateSegmentSuccessResponse) SetId(v string) {
 	o.Id = &v
 }
 
-func (o InlineResponse2005) MarshalJSON() ([]byte, error) {
+func (o CreateSegmentSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -121,11 +122,11 @@ func (o InlineResponse2005) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse2005) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse2005 := _InlineResponse2005{}
+func (o *CreateSegmentSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varCreateSegmentSuccessResponse := _CreateSegmentSuccessResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse2005); err == nil {
-		*o = InlineResponse2005(varInlineResponse2005)
+	if err = json.Unmarshal(bytes, &varCreateSegmentSuccessResponse); err == nil {
+		*o = CreateSegmentSuccessResponse(varCreateSegmentSuccessResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -139,38 +140,38 @@ func (o *InlineResponse2005) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse2005 struct {
-	value *InlineResponse2005
+type NullableCreateSegmentSuccessResponse struct {
+	value *CreateSegmentSuccessResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse2005) Get() *InlineResponse2005 {
+func (v NullableCreateSegmentSuccessResponse) Get() *CreateSegmentSuccessResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse2005) Set(val *InlineResponse2005) {
+func (v *NullableCreateSegmentSuccessResponse) Set(val *CreateSegmentSuccessResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse2005) IsSet() bool {
+func (v NullableCreateSegmentSuccessResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse2005) Unset() {
+func (v *NullableCreateSegmentSuccessResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse2005(val *InlineResponse2005) *NullableInlineResponse2005 {
-	return &NullableInlineResponse2005{value: val, isSet: true}
+func NewNullableCreateSegmentSuccessResponse(val *CreateSegmentSuccessResponse) *NullableCreateSegmentSuccessResponse {
+	return &NullableCreateSegmentSuccessResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse2005) MarshalJSON() ([]byte, error) {
+func (v NullableCreateSegmentSuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse2005) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateSegmentSuccessResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

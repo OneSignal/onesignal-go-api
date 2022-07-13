@@ -15,33 +15,33 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse2001 struct for InlineResponse2001
-type InlineResponse2001 struct {
+// DeleteSegmentSuccessResponse struct for DeleteSegmentSuccessResponse
+type DeleteSegmentSuccessResponse struct {
 	Success *bool `json:"success,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse2001 InlineResponse2001
+type _DeleteSegmentSuccessResponse DeleteSegmentSuccessResponse
 
-// NewInlineResponse2001 instantiates a new InlineResponse2001 object
+// NewDeleteSegmentSuccessResponse instantiates a new DeleteSegmentSuccessResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse2001() *InlineResponse2001 {
-	this := InlineResponse2001{}
+func NewDeleteSegmentSuccessResponse() *DeleteSegmentSuccessResponse {
+	this := DeleteSegmentSuccessResponse{}
 	return &this
 }
 
-// NewInlineResponse2001WithDefaults instantiates a new InlineResponse2001 object
+// NewDeleteSegmentSuccessResponseWithDefaults instantiates a new DeleteSegmentSuccessResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse2001WithDefaults() *InlineResponse2001 {
-	this := InlineResponse2001{}
+func NewDeleteSegmentSuccessResponseWithDefaults() *DeleteSegmentSuccessResponse {
+	this := DeleteSegmentSuccessResponse{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse2001) GetSuccess() bool {
+func (o *DeleteSegmentSuccessResponse) GetSuccess() bool {
 	if o == nil || o.Success == nil {
 		var ret bool
 		return ret
@@ -51,7 +51,7 @@ func (o *InlineResponse2001) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2001) GetSuccessOk() (*bool, bool) {
+func (o *DeleteSegmentSuccessResponse) GetSuccessOk() (*bool, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *InlineResponse2001) GetSuccessOk() (*bool, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse2001) HasSuccess() bool {
+func (o *DeleteSegmentSuccessResponse) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -68,11 +68,11 @@ func (o *InlineResponse2001) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *InlineResponse2001) SetSuccess(v bool) {
+func (o *DeleteSegmentSuccessResponse) SetSuccess(v bool) {
 	o.Success = &v
 }
 
-func (o InlineResponse2001) MarshalJSON() ([]byte, error) {
+func (o DeleteSegmentSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -85,11 +85,11 @@ func (o InlineResponse2001) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse2001) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse2001 := _InlineResponse2001{}
+func (o *DeleteSegmentSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varDeleteSegmentSuccessResponse := _DeleteSegmentSuccessResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse2001); err == nil {
-		*o = InlineResponse2001(varInlineResponse2001)
+	if err = json.Unmarshal(bytes, &varDeleteSegmentSuccessResponse); err == nil {
+		*o = DeleteSegmentSuccessResponse(varDeleteSegmentSuccessResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -102,38 +102,38 @@ func (o *InlineResponse2001) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse2001 struct {
-	value *InlineResponse2001
+type NullableDeleteSegmentSuccessResponse struct {
+	value *DeleteSegmentSuccessResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse2001) Get() *InlineResponse2001 {
+func (v NullableDeleteSegmentSuccessResponse) Get() *DeleteSegmentSuccessResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse2001) Set(val *InlineResponse2001) {
+func (v *NullableDeleteSegmentSuccessResponse) Set(val *DeleteSegmentSuccessResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse2001) IsSet() bool {
+func (v NullableDeleteSegmentSuccessResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse2001) Unset() {
+func (v *NullableDeleteSegmentSuccessResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse2001(val *InlineResponse2001) *NullableInlineResponse2001 {
-	return &NullableInlineResponse2001{value: val, isSet: true}
+func NewNullableDeleteSegmentSuccessResponse(val *DeleteSegmentSuccessResponse) *NullableDeleteSegmentSuccessResponse {
+	return &NullableDeleteSegmentSuccessResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse2001) MarshalJSON() ([]byte, error) {
+func (v NullableDeleteSegmentSuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse2001) UnmarshalJSON(src []byte) error {
+func (v *NullableDeleteSegmentSuccessResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

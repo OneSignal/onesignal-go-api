@@ -15,8 +15,8 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse200 struct for InlineResponse200
-type InlineResponse200 struct {
+// CreateNotificationSuccessResponse struct for CreateNotificationSuccessResponse
+type CreateNotificationSuccessResponse struct {
 	Id string `json:"id"`
 	// Estimated number of subscribers targetted by notification.
 	Recipients int32 `json:"recipients"`
@@ -25,29 +25,29 @@ type InlineResponse200 struct {
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse200 InlineResponse200
+type _CreateNotificationSuccessResponse CreateNotificationSuccessResponse
 
-// NewInlineResponse200 instantiates a new InlineResponse200 object
+// NewCreateNotificationSuccessResponse instantiates a new CreateNotificationSuccessResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse200(id string, recipients int32) *InlineResponse200 {
-	this := InlineResponse200{}
+func NewCreateNotificationSuccessResponse(id string, recipients int32) *CreateNotificationSuccessResponse {
+	this := CreateNotificationSuccessResponse{}
 	this.Id = id
 	this.Recipients = recipients
 	return &this
 }
 
-// NewInlineResponse200WithDefaults instantiates a new InlineResponse200 object
+// NewCreateNotificationSuccessResponseWithDefaults instantiates a new CreateNotificationSuccessResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse200WithDefaults() *InlineResponse200 {
-	this := InlineResponse200{}
+func NewCreateNotificationSuccessResponseWithDefaults() *CreateNotificationSuccessResponse {
+	this := CreateNotificationSuccessResponse{}
 	return &this
 }
 
 // GetId returns the Id field value
-func (o *InlineResponse200) GetId() string {
+func (o *CreateNotificationSuccessResponse) GetId() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -58,7 +58,7 @@ func (o *InlineResponse200) GetId() string {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *InlineResponse200) GetIdOk() (*string, bool) {
+func (o *CreateNotificationSuccessResponse) GetIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -66,12 +66,12 @@ func (o *InlineResponse200) GetIdOk() (*string, bool) {
 }
 
 // SetId sets field value
-func (o *InlineResponse200) SetId(v string) {
+func (o *CreateNotificationSuccessResponse) SetId(v string) {
 	o.Id = v
 }
 
 // GetRecipients returns the Recipients field value
-func (o *InlineResponse200) GetRecipients() int32 {
+func (o *CreateNotificationSuccessResponse) GetRecipients() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -82,7 +82,7 @@ func (o *InlineResponse200) GetRecipients() int32 {
 
 // GetRecipientsOk returns a tuple with the Recipients field value
 // and a boolean to check if the value has been set.
-func (o *InlineResponse200) GetRecipientsOk() (*int32, bool) {
+func (o *CreateNotificationSuccessResponse) GetRecipientsOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -90,12 +90,12 @@ func (o *InlineResponse200) GetRecipientsOk() (*int32, bool) {
 }
 
 // SetRecipients sets field value
-func (o *InlineResponse200) SetRecipients(v int32) {
+func (o *CreateNotificationSuccessResponse) SetRecipients(v int32) {
 	o.Recipients = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
-func (o *InlineResponse200) GetExternalId() string {
+func (o *CreateNotificationSuccessResponse) GetExternalId() string {
 	if o == nil || o.ExternalId == nil {
 		var ret string
 		return ret
@@ -105,7 +105,7 @@ func (o *InlineResponse200) GetExternalId() string {
 
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse200) GetExternalIdOk() (*string, bool) {
+func (o *CreateNotificationSuccessResponse) GetExternalIdOk() (*string, bool) {
 	if o == nil || o.ExternalId == nil {
 		return nil, false
 	}
@@ -113,7 +113,7 @@ func (o *InlineResponse200) GetExternalIdOk() (*string, bool) {
 }
 
 // HasExternalId returns a boolean if a field has been set.
-func (o *InlineResponse200) HasExternalId() bool {
+func (o *CreateNotificationSuccessResponse) HasExternalId() bool {
 	if o != nil && o.ExternalId != nil {
 		return true
 	}
@@ -122,12 +122,12 @@ func (o *InlineResponse200) HasExternalId() bool {
 }
 
 // SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
-func (o *InlineResponse200) SetExternalId(v string) {
+func (o *CreateNotificationSuccessResponse) SetExternalId(v string) {
 	o.ExternalId = &v
 }
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *InlineResponse200) GetErrors() Notification200Errors {
+func (o *CreateNotificationSuccessResponse) GetErrors() Notification200Errors {
 	if o == nil || o.Errors == nil {
 		var ret Notification200Errors
 		return ret
@@ -137,7 +137,7 @@ func (o *InlineResponse200) GetErrors() Notification200Errors {
 
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse200) GetErrorsOk() (*Notification200Errors, bool) {
+func (o *CreateNotificationSuccessResponse) GetErrorsOk() (*Notification200Errors, bool) {
 	if o == nil || o.Errors == nil {
 		return nil, false
 	}
@@ -145,7 +145,7 @@ func (o *InlineResponse200) GetErrorsOk() (*Notification200Errors, bool) {
 }
 
 // HasErrors returns a boolean if a field has been set.
-func (o *InlineResponse200) HasErrors() bool {
+func (o *CreateNotificationSuccessResponse) HasErrors() bool {
 	if o != nil && o.Errors != nil {
 		return true
 	}
@@ -154,11 +154,11 @@ func (o *InlineResponse200) HasErrors() bool {
 }
 
 // SetErrors gets a reference to the given Notification200Errors and assigns it to the Errors field.
-func (o *InlineResponse200) SetErrors(v Notification200Errors) {
+func (o *CreateNotificationSuccessResponse) SetErrors(v Notification200Errors) {
 	o.Errors = &v
 }
 
-func (o InlineResponse200) MarshalJSON() ([]byte, error) {
+func (o CreateNotificationSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
 		toSerialize["id"] = o.Id
@@ -180,11 +180,11 @@ func (o InlineResponse200) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse200) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse200 := _InlineResponse200{}
+func (o *CreateNotificationSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varCreateNotificationSuccessResponse := _CreateNotificationSuccessResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse200); err == nil {
-		*o = InlineResponse200(varInlineResponse200)
+	if err = json.Unmarshal(bytes, &varCreateNotificationSuccessResponse); err == nil {
+		*o = CreateNotificationSuccessResponse(varCreateNotificationSuccessResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -200,38 +200,38 @@ func (o *InlineResponse200) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse200 struct {
-	value *InlineResponse200
+type NullableCreateNotificationSuccessResponse struct {
+	value *CreateNotificationSuccessResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse200) Get() *InlineResponse200 {
+func (v NullableCreateNotificationSuccessResponse) Get() *CreateNotificationSuccessResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse200) Set(val *InlineResponse200) {
+func (v *NullableCreateNotificationSuccessResponse) Set(val *CreateNotificationSuccessResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse200) IsSet() bool {
+func (v NullableCreateNotificationSuccessResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse200) Unset() {
+func (v *NullableCreateNotificationSuccessResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse200(val *InlineResponse200) *NullableInlineResponse200 {
-	return &NullableInlineResponse200{value: val, isSet: true}
+func NewNullableCreateNotificationSuccessResponse(val *CreateNotificationSuccessResponse) *NullableCreateNotificationSuccessResponse {
+	return &NullableCreateNotificationSuccessResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse200) MarshalJSON() ([]byte, error) {
+func (v NullableCreateNotificationSuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse200) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateNotificationSuccessResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

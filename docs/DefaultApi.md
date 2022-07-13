@@ -28,7 +28,7 @@ Method | HTTP request | Description
 
 ## CancelNotification
 
-> InlineResponse2001 CancelNotification(ctx, notificationId).AppId(appId).Execute()
+> CancelNotificationSuccessResponse CancelNotification(ctx, notificationId).AppId(appId).Execute()
 
 Stop a scheduled or currently outgoing notification
 
@@ -66,7 +66,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CancelNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CancelNotification`: InlineResponse2001
+    // response from `CancelNotification`: CancelNotificationSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CancelNotification`: %v\n", resp)
 }
 ```
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**CancelNotificationSuccessResponse**](CancelNotificationSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -176,7 +176,7 @@ Name | Type | Description  | Notes
 
 ## CreateNotification
 
-> InlineResponse200 CreateNotification(ctx).Notification(notification).Execute()
+> CreateNotificationSuccessResponse CreateNotification(ctx).Notification(notification).Execute()
 
 Create notification
 
@@ -213,7 +213,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CreateNotification`: InlineResponse200
+    // response from `CreateNotification`: CreateNotificationSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateNotification`: %v\n", resp)
 }
 ```
@@ -233,7 +233,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**CreateNotificationSuccessResponse**](CreateNotificationSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -247,7 +247,7 @@ Name | Type | Description  | Notes
 
 ## CreatePlayer
 
-> InlineResponse2005 CreatePlayer(ctx).Player(player).Execute()
+> CreatePlayerSuccessResponse CreatePlayer(ctx).Player(player).Execute()
 
 Add a device
 
@@ -284,7 +284,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreatePlayer``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CreatePlayer`: InlineResponse2005
+    // response from `CreatePlayer`: CreatePlayerSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreatePlayer`: %v\n", resp)
 }
 ```
@@ -304,7 +304,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2005**](InlineResponse2005.md)
+[**CreatePlayerSuccessResponse**](CreatePlayerSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -318,7 +318,7 @@ Name | Type | Description  | Notes
 
 ## CreateSegments
 
-> InlineResponse201 CreateSegments(ctx, appId).Segment(segment).Execute()
+> CreateSegmentSuccessResponse CreateSegments(ctx, appId).Segment(segment).Execute()
 
 Create Segments
 
@@ -356,7 +356,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSegments``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CreateSegments`: InlineResponse201
+    // response from `CreateSegments`: CreateSegmentSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateSegments`: %v\n", resp)
 }
 ```
@@ -381,7 +381,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse201**](InlineResponse201.md)
+[**CreateSegmentSuccessResponse**](CreateSegmentSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -395,7 +395,7 @@ Name | Type | Description  | Notes
 
 ## DeletePlayer
 
-> InlineResponse2007 DeletePlayer(ctx, playerId).AppId(appId).Execute()
+> DeletePlayerSuccessResponse DeletePlayer(ctx, playerId).AppId(appId).Execute()
 
 Delete a user record
 
@@ -433,7 +433,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeletePlayer``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `DeletePlayer`: InlineResponse2007
+    // response from `DeletePlayer`: DeletePlayerSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeletePlayer`: %v\n", resp)
 }
 ```
@@ -458,7 +458,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2007**](InlineResponse2007.md)
+[**DeletePlayerSuccessResponse**](DeletePlayerSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -472,7 +472,7 @@ Name | Type | Description  | Notes
 
 ## DeleteSegments
 
-> InlineResponse2001 DeleteSegments(ctx, appId, segmentId).Execute()
+> DeleteSegmentSuccessResponse DeleteSegments(ctx, appId, segmentId).Execute()
 
 Delete Segments
 
@@ -510,7 +510,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSegments``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `DeleteSegments`: InlineResponse2001
+    // response from `DeleteSegments`: DeleteSegmentSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteSegments`: %v\n", resp)
 }
 ```
@@ -536,7 +536,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**DeleteSegmentSuccessResponse**](DeleteSegmentSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -550,7 +550,7 @@ Name | Type | Description  | Notes
 
 ## ExportPlayers
 
-> InlineResponse2008 ExportPlayers(ctx, appId).ExportPlayersRequestBody(exportPlayersRequestBody).Execute()
+> ExportPlayersSuccessResponse ExportPlayers(ctx, appId).ExportPlayersRequestBody(exportPlayersRequestBody).Execute()
 
 CSV export
 
@@ -588,7 +588,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportPlayers``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ExportPlayers`: InlineResponse2008
+    // response from `ExportPlayers`: ExportPlayersSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ExportPlayers`: %v\n", resp)
 }
 ```
@@ -613,7 +613,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2008**](InlineResponse2008.md)
+[**ExportPlayersSuccessResponse**](ExportPlayersSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -845,7 +845,7 @@ Name | Type | Description  | Notes
 
 ## GetNotificationHistory
 
-> InlineResponse2002 GetNotificationHistory(ctx, notificationId).GetNotificationRequestBody(getNotificationRequestBody).Execute()
+> NotificationHistorySuccessResponse GetNotificationHistory(ctx, notificationId).GetNotificationRequestBody(getNotificationRequestBody).Execute()
 
 Notification History
 
@@ -883,7 +883,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotificationHistory``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetNotificationHistory`: InlineResponse2002
+    // response from `GetNotificationHistory`: NotificationHistorySuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetNotificationHistory`: %v\n", resp)
 }
 ```
@@ -908,7 +908,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2002**](InlineResponse2002.md)
+[**NotificationHistorySuccessResponse**](NotificationHistorySuccessResponse.md)
 
 ### HTTP request headers
 
@@ -1315,7 +1315,7 @@ Name | Type | Description  | Notes
 
 ## UpdatePlayer
 
-> InlineResponse2001 UpdatePlayer(ctx, playerId).Player(player).Execute()
+> UpdatePlayerSuccessResponse UpdatePlayer(ctx, playerId).Player(player).Execute()
 
 Edit device
 
@@ -1353,7 +1353,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdatePlayer``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `UpdatePlayer`: InlineResponse2001
+    // response from `UpdatePlayer`: UpdatePlayerSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdatePlayer`: %v\n", resp)
 }
 ```
@@ -1378,7 +1378,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**UpdatePlayerSuccessResponse**](UpdatePlayerSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -1392,7 +1392,7 @@ Name | Type | Description  | Notes
 
 ## UpdatePlayerTags
 
-> InlineResponse2001 UpdatePlayerTags(ctx, appId, externalUserId).UpdatePlayerTagsRequestBody(updatePlayerTagsRequestBody).Execute()
+> UpdatePlayerTagsSuccessResponse UpdatePlayerTags(ctx, appId, externalUserId).UpdatePlayerTagsRequestBody(updatePlayerTagsRequestBody).Execute()
 
 Edit tags with external user id
 
@@ -1431,7 +1431,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdatePlayerTags``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `UpdatePlayerTags`: InlineResponse2001
+    // response from `UpdatePlayerTags`: UpdatePlayerTagsSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdatePlayerTags`: %v\n", resp)
 }
 ```
@@ -1458,7 +1458,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**UpdatePlayerTagsSuccessResponse**](UpdatePlayerTagsSuccessResponse.md)
 
 ### HTTP request headers
 
