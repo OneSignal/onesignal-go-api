@@ -15,34 +15,34 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse2002 struct for InlineResponse2002
-type InlineResponse2002 struct {
+// NotificationHistorySuccessResponse struct for NotificationHistorySuccessResponse
+type NotificationHistorySuccessResponse struct {
 	Success *bool `json:"success,omitempty"`
 	DestinationUrl *string `json:"destination_url,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse2002 InlineResponse2002
+type _NotificationHistorySuccessResponse NotificationHistorySuccessResponse
 
-// NewInlineResponse2002 instantiates a new InlineResponse2002 object
+// NewNotificationHistorySuccessResponse instantiates a new NotificationHistorySuccessResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse2002() *InlineResponse2002 {
-	this := InlineResponse2002{}
+func NewNotificationHistorySuccessResponse() *NotificationHistorySuccessResponse {
+	this := NotificationHistorySuccessResponse{}
 	return &this
 }
 
-// NewInlineResponse2002WithDefaults instantiates a new InlineResponse2002 object
+// NewNotificationHistorySuccessResponseWithDefaults instantiates a new NotificationHistorySuccessResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse2002WithDefaults() *InlineResponse2002 {
-	this := InlineResponse2002{}
+func NewNotificationHistorySuccessResponseWithDefaults() *NotificationHistorySuccessResponse {
+	this := NotificationHistorySuccessResponse{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse2002) GetSuccess() bool {
+func (o *NotificationHistorySuccessResponse) GetSuccess() bool {
 	if o == nil || o.Success == nil {
 		var ret bool
 		return ret
@@ -52,7 +52,7 @@ func (o *InlineResponse2002) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2002) GetSuccessOk() (*bool, bool) {
+func (o *NotificationHistorySuccessResponse) GetSuccessOk() (*bool, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -60,7 +60,7 @@ func (o *InlineResponse2002) GetSuccessOk() (*bool, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse2002) HasSuccess() bool {
+func (o *NotificationHistorySuccessResponse) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -69,12 +69,12 @@ func (o *InlineResponse2002) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *InlineResponse2002) SetSuccess(v bool) {
+func (o *NotificationHistorySuccessResponse) SetSuccess(v bool) {
 	o.Success = &v
 }
 
 // GetDestinationUrl returns the DestinationUrl field value if set, zero value otherwise.
-func (o *InlineResponse2002) GetDestinationUrl() string {
+func (o *NotificationHistorySuccessResponse) GetDestinationUrl() string {
 	if o == nil || o.DestinationUrl == nil {
 		var ret string
 		return ret
@@ -84,7 +84,7 @@ func (o *InlineResponse2002) GetDestinationUrl() string {
 
 // GetDestinationUrlOk returns a tuple with the DestinationUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2002) GetDestinationUrlOk() (*string, bool) {
+func (o *NotificationHistorySuccessResponse) GetDestinationUrlOk() (*string, bool) {
 	if o == nil || o.DestinationUrl == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *InlineResponse2002) GetDestinationUrlOk() (*string, bool) {
 }
 
 // HasDestinationUrl returns a boolean if a field has been set.
-func (o *InlineResponse2002) HasDestinationUrl() bool {
+func (o *NotificationHistorySuccessResponse) HasDestinationUrl() bool {
 	if o != nil && o.DestinationUrl != nil {
 		return true
 	}
@@ -101,11 +101,11 @@ func (o *InlineResponse2002) HasDestinationUrl() bool {
 }
 
 // SetDestinationUrl gets a reference to the given string and assigns it to the DestinationUrl field.
-func (o *InlineResponse2002) SetDestinationUrl(v string) {
+func (o *NotificationHistorySuccessResponse) SetDestinationUrl(v string) {
 	o.DestinationUrl = &v
 }
 
-func (o InlineResponse2002) MarshalJSON() ([]byte, error) {
+func (o NotificationHistorySuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -121,11 +121,11 @@ func (o InlineResponse2002) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse2002) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse2002 := _InlineResponse2002{}
+func (o *NotificationHistorySuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varNotificationHistorySuccessResponse := _NotificationHistorySuccessResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse2002); err == nil {
-		*o = InlineResponse2002(varInlineResponse2002)
+	if err = json.Unmarshal(bytes, &varNotificationHistorySuccessResponse); err == nil {
+		*o = NotificationHistorySuccessResponse(varNotificationHistorySuccessResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -139,38 +139,38 @@ func (o *InlineResponse2002) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse2002 struct {
-	value *InlineResponse2002
+type NullableNotificationHistorySuccessResponse struct {
+	value *NotificationHistorySuccessResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse2002) Get() *InlineResponse2002 {
+func (v NullableNotificationHistorySuccessResponse) Get() *NotificationHistorySuccessResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse2002) Set(val *InlineResponse2002) {
+func (v *NullableNotificationHistorySuccessResponse) Set(val *NotificationHistorySuccessResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse2002) IsSet() bool {
+func (v NullableNotificationHistorySuccessResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse2002) Unset() {
+func (v *NullableNotificationHistorySuccessResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse2002(val *InlineResponse2002) *NullableInlineResponse2002 {
-	return &NullableInlineResponse2002{value: val, isSet: true}
+func NewNullableNotificationHistorySuccessResponse(val *NotificationHistorySuccessResponse) *NullableNotificationHistorySuccessResponse {
+	return &NullableNotificationHistorySuccessResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse2002) MarshalJSON() ([]byte, error) {
+func (v NullableNotificationHistorySuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse2002) UnmarshalJSON(src []byte) error {
+func (v *NullableNotificationHistorySuccessResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

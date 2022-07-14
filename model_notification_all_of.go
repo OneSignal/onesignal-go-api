@@ -20,6 +20,8 @@ import (
 type NotificationAllOf struct {
 	Id *string `json:"id,omitempty"`
 	Value *int32 `json:"value,omitempty"`
+	// Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user.
+	Name *string `json:"name,omitempty"`
 	Aggregation *string `json:"aggregation,omitempty"`
 	// Indicates whether to send to all devices registered under your app's Apple iOS platform.
 	IsIos NullableBool `json:"isIos,omitempty"`
@@ -275,6 +277,38 @@ func (o *NotificationAllOf) HasValue() bool {
 // SetValue gets a reference to the given int32 and assigns it to the Value field.
 func (o *NotificationAllOf) SetValue(v int32) {
 	o.Value = &v
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *NotificationAllOf) GetName() string {
+	if o == nil || o.Name == nil {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotificationAllOf) GetNameOk() (*string, bool) {
+	if o == nil || o.Name == nil {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *NotificationAllOf) HasName() bool {
+	if o != nil && o.Name != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *NotificationAllOf) SetName(v string) {
+	o.Name = &v
 }
 
 // GetAggregation returns the Aggregation field value if set, zero value otherwise.
@@ -3227,6 +3261,9 @@ func (o NotificationAllOf) MarshalJSON() ([]byte, error) {
 	if o.Value != nil {
 		toSerialize["value"] = o.Value
 	}
+	if o.Name != nil {
+		toSerialize["name"] = o.Name
+	}
 	if o.Aggregation != nil {
 		toSerialize["aggregation"] = o.Aggregation
 	}
@@ -3505,6 +3542,7 @@ func (o *NotificationAllOf) UnmarshalJSON(bytes []byte) (err error) {
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "value")
+		delete(additionalProperties, "name")
 		delete(additionalProperties, "aggregation")
 		delete(additionalProperties, "isIos")
 		delete(additionalProperties, "isAndroid")

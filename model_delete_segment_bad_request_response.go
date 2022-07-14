@@ -15,33 +15,33 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse4003 struct for InlineResponse4003
-type InlineResponse4003 struct {
+// DeleteSegmentBadRequestResponse struct for DeleteSegmentBadRequestResponse
+type DeleteSegmentBadRequestResponse struct {
 	Erorrs []string `json:"erorrs,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse4003 InlineResponse4003
+type _DeleteSegmentBadRequestResponse DeleteSegmentBadRequestResponse
 
-// NewInlineResponse4003 instantiates a new InlineResponse4003 object
+// NewDeleteSegmentBadRequestResponse instantiates a new DeleteSegmentBadRequestResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse4003() *InlineResponse4003 {
-	this := InlineResponse4003{}
+func NewDeleteSegmentBadRequestResponse() *DeleteSegmentBadRequestResponse {
+	this := DeleteSegmentBadRequestResponse{}
 	return &this
 }
 
-// NewInlineResponse4003WithDefaults instantiates a new InlineResponse4003 object
+// NewDeleteSegmentBadRequestResponseWithDefaults instantiates a new DeleteSegmentBadRequestResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse4003WithDefaults() *InlineResponse4003 {
-	this := InlineResponse4003{}
+func NewDeleteSegmentBadRequestResponseWithDefaults() *DeleteSegmentBadRequestResponse {
+	this := DeleteSegmentBadRequestResponse{}
 	return &this
 }
 
 // GetErorrs returns the Erorrs field value if set, zero value otherwise.
-func (o *InlineResponse4003) GetErorrs() []string {
+func (o *DeleteSegmentBadRequestResponse) GetErorrs() []string {
 	if o == nil || o.Erorrs == nil {
 		var ret []string
 		return ret
@@ -51,7 +51,7 @@ func (o *InlineResponse4003) GetErorrs() []string {
 
 // GetErorrsOk returns a tuple with the Erorrs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse4003) GetErorrsOk() ([]string, bool) {
+func (o *DeleteSegmentBadRequestResponse) GetErorrsOk() ([]string, bool) {
 	if o == nil || o.Erorrs == nil {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *InlineResponse4003) GetErorrsOk() ([]string, bool) {
 }
 
 // HasErorrs returns a boolean if a field has been set.
-func (o *InlineResponse4003) HasErorrs() bool {
+func (o *DeleteSegmentBadRequestResponse) HasErorrs() bool {
 	if o != nil && o.Erorrs != nil {
 		return true
 	}
@@ -68,11 +68,11 @@ func (o *InlineResponse4003) HasErorrs() bool {
 }
 
 // SetErorrs gets a reference to the given []string and assigns it to the Erorrs field.
-func (o *InlineResponse4003) SetErorrs(v []string) {
+func (o *DeleteSegmentBadRequestResponse) SetErorrs(v []string) {
 	o.Erorrs = v
 }
 
-func (o InlineResponse4003) MarshalJSON() ([]byte, error) {
+func (o DeleteSegmentBadRequestResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Erorrs != nil {
 		toSerialize["erorrs"] = o.Erorrs
@@ -85,11 +85,11 @@ func (o InlineResponse4003) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse4003) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse4003 := _InlineResponse4003{}
+func (o *DeleteSegmentBadRequestResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varDeleteSegmentBadRequestResponse := _DeleteSegmentBadRequestResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse4003); err == nil {
-		*o = InlineResponse4003(varInlineResponse4003)
+	if err = json.Unmarshal(bytes, &varDeleteSegmentBadRequestResponse); err == nil {
+		*o = DeleteSegmentBadRequestResponse(varDeleteSegmentBadRequestResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -102,38 +102,38 @@ func (o *InlineResponse4003) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse4003 struct {
-	value *InlineResponse4003
+type NullableDeleteSegmentBadRequestResponse struct {
+	value *DeleteSegmentBadRequestResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse4003) Get() *InlineResponse4003 {
+func (v NullableDeleteSegmentBadRequestResponse) Get() *DeleteSegmentBadRequestResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse4003) Set(val *InlineResponse4003) {
+func (v *NullableDeleteSegmentBadRequestResponse) Set(val *DeleteSegmentBadRequestResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse4003) IsSet() bool {
+func (v NullableDeleteSegmentBadRequestResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse4003) Unset() {
+func (v *NullableDeleteSegmentBadRequestResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse4003(val *InlineResponse4003) *NullableInlineResponse4003 {
-	return &NullableInlineResponse4003{value: val, isSet: true}
+func NewNullableDeleteSegmentBadRequestResponse(val *DeleteSegmentBadRequestResponse) *NullableDeleteSegmentBadRequestResponse {
+	return &NullableDeleteSegmentBadRequestResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse4003) MarshalJSON() ([]byte, error) {
+func (v NullableDeleteSegmentBadRequestResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse4003) UnmarshalJSON(src []byte) error {
+func (v *NullableDeleteSegmentBadRequestResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -15,34 +15,34 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse4001 struct for InlineResponse4001
-type InlineResponse4001 struct {
+// NotificationHistoryBadRequestResponse struct for NotificationHistoryBadRequestResponse
+type NotificationHistoryBadRequestResponse struct {
 	Success *string `json:"success,omitempty"`
 	Errors []string `json:"errors,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse4001 InlineResponse4001
+type _NotificationHistoryBadRequestResponse NotificationHistoryBadRequestResponse
 
-// NewInlineResponse4001 instantiates a new InlineResponse4001 object
+// NewNotificationHistoryBadRequestResponse instantiates a new NotificationHistoryBadRequestResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse4001() *InlineResponse4001 {
-	this := InlineResponse4001{}
+func NewNotificationHistoryBadRequestResponse() *NotificationHistoryBadRequestResponse {
+	this := NotificationHistoryBadRequestResponse{}
 	return &this
 }
 
-// NewInlineResponse4001WithDefaults instantiates a new InlineResponse4001 object
+// NewNotificationHistoryBadRequestResponseWithDefaults instantiates a new NotificationHistoryBadRequestResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse4001WithDefaults() *InlineResponse4001 {
-	this := InlineResponse4001{}
+func NewNotificationHistoryBadRequestResponseWithDefaults() *NotificationHistoryBadRequestResponse {
+	this := NotificationHistoryBadRequestResponse{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse4001) GetSuccess() string {
+func (o *NotificationHistoryBadRequestResponse) GetSuccess() string {
 	if o == nil || o.Success == nil {
 		var ret string
 		return ret
@@ -52,7 +52,7 @@ func (o *InlineResponse4001) GetSuccess() string {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse4001) GetSuccessOk() (*string, bool) {
+func (o *NotificationHistoryBadRequestResponse) GetSuccessOk() (*string, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -60,7 +60,7 @@ func (o *InlineResponse4001) GetSuccessOk() (*string, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse4001) HasSuccess() bool {
+func (o *NotificationHistoryBadRequestResponse) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -69,12 +69,12 @@ func (o *InlineResponse4001) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given string and assigns it to the Success field.
-func (o *InlineResponse4001) SetSuccess(v string) {
+func (o *NotificationHistoryBadRequestResponse) SetSuccess(v string) {
 	o.Success = &v
 }
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *InlineResponse4001) GetErrors() []string {
+func (o *NotificationHistoryBadRequestResponse) GetErrors() []string {
 	if o == nil || o.Errors == nil {
 		var ret []string
 		return ret
@@ -84,7 +84,7 @@ func (o *InlineResponse4001) GetErrors() []string {
 
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse4001) GetErrorsOk() ([]string, bool) {
+func (o *NotificationHistoryBadRequestResponse) GetErrorsOk() ([]string, bool) {
 	if o == nil || o.Errors == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *InlineResponse4001) GetErrorsOk() ([]string, bool) {
 }
 
 // HasErrors returns a boolean if a field has been set.
-func (o *InlineResponse4001) HasErrors() bool {
+func (o *NotificationHistoryBadRequestResponse) HasErrors() bool {
 	if o != nil && o.Errors != nil {
 		return true
 	}
@@ -101,11 +101,11 @@ func (o *InlineResponse4001) HasErrors() bool {
 }
 
 // SetErrors gets a reference to the given []string and assigns it to the Errors field.
-func (o *InlineResponse4001) SetErrors(v []string) {
+func (o *NotificationHistoryBadRequestResponse) SetErrors(v []string) {
 	o.Errors = v
 }
 
-func (o InlineResponse4001) MarshalJSON() ([]byte, error) {
+func (o NotificationHistoryBadRequestResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -121,11 +121,11 @@ func (o InlineResponse4001) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse4001) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse4001 := _InlineResponse4001{}
+func (o *NotificationHistoryBadRequestResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varNotificationHistoryBadRequestResponse := _NotificationHistoryBadRequestResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse4001); err == nil {
-		*o = InlineResponse4001(varInlineResponse4001)
+	if err = json.Unmarshal(bytes, &varNotificationHistoryBadRequestResponse); err == nil {
+		*o = NotificationHistoryBadRequestResponse(varNotificationHistoryBadRequestResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -139,38 +139,38 @@ func (o *InlineResponse4001) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse4001 struct {
-	value *InlineResponse4001
+type NullableNotificationHistoryBadRequestResponse struct {
+	value *NotificationHistoryBadRequestResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse4001) Get() *InlineResponse4001 {
+func (v NullableNotificationHistoryBadRequestResponse) Get() *NotificationHistoryBadRequestResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse4001) Set(val *InlineResponse4001) {
+func (v *NullableNotificationHistoryBadRequestResponse) Set(val *NotificationHistoryBadRequestResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse4001) IsSet() bool {
+func (v NullableNotificationHistoryBadRequestResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse4001) Unset() {
+func (v *NullableNotificationHistoryBadRequestResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse4001(val *InlineResponse4001) *NullableInlineResponse4001 {
-	return &NullableInlineResponse4001{value: val, isSet: true}
+func NewNullableNotificationHistoryBadRequestResponse(val *NotificationHistoryBadRequestResponse) *NullableNotificationHistoryBadRequestResponse {
+	return &NullableNotificationHistoryBadRequestResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse4001) MarshalJSON() ([]byte, error) {
+func (v NullableNotificationHistoryBadRequestResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse4001) UnmarshalJSON(src []byte) error {
+func (v *NullableNotificationHistoryBadRequestResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

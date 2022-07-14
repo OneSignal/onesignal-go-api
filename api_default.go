@@ -36,7 +36,7 @@ func (r ApiCancelNotificationRequest) AppId(appId string) ApiCancelNotificationR
 	return r
 }
 
-func (r ApiCancelNotificationRequest) Execute() (*InlineResponse2001, *http.Response, error) {
+func (r ApiCancelNotificationRequest) Execute() (*CancelNotificationSuccessResponse, *http.Response, error) {
 	return r.ApiService.CancelNotificationExecute(r)
 }
 
@@ -58,13 +58,13 @@ func (a *DefaultApiService) CancelNotification(ctx context.Context, notification
 }
 
 // Execute executes the request
-//  @return InlineResponse2001
-func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationRequest) (*InlineResponse2001, *http.Response, error) {
+//  @return CancelNotificationSuccessResponse
+func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationRequest) (*CancelNotificationSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2001
+		localVarReturnValue  *CancelNotificationSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CancelNotification")
@@ -258,7 +258,7 @@ func (r ApiCreateNotificationRequest) Notification(notification Notification) Ap
 	return r
 }
 
-func (r ApiCreateNotificationRequest) Execute() (*InlineResponse200, *http.Response, error) {
+func (r ApiCreateNotificationRequest) Execute() (*CreateNotificationSuccessResponse, *http.Response, error) {
 	return r.ApiService.CreateNotificationExecute(r)
 }
 
@@ -279,13 +279,13 @@ func (a *DefaultApiService) CreateNotification(ctx context.Context) ApiCreateNot
 }
 
 // Execute executes the request
-//  @return InlineResponse200
-func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationRequest) (*InlineResponse200, *http.Response, error) {
+//  @return CreateNotificationSuccessResponse
+func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationRequest) (*CreateNotificationSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse200
+		localVarReturnValue  *CreateNotificationSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateNotification")
@@ -344,7 +344,7 @@ func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationReq
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v InlineResponse400
+			var v CreateNotificationBadRequestResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -378,7 +378,7 @@ func (r ApiCreatePlayerRequest) Player(player Player) ApiCreatePlayerRequest {
 	return r
 }
 
-func (r ApiCreatePlayerRequest) Execute() (*InlineResponse2005, *http.Response, error) {
+func (r ApiCreatePlayerRequest) Execute() (*CreatePlayerSuccessResponse, *http.Response, error) {
 	return r.ApiService.CreatePlayerExecute(r)
 }
 
@@ -409,13 +409,13 @@ func (a *DefaultApiService) CreatePlayer(ctx context.Context) ApiCreatePlayerReq
 }
 
 // Execute executes the request
-//  @return InlineResponse2005
-func (a *DefaultApiService) CreatePlayerExecute(r ApiCreatePlayerRequest) (*InlineResponse2005, *http.Response, error) {
+//  @return CreatePlayerSuccessResponse
+func (a *DefaultApiService) CreatePlayerExecute(r ApiCreatePlayerRequest) (*CreatePlayerSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2005
+		localVarReturnValue  *CreatePlayerSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreatePlayer")
@@ -500,7 +500,7 @@ func (r ApiCreateSegmentsRequest) Segment(segment Segment) ApiCreateSegmentsRequ
 	return r
 }
 
-func (r ApiCreateSegmentsRequest) Execute() (*InlineResponse201, *http.Response, error) {
+func (r ApiCreateSegmentsRequest) Execute() (*CreateSegmentSuccessResponse, *http.Response, error) {
 	return r.ApiService.CreateSegmentsExecute(r)
 }
 
@@ -527,13 +527,13 @@ func (a *DefaultApiService) CreateSegments(ctx context.Context, appId string) Ap
 }
 
 // Execute executes the request
-//  @return InlineResponse201
-func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*InlineResponse201, *http.Response, error) {
+//  @return CreateSegmentSuccessResponse
+func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*CreateSegmentSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse201
+		localVarReturnValue  *CreateSegmentSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateSegments")
@@ -590,7 +590,7 @@ func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v InlineResponse4002
+			var v CreateSegmentBadRequestResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -600,7 +600,7 @@ func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse4002
+			var v CreateSegmentConflictResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -636,7 +636,7 @@ func (r ApiDeletePlayerRequest) AppId(appId string) ApiDeletePlayerRequest {
 	return r
 }
 
-func (r ApiDeletePlayerRequest) Execute() (*InlineResponse2007, *http.Response, error) {
+func (r ApiDeletePlayerRequest) Execute() (*DeletePlayerSuccessResponse, *http.Response, error) {
 	return r.ApiService.DeletePlayerExecute(r)
 }
 
@@ -660,13 +660,13 @@ func (a *DefaultApiService) DeletePlayer(ctx context.Context, playerId string) A
 }
 
 // Execute executes the request
-//  @return InlineResponse2007
-func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*InlineResponse2007, *http.Response, error) {
+//  @return DeletePlayerSuccessResponse
+func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*DeletePlayerSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2007
+		localVarReturnValue  *DeletePlayerSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeletePlayer")
@@ -725,7 +725,7 @@ func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*Inli
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v InlineResponse4003
+			var v DeletePlayerBadRequestResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -735,7 +735,7 @@ func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*Inli
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse2007
+			var v DeletePlayerNotFoundResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -765,7 +765,7 @@ type ApiDeleteSegmentsRequest struct {
 	segmentId string
 }
 
-func (r ApiDeleteSegmentsRequest) Execute() (*InlineResponse2001, *http.Response, error) {
+func (r ApiDeleteSegmentsRequest) Execute() (*DeleteSegmentSuccessResponse, *http.Response, error) {
 	return r.ApiService.DeleteSegmentsExecute(r)
 }
 
@@ -792,13 +792,13 @@ func (a *DefaultApiService) DeleteSegments(ctx context.Context, appId string, se
 }
 
 // Execute executes the request
-//  @return InlineResponse2001
-func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*InlineResponse2001, *http.Response, error) {
+//  @return DeleteSegmentSuccessResponse
+func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*DeleteSegmentSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2001
+		localVarReturnValue  *DeleteSegmentSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSegments")
@@ -854,7 +854,7 @@ func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v InlineResponse4003
+			var v DeleteSegmentBadRequestResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -864,7 +864,7 @@ func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse2001
+			var v DeleteSegmentNotFoundResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -899,7 +899,7 @@ func (r ApiExportPlayersRequest) ExportPlayersRequestBody(exportPlayersRequestBo
 	return r
 }
 
-func (r ApiExportPlayersRequest) Execute() (*InlineResponse2008, *http.Response, error) {
+func (r ApiExportPlayersRequest) Execute() (*ExportPlayersSuccessResponse, *http.Response, error) {
 	return r.ApiService.ExportPlayersExecute(r)
 }
 
@@ -966,13 +966,13 @@ func (a *DefaultApiService) ExportPlayers(ctx context.Context, appId string) Api
 }
 
 // Execute executes the request
-//  @return InlineResponse2008
-func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*InlineResponse2008, *http.Response, error) {
+//  @return ExportPlayersSuccessResponse
+func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*ExportPlayersSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2008
+		localVarReturnValue  *ExportPlayersSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ExportPlayers")
@@ -1379,7 +1379,7 @@ func (r ApiGetNotificationHistoryRequest) GetNotificationRequestBody(getNotifica
 	return r
 }
 
-func (r ApiGetNotificationHistoryRequest) Execute() (*InlineResponse2002, *http.Response, error) {
+func (r ApiGetNotificationHistoryRequest) Execute() (*NotificationHistorySuccessResponse, *http.Response, error) {
 	return r.ApiService.GetNotificationHistoryExecute(r)
 }
 
@@ -1401,13 +1401,13 @@ func (a *DefaultApiService) GetNotificationHistory(ctx context.Context, notifica
 }
 
 // Execute executes the request
-//  @return InlineResponse2002
-func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHistoryRequest) (*InlineResponse2002, *http.Response, error) {
+//  @return NotificationHistorySuccessResponse
+func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHistoryRequest) (*NotificationHistorySuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2002
+		localVarReturnValue  *NotificationHistorySuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetNotificationHistory")
@@ -1467,7 +1467,7 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v InlineResponse4001
+			var v NotificationHistoryBadRequestResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2176,7 +2176,7 @@ func (r ApiUpdatePlayerRequest) Player(player Player) ApiUpdatePlayerRequest {
 	return r
 }
 
-func (r ApiUpdatePlayerRequest) Execute() (*InlineResponse2001, *http.Response, error) {
+func (r ApiUpdatePlayerRequest) Execute() (*UpdatePlayerSuccessResponse, *http.Response, error) {
 	return r.ApiService.UpdatePlayerExecute(r)
 }
 
@@ -2198,13 +2198,13 @@ func (a *DefaultApiService) UpdatePlayer(ctx context.Context, playerId string) A
 }
 
 // Execute executes the request
-//  @return InlineResponse2001
-func (a *DefaultApiService) UpdatePlayerExecute(r ApiUpdatePlayerRequest) (*InlineResponse2001, *http.Response, error) {
+//  @return UpdatePlayerSuccessResponse
+func (a *DefaultApiService) UpdatePlayerExecute(r ApiUpdatePlayerRequest) (*UpdatePlayerSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2001
+		localVarReturnValue  *UpdatePlayerSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdatePlayer")
@@ -2291,7 +2291,7 @@ func (r ApiUpdatePlayerTagsRequest) UpdatePlayerTagsRequestBody(updatePlayerTags
 	return r
 }
 
-func (r ApiUpdatePlayerTagsRequest) Execute() (*InlineResponse2001, *http.Response, error) {
+func (r ApiUpdatePlayerTagsRequest) Execute() (*UpdatePlayerTagsSuccessResponse, *http.Response, error) {
 	return r.ApiService.UpdatePlayerTagsExecute(r)
 }
 
@@ -2332,13 +2332,13 @@ func (a *DefaultApiService) UpdatePlayerTags(ctx context.Context, appId string, 
 }
 
 // Execute executes the request
-//  @return InlineResponse2001
-func (a *DefaultApiService) UpdatePlayerTagsExecute(r ApiUpdatePlayerTagsRequest) (*InlineResponse2001, *http.Response, error) {
+//  @return UpdatePlayerTagsSuccessResponse
+func (a *DefaultApiService) UpdatePlayerTagsExecute(r ApiUpdatePlayerTagsRequest) (*UpdatePlayerTagsSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2001
+		localVarReturnValue  *UpdatePlayerTagsSuccessResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdatePlayerTags")

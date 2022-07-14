@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** |  | [optional] 
 **Value** | Pointer to **int32** |  | [optional] [readonly] 
+**Name** | Pointer to **string** | Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user. | [optional] 
 **Aggregation** | Pointer to **string** |  | [optional] [readonly] 
 **IsIos** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Apple iOS platform. | [optional] [default to true]
 **IsAndroid** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Google Android platform. | [optional] 
@@ -161,6 +162,31 @@ SetValue sets Value field to given value.
 `func (o *NotificationAllOf) HasValue() bool`
 
 HasValue returns a boolean if a field has been set.
+
+### GetName
+
+`func (o *NotificationAllOf) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *NotificationAllOf) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *NotificationAllOf) SetName(v string)`
+
+SetName sets Name field to given value.
+
+### HasName
+
+`func (o *NotificationAllOf) HasName() bool`
+
+HasName returns a boolean if a field has been set.
 
 ### GetAggregation
 

@@ -85,7 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/CreateNotificationSuccessResponse'
           description: "OK, invalid_player_ids, invalid_external_user_ids or No Subscribed\
             \ Players\nIf a message was successfully created, you will get a 200 response\
             \ and an id for the notification.\nIf the 200 response contains \"invalid_player_ids\"\
@@ -98,7 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400'
+                $ref: '#/components/schemas/CreateNotificationBadRequestResponse'
           description: Bad Request
       security:
       - app_key: []
@@ -127,7 +127,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/CancelNotificationSuccessResponse'
           description: OK
       security:
       - app_key: []
@@ -303,13 +303,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_2'
+                $ref: '#/components/schemas/NotificationHistorySuccessResponse'
           description: OK
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_1'
+                $ref: '#/components/schemas/NotificationHistoryBadRequestResponse'
           description: Bad Request
       security:
       - app_key: []
@@ -376,7 +376,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/UpdatePlayerTagsSuccessResponse'
           description: OK
       security:
       - app_key: []
@@ -412,19 +412,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
+                $ref: '#/components/schemas/CreateSegmentSuccessResponse'
           description: Created
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_2'
+                $ref: '#/components/schemas/CreateSegmentBadRequestResponse'
           description: Bad Request
         "409":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_2'
+                $ref: '#/components/schemas/CreateSegmentConflictResponse'
           description: Conflict
       security:
       - app_key: []
@@ -460,19 +460,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/DeleteSegmentSuccessResponse'
           description: OK
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_3'
+                $ref: '#/components/schemas/DeleteSegmentBadRequestResponse'
           description: Bad Request
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/DeleteSegmentNotFoundResponse'
           description: Not Found
       security:
       - app_key: []
@@ -627,7 +627,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_5'
+                $ref: '#/components/schemas/CreatePlayerSuccessResponse'
           description: OK
       security:
       - app_key: []
@@ -659,19 +659,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_7'
+                $ref: '#/components/schemas/DeletePlayerSuccessResponse'
           description: OK
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_3'
+                $ref: '#/components/schemas/DeletePlayerBadRequestResponse'
           description: Bad Request
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_7'
+                $ref: '#/components/schemas/DeletePlayerNotFoundResponse'
           description: Not Found
       security:
       - app_key: []
@@ -739,7 +739,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/UpdatePlayerSuccessResponse'
           description: OK
       security:
       - app_key: []
@@ -825,13 +825,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_8'
+                $ref: '#/components/schemas/ExportPlayersSuccessResponse'
           description: OK
         "400":
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/ExportPlayersBadRequestResponse'
           description: Bad Request
       security:
       - app_key: []
@@ -1794,7 +1794,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/InvalidIdentifierError'
       - $ref: '#/components/schemas/NoSubscribersError'
-    inline_response_200:
+    CreateNotificationSuccessResponse:
       example:
         recipients: 0
         external_id: external_id
@@ -1814,19 +1814,138 @@ components:
       - id
       - recipients
       type: object
-    inline_response_400:
+    CreateNotificationBadRequestResponse:
       properties:
         errors:
           items:
             type: string
           type: array
       type: object
-    inline_response_200_1:
+    CancelNotificationSuccessResponse:
       example:
         success: true
       properties:
         success:
           type: boolean
+      type: object
+    NotificationHistorySuccessResponse:
+      example:
+        success: true
+        destination_url: destination_url
+      properties:
+        success:
+          type: boolean
+        destination_url:
+          type: string
+      type: object
+    NotificationHistoryBadRequestResponse:
+      properties:
+        success:
+          type: string
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    UpdatePlayerTagsSuccessResponse:
+      example:
+        success: true
+      properties:
+        success:
+          type: boolean
+      type: object
+    CreateSegmentSuccessResponse:
+      example:
+        success: true
+        id: id
+      properties:
+        success:
+          type: boolean
+        id:
+          description: UUID of created segment
+          type: string
+      type: object
+    CreateSegmentBadRequestResponse:
+      properties:
+        success:
+          type: boolean
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    CreateSegmentConflictResponse:
+      properties:
+        success:
+          type: boolean
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    DeleteSegmentSuccessResponse:
+      example:
+        success: true
+      properties:
+        success:
+          type: boolean
+      type: object
+    DeleteSegmentBadRequestResponse:
+      properties:
+        erorrs:
+          items:
+            type: string
+          type: array
+      type: object
+    DeleteSegmentNotFoundResponse:
+      properties:
+        success:
+          type: boolean
+      type: object
+    CreatePlayerSuccessResponse:
+      example:
+        success: true
+        id: id
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
+      type: object
+    DeletePlayerSuccessResponse:
+      example:
+        success: success
+      properties:
+        success:
+          type: string
+      type: object
+    DeletePlayerBadRequestResponse:
+      properties:
+        erorrs:
+          items:
+            type: string
+          type: array
+      type: object
+    DeletePlayerNotFoundResponse:
+      properties:
+        success:
+          type: string
+      type: object
+    UpdatePlayerSuccessResponse:
+      example:
+        success: true
+      properties:
+        success:
+          type: boolean
+      type: object
+    ExportPlayersSuccessResponse:
+      example:
+        csv_file_url: csv_file_url
+      properties:
+        csv_file_url:
+          type: string
+      type: object
+    ExportPlayersBadRequestResponse:
       type: object
     get_notification_request_body:
       properties:
@@ -1849,25 +1968,6 @@ components:
       - id
       title: get_notification_request_body
       type: object
-    inline_response_200_2:
-      example:
-        success: true
-        destination_url: destination_url
-      properties:
-        success:
-          type: boolean
-        destination_url:
-          type: string
-      type: object
-    inline_response_400_1:
-      properties:
-        success:
-          type: string
-        errors:
-          items:
-            type: string
-          type: array
-      type: object
     update_player_tags_request_body:
       properties:
         tags:
@@ -1880,50 +1980,6 @@ components:
             \ more than 1 kilobyte of data.  See: Internal Database & CRM\n"
           type: object
       title: update_player_tags_request_body
-      type: object
-    inline_response_201:
-      example:
-        success: true
-        id: id
-      properties:
-        success:
-          type: boolean
-        id:
-          description: UUID of created segment
-          type: string
-      type: object
-    inline_response_400_2:
-      properties:
-        success:
-          type: boolean
-        errors:
-          items:
-            type: string
-          type: array
-      type: object
-    inline_response_400_3:
-      properties:
-        erorrs:
-          items:
-            type: string
-          type: array
-      type: object
-    inline_response_200_5:
-      example:
-        success: true
-        id: id
-      properties:
-        success:
-          type: boolean
-        id:
-          type: string
-      type: object
-    inline_response_200_7:
-      example:
-        success: success
-      properties:
-        success:
-          type: string
       type: object
     export_players_request_body:
       properties:
@@ -1942,13 +1998,6 @@ components:
           description: Export al ldevices belonging to the segment.
           type: string
       title: export_players_request_body
-      type: object
-    inline_response_200_8:
-      example:
-        csv_file_url: csv_file_url
-      properties:
-        csv_file_url:
-          type: string
       type: object
     Notification_allOf_android_background_layout:
       description: "Channel: Push Notifications\nPlatform: Android\nAllowing setting\
@@ -1973,6 +2022,13 @@ components:
         value:
           readOnly: true
           type: integer
+        name:
+          description: |-
+            Required for SMS Messages.
+            An identifier for tracking message within the OneSignal dashboard or export analytics.
+            Not shown to end user.
+          type: string
+          writeOnly: true
         aggregation:
           enum:
           - sum

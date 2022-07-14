@@ -15,34 +15,34 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse4002 struct for InlineResponse4002
-type InlineResponse4002 struct {
+// CreateSegmentConflictResponse struct for CreateSegmentConflictResponse
+type CreateSegmentConflictResponse struct {
 	Success *bool `json:"success,omitempty"`
 	Errors []string `json:"errors,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse4002 InlineResponse4002
+type _CreateSegmentConflictResponse CreateSegmentConflictResponse
 
-// NewInlineResponse4002 instantiates a new InlineResponse4002 object
+// NewCreateSegmentConflictResponse instantiates a new CreateSegmentConflictResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse4002() *InlineResponse4002 {
-	this := InlineResponse4002{}
+func NewCreateSegmentConflictResponse() *CreateSegmentConflictResponse {
+	this := CreateSegmentConflictResponse{}
 	return &this
 }
 
-// NewInlineResponse4002WithDefaults instantiates a new InlineResponse4002 object
+// NewCreateSegmentConflictResponseWithDefaults instantiates a new CreateSegmentConflictResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse4002WithDefaults() *InlineResponse4002 {
-	this := InlineResponse4002{}
+func NewCreateSegmentConflictResponseWithDefaults() *CreateSegmentConflictResponse {
+	this := CreateSegmentConflictResponse{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse4002) GetSuccess() bool {
+func (o *CreateSegmentConflictResponse) GetSuccess() bool {
 	if o == nil || o.Success == nil {
 		var ret bool
 		return ret
@@ -52,7 +52,7 @@ func (o *InlineResponse4002) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse4002) GetSuccessOk() (*bool, bool) {
+func (o *CreateSegmentConflictResponse) GetSuccessOk() (*bool, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -60,7 +60,7 @@ func (o *InlineResponse4002) GetSuccessOk() (*bool, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse4002) HasSuccess() bool {
+func (o *CreateSegmentConflictResponse) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -69,12 +69,12 @@ func (o *InlineResponse4002) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *InlineResponse4002) SetSuccess(v bool) {
+func (o *CreateSegmentConflictResponse) SetSuccess(v bool) {
 	o.Success = &v
 }
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *InlineResponse4002) GetErrors() []string {
+func (o *CreateSegmentConflictResponse) GetErrors() []string {
 	if o == nil || o.Errors == nil {
 		var ret []string
 		return ret
@@ -84,7 +84,7 @@ func (o *InlineResponse4002) GetErrors() []string {
 
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse4002) GetErrorsOk() ([]string, bool) {
+func (o *CreateSegmentConflictResponse) GetErrorsOk() ([]string, bool) {
 	if o == nil || o.Errors == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *InlineResponse4002) GetErrorsOk() ([]string, bool) {
 }
 
 // HasErrors returns a boolean if a field has been set.
-func (o *InlineResponse4002) HasErrors() bool {
+func (o *CreateSegmentConflictResponse) HasErrors() bool {
 	if o != nil && o.Errors != nil {
 		return true
 	}
@@ -101,11 +101,11 @@ func (o *InlineResponse4002) HasErrors() bool {
 }
 
 // SetErrors gets a reference to the given []string and assigns it to the Errors field.
-func (o *InlineResponse4002) SetErrors(v []string) {
+func (o *CreateSegmentConflictResponse) SetErrors(v []string) {
 	o.Errors = v
 }
 
-func (o InlineResponse4002) MarshalJSON() ([]byte, error) {
+func (o CreateSegmentConflictResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -121,11 +121,11 @@ func (o InlineResponse4002) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse4002) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse4002 := _InlineResponse4002{}
+func (o *CreateSegmentConflictResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varCreateSegmentConflictResponse := _CreateSegmentConflictResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse4002); err == nil {
-		*o = InlineResponse4002(varInlineResponse4002)
+	if err = json.Unmarshal(bytes, &varCreateSegmentConflictResponse); err == nil {
+		*o = CreateSegmentConflictResponse(varCreateSegmentConflictResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -139,38 +139,38 @@ func (o *InlineResponse4002) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse4002 struct {
-	value *InlineResponse4002
+type NullableCreateSegmentConflictResponse struct {
+	value *CreateSegmentConflictResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse4002) Get() *InlineResponse4002 {
+func (v NullableCreateSegmentConflictResponse) Get() *CreateSegmentConflictResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse4002) Set(val *InlineResponse4002) {
+func (v *NullableCreateSegmentConflictResponse) Set(val *CreateSegmentConflictResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse4002) IsSet() bool {
+func (v NullableCreateSegmentConflictResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse4002) Unset() {
+func (v *NullableCreateSegmentConflictResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse4002(val *InlineResponse4002) *NullableInlineResponse4002 {
-	return &NullableInlineResponse4002{value: val, isSet: true}
+func NewNullableCreateSegmentConflictResponse(val *CreateSegmentConflictResponse) *NullableCreateSegmentConflictResponse {
+	return &NullableCreateSegmentConflictResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse4002) MarshalJSON() ([]byte, error) {
+func (v NullableCreateSegmentConflictResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse4002) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateSegmentConflictResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

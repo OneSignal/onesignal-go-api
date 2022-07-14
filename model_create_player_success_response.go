@@ -15,35 +15,34 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse201 struct for InlineResponse201
-type InlineResponse201 struct {
+// CreatePlayerSuccessResponse struct for CreatePlayerSuccessResponse
+type CreatePlayerSuccessResponse struct {
 	Success *bool `json:"success,omitempty"`
-	// UUID of created segment
 	Id *string `json:"id,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _InlineResponse201 InlineResponse201
+type _CreatePlayerSuccessResponse CreatePlayerSuccessResponse
 
-// NewInlineResponse201 instantiates a new InlineResponse201 object
+// NewCreatePlayerSuccessResponse instantiates a new CreatePlayerSuccessResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse201() *InlineResponse201 {
-	this := InlineResponse201{}
+func NewCreatePlayerSuccessResponse() *CreatePlayerSuccessResponse {
+	this := CreatePlayerSuccessResponse{}
 	return &this
 }
 
-// NewInlineResponse201WithDefaults instantiates a new InlineResponse201 object
+// NewCreatePlayerSuccessResponseWithDefaults instantiates a new CreatePlayerSuccessResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse201WithDefaults() *InlineResponse201 {
-	this := InlineResponse201{}
+func NewCreatePlayerSuccessResponseWithDefaults() *CreatePlayerSuccessResponse {
+	this := CreatePlayerSuccessResponse{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse201) GetSuccess() bool {
+func (o *CreatePlayerSuccessResponse) GetSuccess() bool {
 	if o == nil || o.Success == nil {
 		var ret bool
 		return ret
@@ -53,7 +52,7 @@ func (o *InlineResponse201) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse201) GetSuccessOk() (*bool, bool) {
+func (o *CreatePlayerSuccessResponse) GetSuccessOk() (*bool, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -61,7 +60,7 @@ func (o *InlineResponse201) GetSuccessOk() (*bool, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse201) HasSuccess() bool {
+func (o *CreatePlayerSuccessResponse) HasSuccess() bool {
 	if o != nil && o.Success != nil {
 		return true
 	}
@@ -70,12 +69,12 @@ func (o *InlineResponse201) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *InlineResponse201) SetSuccess(v bool) {
+func (o *CreatePlayerSuccessResponse) SetSuccess(v bool) {
 	o.Success = &v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *InlineResponse201) GetId() string {
+func (o *CreatePlayerSuccessResponse) GetId() string {
 	if o == nil || o.Id == nil {
 		var ret string
 		return ret
@@ -85,7 +84,7 @@ func (o *InlineResponse201) GetId() string {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse201) GetIdOk() (*string, bool) {
+func (o *CreatePlayerSuccessResponse) GetIdOk() (*string, bool) {
 	if o == nil || o.Id == nil {
 		return nil, false
 	}
@@ -93,7 +92,7 @@ func (o *InlineResponse201) GetIdOk() (*string, bool) {
 }
 
 // HasId returns a boolean if a field has been set.
-func (o *InlineResponse201) HasId() bool {
+func (o *CreatePlayerSuccessResponse) HasId() bool {
 	if o != nil && o.Id != nil {
 		return true
 	}
@@ -102,11 +101,11 @@ func (o *InlineResponse201) HasId() bool {
 }
 
 // SetId gets a reference to the given string and assigns it to the Id field.
-func (o *InlineResponse201) SetId(v string) {
+func (o *CreatePlayerSuccessResponse) SetId(v string) {
 	o.Id = &v
 }
 
-func (o InlineResponse201) MarshalJSON() ([]byte, error) {
+func (o CreatePlayerSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Success != nil {
 		toSerialize["success"] = o.Success
@@ -122,11 +121,11 @@ func (o InlineResponse201) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *InlineResponse201) UnmarshalJSON(bytes []byte) (err error) {
-	varInlineResponse201 := _InlineResponse201{}
+func (o *CreatePlayerSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varCreatePlayerSuccessResponse := _CreatePlayerSuccessResponse{}
 
-	if err = json.Unmarshal(bytes, &varInlineResponse201); err == nil {
-		*o = InlineResponse201(varInlineResponse201)
+	if err = json.Unmarshal(bytes, &varCreatePlayerSuccessResponse); err == nil {
+		*o = CreatePlayerSuccessResponse(varCreatePlayerSuccessResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -140,38 +139,38 @@ func (o *InlineResponse201) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableInlineResponse201 struct {
-	value *InlineResponse201
+type NullableCreatePlayerSuccessResponse struct {
+	value *CreatePlayerSuccessResponse
 	isSet bool
 }
 
-func (v NullableInlineResponse201) Get() *InlineResponse201 {
+func (v NullableCreatePlayerSuccessResponse) Get() *CreatePlayerSuccessResponse {
 	return v.value
 }
 
-func (v *NullableInlineResponse201) Set(val *InlineResponse201) {
+func (v *NullableCreatePlayerSuccessResponse) Set(val *CreatePlayerSuccessResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse201) IsSet() bool {
+func (v NullableCreatePlayerSuccessResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse201) Unset() {
+func (v *NullableCreatePlayerSuccessResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse201(val *InlineResponse201) *NullableInlineResponse201 {
-	return &NullableInlineResponse201{value: val, isSet: true}
+func NewNullableCreatePlayerSuccessResponse(val *CreatePlayerSuccessResponse) *NullableCreatePlayerSuccessResponse {
+	return &NullableCreatePlayerSuccessResponse{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse201) MarshalJSON() ([]byte, error) {
+func (v NullableCreatePlayerSuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse201) UnmarshalJSON(src []byte) error {
+func (v *NullableCreatePlayerSuccessResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
