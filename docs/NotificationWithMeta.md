@@ -30,9 +30,9 @@ Name | Type | Description | Notes
 **IncludeAndroidRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
 **Id** | Pointer to **string** |  | [optional] 
 **Value** | Pointer to **int32** |  | [optional] [readonly] 
-**Name** | Pointer to **string** | Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user. | [optional] 
+**Name** | Pointer to **NullableString** | Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user. | [optional] 
 **Aggregation** | Pointer to **string** |  | [optional] [readonly] 
-**IsIos** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Apple iOS platform. | [optional] [default to true]
+**IsIos** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Apple iOS platform. | [optional] 
 **IsAndroid** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Google Android platform. | [optional] 
 **IsHuawei** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Huawei Android platform. | [optional] 
 **IsAnyWeb** | Pointer to **NullableBool** | Indicates whether to send to all subscribed web browser users, including Chrome, Firefox, and Safari. You may use this instead as a combined flag instead of separately enabling isChromeWeb, isFirefox, and isSafari, though the three options are equivalent to this one.  | [optional] 
@@ -49,73 +49,72 @@ Name | Type | Description | Notes
 **Headings** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
 **Subtitle** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
 **Data** | Pointer to **map[string]interface{}** | Channel: Push Notifications Platform: Huawei A custom map of data that is passed back to your app. Same as using Additional Data within the dashboard. Can use up to 2048 bytes of data. Example: {\&quot;abc\&quot;: 123, \&quot;foo\&quot;: \&quot;bar\&quot;, \&quot;event_performed\&quot;: true, \&quot;amount\&quot;: 12.1}  | [optional] 
-**HuaweiMsgType** | Pointer to **string** | Channel: Push Notifications Platform: Huawei Use \&quot;data\&quot; or \&quot;message\&quot; depending on the type of notification you are sending. More details in Data &amp; Background Notifications.  | [optional] 
-**Url** | Pointer to **string** | Channel: Push Notifications Platform: All The URL to open in the browser when a user clicks on the notification. Note: iOS needs https or updated NSAppTransportSecurity in plist This field supports inline substitutions. Omit if including web_url or app_url Example: https://onesignal.com  | [optional] 
-**WebUrl** | Pointer to **string** | Channel: Push Notifications Platform: All Browsers Same as url but only sent to web push platforms. Including Chrome, Firefox, Safari, Opera, etc. Example: https://onesignal.com  | [optional] 
-**AppUrl** | Pointer to **string** | Channel: Push Notifications Platform: All Browsers Same as url but only sent to web push platforms. Including iOS, Android, macOS, Windows, ChromeApps, etc. Example: https://onesignal.com  | [optional] 
+**HuaweiMsgType** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Use \&quot;data\&quot; or \&quot;message\&quot; depending on the type of notification you are sending. More details in Data &amp; Background Notifications.  | [optional] 
+**Url** | Pointer to **NullableString** | Channel: Push Notifications Platform: All The URL to open in the browser when a user clicks on the notification. Note: iOS needs https or updated NSAppTransportSecurity in plist This field supports inline substitutions. Omit if including web_url or app_url Example: https://onesignal.com  | [optional] 
+**WebUrl** | Pointer to **NullableString** | Channel: Push Notifications Platform: All Browsers Same as url but only sent to web push platforms. Including Chrome, Firefox, Safari, Opera, etc. Example: https://onesignal.com  | [optional] 
+**AppUrl** | Pointer to **NullableString** | Channel: Push Notifications Platform: All Browsers Same as url but only sent to web push platforms. Including iOS, Android, macOS, Windows, ChromeApps, etc. Example: https://onesignal.com  | [optional] 
 **IosAttachments** | Pointer to **map[string]interface{}** | Channel: Push Notifications Platform: iOS 10+ Adds media attachments to notifications. Set as JSON object, key as a media id of your choice and the value as a valid local filename or URL. User must press and hold on the notification to view. Do not set mutable_content to download attachments. The OneSignal SDK does this automatically Example: {\&quot;id1\&quot;: \&quot;https://domain.com/image.jpg\&quot;}  | [optional] 
-**TemplateId** | Pointer to **string** | Channel: Push Notifications Platform: All Use a template you setup on our dashboard. The template_id is the UUID found in the URL when viewing a template on our dashboard. Example: be4a8044-bbd6-11e4-a581-000c2940e62c  | [optional] 
+**TemplateId** | Pointer to **NullableString** | Channel: Push Notifications Platform: All Use a template you setup on our dashboard. The template_id is the UUID found in the URL when viewing a template on our dashboard. Example: be4a8044-bbd6-11e4-a581-000c2940e62c  | [optional] 
 **ContentAvailable** | Pointer to **NullableBool** | Channel: Push Notifications Platform: iOS Sending true wakes your app from background to run custom native code (Apple interprets this as content-available&#x3D;1). Note: Not applicable if the app is in the \&quot;force-quit\&quot; state (i.e app was swiped away). Omit the contents field to prevent displaying a visible notification.  | [optional] 
 **MutableContent** | Pointer to **bool** | Channel: Push Notifications Platform: iOS 10+ Always defaults to true and cannot be turned off. Allows tracking of notification receives and changing of the notification content in your app before it is displayed. Triggers didReceive(_:withContentHandler:) on your UNNotificationServiceExtension.  | [optional] 
-**TargetContentIdentifier** | Pointer to **string** | Channel: Push Notifications Platform: iOS 13+ Use to target a specific experience in your App Clip, or to target your notification to a specific window in a multi-scene App.  | [optional] 
-**BigPicture** | Pointer to **string** | Channel: Push Notifications Platform: Android Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
-**HuaweiBigPicture** | Pointer to **string** | Channel: Push Notifications Platform: Huawei Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
-**AdmBigPicture** | Pointer to **string** | Channel: Push Notifications Platform: Amazon Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
-**ChromeBigPicture** | Pointer to **string** | Channel: Push Notifications Platform: ChromeApp Large picture to display below the notification text. Must be a local URL.  | [optional] 
-**ChromeWebImage** | Pointer to **string** | Channel: Push Notifications Platform: Chrome 56+ Sets the web push notification&#39;s large image to be shown below the notification&#39;s title and text. Please see Web Push Notification Icons.  | [optional] 
+**TargetContentIdentifier** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS 13+ Use to target a specific experience in your App Clip, or to target your notification to a specific window in a multi-scene App.  | [optional] 
+**BigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
+**HuaweiBigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
+**AdmBigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: Amazon Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
+**ChromeBigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: ChromeApp Large picture to display below the notification text. Must be a local URL.  | [optional] 
+**ChromeWebImage** | Pointer to **NullableString** | Channel: Push Notifications Platform: Chrome 56+ Sets the web push notification&#39;s large image to be shown below the notification&#39;s title and text. Please see Web Push Notification Icons.  | [optional] 
 **Buttons** | Pointer to [**[]Button**](Button.md) | Channel: Push Notifications Platform: iOS 8.0+, Android 4.1+, and derivatives like Amazon Buttons to add to the notification. Icon only works for Android. Buttons show in reverse order of array position i.e. Last item in array shows as first button on device. Example: [{\&quot;id\&quot;: \&quot;id2\&quot;, \&quot;text\&quot;: \&quot;second button\&quot;, \&quot;icon\&quot;: \&quot;ic_menu_share\&quot;}, {\&quot;id\&quot;: \&quot;id1\&quot;, \&quot;text\&quot;: \&quot;first button\&quot;, \&quot;icon\&quot;: \&quot;ic_menu_send\&quot;}]  | [optional] 
 **WebButtons** | Pointer to [**[]Button**](Button.md) | Channel: Push Notifications Platform: Chrome 48+ Add action buttons to the notification. The id field is required. Example: [{\&quot;id\&quot;: \&quot;like-button\&quot;, \&quot;text\&quot;: \&quot;Like\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/N8SN8ZS.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}, {\&quot;id\&quot;: \&quot;read-more-button\&quot;, \&quot;text\&quot;: \&quot;Read more\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/MIxJp1L.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}]  | [optional] 
-**IosCategory** | Pointer to **string** | Channel: Push Notifications Platform: iOS Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code. Example: calendar category which contains actions like accept and decline iOS 10+ This will trigger your UNNotificationContentExtension whose ID matches this category.  | [optional] 
+**IosCategory** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code. Example: calendar category which contains actions like accept and decline iOS 10+ This will trigger your UNNotificationContentExtension whose ID matches this category.  | [optional] 
 **AndroidChannelId** | Pointer to **string** | Channel: Push Notifications Platform: Android The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
-**HuaweiChannelId** | Pointer to **string** | Channel: Push Notifications Platform: Huawei The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
+**HuaweiChannelId** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
 **ExistingAndroidChannelId** | Pointer to **string** | Channel: Push Notifications Platform: Android Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional] 
-**HuaweiExistingChannelId** | Pointer to **string** | Channel: Push Notifications Platform: Huawei Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional] 
-**AndroidBackgroundLayout** | Pointer to [**NotificationAllOfAndroidBackgroundLayout**](NotificationAllOfAndroidBackgroundLayout.md) |  | [optional] 
-**SmallIcon** | Pointer to **string** | Channel: Push Notifications Platform: Android Icon shown in the status bar and on the top left of the notification. If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons  | [optional] 
-**HuaweiSmallIcon** | Pointer to **string** | Channel: Push Notifications Platform: Huawei Icon shown in the status bar and on the top left of the notification. Use an Android resource path (E.g. /drawable/small_icon). Defaults to your app icon if not set.  | [optional] 
-**LargeIcon** | Pointer to **string** | Channel: Push Notifications Platform: Android Can be a drawable resource name or a URL. See: How to create large icons  | [optional] 
-**HuaweiLargeIcon** | Pointer to **string** | Channel: Push Notifications Platform: Huawei Can be a drawable resource name or a URL. See: How to create large icons  | [optional] 
-**AdmSmallIcon** | Pointer to **string** | Channel: Push Notifications Platform: Amazon If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons  | [optional] 
-**AdmLargeIcon** | Pointer to **string** | Channel: Push Notifications Platform: Amazon If blank the small_icon is used. Can be a drawable resource name or a URL. See: How to create large icons  | [optional] 
-**ChromeWebIcon** | Pointer to **string** | Channel: Push Notifications Platform: Chrome Sets the web push notification&#39;s icon. An image URL linking to a valid image. Common image types are supported; GIF will not animate. We recommend 256x256 (at least 80x80) to display well on high DPI devices. Firefox will also use this icon, unless you specify firefox_icon.  | [optional] 
-**ChromeWebBadge** | Pointer to **string** | Channel: Push Notifications Platform: Chrome Sets the web push notification icon for Android devices in the notification shade. Please see Web Push Notification Badge.  | [optional] 
-**FirefoxIcon** | Pointer to **string** | Channel: Push Notifications Platform: Firefox Not recommended Few people need to set Firefox-specific icons. We recommend setting chrome_web_icon instead, which Firefox will also use. Sets the web push notification&#39;s icon for Firefox. An image URL linking to a valid image. Common image types are supported; GIF will not animate. We recommend 256x256 (at least 80x80) to display well on high DPI devices.  | [optional] 
-**ChromeIcon** | Pointer to **string** | Channel: Push Notifications Platform: ChromeApp This flag is not used for web push For web push, please see chrome_web_icon instead. The local URL to an icon to use. If blank, the app icon will be used.  | [optional] 
-**IosSound** | Pointer to **string** | Channel: Push Notifications Platform: iOS Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable vibration and sound for the notification. Example: \&quot;notification.wav\&quot;  | [optional] 
-**AndroidSound** | Pointer to **string** | Channel: Push Notifications Platform: Android &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable sound for the notification. NOTE: Leave off file extension for Android. Example: \&quot;notification\&quot;  | [optional] 
-**HuaweiSound** | Pointer to **string** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. Sound file that is included in your app to play instead of the default device notification sound. NOTE: Leave off file extension for and include the full path.  Example: \&quot;/res/raw/notification\&quot;  | [optional] 
-**AdmSound** | Pointer to **string** | Channel: Push Notifications Platform: Amazon &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable sound for the notification. NOTE: Leave off file extension for Android. Example: \&quot;notification\&quot;  | [optional] 
-**WpWnsSound** | Pointer to **string** | Channel: Push Notifications Platform: Windows Sound file that is included in your app to play instead of the default device notification sound. Example: \&quot;notification.wav\&quot;  | [optional] 
-**AndroidLedColor** | Pointer to **string** | Channel: Push Notifications Platform: Android &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sets the devices LED notification light if the device has one. ARGB Hex format. Example(Blue): \&quot;FF0000FF\&quot;  | [optional] 
-**HuaweiLedColor** | Pointer to **string** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. Sets the devices LED notification light if the device has one. RGB Hex format. Example(Blue): \&quot;0000FF\&quot;  | [optional] 
-**AndroidAccentColor** | Pointer to **string** | Channel: Push Notifications Platform: Android Sets the background color of the notification circle to the left of the notification text. Only applies to apps targeting Android API level 21+ on Android 5.0+ devices. Example(Red): \&quot;FFFF0000\&quot;  | [optional] 
-**HuaweiAccentColor** | Pointer to **string** | Channel: Push Notifications Platform: Huawei Accent Color used on Action Buttons and Group overflow count. Uses RGB Hex value (E.g. #9900FF). Defaults to device&#39;s theme color if not set.  | [optional] 
+**HuaweiExistingChannelId** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional] 
+**AndroidBackgroundLayout** | Pointer to [**BasicNotificationAllOfAndroidBackgroundLayout**](BasicNotificationAllOfAndroidBackgroundLayout.md) |  | [optional] 
+**SmallIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Icon shown in the status bar and on the top left of the notification. If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons  | [optional] 
+**HuaweiSmallIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Icon shown in the status bar and on the top left of the notification. Use an Android resource path (E.g. /drawable/small_icon). Defaults to your app icon if not set.  | [optional] 
+**LargeIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Can be a drawable resource name or a URL. See: How to create large icons  | [optional] 
+**HuaweiLargeIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Can be a drawable resource name or a URL. See: How to create large icons  | [optional] 
+**AdmSmallIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Amazon If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons  | [optional] 
+**AdmLargeIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Amazon If blank the small_icon is used. Can be a drawable resource name or a URL. See: How to create large icons  | [optional] 
+**ChromeWebIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Chrome Sets the web push notification&#39;s icon. An image URL linking to a valid image. Common image types are supported; GIF will not animate. We recommend 256x256 (at least 80x80) to display well on high DPI devices. Firefox will also use this icon, unless you specify firefox_icon.  | [optional] 
+**ChromeWebBadge** | Pointer to **NullableString** | Channel: Push Notifications Platform: Chrome Sets the web push notification icon for Android devices in the notification shade. Please see Web Push Notification Badge.  | [optional] 
+**FirefoxIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Firefox Not recommended Few people need to set Firefox-specific icons. We recommend setting chrome_web_icon instead, which Firefox will also use. Sets the web push notification&#39;s icon for Firefox. An image URL linking to a valid image. Common image types are supported; GIF will not animate. We recommend 256x256 (at least 80x80) to display well on high DPI devices.  | [optional] 
+**ChromeIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: ChromeApp This flag is not used for web push For web push, please see chrome_web_icon instead. The local URL to an icon to use. If blank, the app icon will be used.  | [optional] 
+**IosSound** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable vibration and sound for the notification. Example: \&quot;notification.wav\&quot;  | [optional] 
+**AndroidSound** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable sound for the notification. NOTE: Leave off file extension for Android. Example: \&quot;notification\&quot;  | [optional] 
+**HuaweiSound** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. Sound file that is included in your app to play instead of the default device notification sound. NOTE: Leave off file extension for and include the full path.  Example: \&quot;/res/raw/notification\&quot;  | [optional] 
+**AdmSound** | Pointer to **NullableString** | Channel: Push Notifications Platform: Amazon &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable sound for the notification. NOTE: Leave off file extension for Android. Example: \&quot;notification\&quot;  | [optional] 
+**WpWnsSound** | Pointer to **NullableString** | Channel: Push Notifications Platform: Windows Sound file that is included in your app to play instead of the default device notification sound. Example: \&quot;notification.wav\&quot;  | [optional] 
+**AndroidLedColor** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sets the devices LED notification light if the device has one. ARGB Hex format. Example(Blue): \&quot;FF0000FF\&quot;  | [optional] 
+**HuaweiLedColor** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. Sets the devices LED notification light if the device has one. RGB Hex format. Example(Blue): \&quot;0000FF\&quot;  | [optional] 
+**AndroidAccentColor** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Sets the background color of the notification circle to the left of the notification text. Only applies to apps targeting Android API level 21+ on Android 5.0+ devices. Example(Red): \&quot;FFFF0000\&quot;  | [optional] 
+**HuaweiAccentColor** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Accent Color used on Action Buttons and Group overflow count. Uses RGB Hex value (E.g. #9900FF). Defaults to device&#39;s theme color if not set.  | [optional] 
 **AndroidVisibility** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Android 5.0_ &amp;#9888;&amp;#65039;Deprecated, this field doesn&#39;t work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. 1 &#x3D; Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 &#x3D; Private (Hides message contents on lock screen if the user set \&quot;Hide sensitive notification content\&quot; in the system settings) -1 &#x3D; Secret (Notification does not show on the lock screen at all)  | [optional] 
 **HuaweiVisibility** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Huawei &amp;#9888;&amp;#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. 1 &#x3D; Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 &#x3D; Private (Hides message contents on lock screen if the user set \&quot;Hide sensitive notification content\&quot; in the system settings) -1 &#x3D; Secret (Notification does not show on the lock screen at all)  | [optional] 
-**IosBadgeType** | Pointer to **string** | Channel: Push Notifications Platform: iOS Describes whether to set or increase/decrease your app&#39;s iOS badge count by the ios_badgeCount specified count. Can specify None, SetTo, or Increase. &#x60;None&#x60; leaves the count unaffected. &#x60;SetTo&#x60; directly sets the badge count to the number specified in ios_badgeCount. &#x60;Increase&#x60; adds the number specified in ios_badgeCount to the total. Use a negative number to decrease the badge count.  | [optional] 
+**IosBadgeType** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS Describes whether to set or increase/decrease your app&#39;s iOS badge count by the ios_badgeCount specified count. Can specify None, SetTo, or Increase. &#x60;None&#x60; leaves the count unaffected. &#x60;SetTo&#x60; directly sets the badge count to the number specified in ios_badgeCount. &#x60;Increase&#x60; adds the number specified in ios_badgeCount to the total. Use a negative number to decrease the badge count.  | [optional] 
 **IosBadgeCount** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: iOS Used with ios_badgeType, describes the value to set or amount to increase/decrease your app&#39;s iOS badge count by. You can use a negative number to decrease the badge count when used with an ios_badgeType of Increase.  | [optional] 
 **CollapseId** | Pointer to **string** | Channel: Push Notifications Platform: iOS 10+, Android Only one notification with the same id will be shown on the device. Use the same id to update an existing notification instead of showing a new one. Limit of 64 characters.  | [optional] 
-**WebPushTopic** | Pointer to **string** | Channel: Push Notifications Platform: All Browsers Display multiple notifications at once with different topics.  | [optional] 
+**WebPushTopic** | Pointer to **NullableString** | Channel: Push Notifications Platform: All Browsers Display multiple notifications at once with different topics.  | [optional] 
 **ApnsAlert** | Pointer to **map[string]interface{}** | Channel: Push Notifications Platform: iOS 10+ iOS can localize push notification messages on the client using special parameters such as loc-key. When using the Create Notification endpoint, you must include these parameters inside of a field called apns_alert. Please see Apple&#39;s guide on localizing push notifications to learn more.  | [optional] 
-**SendAfter** | Pointer to **int64** | Unix timestamp indicating when notification delivery should begin. | [optional] 
-**DelayedOption** | Pointer to **string** | Channel: All Possible values are: timezone (Deliver at a specific time-of-day in each users own timezone) last-active Same as Intelligent Delivery . (Deliver at the same time of day as each user last used your app). If send_after is used, this takes effect after the send_after time has elapsed.  | [optional] 
-**DeliveryTimeOfDay** | Pointer to **string** | Channel: All Use with delayed_option&#x3D;timezone. Examples: \&quot;9:00AM\&quot; \&quot;21:45\&quot; \&quot;9:45:30\&quot;  | [optional] 
+**DelayedOption** | Pointer to **NullableString** | Channel: All Possible values are: timezone (Deliver at a specific time-of-day in each users own timezone) last-active Same as Intelligent Delivery . (Deliver at the same time of day as each user last used your app). If send_after is used, this takes effect after the send_after time has elapsed.  | [optional] 
+**DeliveryTimeOfDay** | Pointer to **NullableString** | Channel: All Use with delayed_option&#x3D;timezone. Examples: \&quot;9:00AM\&quot; \&quot;21:45\&quot; \&quot;9:45:30\&quot;  | [optional] 
 **Ttl** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: iOS, Android, Chrome, Firefox, Safari, ChromeWeb Time To Live - In seconds. The notification will be expired if the device does not come back online within this time. The default is 259,200 seconds (3 days). Max value to set is 2419200 seconds (28 days).  | [optional] 
 **Priority** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Android, Chrome, ChromeWeb Delivery priority through the push server (example GCM/FCM). Pass 10 for high priority or any other integer for normal priority. Defaults to normal priority for Android and high for iOS. For Android 6.0+ devices setting priority to high will wake the device out of doze mode.  | [optional] 
 **ApnsPushTypeOverride** | Pointer to **string** | Channel: Push Notifications Platform: iOS valid values: voip Set the value to voip for sending VoIP Notifications This field maps to the APNS header apns-push-type. Note: alert and background are automatically set by OneSignal  | [optional] 
 **ThrottleRatePerMinute** | Pointer to **NullableInt32** | number of push notifications sent per minute. Paid Feature Only. If throttling is not enabled for the app or the notification, and for free accounts, null is returned. Refer to Throttling for more details. | [optional] 
-**AndroidGroup** | Pointer to **string** | Channel: Push Notifications Platform: Android Notifications with the same group will be stacked together using Android&#39;s Notification Grouping feature.  | [optional] 
-**AndroidGroupMessage** | Pointer to **string** | Channel: Push Notifications Platform: Android Note: This only works for Android 6 and older. Android 7+ allows full expansion of all message. Summary message to display when 2+ notifications are stacked together. Default is \&quot;# new messages\&quot;. Include $[notif_count] in your message and it will be replaced with the current number. Languages - The value of each key is the message that will be sent to users for that language. \&quot;en\&quot; (English) is required. The key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified or Traditional Chinese. Read more: supported languages. Example: {\&quot;en\&quot;: \&quot;You have $[notif_count] new messages\&quot;}  | [optional] 
-**AdmGroup** | Pointer to **string** | Channel: Push Notifications Platform: Amazon Notifications with the same group will be stacked together using Android&#39;s Notification Grouping feature.  | [optional] 
+**AndroidGroup** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Notifications with the same group will be stacked together using Android&#39;s Notification Grouping feature.  | [optional] 
+**AndroidGroupMessage** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Note: This only works for Android 6 and older. Android 7+ allows full expansion of all message. Summary message to display when 2+ notifications are stacked together. Default is \&quot;# new messages\&quot;. Include $[notif_count] in your message and it will be replaced with the current number. Languages - The value of each key is the message that will be sent to users for that language. \&quot;en\&quot; (English) is required. The key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified or Traditional Chinese. Read more: supported languages. Example: {\&quot;en\&quot;: \&quot;You have $[notif_count] new messages\&quot;}  | [optional] 
+**AdmGroup** | Pointer to **NullableString** | Channel: Push Notifications Platform: Amazon Notifications with the same group will be stacked together using Android&#39;s Notification Grouping feature.  | [optional] 
 **AdmGroupMessage** | Pointer to **map[string]interface{}** | Channel: Push Notifications Platform: Amazon Summary message to display when 2+ notifications are stacked together. Default is \&quot;# new messages\&quot;. Include $[notif_count] in your message and it will be replaced with the current number. \&quot;en\&quot; (English) is required. The key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified or Traditional Chinese. The value of each key is the message that will be sent to users for that language. Example: {\&quot;en\&quot;: \&quot;You have $[notif_count] new messages\&quot;}  | [optional] 
-**ThreadId** | Pointer to **string** | Channel: Push Notifications Platform: iOS 12+ This parameter is supported in iOS 12 and above. It allows you to group related notifications together. If two notifications have the same thread-id, they will both be added to the same group.  | [optional] 
+**ThreadId** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS 12+ This parameter is supported in iOS 12 and above. It allows you to group related notifications together. If two notifications have the same thread-id, they will both be added to the same group.  | [optional] 
 **SummaryArg** | Pointer to **string** | Channel: Push Notifications Platform: iOS 12+ When using thread_id to create grouped notifications in iOS 12+, you can also control the summary. For example, a grouped notification can say \&quot;12 more notifications from John Doe\&quot;. The summary_arg lets you set the name of the person/thing the notifications are coming from, and will show up as \&quot;X more notifications from summary_arg\&quot;  | [optional] 
 **SummaryArgCount** | Pointer to **int32** | Channel: Push Notifications Platform: iOS 12+ When using thread_id, you can also control the count of the number of notifications in the group. For example, if the group already has 12 notifications, and you send a new notification with summary_arg_count &#x3D; 2, the new total will be 14 and the summary will be \&quot;14 more notifications from summary_arg\&quot;  | [optional] 
-**EmailSubject** | Pointer to **string** | Channel: Email Required.  The subject of the email.  | [optional] 
+**EmailSubject** | Pointer to **NullableString** | Channel: Email Required.  The subject of the email.  | [optional] 
 **EmailBody** | Pointer to **string** | Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an &lt;a&gt; tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid.  | [optional] 
-**EmailFromName** | Pointer to **string** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
-**EmailFromAddress** | Pointer to **string** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
-**SmsFrom** | Pointer to **string** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
+**EmailFromName** | Pointer to **NullableString** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
+**EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
+**SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
 **Successful** | Pointer to **int32** | Number of notifications that were successfully delivered. | [optional] 
 **Failed** | Pointer to **int32** | Number of notifications that could not be delivered due to those devices being unsubscribed. | [optional] 
@@ -125,6 +124,7 @@ Name | Type | Description | Notes
 **Outcomes** | Pointer to [**[]OutcomeData**](OutcomeData.md) |  | [optional] 
 **Remaining** | Pointer to **int32** | Number of notifications that have not been sent out yet. This can mean either our system is still processing the notification or you have delayed options set. | [optional] 
 **QueuedAt** | Pointer to **int64** | Unix timestamp indicating when the notification was created. | [optional] 
+**SendAfter** | Pointer to **NullableInt64** | Unix timestamp indicating when notification delivery should begin. | [optional] 
 **CompletedAt** | Pointer to **NullableInt64** | Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after. | [optional] 
 **PlatformDeliveryStats** | Pointer to [**PlatformDeliveryData**](PlatformDeliveryData.md) |  | [optional] 
 
@@ -522,6 +522,16 @@ SetIncludePlayerIds sets IncludePlayerIds field to given value.
 
 HasIncludePlayerIds returns a boolean if a field has been set.
 
+### SetIncludePlayerIdsNil
+
+`func (o *NotificationWithMeta) SetIncludePlayerIdsNil(b bool)`
+
+ SetIncludePlayerIdsNil sets the value for IncludePlayerIds to be an explicit nil
+
+### UnsetIncludePlayerIds
+`func (o *NotificationWithMeta) UnsetIncludePlayerIds()`
+
+UnsetIncludePlayerIds ensures that no value is present for IncludePlayerIds, not even an explicit nil
 ### GetIncludeExternalUserIds
 
 `func (o *NotificationWithMeta) GetIncludeExternalUserIds() []string`
@@ -547,6 +557,16 @@ SetIncludeExternalUserIds sets IncludeExternalUserIds field to given value.
 
 HasIncludeExternalUserIds returns a boolean if a field has been set.
 
+### SetIncludeExternalUserIdsNil
+
+`func (o *NotificationWithMeta) SetIncludeExternalUserIdsNil(b bool)`
+
+ SetIncludeExternalUserIdsNil sets the value for IncludeExternalUserIds to be an explicit nil
+
+### UnsetIncludeExternalUserIds
+`func (o *NotificationWithMeta) UnsetIncludeExternalUserIds()`
+
+UnsetIncludeExternalUserIds ensures that no value is present for IncludeExternalUserIds, not even an explicit nil
 ### GetIncludeEmailTokens
 
 `func (o *NotificationWithMeta) GetIncludeEmailTokens() []string`
@@ -822,6 +842,16 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
+### SetNameNil
+
+`func (o *NotificationWithMeta) SetNameNil(b bool)`
+
+ SetNameNil sets the value for Name to be an explicit nil
+
+### UnsetName
+`func (o *NotificationWithMeta) UnsetName()`
+
+UnsetName ensures that no value is present for Name, not even an explicit nil
 ### GetAggregation
 
 `func (o *NotificationWithMeta) GetAggregation() string`
@@ -1397,6 +1427,16 @@ SetData sets Data field to given value.
 
 HasData returns a boolean if a field has been set.
 
+### SetDataNil
+
+`func (o *NotificationWithMeta) SetDataNil(b bool)`
+
+ SetDataNil sets the value for Data to be an explicit nil
+
+### UnsetData
+`func (o *NotificationWithMeta) UnsetData()`
+
+UnsetData ensures that no value is present for Data, not even an explicit nil
 ### GetHuaweiMsgType
 
 `func (o *NotificationWithMeta) GetHuaweiMsgType() string`
@@ -1422,6 +1462,16 @@ SetHuaweiMsgType sets HuaweiMsgType field to given value.
 
 HasHuaweiMsgType returns a boolean if a field has been set.
 
+### SetHuaweiMsgTypeNil
+
+`func (o *NotificationWithMeta) SetHuaweiMsgTypeNil(b bool)`
+
+ SetHuaweiMsgTypeNil sets the value for HuaweiMsgType to be an explicit nil
+
+### UnsetHuaweiMsgType
+`func (o *NotificationWithMeta) UnsetHuaweiMsgType()`
+
+UnsetHuaweiMsgType ensures that no value is present for HuaweiMsgType, not even an explicit nil
 ### GetUrl
 
 `func (o *NotificationWithMeta) GetUrl() string`
@@ -1447,6 +1497,16 @@ SetUrl sets Url field to given value.
 
 HasUrl returns a boolean if a field has been set.
 
+### SetUrlNil
+
+`func (o *NotificationWithMeta) SetUrlNil(b bool)`
+
+ SetUrlNil sets the value for Url to be an explicit nil
+
+### UnsetUrl
+`func (o *NotificationWithMeta) UnsetUrl()`
+
+UnsetUrl ensures that no value is present for Url, not even an explicit nil
 ### GetWebUrl
 
 `func (o *NotificationWithMeta) GetWebUrl() string`
@@ -1472,6 +1532,16 @@ SetWebUrl sets WebUrl field to given value.
 
 HasWebUrl returns a boolean if a field has been set.
 
+### SetWebUrlNil
+
+`func (o *NotificationWithMeta) SetWebUrlNil(b bool)`
+
+ SetWebUrlNil sets the value for WebUrl to be an explicit nil
+
+### UnsetWebUrl
+`func (o *NotificationWithMeta) UnsetWebUrl()`
+
+UnsetWebUrl ensures that no value is present for WebUrl, not even an explicit nil
 ### GetAppUrl
 
 `func (o *NotificationWithMeta) GetAppUrl() string`
@@ -1497,6 +1567,16 @@ SetAppUrl sets AppUrl field to given value.
 
 HasAppUrl returns a boolean if a field has been set.
 
+### SetAppUrlNil
+
+`func (o *NotificationWithMeta) SetAppUrlNil(b bool)`
+
+ SetAppUrlNil sets the value for AppUrl to be an explicit nil
+
+### UnsetAppUrl
+`func (o *NotificationWithMeta) UnsetAppUrl()`
+
+UnsetAppUrl ensures that no value is present for AppUrl, not even an explicit nil
 ### GetIosAttachments
 
 `func (o *NotificationWithMeta) GetIosAttachments() map[string]interface{}`
@@ -1522,6 +1602,16 @@ SetIosAttachments sets IosAttachments field to given value.
 
 HasIosAttachments returns a boolean if a field has been set.
 
+### SetIosAttachmentsNil
+
+`func (o *NotificationWithMeta) SetIosAttachmentsNil(b bool)`
+
+ SetIosAttachmentsNil sets the value for IosAttachments to be an explicit nil
+
+### UnsetIosAttachments
+`func (o *NotificationWithMeta) UnsetIosAttachments()`
+
+UnsetIosAttachments ensures that no value is present for IosAttachments, not even an explicit nil
 ### GetTemplateId
 
 `func (o *NotificationWithMeta) GetTemplateId() string`
@@ -1547,6 +1637,16 @@ SetTemplateId sets TemplateId field to given value.
 
 HasTemplateId returns a boolean if a field has been set.
 
+### SetTemplateIdNil
+
+`func (o *NotificationWithMeta) SetTemplateIdNil(b bool)`
+
+ SetTemplateIdNil sets the value for TemplateId to be an explicit nil
+
+### UnsetTemplateId
+`func (o *NotificationWithMeta) UnsetTemplateId()`
+
+UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
 ### GetContentAvailable
 
 `func (o *NotificationWithMeta) GetContentAvailable() bool`
@@ -1632,6 +1732,16 @@ SetTargetContentIdentifier sets TargetContentIdentifier field to given value.
 
 HasTargetContentIdentifier returns a boolean if a field has been set.
 
+### SetTargetContentIdentifierNil
+
+`func (o *NotificationWithMeta) SetTargetContentIdentifierNil(b bool)`
+
+ SetTargetContentIdentifierNil sets the value for TargetContentIdentifier to be an explicit nil
+
+### UnsetTargetContentIdentifier
+`func (o *NotificationWithMeta) UnsetTargetContentIdentifier()`
+
+UnsetTargetContentIdentifier ensures that no value is present for TargetContentIdentifier, not even an explicit nil
 ### GetBigPicture
 
 `func (o *NotificationWithMeta) GetBigPicture() string`
@@ -1657,6 +1767,16 @@ SetBigPicture sets BigPicture field to given value.
 
 HasBigPicture returns a boolean if a field has been set.
 
+### SetBigPictureNil
+
+`func (o *NotificationWithMeta) SetBigPictureNil(b bool)`
+
+ SetBigPictureNil sets the value for BigPicture to be an explicit nil
+
+### UnsetBigPicture
+`func (o *NotificationWithMeta) UnsetBigPicture()`
+
+UnsetBigPicture ensures that no value is present for BigPicture, not even an explicit nil
 ### GetHuaweiBigPicture
 
 `func (o *NotificationWithMeta) GetHuaweiBigPicture() string`
@@ -1682,6 +1802,16 @@ SetHuaweiBigPicture sets HuaweiBigPicture field to given value.
 
 HasHuaweiBigPicture returns a boolean if a field has been set.
 
+### SetHuaweiBigPictureNil
+
+`func (o *NotificationWithMeta) SetHuaweiBigPictureNil(b bool)`
+
+ SetHuaweiBigPictureNil sets the value for HuaweiBigPicture to be an explicit nil
+
+### UnsetHuaweiBigPicture
+`func (o *NotificationWithMeta) UnsetHuaweiBigPicture()`
+
+UnsetHuaweiBigPicture ensures that no value is present for HuaweiBigPicture, not even an explicit nil
 ### GetAdmBigPicture
 
 `func (o *NotificationWithMeta) GetAdmBigPicture() string`
@@ -1707,6 +1837,16 @@ SetAdmBigPicture sets AdmBigPicture field to given value.
 
 HasAdmBigPicture returns a boolean if a field has been set.
 
+### SetAdmBigPictureNil
+
+`func (o *NotificationWithMeta) SetAdmBigPictureNil(b bool)`
+
+ SetAdmBigPictureNil sets the value for AdmBigPicture to be an explicit nil
+
+### UnsetAdmBigPicture
+`func (o *NotificationWithMeta) UnsetAdmBigPicture()`
+
+UnsetAdmBigPicture ensures that no value is present for AdmBigPicture, not even an explicit nil
 ### GetChromeBigPicture
 
 `func (o *NotificationWithMeta) GetChromeBigPicture() string`
@@ -1732,6 +1872,16 @@ SetChromeBigPicture sets ChromeBigPicture field to given value.
 
 HasChromeBigPicture returns a boolean if a field has been set.
 
+### SetChromeBigPictureNil
+
+`func (o *NotificationWithMeta) SetChromeBigPictureNil(b bool)`
+
+ SetChromeBigPictureNil sets the value for ChromeBigPicture to be an explicit nil
+
+### UnsetChromeBigPicture
+`func (o *NotificationWithMeta) UnsetChromeBigPicture()`
+
+UnsetChromeBigPicture ensures that no value is present for ChromeBigPicture, not even an explicit nil
 ### GetChromeWebImage
 
 `func (o *NotificationWithMeta) GetChromeWebImage() string`
@@ -1757,6 +1907,16 @@ SetChromeWebImage sets ChromeWebImage field to given value.
 
 HasChromeWebImage returns a boolean if a field has been set.
 
+### SetChromeWebImageNil
+
+`func (o *NotificationWithMeta) SetChromeWebImageNil(b bool)`
+
+ SetChromeWebImageNil sets the value for ChromeWebImage to be an explicit nil
+
+### UnsetChromeWebImage
+`func (o *NotificationWithMeta) UnsetChromeWebImage()`
+
+UnsetChromeWebImage ensures that no value is present for ChromeWebImage, not even an explicit nil
 ### GetButtons
 
 `func (o *NotificationWithMeta) GetButtons() []Button`
@@ -1782,6 +1942,16 @@ SetButtons sets Buttons field to given value.
 
 HasButtons returns a boolean if a field has been set.
 
+### SetButtonsNil
+
+`func (o *NotificationWithMeta) SetButtonsNil(b bool)`
+
+ SetButtonsNil sets the value for Buttons to be an explicit nil
+
+### UnsetButtons
+`func (o *NotificationWithMeta) UnsetButtons()`
+
+UnsetButtons ensures that no value is present for Buttons, not even an explicit nil
 ### GetWebButtons
 
 `func (o *NotificationWithMeta) GetWebButtons() []Button`
@@ -1807,6 +1977,16 @@ SetWebButtons sets WebButtons field to given value.
 
 HasWebButtons returns a boolean if a field has been set.
 
+### SetWebButtonsNil
+
+`func (o *NotificationWithMeta) SetWebButtonsNil(b bool)`
+
+ SetWebButtonsNil sets the value for WebButtons to be an explicit nil
+
+### UnsetWebButtons
+`func (o *NotificationWithMeta) UnsetWebButtons()`
+
+UnsetWebButtons ensures that no value is present for WebButtons, not even an explicit nil
 ### GetIosCategory
 
 `func (o *NotificationWithMeta) GetIosCategory() string`
@@ -1832,6 +2012,16 @@ SetIosCategory sets IosCategory field to given value.
 
 HasIosCategory returns a boolean if a field has been set.
 
+### SetIosCategoryNil
+
+`func (o *NotificationWithMeta) SetIosCategoryNil(b bool)`
+
+ SetIosCategoryNil sets the value for IosCategory to be an explicit nil
+
+### UnsetIosCategory
+`func (o *NotificationWithMeta) UnsetIosCategory()`
+
+UnsetIosCategory ensures that no value is present for IosCategory, not even an explicit nil
 ### GetAndroidChannelId
 
 `func (o *NotificationWithMeta) GetAndroidChannelId() string`
@@ -1882,6 +2072,16 @@ SetHuaweiChannelId sets HuaweiChannelId field to given value.
 
 HasHuaweiChannelId returns a boolean if a field has been set.
 
+### SetHuaweiChannelIdNil
+
+`func (o *NotificationWithMeta) SetHuaweiChannelIdNil(b bool)`
+
+ SetHuaweiChannelIdNil sets the value for HuaweiChannelId to be an explicit nil
+
+### UnsetHuaweiChannelId
+`func (o *NotificationWithMeta) UnsetHuaweiChannelId()`
+
+UnsetHuaweiChannelId ensures that no value is present for HuaweiChannelId, not even an explicit nil
 ### GetExistingAndroidChannelId
 
 `func (o *NotificationWithMeta) GetExistingAndroidChannelId() string`
@@ -1932,22 +2132,32 @@ SetHuaweiExistingChannelId sets HuaweiExistingChannelId field to given value.
 
 HasHuaweiExistingChannelId returns a boolean if a field has been set.
 
+### SetHuaweiExistingChannelIdNil
+
+`func (o *NotificationWithMeta) SetHuaweiExistingChannelIdNil(b bool)`
+
+ SetHuaweiExistingChannelIdNil sets the value for HuaweiExistingChannelId to be an explicit nil
+
+### UnsetHuaweiExistingChannelId
+`func (o *NotificationWithMeta) UnsetHuaweiExistingChannelId()`
+
+UnsetHuaweiExistingChannelId ensures that no value is present for HuaweiExistingChannelId, not even an explicit nil
 ### GetAndroidBackgroundLayout
 
-`func (o *NotificationWithMeta) GetAndroidBackgroundLayout() NotificationAllOfAndroidBackgroundLayout`
+`func (o *NotificationWithMeta) GetAndroidBackgroundLayout() BasicNotificationAllOfAndroidBackgroundLayout`
 
 GetAndroidBackgroundLayout returns the AndroidBackgroundLayout field if non-nil, zero value otherwise.
 
 ### GetAndroidBackgroundLayoutOk
 
-`func (o *NotificationWithMeta) GetAndroidBackgroundLayoutOk() (*NotificationAllOfAndroidBackgroundLayout, bool)`
+`func (o *NotificationWithMeta) GetAndroidBackgroundLayoutOk() (*BasicNotificationAllOfAndroidBackgroundLayout, bool)`
 
 GetAndroidBackgroundLayoutOk returns a tuple with the AndroidBackgroundLayout field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidBackgroundLayout
 
-`func (o *NotificationWithMeta) SetAndroidBackgroundLayout(v NotificationAllOfAndroidBackgroundLayout)`
+`func (o *NotificationWithMeta) SetAndroidBackgroundLayout(v BasicNotificationAllOfAndroidBackgroundLayout)`
 
 SetAndroidBackgroundLayout sets AndroidBackgroundLayout field to given value.
 
@@ -1982,6 +2192,16 @@ SetSmallIcon sets SmallIcon field to given value.
 
 HasSmallIcon returns a boolean if a field has been set.
 
+### SetSmallIconNil
+
+`func (o *NotificationWithMeta) SetSmallIconNil(b bool)`
+
+ SetSmallIconNil sets the value for SmallIcon to be an explicit nil
+
+### UnsetSmallIcon
+`func (o *NotificationWithMeta) UnsetSmallIcon()`
+
+UnsetSmallIcon ensures that no value is present for SmallIcon, not even an explicit nil
 ### GetHuaweiSmallIcon
 
 `func (o *NotificationWithMeta) GetHuaweiSmallIcon() string`
@@ -2007,6 +2227,16 @@ SetHuaweiSmallIcon sets HuaweiSmallIcon field to given value.
 
 HasHuaweiSmallIcon returns a boolean if a field has been set.
 
+### SetHuaweiSmallIconNil
+
+`func (o *NotificationWithMeta) SetHuaweiSmallIconNil(b bool)`
+
+ SetHuaweiSmallIconNil sets the value for HuaweiSmallIcon to be an explicit nil
+
+### UnsetHuaweiSmallIcon
+`func (o *NotificationWithMeta) UnsetHuaweiSmallIcon()`
+
+UnsetHuaweiSmallIcon ensures that no value is present for HuaweiSmallIcon, not even an explicit nil
 ### GetLargeIcon
 
 `func (o *NotificationWithMeta) GetLargeIcon() string`
@@ -2032,6 +2262,16 @@ SetLargeIcon sets LargeIcon field to given value.
 
 HasLargeIcon returns a boolean if a field has been set.
 
+### SetLargeIconNil
+
+`func (o *NotificationWithMeta) SetLargeIconNil(b bool)`
+
+ SetLargeIconNil sets the value for LargeIcon to be an explicit nil
+
+### UnsetLargeIcon
+`func (o *NotificationWithMeta) UnsetLargeIcon()`
+
+UnsetLargeIcon ensures that no value is present for LargeIcon, not even an explicit nil
 ### GetHuaweiLargeIcon
 
 `func (o *NotificationWithMeta) GetHuaweiLargeIcon() string`
@@ -2057,6 +2297,16 @@ SetHuaweiLargeIcon sets HuaweiLargeIcon field to given value.
 
 HasHuaweiLargeIcon returns a boolean if a field has been set.
 
+### SetHuaweiLargeIconNil
+
+`func (o *NotificationWithMeta) SetHuaweiLargeIconNil(b bool)`
+
+ SetHuaweiLargeIconNil sets the value for HuaweiLargeIcon to be an explicit nil
+
+### UnsetHuaweiLargeIcon
+`func (o *NotificationWithMeta) UnsetHuaweiLargeIcon()`
+
+UnsetHuaweiLargeIcon ensures that no value is present for HuaweiLargeIcon, not even an explicit nil
 ### GetAdmSmallIcon
 
 `func (o *NotificationWithMeta) GetAdmSmallIcon() string`
@@ -2082,6 +2332,16 @@ SetAdmSmallIcon sets AdmSmallIcon field to given value.
 
 HasAdmSmallIcon returns a boolean if a field has been set.
 
+### SetAdmSmallIconNil
+
+`func (o *NotificationWithMeta) SetAdmSmallIconNil(b bool)`
+
+ SetAdmSmallIconNil sets the value for AdmSmallIcon to be an explicit nil
+
+### UnsetAdmSmallIcon
+`func (o *NotificationWithMeta) UnsetAdmSmallIcon()`
+
+UnsetAdmSmallIcon ensures that no value is present for AdmSmallIcon, not even an explicit nil
 ### GetAdmLargeIcon
 
 `func (o *NotificationWithMeta) GetAdmLargeIcon() string`
@@ -2107,6 +2367,16 @@ SetAdmLargeIcon sets AdmLargeIcon field to given value.
 
 HasAdmLargeIcon returns a boolean if a field has been set.
 
+### SetAdmLargeIconNil
+
+`func (o *NotificationWithMeta) SetAdmLargeIconNil(b bool)`
+
+ SetAdmLargeIconNil sets the value for AdmLargeIcon to be an explicit nil
+
+### UnsetAdmLargeIcon
+`func (o *NotificationWithMeta) UnsetAdmLargeIcon()`
+
+UnsetAdmLargeIcon ensures that no value is present for AdmLargeIcon, not even an explicit nil
 ### GetChromeWebIcon
 
 `func (o *NotificationWithMeta) GetChromeWebIcon() string`
@@ -2132,6 +2402,16 @@ SetChromeWebIcon sets ChromeWebIcon field to given value.
 
 HasChromeWebIcon returns a boolean if a field has been set.
 
+### SetChromeWebIconNil
+
+`func (o *NotificationWithMeta) SetChromeWebIconNil(b bool)`
+
+ SetChromeWebIconNil sets the value for ChromeWebIcon to be an explicit nil
+
+### UnsetChromeWebIcon
+`func (o *NotificationWithMeta) UnsetChromeWebIcon()`
+
+UnsetChromeWebIcon ensures that no value is present for ChromeWebIcon, not even an explicit nil
 ### GetChromeWebBadge
 
 `func (o *NotificationWithMeta) GetChromeWebBadge() string`
@@ -2157,6 +2437,16 @@ SetChromeWebBadge sets ChromeWebBadge field to given value.
 
 HasChromeWebBadge returns a boolean if a field has been set.
 
+### SetChromeWebBadgeNil
+
+`func (o *NotificationWithMeta) SetChromeWebBadgeNil(b bool)`
+
+ SetChromeWebBadgeNil sets the value for ChromeWebBadge to be an explicit nil
+
+### UnsetChromeWebBadge
+`func (o *NotificationWithMeta) UnsetChromeWebBadge()`
+
+UnsetChromeWebBadge ensures that no value is present for ChromeWebBadge, not even an explicit nil
 ### GetFirefoxIcon
 
 `func (o *NotificationWithMeta) GetFirefoxIcon() string`
@@ -2182,6 +2472,16 @@ SetFirefoxIcon sets FirefoxIcon field to given value.
 
 HasFirefoxIcon returns a boolean if a field has been set.
 
+### SetFirefoxIconNil
+
+`func (o *NotificationWithMeta) SetFirefoxIconNil(b bool)`
+
+ SetFirefoxIconNil sets the value for FirefoxIcon to be an explicit nil
+
+### UnsetFirefoxIcon
+`func (o *NotificationWithMeta) UnsetFirefoxIcon()`
+
+UnsetFirefoxIcon ensures that no value is present for FirefoxIcon, not even an explicit nil
 ### GetChromeIcon
 
 `func (o *NotificationWithMeta) GetChromeIcon() string`
@@ -2207,6 +2507,16 @@ SetChromeIcon sets ChromeIcon field to given value.
 
 HasChromeIcon returns a boolean if a field has been set.
 
+### SetChromeIconNil
+
+`func (o *NotificationWithMeta) SetChromeIconNil(b bool)`
+
+ SetChromeIconNil sets the value for ChromeIcon to be an explicit nil
+
+### UnsetChromeIcon
+`func (o *NotificationWithMeta) UnsetChromeIcon()`
+
+UnsetChromeIcon ensures that no value is present for ChromeIcon, not even an explicit nil
 ### GetIosSound
 
 `func (o *NotificationWithMeta) GetIosSound() string`
@@ -2232,6 +2542,16 @@ SetIosSound sets IosSound field to given value.
 
 HasIosSound returns a boolean if a field has been set.
 
+### SetIosSoundNil
+
+`func (o *NotificationWithMeta) SetIosSoundNil(b bool)`
+
+ SetIosSoundNil sets the value for IosSound to be an explicit nil
+
+### UnsetIosSound
+`func (o *NotificationWithMeta) UnsetIosSound()`
+
+UnsetIosSound ensures that no value is present for IosSound, not even an explicit nil
 ### GetAndroidSound
 
 `func (o *NotificationWithMeta) GetAndroidSound() string`
@@ -2257,6 +2577,16 @@ SetAndroidSound sets AndroidSound field to given value.
 
 HasAndroidSound returns a boolean if a field has been set.
 
+### SetAndroidSoundNil
+
+`func (o *NotificationWithMeta) SetAndroidSoundNil(b bool)`
+
+ SetAndroidSoundNil sets the value for AndroidSound to be an explicit nil
+
+### UnsetAndroidSound
+`func (o *NotificationWithMeta) UnsetAndroidSound()`
+
+UnsetAndroidSound ensures that no value is present for AndroidSound, not even an explicit nil
 ### GetHuaweiSound
 
 `func (o *NotificationWithMeta) GetHuaweiSound() string`
@@ -2282,6 +2612,16 @@ SetHuaweiSound sets HuaweiSound field to given value.
 
 HasHuaweiSound returns a boolean if a field has been set.
 
+### SetHuaweiSoundNil
+
+`func (o *NotificationWithMeta) SetHuaweiSoundNil(b bool)`
+
+ SetHuaweiSoundNil sets the value for HuaweiSound to be an explicit nil
+
+### UnsetHuaweiSound
+`func (o *NotificationWithMeta) UnsetHuaweiSound()`
+
+UnsetHuaweiSound ensures that no value is present for HuaweiSound, not even an explicit nil
 ### GetAdmSound
 
 `func (o *NotificationWithMeta) GetAdmSound() string`
@@ -2307,6 +2647,16 @@ SetAdmSound sets AdmSound field to given value.
 
 HasAdmSound returns a boolean if a field has been set.
 
+### SetAdmSoundNil
+
+`func (o *NotificationWithMeta) SetAdmSoundNil(b bool)`
+
+ SetAdmSoundNil sets the value for AdmSound to be an explicit nil
+
+### UnsetAdmSound
+`func (o *NotificationWithMeta) UnsetAdmSound()`
+
+UnsetAdmSound ensures that no value is present for AdmSound, not even an explicit nil
 ### GetWpWnsSound
 
 `func (o *NotificationWithMeta) GetWpWnsSound() string`
@@ -2332,6 +2682,16 @@ SetWpWnsSound sets WpWnsSound field to given value.
 
 HasWpWnsSound returns a boolean if a field has been set.
 
+### SetWpWnsSoundNil
+
+`func (o *NotificationWithMeta) SetWpWnsSoundNil(b bool)`
+
+ SetWpWnsSoundNil sets the value for WpWnsSound to be an explicit nil
+
+### UnsetWpWnsSound
+`func (o *NotificationWithMeta) UnsetWpWnsSound()`
+
+UnsetWpWnsSound ensures that no value is present for WpWnsSound, not even an explicit nil
 ### GetAndroidLedColor
 
 `func (o *NotificationWithMeta) GetAndroidLedColor() string`
@@ -2357,6 +2717,16 @@ SetAndroidLedColor sets AndroidLedColor field to given value.
 
 HasAndroidLedColor returns a boolean if a field has been set.
 
+### SetAndroidLedColorNil
+
+`func (o *NotificationWithMeta) SetAndroidLedColorNil(b bool)`
+
+ SetAndroidLedColorNil sets the value for AndroidLedColor to be an explicit nil
+
+### UnsetAndroidLedColor
+`func (o *NotificationWithMeta) UnsetAndroidLedColor()`
+
+UnsetAndroidLedColor ensures that no value is present for AndroidLedColor, not even an explicit nil
 ### GetHuaweiLedColor
 
 `func (o *NotificationWithMeta) GetHuaweiLedColor() string`
@@ -2382,6 +2752,16 @@ SetHuaweiLedColor sets HuaweiLedColor field to given value.
 
 HasHuaweiLedColor returns a boolean if a field has been set.
 
+### SetHuaweiLedColorNil
+
+`func (o *NotificationWithMeta) SetHuaweiLedColorNil(b bool)`
+
+ SetHuaweiLedColorNil sets the value for HuaweiLedColor to be an explicit nil
+
+### UnsetHuaweiLedColor
+`func (o *NotificationWithMeta) UnsetHuaweiLedColor()`
+
+UnsetHuaweiLedColor ensures that no value is present for HuaweiLedColor, not even an explicit nil
 ### GetAndroidAccentColor
 
 `func (o *NotificationWithMeta) GetAndroidAccentColor() string`
@@ -2407,6 +2787,16 @@ SetAndroidAccentColor sets AndroidAccentColor field to given value.
 
 HasAndroidAccentColor returns a boolean if a field has been set.
 
+### SetAndroidAccentColorNil
+
+`func (o *NotificationWithMeta) SetAndroidAccentColorNil(b bool)`
+
+ SetAndroidAccentColorNil sets the value for AndroidAccentColor to be an explicit nil
+
+### UnsetAndroidAccentColor
+`func (o *NotificationWithMeta) UnsetAndroidAccentColor()`
+
+UnsetAndroidAccentColor ensures that no value is present for AndroidAccentColor, not even an explicit nil
 ### GetHuaweiAccentColor
 
 `func (o *NotificationWithMeta) GetHuaweiAccentColor() string`
@@ -2432,6 +2822,16 @@ SetHuaweiAccentColor sets HuaweiAccentColor field to given value.
 
 HasHuaweiAccentColor returns a boolean if a field has been set.
 
+### SetHuaweiAccentColorNil
+
+`func (o *NotificationWithMeta) SetHuaweiAccentColorNil(b bool)`
+
+ SetHuaweiAccentColorNil sets the value for HuaweiAccentColor to be an explicit nil
+
+### UnsetHuaweiAccentColor
+`func (o *NotificationWithMeta) UnsetHuaweiAccentColor()`
+
+UnsetHuaweiAccentColor ensures that no value is present for HuaweiAccentColor, not even an explicit nil
 ### GetAndroidVisibility
 
 `func (o *NotificationWithMeta) GetAndroidVisibility() int32`
@@ -2527,6 +2927,16 @@ SetIosBadgeType sets IosBadgeType field to given value.
 
 HasIosBadgeType returns a boolean if a field has been set.
 
+### SetIosBadgeTypeNil
+
+`func (o *NotificationWithMeta) SetIosBadgeTypeNil(b bool)`
+
+ SetIosBadgeTypeNil sets the value for IosBadgeType to be an explicit nil
+
+### UnsetIosBadgeType
+`func (o *NotificationWithMeta) UnsetIosBadgeType()`
+
+UnsetIosBadgeType ensures that no value is present for IosBadgeType, not even an explicit nil
 ### GetIosBadgeCount
 
 `func (o *NotificationWithMeta) GetIosBadgeCount() int32`
@@ -2612,6 +3022,16 @@ SetWebPushTopic sets WebPushTopic field to given value.
 
 HasWebPushTopic returns a boolean if a field has been set.
 
+### SetWebPushTopicNil
+
+`func (o *NotificationWithMeta) SetWebPushTopicNil(b bool)`
+
+ SetWebPushTopicNil sets the value for WebPushTopic to be an explicit nil
+
+### UnsetWebPushTopic
+`func (o *NotificationWithMeta) UnsetWebPushTopic()`
+
+UnsetWebPushTopic ensures that no value is present for WebPushTopic, not even an explicit nil
 ### GetApnsAlert
 
 `func (o *NotificationWithMeta) GetApnsAlert() map[string]interface{}`
@@ -2637,31 +3057,16 @@ SetApnsAlert sets ApnsAlert field to given value.
 
 HasApnsAlert returns a boolean if a field has been set.
 
-### GetSendAfter
+### SetApnsAlertNil
 
-`func (o *NotificationWithMeta) GetSendAfter() int64`
+`func (o *NotificationWithMeta) SetApnsAlertNil(b bool)`
 
-GetSendAfter returns the SendAfter field if non-nil, zero value otherwise.
+ SetApnsAlertNil sets the value for ApnsAlert to be an explicit nil
 
-### GetSendAfterOk
+### UnsetApnsAlert
+`func (o *NotificationWithMeta) UnsetApnsAlert()`
 
-`func (o *NotificationWithMeta) GetSendAfterOk() (*int64, bool)`
-
-GetSendAfterOk returns a tuple with the SendAfter field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSendAfter
-
-`func (o *NotificationWithMeta) SetSendAfter(v int64)`
-
-SetSendAfter sets SendAfter field to given value.
-
-### HasSendAfter
-
-`func (o *NotificationWithMeta) HasSendAfter() bool`
-
-HasSendAfter returns a boolean if a field has been set.
-
+UnsetApnsAlert ensures that no value is present for ApnsAlert, not even an explicit nil
 ### GetDelayedOption
 
 `func (o *NotificationWithMeta) GetDelayedOption() string`
@@ -2687,6 +3092,16 @@ SetDelayedOption sets DelayedOption field to given value.
 
 HasDelayedOption returns a boolean if a field has been set.
 
+### SetDelayedOptionNil
+
+`func (o *NotificationWithMeta) SetDelayedOptionNil(b bool)`
+
+ SetDelayedOptionNil sets the value for DelayedOption to be an explicit nil
+
+### UnsetDelayedOption
+`func (o *NotificationWithMeta) UnsetDelayedOption()`
+
+UnsetDelayedOption ensures that no value is present for DelayedOption, not even an explicit nil
 ### GetDeliveryTimeOfDay
 
 `func (o *NotificationWithMeta) GetDeliveryTimeOfDay() string`
@@ -2712,6 +3127,16 @@ SetDeliveryTimeOfDay sets DeliveryTimeOfDay field to given value.
 
 HasDeliveryTimeOfDay returns a boolean if a field has been set.
 
+### SetDeliveryTimeOfDayNil
+
+`func (o *NotificationWithMeta) SetDeliveryTimeOfDayNil(b bool)`
+
+ SetDeliveryTimeOfDayNil sets the value for DeliveryTimeOfDay to be an explicit nil
+
+### UnsetDeliveryTimeOfDay
+`func (o *NotificationWithMeta) UnsetDeliveryTimeOfDay()`
+
+UnsetDeliveryTimeOfDay ensures that no value is present for DeliveryTimeOfDay, not even an explicit nil
 ### GetTtl
 
 `func (o *NotificationWithMeta) GetTtl() int32`
@@ -2867,6 +3292,16 @@ SetAndroidGroup sets AndroidGroup field to given value.
 
 HasAndroidGroup returns a boolean if a field has been set.
 
+### SetAndroidGroupNil
+
+`func (o *NotificationWithMeta) SetAndroidGroupNil(b bool)`
+
+ SetAndroidGroupNil sets the value for AndroidGroup to be an explicit nil
+
+### UnsetAndroidGroup
+`func (o *NotificationWithMeta) UnsetAndroidGroup()`
+
+UnsetAndroidGroup ensures that no value is present for AndroidGroup, not even an explicit nil
 ### GetAndroidGroupMessage
 
 `func (o *NotificationWithMeta) GetAndroidGroupMessage() string`
@@ -2892,6 +3327,16 @@ SetAndroidGroupMessage sets AndroidGroupMessage field to given value.
 
 HasAndroidGroupMessage returns a boolean if a field has been set.
 
+### SetAndroidGroupMessageNil
+
+`func (o *NotificationWithMeta) SetAndroidGroupMessageNil(b bool)`
+
+ SetAndroidGroupMessageNil sets the value for AndroidGroupMessage to be an explicit nil
+
+### UnsetAndroidGroupMessage
+`func (o *NotificationWithMeta) UnsetAndroidGroupMessage()`
+
+UnsetAndroidGroupMessage ensures that no value is present for AndroidGroupMessage, not even an explicit nil
 ### GetAdmGroup
 
 `func (o *NotificationWithMeta) GetAdmGroup() string`
@@ -2917,6 +3362,16 @@ SetAdmGroup sets AdmGroup field to given value.
 
 HasAdmGroup returns a boolean if a field has been set.
 
+### SetAdmGroupNil
+
+`func (o *NotificationWithMeta) SetAdmGroupNil(b bool)`
+
+ SetAdmGroupNil sets the value for AdmGroup to be an explicit nil
+
+### UnsetAdmGroup
+`func (o *NotificationWithMeta) UnsetAdmGroup()`
+
+UnsetAdmGroup ensures that no value is present for AdmGroup, not even an explicit nil
 ### GetAdmGroupMessage
 
 `func (o *NotificationWithMeta) GetAdmGroupMessage() map[string]interface{}`
@@ -2942,6 +3397,16 @@ SetAdmGroupMessage sets AdmGroupMessage field to given value.
 
 HasAdmGroupMessage returns a boolean if a field has been set.
 
+### SetAdmGroupMessageNil
+
+`func (o *NotificationWithMeta) SetAdmGroupMessageNil(b bool)`
+
+ SetAdmGroupMessageNil sets the value for AdmGroupMessage to be an explicit nil
+
+### UnsetAdmGroupMessage
+`func (o *NotificationWithMeta) UnsetAdmGroupMessage()`
+
+UnsetAdmGroupMessage ensures that no value is present for AdmGroupMessage, not even an explicit nil
 ### GetThreadId
 
 `func (o *NotificationWithMeta) GetThreadId() string`
@@ -2967,6 +3432,16 @@ SetThreadId sets ThreadId field to given value.
 
 HasThreadId returns a boolean if a field has been set.
 
+### SetThreadIdNil
+
+`func (o *NotificationWithMeta) SetThreadIdNil(b bool)`
+
+ SetThreadIdNil sets the value for ThreadId to be an explicit nil
+
+### UnsetThreadId
+`func (o *NotificationWithMeta) UnsetThreadId()`
+
+UnsetThreadId ensures that no value is present for ThreadId, not even an explicit nil
 ### GetSummaryArg
 
 `func (o *NotificationWithMeta) GetSummaryArg() string`
@@ -3042,6 +3517,16 @@ SetEmailSubject sets EmailSubject field to given value.
 
 HasEmailSubject returns a boolean if a field has been set.
 
+### SetEmailSubjectNil
+
+`func (o *NotificationWithMeta) SetEmailSubjectNil(b bool)`
+
+ SetEmailSubjectNil sets the value for EmailSubject to be an explicit nil
+
+### UnsetEmailSubject
+`func (o *NotificationWithMeta) UnsetEmailSubject()`
+
+UnsetEmailSubject ensures that no value is present for EmailSubject, not even an explicit nil
 ### GetEmailBody
 
 `func (o *NotificationWithMeta) GetEmailBody() string`
@@ -3092,6 +3577,16 @@ SetEmailFromName sets EmailFromName field to given value.
 
 HasEmailFromName returns a boolean if a field has been set.
 
+### SetEmailFromNameNil
+
+`func (o *NotificationWithMeta) SetEmailFromNameNil(b bool)`
+
+ SetEmailFromNameNil sets the value for EmailFromName to be an explicit nil
+
+### UnsetEmailFromName
+`func (o *NotificationWithMeta) UnsetEmailFromName()`
+
+UnsetEmailFromName ensures that no value is present for EmailFromName, not even an explicit nil
 ### GetEmailFromAddress
 
 `func (o *NotificationWithMeta) GetEmailFromAddress() string`
@@ -3117,6 +3612,16 @@ SetEmailFromAddress sets EmailFromAddress field to given value.
 
 HasEmailFromAddress returns a boolean if a field has been set.
 
+### SetEmailFromAddressNil
+
+`func (o *NotificationWithMeta) SetEmailFromAddressNil(b bool)`
+
+ SetEmailFromAddressNil sets the value for EmailFromAddress to be an explicit nil
+
+### UnsetEmailFromAddress
+`func (o *NotificationWithMeta) UnsetEmailFromAddress()`
+
+UnsetEmailFromAddress ensures that no value is present for EmailFromAddress, not even an explicit nil
 ### GetSmsFrom
 
 `func (o *NotificationWithMeta) GetSmsFrom() string`
@@ -3142,6 +3647,16 @@ SetSmsFrom sets SmsFrom field to given value.
 
 HasSmsFrom returns a boolean if a field has been set.
 
+### SetSmsFromNil
+
+`func (o *NotificationWithMeta) SetSmsFromNil(b bool)`
+
+ SetSmsFromNil sets the value for SmsFrom to be an explicit nil
+
+### UnsetSmsFrom
+`func (o *NotificationWithMeta) UnsetSmsFrom()`
+
+UnsetSmsFrom ensures that no value is present for SmsFrom, not even an explicit nil
 ### GetSmsMediaUrls
 
 `func (o *NotificationWithMeta) GetSmsMediaUrls() []string`
@@ -3167,6 +3682,16 @@ SetSmsMediaUrls sets SmsMediaUrls field to given value.
 
 HasSmsMediaUrls returns a boolean if a field has been set.
 
+### SetSmsMediaUrlsNil
+
+`func (o *NotificationWithMeta) SetSmsMediaUrlsNil(b bool)`
+
+ SetSmsMediaUrlsNil sets the value for SmsMediaUrls to be an explicit nil
+
+### UnsetSmsMediaUrls
+`func (o *NotificationWithMeta) UnsetSmsMediaUrls()`
+
+UnsetSmsMediaUrls ensures that no value is present for SmsMediaUrls, not even an explicit nil
 ### GetSuccessful
 
 `func (o *NotificationWithMeta) GetSuccessful() int32`
@@ -3377,6 +3902,41 @@ SetQueuedAt sets QueuedAt field to given value.
 
 HasQueuedAt returns a boolean if a field has been set.
 
+### GetSendAfter
+
+`func (o *NotificationWithMeta) GetSendAfter() int64`
+
+GetSendAfter returns the SendAfter field if non-nil, zero value otherwise.
+
+### GetSendAfterOk
+
+`func (o *NotificationWithMeta) GetSendAfterOk() (*int64, bool)`
+
+GetSendAfterOk returns a tuple with the SendAfter field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSendAfter
+
+`func (o *NotificationWithMeta) SetSendAfter(v int64)`
+
+SetSendAfter sets SendAfter field to given value.
+
+### HasSendAfter
+
+`func (o *NotificationWithMeta) HasSendAfter() bool`
+
+HasSendAfter returns a boolean if a field has been set.
+
+### SetSendAfterNil
+
+`func (o *NotificationWithMeta) SetSendAfterNil(b bool)`
+
+ SetSendAfterNil sets the value for SendAfter to be an explicit nil
+
+### UnsetSendAfter
+`func (o *NotificationWithMeta) UnsetSendAfter()`
+
+UnsetSendAfter ensures that no value is present for SendAfter, not even an explicit nil
 ### GetCompletedAt
 
 `func (o *NotificationWithMeta) GetCompletedAt() int64`

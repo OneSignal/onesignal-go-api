@@ -15,56 +15,8 @@ import (
 	"encoding/json"
 )
 
-// NotificationWithMeta struct for NotificationWithMeta
-type NotificationWithMeta struct {
-	// The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\"Active Users\", \"Inactive Users\"] 
-	IncludedSegments []string `json:"included_segments,omitempty"`
-	// Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\"Active Users\", \"Inactive Users\"] 
-	ExcludedSegments []string `json:"excluded_segments,omitempty"`
-	// relation = \">\" or \"<\" hours_ago = number of hours before or after the users last session. Example: \"1.1\" 
-	LastSession *string `json:"last_session,omitempty"`
-	// relation = \">\" or \"<\" hours_ago = number of hours before or after the users first session. Example: \"1.1\" 
-	FirstSession *string `json:"first_session,omitempty"`
-	// relation = \">\", \"<\", \"=\" or \"!=\" value = number sessions. Example: \"1\" 
-	SessionCount *string `json:"session_count,omitempty"`
-	// relation = \">\", \"<\", \"=\" or \"!=\" value = Time in seconds the user has been in your app. Example: \"3600\" 
-	SessionTime *string `json:"session_time,omitempty"`
-	// relation = \">\", \"<\", or \"=\" value = Amount in USD a user has spent on IAP (In App Purchases). Example: \"0.99\" 
-	AmountSpent *string `json:"amount_spent,omitempty"`
-	// relation = \">\", \"<\" or \"=\" key = SKU purchased in your app as an IAP (In App Purchases). Example: \"com.domain.100coinpack\" value = value of SKU to compare to. Example: \"0.99\" 
-	BoughtSku *string `json:"bought_sku,omitempty"`
-	// relation = \">\", \"<\", \"=\", \"!=\", \"exists\", \"not_exists\", \"time_elapsed_gt\" (paid plan only) or \"time_elapsed_lt\" (paid plan only) See Time Operators key = Tag key to compare. value = Tag value to compare. Not required for \"exists\" or \"not_exists\". Example: See Formatting Filters 
-	Tag *string `json:"tag,omitempty"`
-	// relation = \"=\" or \"!=\" value = 2 character language code. Example: \"en\". For a list of all language codes see Language & Localization. 
-	Language *string `json:"language,omitempty"`
-	// relation = \">\", \"<\", \"=\" or \"!=\" value = app version. Example: \"1.0.0\" 
-	AppVersion *string `json:"app_version,omitempty"`
-	// radius = in meters lat = latitude long = longitude 
-	Location *string `json:"location,omitempty"`
-	// value = email address Only for sending Push Notifications Use this for targeting push subscribers associated with an email set with all SDK setEmail methods To send emails to specific email addresses use include_email_tokens parameter 
-	Email *string `json:"email,omitempty"`
-	// relation = \"=\" value = 2-digit Country code Example: \"field\": \"country\", \"relation\": \"=\", \"value\", \"US\" 
-	Country *string `json:"country,omitempty"`
-	// Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
-	IncludePlayerIds []string `json:"include_player_ids,omitempty"`
-	// Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\"custom-id-assigned-by-api\"] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms. 
-	IncludeExternalUserIds []string `json:"include_external_user_ids,omitempty"`
-	// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call 
-	IncludeEmailTokens []string `json:"include_email_tokens,omitempty"`
-	// Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call 
-	IncludePhoneNumbers []string `json:"include_phone_numbers,omitempty"`
-	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call 
-	IncludeIosTokens []string `json:"include_ios_tokens,omitempty"`
-	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call 
-	IncludeWpWnsUris []string `json:"include_wp_wns_uris,omitempty"`
-	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Amazon ADM registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV... Limit of 2,000 entries per REST API call 
-	IncludeAmazonRegIds []string `json:"include_amazon_reg_ids,omitempty"`
-	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
-	IncludeChromeRegIds []string `json:"include_chrome_reg_ids,omitempty"`
-	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
-	IncludeChromeWebRegIds []string `json:"include_chrome_web_reg_ids,omitempty"`
-	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
-	IncludeAndroidRegIds []string `json:"include_android_reg_ids,omitempty"`
+// BasicNotificationAllOf struct for BasicNotificationAllOf
+type BasicNotificationAllOf struct {
 	Id *string `json:"id,omitempty"`
 	Value *int32 `json:"value,omitempty"`
 	// Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user.
@@ -93,7 +45,7 @@ type NotificationWithMeta struct {
 	// Indicates if the message type when targeting with include_external_user_ids for cases where an email, sms, and/or push subscribers have the same external user id. Example: Use the string \"push\" to indicate you are sending a push notification or the string \"email\"for sending emails or \"sms\"for sending SMS. 
 	ChannelForExternalUserIds *string `json:"channel_for_external_user_ids,omitempty"`
 	// Required: Your OneSignal Application ID, which can be found in Keys & IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434. 
-	AppId string `json:"app_id"`
+	AppId *string `json:"app_id,omitempty"`
 	// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
 	ExternalId *string `json:"external_id,omitempty"`
 	Contents NullableStringMap `json:"contents,omitempty"`
@@ -206,8 +158,8 @@ type NotificationWithMeta struct {
 	Priority NullableInt32 `json:"priority,omitempty"`
 	// Channel: Push Notifications Platform: iOS valid values: voip Set the value to voip for sending VoIP Notifications This field maps to the APNS header apns-push-type. Note: alert and background are automatically set by OneSignal 
 	ApnsPushTypeOverride *string `json:"apns_push_type_override,omitempty"`
-	// number of push notifications sent per minute. Paid Feature Only. If throttling is not enabled for the app or the notification, and for free accounts, null is returned. Refer to Throttling for more details.
-	ThrottleRatePerMinute NullableInt32 `json:"throttle_rate_per_minute,omitempty"`
+	// Channel: All Apps with throttling enabled:   - the parameter value will be used to override the default application throttling value set from the dashboard settings.   - parameter value 0 indicates not to apply throttling to the notification.   - if the parameter is not passed then the default app throttling value will be applied to the notification. Apps with throttling disabled:   - this parameter can be used to throttle delivery for the notification even though throttling is not enabled at the application level. Refer to throttling for more details. 
+	ThrottleRatePerMinute NullableString `json:"throttle_rate_per_minute,omitempty"`
 	// Channel: Push Notifications Platform: Android Notifications with the same group will be stacked together using Android's Notification Grouping feature. 
 	AndroidGroup NullableString `json:"android_group,omitempty"`
 	// Channel: Push Notifications Platform: Android Note: This only works for Android 6 and older. Android 7+ allows full expansion of all message. Summary message to display when 2+ notifications are stacked together. Default is \"# new messages\". Include $[notif_count] in your message and it will be replaced with the current number. Languages - The value of each key is the message that will be sent to users for that language. \"en\" (English) is required. The key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified or Traditional Chinese. Read more: supported languages. Example: {\"en\": \"You have $[notif_count] new messages\"} 
@@ -234,821 +186,30 @@ type NotificationWithMeta struct {
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
 	SmsMediaUrls []string `json:"sms_media_urls,omitempty"`
-	// Number of notifications that were successfully delivered.
-	Successful *int32 `json:"successful,omitempty"`
-	// Number of notifications that could not be delivered due to those devices being unsubscribed.
-	Failed *int32 `json:"failed,omitempty"`
-	// Number of notifications that could not be delivered due to an error. You can find more information by viewing the notification in the dashboard.
-	Errored *int32 `json:"errored,omitempty"`
-	// Number of users who have clicked / tapped on your notification.
-	Converted *int32 `json:"converted,omitempty"`
-	// Confirmed Deliveries number of devices that received the push notification. Paid Feature Only. Free accounts will see 0.
-	Received NullableInt32 `json:"received,omitempty"`
-	Outcomes []OutcomeData `json:"outcomes,omitempty"`
-	// Number of notifications that have not been sent out yet. This can mean either our system is still processing the notification or you have delayed options set.
-	Remaining *int32 `json:"remaining,omitempty"`
-	// Unix timestamp indicating when the notification was created.
-	QueuedAt *int64 `json:"queued_at,omitempty"`
-	// Unix timestamp indicating when notification delivery should begin.
-	SendAfter NullableInt64 `json:"send_after,omitempty"`
-	// Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after.
-	CompletedAt NullableInt64 `json:"completed_at,omitempty"`
-	PlatformDeliveryStats *PlatformDeliveryData `json:"platform_delivery_stats,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _NotificationWithMeta NotificationWithMeta
+type _BasicNotificationAllOf BasicNotificationAllOf
 
-// NewNotificationWithMeta instantiates a new NotificationWithMeta object
+// NewBasicNotificationAllOf instantiates a new BasicNotificationAllOf object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNotificationWithMeta(appId string) *NotificationWithMeta {
-	this := NotificationWithMeta{}
-	this.AppId = appId
+func NewBasicNotificationAllOf() *BasicNotificationAllOf {
+	this := BasicNotificationAllOf{}
 	return &this
 }
 
-// NewNotificationWithMetaWithDefaults instantiates a new NotificationWithMeta object
+// NewBasicNotificationAllOfWithDefaults instantiates a new BasicNotificationAllOf object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewNotificationWithMetaWithDefaults() *NotificationWithMeta {
-	this := NotificationWithMeta{}
+func NewBasicNotificationAllOfWithDefaults() *BasicNotificationAllOf {
+	this := BasicNotificationAllOf{}
 	return &this
-}
-
-// GetIncludedSegments returns the IncludedSegments field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludedSegments() []string {
-	if o == nil || o.IncludedSegments == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludedSegments
-}
-
-// GetIncludedSegmentsOk returns a tuple with the IncludedSegments field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludedSegmentsOk() ([]string, bool) {
-	if o == nil || o.IncludedSegments == nil {
-		return nil, false
-	}
-	return o.IncludedSegments, true
-}
-
-// HasIncludedSegments returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludedSegments() bool {
-	if o != nil && o.IncludedSegments != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludedSegments gets a reference to the given []string and assigns it to the IncludedSegments field.
-func (o *NotificationWithMeta) SetIncludedSegments(v []string) {
-	o.IncludedSegments = v
-}
-
-// GetExcludedSegments returns the ExcludedSegments field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetExcludedSegments() []string {
-	if o == nil || o.ExcludedSegments == nil {
-		var ret []string
-		return ret
-	}
-	return o.ExcludedSegments
-}
-
-// GetExcludedSegmentsOk returns a tuple with the ExcludedSegments field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetExcludedSegmentsOk() ([]string, bool) {
-	if o == nil || o.ExcludedSegments == nil {
-		return nil, false
-	}
-	return o.ExcludedSegments, true
-}
-
-// HasExcludedSegments returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasExcludedSegments() bool {
-	if o != nil && o.ExcludedSegments != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetExcludedSegments gets a reference to the given []string and assigns it to the ExcludedSegments field.
-func (o *NotificationWithMeta) SetExcludedSegments(v []string) {
-	o.ExcludedSegments = v
-}
-
-// GetLastSession returns the LastSession field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetLastSession() string {
-	if o == nil || o.LastSession == nil {
-		var ret string
-		return ret
-	}
-	return *o.LastSession
-}
-
-// GetLastSessionOk returns a tuple with the LastSession field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetLastSessionOk() (*string, bool) {
-	if o == nil || o.LastSession == nil {
-		return nil, false
-	}
-	return o.LastSession, true
-}
-
-// HasLastSession returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasLastSession() bool {
-	if o != nil && o.LastSession != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLastSession gets a reference to the given string and assigns it to the LastSession field.
-func (o *NotificationWithMeta) SetLastSession(v string) {
-	o.LastSession = &v
-}
-
-// GetFirstSession returns the FirstSession field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetFirstSession() string {
-	if o == nil || o.FirstSession == nil {
-		var ret string
-		return ret
-	}
-	return *o.FirstSession
-}
-
-// GetFirstSessionOk returns a tuple with the FirstSession field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetFirstSessionOk() (*string, bool) {
-	if o == nil || o.FirstSession == nil {
-		return nil, false
-	}
-	return o.FirstSession, true
-}
-
-// HasFirstSession returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasFirstSession() bool {
-	if o != nil && o.FirstSession != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFirstSession gets a reference to the given string and assigns it to the FirstSession field.
-func (o *NotificationWithMeta) SetFirstSession(v string) {
-	o.FirstSession = &v
-}
-
-// GetSessionCount returns the SessionCount field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetSessionCount() string {
-	if o == nil || o.SessionCount == nil {
-		var ret string
-		return ret
-	}
-	return *o.SessionCount
-}
-
-// GetSessionCountOk returns a tuple with the SessionCount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetSessionCountOk() (*string, bool) {
-	if o == nil || o.SessionCount == nil {
-		return nil, false
-	}
-	return o.SessionCount, true
-}
-
-// HasSessionCount returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSessionCount() bool {
-	if o != nil && o.SessionCount != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSessionCount gets a reference to the given string and assigns it to the SessionCount field.
-func (o *NotificationWithMeta) SetSessionCount(v string) {
-	o.SessionCount = &v
-}
-
-// GetSessionTime returns the SessionTime field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetSessionTime() string {
-	if o == nil || o.SessionTime == nil {
-		var ret string
-		return ret
-	}
-	return *o.SessionTime
-}
-
-// GetSessionTimeOk returns a tuple with the SessionTime field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetSessionTimeOk() (*string, bool) {
-	if o == nil || o.SessionTime == nil {
-		return nil, false
-	}
-	return o.SessionTime, true
-}
-
-// HasSessionTime returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSessionTime() bool {
-	if o != nil && o.SessionTime != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSessionTime gets a reference to the given string and assigns it to the SessionTime field.
-func (o *NotificationWithMeta) SetSessionTime(v string) {
-	o.SessionTime = &v
-}
-
-// GetAmountSpent returns the AmountSpent field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetAmountSpent() string {
-	if o == nil || o.AmountSpent == nil {
-		var ret string
-		return ret
-	}
-	return *o.AmountSpent
-}
-
-// GetAmountSpentOk returns a tuple with the AmountSpent field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAmountSpentOk() (*string, bool) {
-	if o == nil || o.AmountSpent == nil {
-		return nil, false
-	}
-	return o.AmountSpent, true
-}
-
-// HasAmountSpent returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAmountSpent() bool {
-	if o != nil && o.AmountSpent != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetAmountSpent gets a reference to the given string and assigns it to the AmountSpent field.
-func (o *NotificationWithMeta) SetAmountSpent(v string) {
-	o.AmountSpent = &v
-}
-
-// GetBoughtSku returns the BoughtSku field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetBoughtSku() string {
-	if o == nil || o.BoughtSku == nil {
-		var ret string
-		return ret
-	}
-	return *o.BoughtSku
-}
-
-// GetBoughtSkuOk returns a tuple with the BoughtSku field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetBoughtSkuOk() (*string, bool) {
-	if o == nil || o.BoughtSku == nil {
-		return nil, false
-	}
-	return o.BoughtSku, true
-}
-
-// HasBoughtSku returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasBoughtSku() bool {
-	if o != nil && o.BoughtSku != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetBoughtSku gets a reference to the given string and assigns it to the BoughtSku field.
-func (o *NotificationWithMeta) SetBoughtSku(v string) {
-	o.BoughtSku = &v
-}
-
-// GetTag returns the Tag field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetTag() string {
-	if o == nil || o.Tag == nil {
-		var ret string
-		return ret
-	}
-	return *o.Tag
-}
-
-// GetTagOk returns a tuple with the Tag field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetTagOk() (*string, bool) {
-	if o == nil || o.Tag == nil {
-		return nil, false
-	}
-	return o.Tag, true
-}
-
-// HasTag returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasTag() bool {
-	if o != nil && o.Tag != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetTag gets a reference to the given string and assigns it to the Tag field.
-func (o *NotificationWithMeta) SetTag(v string) {
-	o.Tag = &v
-}
-
-// GetLanguage returns the Language field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetLanguage() string {
-	if o == nil || o.Language == nil {
-		var ret string
-		return ret
-	}
-	return *o.Language
-}
-
-// GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetLanguageOk() (*string, bool) {
-	if o == nil || o.Language == nil {
-		return nil, false
-	}
-	return o.Language, true
-}
-
-// HasLanguage returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasLanguage() bool {
-	if o != nil && o.Language != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLanguage gets a reference to the given string and assigns it to the Language field.
-func (o *NotificationWithMeta) SetLanguage(v string) {
-	o.Language = &v
-}
-
-// GetAppVersion returns the AppVersion field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetAppVersion() string {
-	if o == nil || o.AppVersion == nil {
-		var ret string
-		return ret
-	}
-	return *o.AppVersion
-}
-
-// GetAppVersionOk returns a tuple with the AppVersion field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAppVersionOk() (*string, bool) {
-	if o == nil || o.AppVersion == nil {
-		return nil, false
-	}
-	return o.AppVersion, true
-}
-
-// HasAppVersion returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAppVersion() bool {
-	if o != nil && o.AppVersion != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetAppVersion gets a reference to the given string and assigns it to the AppVersion field.
-func (o *NotificationWithMeta) SetAppVersion(v string) {
-	o.AppVersion = &v
-}
-
-// GetLocation returns the Location field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetLocation() string {
-	if o == nil || o.Location == nil {
-		var ret string
-		return ret
-	}
-	return *o.Location
-}
-
-// GetLocationOk returns a tuple with the Location field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetLocationOk() (*string, bool) {
-	if o == nil || o.Location == nil {
-		return nil, false
-	}
-	return o.Location, true
-}
-
-// HasLocation returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasLocation() bool {
-	if o != nil && o.Location != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLocation gets a reference to the given string and assigns it to the Location field.
-func (o *NotificationWithMeta) SetLocation(v string) {
-	o.Location = &v
-}
-
-// GetEmail returns the Email field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetEmail() string {
-	if o == nil || o.Email == nil {
-		var ret string
-		return ret
-	}
-	return *o.Email
-}
-
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetEmailOk() (*string, bool) {
-	if o == nil || o.Email == nil {
-		return nil, false
-	}
-	return o.Email, true
-}
-
-// HasEmail returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasEmail() bool {
-	if o != nil && o.Email != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetEmail gets a reference to the given string and assigns it to the Email field.
-func (o *NotificationWithMeta) SetEmail(v string) {
-	o.Email = &v
-}
-
-// GetCountry returns the Country field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetCountry() string {
-	if o == nil || o.Country == nil {
-		var ret string
-		return ret
-	}
-	return *o.Country
-}
-
-// GetCountryOk returns a tuple with the Country field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetCountryOk() (*string, bool) {
-	if o == nil || o.Country == nil {
-		return nil, false
-	}
-	return o.Country, true
-}
-
-// HasCountry returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasCountry() bool {
-	if o != nil && o.Country != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCountry gets a reference to the given string and assigns it to the Country field.
-func (o *NotificationWithMeta) SetCountry(v string) {
-	o.Country = &v
-}
-
-// GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIncludePlayerIds() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludePlayerIds
-}
-
-// GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIncludePlayerIdsOk() ([]string, bool) {
-	if o == nil || o.IncludePlayerIds == nil {
-		return nil, false
-	}
-	return o.IncludePlayerIds, true
-}
-
-// HasIncludePlayerIds returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludePlayerIds() bool {
-	if o != nil && o.IncludePlayerIds != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludePlayerIds gets a reference to the given []string and assigns it to the IncludePlayerIds field.
-func (o *NotificationWithMeta) SetIncludePlayerIds(v []string) {
-	o.IncludePlayerIds = v
-}
-
-// GetIncludeExternalUserIds returns the IncludeExternalUserIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIncludeExternalUserIds() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeExternalUserIds
-}
-
-// GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIncludeExternalUserIdsOk() ([]string, bool) {
-	if o == nil || o.IncludeExternalUserIds == nil {
-		return nil, false
-	}
-	return o.IncludeExternalUserIds, true
-}
-
-// HasIncludeExternalUserIds returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeExternalUserIds() bool {
-	if o != nil && o.IncludeExternalUserIds != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeExternalUserIds gets a reference to the given []string and assigns it to the IncludeExternalUserIds field.
-func (o *NotificationWithMeta) SetIncludeExternalUserIds(v []string) {
-	o.IncludeExternalUserIds = v
-}
-
-// GetIncludeEmailTokens returns the IncludeEmailTokens field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludeEmailTokens() []string {
-	if o == nil || o.IncludeEmailTokens == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeEmailTokens
-}
-
-// GetIncludeEmailTokensOk returns a tuple with the IncludeEmailTokens field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludeEmailTokensOk() ([]string, bool) {
-	if o == nil || o.IncludeEmailTokens == nil {
-		return nil, false
-	}
-	return o.IncludeEmailTokens, true
-}
-
-// HasIncludeEmailTokens returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeEmailTokens() bool {
-	if o != nil && o.IncludeEmailTokens != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeEmailTokens gets a reference to the given []string and assigns it to the IncludeEmailTokens field.
-func (o *NotificationWithMeta) SetIncludeEmailTokens(v []string) {
-	o.IncludeEmailTokens = v
-}
-
-// GetIncludePhoneNumbers returns the IncludePhoneNumbers field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludePhoneNumbers() []string {
-	if o == nil || o.IncludePhoneNumbers == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludePhoneNumbers
-}
-
-// GetIncludePhoneNumbersOk returns a tuple with the IncludePhoneNumbers field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludePhoneNumbersOk() ([]string, bool) {
-	if o == nil || o.IncludePhoneNumbers == nil {
-		return nil, false
-	}
-	return o.IncludePhoneNumbers, true
-}
-
-// HasIncludePhoneNumbers returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludePhoneNumbers() bool {
-	if o != nil && o.IncludePhoneNumbers != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludePhoneNumbers gets a reference to the given []string and assigns it to the IncludePhoneNumbers field.
-func (o *NotificationWithMeta) SetIncludePhoneNumbers(v []string) {
-	o.IncludePhoneNumbers = v
-}
-
-// GetIncludeIosTokens returns the IncludeIosTokens field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludeIosTokens() []string {
-	if o == nil || o.IncludeIosTokens == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeIosTokens
-}
-
-// GetIncludeIosTokensOk returns a tuple with the IncludeIosTokens field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludeIosTokensOk() ([]string, bool) {
-	if o == nil || o.IncludeIosTokens == nil {
-		return nil, false
-	}
-	return o.IncludeIosTokens, true
-}
-
-// HasIncludeIosTokens returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeIosTokens() bool {
-	if o != nil && o.IncludeIosTokens != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeIosTokens gets a reference to the given []string and assigns it to the IncludeIosTokens field.
-func (o *NotificationWithMeta) SetIncludeIosTokens(v []string) {
-	o.IncludeIosTokens = v
-}
-
-// GetIncludeWpWnsUris returns the IncludeWpWnsUris field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludeWpWnsUris() []string {
-	if o == nil || o.IncludeWpWnsUris == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeWpWnsUris
-}
-
-// GetIncludeWpWnsUrisOk returns a tuple with the IncludeWpWnsUris field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludeWpWnsUrisOk() ([]string, bool) {
-	if o == nil || o.IncludeWpWnsUris == nil {
-		return nil, false
-	}
-	return o.IncludeWpWnsUris, true
-}
-
-// HasIncludeWpWnsUris returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeWpWnsUris() bool {
-	if o != nil && o.IncludeWpWnsUris != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeWpWnsUris gets a reference to the given []string and assigns it to the IncludeWpWnsUris field.
-func (o *NotificationWithMeta) SetIncludeWpWnsUris(v []string) {
-	o.IncludeWpWnsUris = v
-}
-
-// GetIncludeAmazonRegIds returns the IncludeAmazonRegIds field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludeAmazonRegIds() []string {
-	if o == nil || o.IncludeAmazonRegIds == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeAmazonRegIds
-}
-
-// GetIncludeAmazonRegIdsOk returns a tuple with the IncludeAmazonRegIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludeAmazonRegIdsOk() ([]string, bool) {
-	if o == nil || o.IncludeAmazonRegIds == nil {
-		return nil, false
-	}
-	return o.IncludeAmazonRegIds, true
-}
-
-// HasIncludeAmazonRegIds returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeAmazonRegIds() bool {
-	if o != nil && o.IncludeAmazonRegIds != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeAmazonRegIds gets a reference to the given []string and assigns it to the IncludeAmazonRegIds field.
-func (o *NotificationWithMeta) SetIncludeAmazonRegIds(v []string) {
-	o.IncludeAmazonRegIds = v
-}
-
-// GetIncludeChromeRegIds returns the IncludeChromeRegIds field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludeChromeRegIds() []string {
-	if o == nil || o.IncludeChromeRegIds == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeChromeRegIds
-}
-
-// GetIncludeChromeRegIdsOk returns a tuple with the IncludeChromeRegIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludeChromeRegIdsOk() ([]string, bool) {
-	if o == nil || o.IncludeChromeRegIds == nil {
-		return nil, false
-	}
-	return o.IncludeChromeRegIds, true
-}
-
-// HasIncludeChromeRegIds returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeChromeRegIds() bool {
-	if o != nil && o.IncludeChromeRegIds != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeChromeRegIds gets a reference to the given []string and assigns it to the IncludeChromeRegIds field.
-func (o *NotificationWithMeta) SetIncludeChromeRegIds(v []string) {
-	o.IncludeChromeRegIds = v
-}
-
-// GetIncludeChromeWebRegIds returns the IncludeChromeWebRegIds field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludeChromeWebRegIds() []string {
-	if o == nil || o.IncludeChromeWebRegIds == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeChromeWebRegIds
-}
-
-// GetIncludeChromeWebRegIdsOk returns a tuple with the IncludeChromeWebRegIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludeChromeWebRegIdsOk() ([]string, bool) {
-	if o == nil || o.IncludeChromeWebRegIds == nil {
-		return nil, false
-	}
-	return o.IncludeChromeWebRegIds, true
-}
-
-// HasIncludeChromeWebRegIds returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeChromeWebRegIds() bool {
-	if o != nil && o.IncludeChromeWebRegIds != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeChromeWebRegIds gets a reference to the given []string and assigns it to the IncludeChromeWebRegIds field.
-func (o *NotificationWithMeta) SetIncludeChromeWebRegIds(v []string) {
-	o.IncludeChromeWebRegIds = v
-}
-
-// GetIncludeAndroidRegIds returns the IncludeAndroidRegIds field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetIncludeAndroidRegIds() []string {
-	if o == nil || o.IncludeAndroidRegIds == nil {
-		var ret []string
-		return ret
-	}
-	return o.IncludeAndroidRegIds
-}
-
-// GetIncludeAndroidRegIdsOk returns a tuple with the IncludeAndroidRegIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIncludeAndroidRegIdsOk() ([]string, bool) {
-	if o == nil || o.IncludeAndroidRegIds == nil {
-		return nil, false
-	}
-	return o.IncludeAndroidRegIds, true
-}
-
-// HasIncludeAndroidRegIds returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIncludeAndroidRegIds() bool {
-	if o != nil && o.IncludeAndroidRegIds != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIncludeAndroidRegIds gets a reference to the given []string and assigns it to the IncludeAndroidRegIds field.
-func (o *NotificationWithMeta) SetIncludeAndroidRegIds(v []string) {
-	o.IncludeAndroidRegIds = v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetId() string {
+func (o *BasicNotificationAllOf) GetId() string {
 	if o == nil || o.Id == nil {
 		var ret string
 		return ret
@@ -1058,7 +219,7 @@ func (o *NotificationWithMeta) GetId() string {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetIdOk() (*string, bool) {
 	if o == nil || o.Id == nil {
 		return nil, false
 	}
@@ -1066,7 +227,7 @@ func (o *NotificationWithMeta) GetIdOk() (*string, bool) {
 }
 
 // HasId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasId() bool {
+func (o *BasicNotificationAllOf) HasId() bool {
 	if o != nil && o.Id != nil {
 		return true
 	}
@@ -1075,12 +236,12 @@ func (o *NotificationWithMeta) HasId() bool {
 }
 
 // SetId gets a reference to the given string and assigns it to the Id field.
-func (o *NotificationWithMeta) SetId(v string) {
+func (o *BasicNotificationAllOf) SetId(v string) {
 	o.Id = &v
 }
 
 // GetValue returns the Value field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetValue() int32 {
+func (o *BasicNotificationAllOf) GetValue() int32 {
 	if o == nil || o.Value == nil {
 		var ret int32
 		return ret
@@ -1090,7 +251,7 @@ func (o *NotificationWithMeta) GetValue() int32 {
 
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetValueOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetValueOk() (*int32, bool) {
 	if o == nil || o.Value == nil {
 		return nil, false
 	}
@@ -1098,7 +259,7 @@ func (o *NotificationWithMeta) GetValueOk() (*int32, bool) {
 }
 
 // HasValue returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasValue() bool {
+func (o *BasicNotificationAllOf) HasValue() bool {
 	if o != nil && o.Value != nil {
 		return true
 	}
@@ -1107,12 +268,12 @@ func (o *NotificationWithMeta) HasValue() bool {
 }
 
 // SetValue gets a reference to the given int32 and assigns it to the Value field.
-func (o *NotificationWithMeta) SetValue(v int32) {
+func (o *BasicNotificationAllOf) SetValue(v int32) {
 	o.Value = &v
 }
 
 // GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetName() string {
+func (o *BasicNotificationAllOf) GetName() string {
 	if o == nil || o.Name.Get() == nil {
 		var ret string
 		return ret
@@ -1123,7 +284,7 @@ func (o *NotificationWithMeta) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetNameOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1131,7 +292,7 @@ func (o *NotificationWithMeta) GetNameOk() (*string, bool) {
 }
 
 // HasName returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasName() bool {
+func (o *BasicNotificationAllOf) HasName() bool {
 	if o != nil && o.Name.IsSet() {
 		return true
 	}
@@ -1140,21 +301,21 @@ func (o *NotificationWithMeta) HasName() bool {
 }
 
 // SetName gets a reference to the given NullableString and assigns it to the Name field.
-func (o *NotificationWithMeta) SetName(v string) {
+func (o *BasicNotificationAllOf) SetName(v string) {
 	o.Name.Set(&v)
 }
 // SetNameNil sets the value for Name to be an explicit nil
-func (o *NotificationWithMeta) SetNameNil() {
+func (o *BasicNotificationAllOf) SetNameNil() {
 	o.Name.Set(nil)
 }
 
 // UnsetName ensures that no value is present for Name, not even an explicit nil
-func (o *NotificationWithMeta) UnsetName() {
+func (o *BasicNotificationAllOf) UnsetName() {
 	o.Name.Unset()
 }
 
 // GetAggregation returns the Aggregation field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetAggregation() string {
+func (o *BasicNotificationAllOf) GetAggregation() string {
 	if o == nil || o.Aggregation == nil {
 		var ret string
 		return ret
@@ -1164,7 +325,7 @@ func (o *NotificationWithMeta) GetAggregation() string {
 
 // GetAggregationOk returns a tuple with the Aggregation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAggregationOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAggregationOk() (*string, bool) {
 	if o == nil || o.Aggregation == nil {
 		return nil, false
 	}
@@ -1172,7 +333,7 @@ func (o *NotificationWithMeta) GetAggregationOk() (*string, bool) {
 }
 
 // HasAggregation returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAggregation() bool {
+func (o *BasicNotificationAllOf) HasAggregation() bool {
 	if o != nil && o.Aggregation != nil {
 		return true
 	}
@@ -1181,12 +342,12 @@ func (o *NotificationWithMeta) HasAggregation() bool {
 }
 
 // SetAggregation gets a reference to the given string and assigns it to the Aggregation field.
-func (o *NotificationWithMeta) SetAggregation(v string) {
+func (o *BasicNotificationAllOf) SetAggregation(v string) {
 	o.Aggregation = &v
 }
 
 // GetIsIos returns the IsIos field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsIos() bool {
+func (o *BasicNotificationAllOf) GetIsIos() bool {
 	if o == nil || o.IsIos.Get() == nil {
 		var ret bool
 		return ret
@@ -1197,7 +358,7 @@ func (o *NotificationWithMeta) GetIsIos() bool {
 // GetIsIosOk returns a tuple with the IsIos field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsIosOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsIosOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1205,7 +366,7 @@ func (o *NotificationWithMeta) GetIsIosOk() (*bool, bool) {
 }
 
 // HasIsIos returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsIos() bool {
+func (o *BasicNotificationAllOf) HasIsIos() bool {
 	if o != nil && o.IsIos.IsSet() {
 		return true
 	}
@@ -1214,21 +375,21 @@ func (o *NotificationWithMeta) HasIsIos() bool {
 }
 
 // SetIsIos gets a reference to the given NullableBool and assigns it to the IsIos field.
-func (o *NotificationWithMeta) SetIsIos(v bool) {
+func (o *BasicNotificationAllOf) SetIsIos(v bool) {
 	o.IsIos.Set(&v)
 }
 // SetIsIosNil sets the value for IsIos to be an explicit nil
-func (o *NotificationWithMeta) SetIsIosNil() {
+func (o *BasicNotificationAllOf) SetIsIosNil() {
 	o.IsIos.Set(nil)
 }
 
 // UnsetIsIos ensures that no value is present for IsIos, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsIos() {
+func (o *BasicNotificationAllOf) UnsetIsIos() {
 	o.IsIos.Unset()
 }
 
 // GetIsAndroid returns the IsAndroid field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsAndroid() bool {
+func (o *BasicNotificationAllOf) GetIsAndroid() bool {
 	if o == nil || o.IsAndroid.Get() == nil {
 		var ret bool
 		return ret
@@ -1239,7 +400,7 @@ func (o *NotificationWithMeta) GetIsAndroid() bool {
 // GetIsAndroidOk returns a tuple with the IsAndroid field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsAndroidOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsAndroidOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1247,7 +408,7 @@ func (o *NotificationWithMeta) GetIsAndroidOk() (*bool, bool) {
 }
 
 // HasIsAndroid returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsAndroid() bool {
+func (o *BasicNotificationAllOf) HasIsAndroid() bool {
 	if o != nil && o.IsAndroid.IsSet() {
 		return true
 	}
@@ -1256,21 +417,21 @@ func (o *NotificationWithMeta) HasIsAndroid() bool {
 }
 
 // SetIsAndroid gets a reference to the given NullableBool and assigns it to the IsAndroid field.
-func (o *NotificationWithMeta) SetIsAndroid(v bool) {
+func (o *BasicNotificationAllOf) SetIsAndroid(v bool) {
 	o.IsAndroid.Set(&v)
 }
 // SetIsAndroidNil sets the value for IsAndroid to be an explicit nil
-func (o *NotificationWithMeta) SetIsAndroidNil() {
+func (o *BasicNotificationAllOf) SetIsAndroidNil() {
 	o.IsAndroid.Set(nil)
 }
 
 // UnsetIsAndroid ensures that no value is present for IsAndroid, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsAndroid() {
+func (o *BasicNotificationAllOf) UnsetIsAndroid() {
 	o.IsAndroid.Unset()
 }
 
 // GetIsHuawei returns the IsHuawei field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsHuawei() bool {
+func (o *BasicNotificationAllOf) GetIsHuawei() bool {
 	if o == nil || o.IsHuawei.Get() == nil {
 		var ret bool
 		return ret
@@ -1281,7 +442,7 @@ func (o *NotificationWithMeta) GetIsHuawei() bool {
 // GetIsHuaweiOk returns a tuple with the IsHuawei field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsHuaweiOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsHuaweiOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1289,7 +450,7 @@ func (o *NotificationWithMeta) GetIsHuaweiOk() (*bool, bool) {
 }
 
 // HasIsHuawei returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsHuawei() bool {
+func (o *BasicNotificationAllOf) HasIsHuawei() bool {
 	if o != nil && o.IsHuawei.IsSet() {
 		return true
 	}
@@ -1298,21 +459,21 @@ func (o *NotificationWithMeta) HasIsHuawei() bool {
 }
 
 // SetIsHuawei gets a reference to the given NullableBool and assigns it to the IsHuawei field.
-func (o *NotificationWithMeta) SetIsHuawei(v bool) {
+func (o *BasicNotificationAllOf) SetIsHuawei(v bool) {
 	o.IsHuawei.Set(&v)
 }
 // SetIsHuaweiNil sets the value for IsHuawei to be an explicit nil
-func (o *NotificationWithMeta) SetIsHuaweiNil() {
+func (o *BasicNotificationAllOf) SetIsHuaweiNil() {
 	o.IsHuawei.Set(nil)
 }
 
 // UnsetIsHuawei ensures that no value is present for IsHuawei, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsHuawei() {
+func (o *BasicNotificationAllOf) UnsetIsHuawei() {
 	o.IsHuawei.Unset()
 }
 
 // GetIsAnyWeb returns the IsAnyWeb field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsAnyWeb() bool {
+func (o *BasicNotificationAllOf) GetIsAnyWeb() bool {
 	if o == nil || o.IsAnyWeb.Get() == nil {
 		var ret bool
 		return ret
@@ -1323,7 +484,7 @@ func (o *NotificationWithMeta) GetIsAnyWeb() bool {
 // GetIsAnyWebOk returns a tuple with the IsAnyWeb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsAnyWebOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsAnyWebOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1331,7 +492,7 @@ func (o *NotificationWithMeta) GetIsAnyWebOk() (*bool, bool) {
 }
 
 // HasIsAnyWeb returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsAnyWeb() bool {
+func (o *BasicNotificationAllOf) HasIsAnyWeb() bool {
 	if o != nil && o.IsAnyWeb.IsSet() {
 		return true
 	}
@@ -1340,21 +501,21 @@ func (o *NotificationWithMeta) HasIsAnyWeb() bool {
 }
 
 // SetIsAnyWeb gets a reference to the given NullableBool and assigns it to the IsAnyWeb field.
-func (o *NotificationWithMeta) SetIsAnyWeb(v bool) {
+func (o *BasicNotificationAllOf) SetIsAnyWeb(v bool) {
 	o.IsAnyWeb.Set(&v)
 }
 // SetIsAnyWebNil sets the value for IsAnyWeb to be an explicit nil
-func (o *NotificationWithMeta) SetIsAnyWebNil() {
+func (o *BasicNotificationAllOf) SetIsAnyWebNil() {
 	o.IsAnyWeb.Set(nil)
 }
 
 // UnsetIsAnyWeb ensures that no value is present for IsAnyWeb, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsAnyWeb() {
+func (o *BasicNotificationAllOf) UnsetIsAnyWeb() {
 	o.IsAnyWeb.Unset()
 }
 
 // GetIsChromeWeb returns the IsChromeWeb field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsChromeWeb() bool {
+func (o *BasicNotificationAllOf) GetIsChromeWeb() bool {
 	if o == nil || o.IsChromeWeb.Get() == nil {
 		var ret bool
 		return ret
@@ -1365,7 +526,7 @@ func (o *NotificationWithMeta) GetIsChromeWeb() bool {
 // GetIsChromeWebOk returns a tuple with the IsChromeWeb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsChromeWebOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsChromeWebOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1373,7 +534,7 @@ func (o *NotificationWithMeta) GetIsChromeWebOk() (*bool, bool) {
 }
 
 // HasIsChromeWeb returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsChromeWeb() bool {
+func (o *BasicNotificationAllOf) HasIsChromeWeb() bool {
 	if o != nil && o.IsChromeWeb.IsSet() {
 		return true
 	}
@@ -1382,21 +543,21 @@ func (o *NotificationWithMeta) HasIsChromeWeb() bool {
 }
 
 // SetIsChromeWeb gets a reference to the given NullableBool and assigns it to the IsChromeWeb field.
-func (o *NotificationWithMeta) SetIsChromeWeb(v bool) {
+func (o *BasicNotificationAllOf) SetIsChromeWeb(v bool) {
 	o.IsChromeWeb.Set(&v)
 }
 // SetIsChromeWebNil sets the value for IsChromeWeb to be an explicit nil
-func (o *NotificationWithMeta) SetIsChromeWebNil() {
+func (o *BasicNotificationAllOf) SetIsChromeWebNil() {
 	o.IsChromeWeb.Set(nil)
 }
 
 // UnsetIsChromeWeb ensures that no value is present for IsChromeWeb, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsChromeWeb() {
+func (o *BasicNotificationAllOf) UnsetIsChromeWeb() {
 	o.IsChromeWeb.Unset()
 }
 
 // GetIsFirefox returns the IsFirefox field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsFirefox() bool {
+func (o *BasicNotificationAllOf) GetIsFirefox() bool {
 	if o == nil || o.IsFirefox.Get() == nil {
 		var ret bool
 		return ret
@@ -1407,7 +568,7 @@ func (o *NotificationWithMeta) GetIsFirefox() bool {
 // GetIsFirefoxOk returns a tuple with the IsFirefox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsFirefoxOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsFirefoxOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1415,7 +576,7 @@ func (o *NotificationWithMeta) GetIsFirefoxOk() (*bool, bool) {
 }
 
 // HasIsFirefox returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsFirefox() bool {
+func (o *BasicNotificationAllOf) HasIsFirefox() bool {
 	if o != nil && o.IsFirefox.IsSet() {
 		return true
 	}
@@ -1424,21 +585,21 @@ func (o *NotificationWithMeta) HasIsFirefox() bool {
 }
 
 // SetIsFirefox gets a reference to the given NullableBool and assigns it to the IsFirefox field.
-func (o *NotificationWithMeta) SetIsFirefox(v bool) {
+func (o *BasicNotificationAllOf) SetIsFirefox(v bool) {
 	o.IsFirefox.Set(&v)
 }
 // SetIsFirefoxNil sets the value for IsFirefox to be an explicit nil
-func (o *NotificationWithMeta) SetIsFirefoxNil() {
+func (o *BasicNotificationAllOf) SetIsFirefoxNil() {
 	o.IsFirefox.Set(nil)
 }
 
 // UnsetIsFirefox ensures that no value is present for IsFirefox, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsFirefox() {
+func (o *BasicNotificationAllOf) UnsetIsFirefox() {
 	o.IsFirefox.Unset()
 }
 
 // GetIsSafari returns the IsSafari field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsSafari() bool {
+func (o *BasicNotificationAllOf) GetIsSafari() bool {
 	if o == nil || o.IsSafari.Get() == nil {
 		var ret bool
 		return ret
@@ -1449,7 +610,7 @@ func (o *NotificationWithMeta) GetIsSafari() bool {
 // GetIsSafariOk returns a tuple with the IsSafari field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsSafariOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsSafariOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1457,7 +618,7 @@ func (o *NotificationWithMeta) GetIsSafariOk() (*bool, bool) {
 }
 
 // HasIsSafari returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsSafari() bool {
+func (o *BasicNotificationAllOf) HasIsSafari() bool {
 	if o != nil && o.IsSafari.IsSet() {
 		return true
 	}
@@ -1466,21 +627,21 @@ func (o *NotificationWithMeta) HasIsSafari() bool {
 }
 
 // SetIsSafari gets a reference to the given NullableBool and assigns it to the IsSafari field.
-func (o *NotificationWithMeta) SetIsSafari(v bool) {
+func (o *BasicNotificationAllOf) SetIsSafari(v bool) {
 	o.IsSafari.Set(&v)
 }
 // SetIsSafariNil sets the value for IsSafari to be an explicit nil
-func (o *NotificationWithMeta) SetIsSafariNil() {
+func (o *BasicNotificationAllOf) SetIsSafariNil() {
 	o.IsSafari.Set(nil)
 }
 
 // UnsetIsSafari ensures that no value is present for IsSafari, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsSafari() {
+func (o *BasicNotificationAllOf) UnsetIsSafari() {
 	o.IsSafari.Unset()
 }
 
 // GetIsWPWNS returns the IsWPWNS field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsWPWNS() bool {
+func (o *BasicNotificationAllOf) GetIsWPWNS() bool {
 	if o == nil || o.IsWPWNS.Get() == nil {
 		var ret bool
 		return ret
@@ -1491,7 +652,7 @@ func (o *NotificationWithMeta) GetIsWPWNS() bool {
 // GetIsWPWNSOk returns a tuple with the IsWPWNS field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsWPWNSOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsWPWNSOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1499,7 +660,7 @@ func (o *NotificationWithMeta) GetIsWPWNSOk() (*bool, bool) {
 }
 
 // HasIsWPWNS returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsWPWNS() bool {
+func (o *BasicNotificationAllOf) HasIsWPWNS() bool {
 	if o != nil && o.IsWPWNS.IsSet() {
 		return true
 	}
@@ -1508,21 +669,21 @@ func (o *NotificationWithMeta) HasIsWPWNS() bool {
 }
 
 // SetIsWPWNS gets a reference to the given NullableBool and assigns it to the IsWPWNS field.
-func (o *NotificationWithMeta) SetIsWPWNS(v bool) {
+func (o *BasicNotificationAllOf) SetIsWPWNS(v bool) {
 	o.IsWPWNS.Set(&v)
 }
 // SetIsWPWNSNil sets the value for IsWPWNS to be an explicit nil
-func (o *NotificationWithMeta) SetIsWPWNSNil() {
+func (o *BasicNotificationAllOf) SetIsWPWNSNil() {
 	o.IsWPWNS.Set(nil)
 }
 
 // UnsetIsWPWNS ensures that no value is present for IsWPWNS, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsWPWNS() {
+func (o *BasicNotificationAllOf) UnsetIsWPWNS() {
 	o.IsWPWNS.Unset()
 }
 
 // GetIsAdm returns the IsAdm field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsAdm() bool {
+func (o *BasicNotificationAllOf) GetIsAdm() bool {
 	if o == nil || o.IsAdm.Get() == nil {
 		var ret bool
 		return ret
@@ -1533,7 +694,7 @@ func (o *NotificationWithMeta) GetIsAdm() bool {
 // GetIsAdmOk returns a tuple with the IsAdm field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsAdmOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsAdmOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1541,7 +702,7 @@ func (o *NotificationWithMeta) GetIsAdmOk() (*bool, bool) {
 }
 
 // HasIsAdm returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsAdm() bool {
+func (o *BasicNotificationAllOf) HasIsAdm() bool {
 	if o != nil && o.IsAdm.IsSet() {
 		return true
 	}
@@ -1550,21 +711,21 @@ func (o *NotificationWithMeta) HasIsAdm() bool {
 }
 
 // SetIsAdm gets a reference to the given NullableBool and assigns it to the IsAdm field.
-func (o *NotificationWithMeta) SetIsAdm(v bool) {
+func (o *BasicNotificationAllOf) SetIsAdm(v bool) {
 	o.IsAdm.Set(&v)
 }
 // SetIsAdmNil sets the value for IsAdm to be an explicit nil
-func (o *NotificationWithMeta) SetIsAdmNil() {
+func (o *BasicNotificationAllOf) SetIsAdmNil() {
 	o.IsAdm.Set(nil)
 }
 
 // UnsetIsAdm ensures that no value is present for IsAdm, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsAdm() {
+func (o *BasicNotificationAllOf) UnsetIsAdm() {
 	o.IsAdm.Unset()
 }
 
 // GetIsChrome returns the IsChrome field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIsChrome() bool {
+func (o *BasicNotificationAllOf) GetIsChrome() bool {
 	if o == nil || o.IsChrome.Get() == nil {
 		var ret bool
 		return ret
@@ -1575,7 +736,7 @@ func (o *NotificationWithMeta) GetIsChrome() bool {
 // GetIsChromeOk returns a tuple with the IsChrome field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIsChromeOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetIsChromeOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1583,7 +744,7 @@ func (o *NotificationWithMeta) GetIsChromeOk() (*bool, bool) {
 }
 
 // HasIsChrome returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIsChrome() bool {
+func (o *BasicNotificationAllOf) HasIsChrome() bool {
 	if o != nil && o.IsChrome.IsSet() {
 		return true
 	}
@@ -1592,21 +753,21 @@ func (o *NotificationWithMeta) HasIsChrome() bool {
 }
 
 // SetIsChrome gets a reference to the given NullableBool and assigns it to the IsChrome field.
-func (o *NotificationWithMeta) SetIsChrome(v bool) {
+func (o *BasicNotificationAllOf) SetIsChrome(v bool) {
 	o.IsChrome.Set(&v)
 }
 // SetIsChromeNil sets the value for IsChrome to be an explicit nil
-func (o *NotificationWithMeta) SetIsChromeNil() {
+func (o *BasicNotificationAllOf) SetIsChromeNil() {
 	o.IsChrome.Set(nil)
 }
 
 // UnsetIsChrome ensures that no value is present for IsChrome, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIsChrome() {
+func (o *BasicNotificationAllOf) UnsetIsChrome() {
 	o.IsChrome.Unset()
 }
 
 // GetChannelForExternalUserIds returns the ChannelForExternalUserIds field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetChannelForExternalUserIds() string {
+func (o *BasicNotificationAllOf) GetChannelForExternalUserIds() string {
 	if o == nil || o.ChannelForExternalUserIds == nil {
 		var ret string
 		return ret
@@ -1616,7 +777,7 @@ func (o *NotificationWithMeta) GetChannelForExternalUserIds() string {
 
 // GetChannelForExternalUserIdsOk returns a tuple with the ChannelForExternalUserIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetChannelForExternalUserIdsOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetChannelForExternalUserIdsOk() (*string, bool) {
 	if o == nil || o.ChannelForExternalUserIds == nil {
 		return nil, false
 	}
@@ -1624,7 +785,7 @@ func (o *NotificationWithMeta) GetChannelForExternalUserIdsOk() (*string, bool) 
 }
 
 // HasChannelForExternalUserIds returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasChannelForExternalUserIds() bool {
+func (o *BasicNotificationAllOf) HasChannelForExternalUserIds() bool {
 	if o != nil && o.ChannelForExternalUserIds != nil {
 		return true
 	}
@@ -1633,36 +794,44 @@ func (o *NotificationWithMeta) HasChannelForExternalUserIds() bool {
 }
 
 // SetChannelForExternalUserIds gets a reference to the given string and assigns it to the ChannelForExternalUserIds field.
-func (o *NotificationWithMeta) SetChannelForExternalUserIds(v string) {
+func (o *BasicNotificationAllOf) SetChannelForExternalUserIds(v string) {
 	o.ChannelForExternalUserIds = &v
 }
 
-// GetAppId returns the AppId field value
-func (o *NotificationWithMeta) GetAppId() string {
-	if o == nil {
+// GetAppId returns the AppId field value if set, zero value otherwise.
+func (o *BasicNotificationAllOf) GetAppId() string {
+	if o == nil || o.AppId == nil {
 		var ret string
 		return ret
 	}
-
-	return o.AppId
+	return *o.AppId
 }
 
-// GetAppIdOk returns a tuple with the AppId field value
+// GetAppIdOk returns a tuple with the AppId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAppIdOk() (*string, bool) {
-	if o == nil {
+func (o *BasicNotificationAllOf) GetAppIdOk() (*string, bool) {
+	if o == nil || o.AppId == nil {
 		return nil, false
 	}
-	return &o.AppId, true
+	return o.AppId, true
 }
 
-// SetAppId sets field value
-func (o *NotificationWithMeta) SetAppId(v string) {
-	o.AppId = v
+// HasAppId returns a boolean if a field has been set.
+func (o *BasicNotificationAllOf) HasAppId() bool {
+	if o != nil && o.AppId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAppId gets a reference to the given string and assigns it to the AppId field.
+func (o *BasicNotificationAllOf) SetAppId(v string) {
+	o.AppId = &v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetExternalId() string {
+func (o *BasicNotificationAllOf) GetExternalId() string {
 	if o == nil || o.ExternalId == nil {
 		var ret string
 		return ret
@@ -1672,7 +841,7 @@ func (o *NotificationWithMeta) GetExternalId() string {
 
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetExternalIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetExternalIdOk() (*string, bool) {
 	if o == nil || o.ExternalId == nil {
 		return nil, false
 	}
@@ -1680,7 +849,7 @@ func (o *NotificationWithMeta) GetExternalIdOk() (*string, bool) {
 }
 
 // HasExternalId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasExternalId() bool {
+func (o *BasicNotificationAllOf) HasExternalId() bool {
 	if o != nil && o.ExternalId != nil {
 		return true
 	}
@@ -1689,12 +858,12 @@ func (o *NotificationWithMeta) HasExternalId() bool {
 }
 
 // SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
-func (o *NotificationWithMeta) SetExternalId(v string) {
+func (o *BasicNotificationAllOf) SetExternalId(v string) {
 	o.ExternalId = &v
 }
 
 // GetContents returns the Contents field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetContents() StringMap {
+func (o *BasicNotificationAllOf) GetContents() StringMap {
 	if o == nil || o.Contents.Get() == nil {
 		var ret StringMap
 		return ret
@@ -1705,7 +874,7 @@ func (o *NotificationWithMeta) GetContents() StringMap {
 // GetContentsOk returns a tuple with the Contents field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetContentsOk() (*StringMap, bool) {
+func (o *BasicNotificationAllOf) GetContentsOk() (*StringMap, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1713,7 +882,7 @@ func (o *NotificationWithMeta) GetContentsOk() (*StringMap, bool) {
 }
 
 // HasContents returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasContents() bool {
+func (o *BasicNotificationAllOf) HasContents() bool {
 	if o != nil && o.Contents.IsSet() {
 		return true
 	}
@@ -1722,21 +891,21 @@ func (o *NotificationWithMeta) HasContents() bool {
 }
 
 // SetContents gets a reference to the given NullableStringMap and assigns it to the Contents field.
-func (o *NotificationWithMeta) SetContents(v StringMap) {
+func (o *BasicNotificationAllOf) SetContents(v StringMap) {
 	o.Contents.Set(&v)
 }
 // SetContentsNil sets the value for Contents to be an explicit nil
-func (o *NotificationWithMeta) SetContentsNil() {
+func (o *BasicNotificationAllOf) SetContentsNil() {
 	o.Contents.Set(nil)
 }
 
 // UnsetContents ensures that no value is present for Contents, not even an explicit nil
-func (o *NotificationWithMeta) UnsetContents() {
+func (o *BasicNotificationAllOf) UnsetContents() {
 	o.Contents.Unset()
 }
 
 // GetHeadings returns the Headings field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHeadings() StringMap {
+func (o *BasicNotificationAllOf) GetHeadings() StringMap {
 	if o == nil || o.Headings.Get() == nil {
 		var ret StringMap
 		return ret
@@ -1747,7 +916,7 @@ func (o *NotificationWithMeta) GetHeadings() StringMap {
 // GetHeadingsOk returns a tuple with the Headings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHeadingsOk() (*StringMap, bool) {
+func (o *BasicNotificationAllOf) GetHeadingsOk() (*StringMap, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1755,7 +924,7 @@ func (o *NotificationWithMeta) GetHeadingsOk() (*StringMap, bool) {
 }
 
 // HasHeadings returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHeadings() bool {
+func (o *BasicNotificationAllOf) HasHeadings() bool {
 	if o != nil && o.Headings.IsSet() {
 		return true
 	}
@@ -1764,21 +933,21 @@ func (o *NotificationWithMeta) HasHeadings() bool {
 }
 
 // SetHeadings gets a reference to the given NullableStringMap and assigns it to the Headings field.
-func (o *NotificationWithMeta) SetHeadings(v StringMap) {
+func (o *BasicNotificationAllOf) SetHeadings(v StringMap) {
 	o.Headings.Set(&v)
 }
 // SetHeadingsNil sets the value for Headings to be an explicit nil
-func (o *NotificationWithMeta) SetHeadingsNil() {
+func (o *BasicNotificationAllOf) SetHeadingsNil() {
 	o.Headings.Set(nil)
 }
 
 // UnsetHeadings ensures that no value is present for Headings, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHeadings() {
+func (o *BasicNotificationAllOf) UnsetHeadings() {
 	o.Headings.Unset()
 }
 
 // GetSubtitle returns the Subtitle field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetSubtitle() StringMap {
+func (o *BasicNotificationAllOf) GetSubtitle() StringMap {
 	if o == nil || o.Subtitle.Get() == nil {
 		var ret StringMap
 		return ret
@@ -1789,7 +958,7 @@ func (o *NotificationWithMeta) GetSubtitle() StringMap {
 // GetSubtitleOk returns a tuple with the Subtitle field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetSubtitleOk() (*StringMap, bool) {
+func (o *BasicNotificationAllOf) GetSubtitleOk() (*StringMap, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1797,7 +966,7 @@ func (o *NotificationWithMeta) GetSubtitleOk() (*StringMap, bool) {
 }
 
 // HasSubtitle returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSubtitle() bool {
+func (o *BasicNotificationAllOf) HasSubtitle() bool {
 	if o != nil && o.Subtitle.IsSet() {
 		return true
 	}
@@ -1806,21 +975,21 @@ func (o *NotificationWithMeta) HasSubtitle() bool {
 }
 
 // SetSubtitle gets a reference to the given NullableStringMap and assigns it to the Subtitle field.
-func (o *NotificationWithMeta) SetSubtitle(v StringMap) {
+func (o *BasicNotificationAllOf) SetSubtitle(v StringMap) {
 	o.Subtitle.Set(&v)
 }
 // SetSubtitleNil sets the value for Subtitle to be an explicit nil
-func (o *NotificationWithMeta) SetSubtitleNil() {
+func (o *BasicNotificationAllOf) SetSubtitleNil() {
 	o.Subtitle.Set(nil)
 }
 
 // UnsetSubtitle ensures that no value is present for Subtitle, not even an explicit nil
-func (o *NotificationWithMeta) UnsetSubtitle() {
+func (o *BasicNotificationAllOf) UnsetSubtitle() {
 	o.Subtitle.Unset()
 }
 
 // GetData returns the Data field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetData() map[string]interface{} {
+func (o *BasicNotificationAllOf) GetData() map[string]interface{} {
 	if o == nil {
 		var ret map[string]interface{}
 		return ret
@@ -1831,7 +1000,7 @@ func (o *NotificationWithMeta) GetData() map[string]interface{} {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetDataOk() (map[string]interface{}, bool) {
+func (o *BasicNotificationAllOf) GetDataOk() (map[string]interface{}, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -1839,7 +1008,7 @@ func (o *NotificationWithMeta) GetDataOk() (map[string]interface{}, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasData() bool {
+func (o *BasicNotificationAllOf) HasData() bool {
 	if o != nil && o.Data != nil {
 		return true
 	}
@@ -1848,12 +1017,12 @@ func (o *NotificationWithMeta) HasData() bool {
 }
 
 // SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
-func (o *NotificationWithMeta) SetData(v map[string]interface{}) {
+func (o *BasicNotificationAllOf) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 
 // GetHuaweiMsgType returns the HuaweiMsgType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiMsgType() string {
+func (o *BasicNotificationAllOf) GetHuaweiMsgType() string {
 	if o == nil || o.HuaweiMsgType.Get() == nil {
 		var ret string
 		return ret
@@ -1864,7 +1033,7 @@ func (o *NotificationWithMeta) GetHuaweiMsgType() string {
 // GetHuaweiMsgTypeOk returns a tuple with the HuaweiMsgType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiMsgTypeOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiMsgTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1872,7 +1041,7 @@ func (o *NotificationWithMeta) GetHuaweiMsgTypeOk() (*string, bool) {
 }
 
 // HasHuaweiMsgType returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiMsgType() bool {
+func (o *BasicNotificationAllOf) HasHuaweiMsgType() bool {
 	if o != nil && o.HuaweiMsgType.IsSet() {
 		return true
 	}
@@ -1881,21 +1050,21 @@ func (o *NotificationWithMeta) HasHuaweiMsgType() bool {
 }
 
 // SetHuaweiMsgType gets a reference to the given NullableString and assigns it to the HuaweiMsgType field.
-func (o *NotificationWithMeta) SetHuaweiMsgType(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiMsgType(v string) {
 	o.HuaweiMsgType.Set(&v)
 }
 // SetHuaweiMsgTypeNil sets the value for HuaweiMsgType to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiMsgTypeNil() {
+func (o *BasicNotificationAllOf) SetHuaweiMsgTypeNil() {
 	o.HuaweiMsgType.Set(nil)
 }
 
 // UnsetHuaweiMsgType ensures that no value is present for HuaweiMsgType, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiMsgType() {
+func (o *BasicNotificationAllOf) UnsetHuaweiMsgType() {
 	o.HuaweiMsgType.Unset()
 }
 
 // GetUrl returns the Url field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetUrl() string {
+func (o *BasicNotificationAllOf) GetUrl() string {
 	if o == nil || o.Url.Get() == nil {
 		var ret string
 		return ret
@@ -1906,7 +1075,7 @@ func (o *NotificationWithMeta) GetUrl() string {
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetUrlOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetUrlOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1914,7 +1083,7 @@ func (o *NotificationWithMeta) GetUrlOk() (*string, bool) {
 }
 
 // HasUrl returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasUrl() bool {
+func (o *BasicNotificationAllOf) HasUrl() bool {
 	if o != nil && o.Url.IsSet() {
 		return true
 	}
@@ -1923,21 +1092,21 @@ func (o *NotificationWithMeta) HasUrl() bool {
 }
 
 // SetUrl gets a reference to the given NullableString and assigns it to the Url field.
-func (o *NotificationWithMeta) SetUrl(v string) {
+func (o *BasicNotificationAllOf) SetUrl(v string) {
 	o.Url.Set(&v)
 }
 // SetUrlNil sets the value for Url to be an explicit nil
-func (o *NotificationWithMeta) SetUrlNil() {
+func (o *BasicNotificationAllOf) SetUrlNil() {
 	o.Url.Set(nil)
 }
 
 // UnsetUrl ensures that no value is present for Url, not even an explicit nil
-func (o *NotificationWithMeta) UnsetUrl() {
+func (o *BasicNotificationAllOf) UnsetUrl() {
 	o.Url.Unset()
 }
 
 // GetWebUrl returns the WebUrl field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetWebUrl() string {
+func (o *BasicNotificationAllOf) GetWebUrl() string {
 	if o == nil || o.WebUrl.Get() == nil {
 		var ret string
 		return ret
@@ -1948,7 +1117,7 @@ func (o *NotificationWithMeta) GetWebUrl() string {
 // GetWebUrlOk returns a tuple with the WebUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetWebUrlOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetWebUrlOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1956,7 +1125,7 @@ func (o *NotificationWithMeta) GetWebUrlOk() (*string, bool) {
 }
 
 // HasWebUrl returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasWebUrl() bool {
+func (o *BasicNotificationAllOf) HasWebUrl() bool {
 	if o != nil && o.WebUrl.IsSet() {
 		return true
 	}
@@ -1965,21 +1134,21 @@ func (o *NotificationWithMeta) HasWebUrl() bool {
 }
 
 // SetWebUrl gets a reference to the given NullableString and assigns it to the WebUrl field.
-func (o *NotificationWithMeta) SetWebUrl(v string) {
+func (o *BasicNotificationAllOf) SetWebUrl(v string) {
 	o.WebUrl.Set(&v)
 }
 // SetWebUrlNil sets the value for WebUrl to be an explicit nil
-func (o *NotificationWithMeta) SetWebUrlNil() {
+func (o *BasicNotificationAllOf) SetWebUrlNil() {
 	o.WebUrl.Set(nil)
 }
 
 // UnsetWebUrl ensures that no value is present for WebUrl, not even an explicit nil
-func (o *NotificationWithMeta) UnsetWebUrl() {
+func (o *BasicNotificationAllOf) UnsetWebUrl() {
 	o.WebUrl.Unset()
 }
 
 // GetAppUrl returns the AppUrl field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAppUrl() string {
+func (o *BasicNotificationAllOf) GetAppUrl() string {
 	if o == nil || o.AppUrl.Get() == nil {
 		var ret string
 		return ret
@@ -1990,7 +1159,7 @@ func (o *NotificationWithMeta) GetAppUrl() string {
 // GetAppUrlOk returns a tuple with the AppUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAppUrlOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAppUrlOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1998,7 +1167,7 @@ func (o *NotificationWithMeta) GetAppUrlOk() (*string, bool) {
 }
 
 // HasAppUrl returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAppUrl() bool {
+func (o *BasicNotificationAllOf) HasAppUrl() bool {
 	if o != nil && o.AppUrl.IsSet() {
 		return true
 	}
@@ -2007,21 +1176,21 @@ func (o *NotificationWithMeta) HasAppUrl() bool {
 }
 
 // SetAppUrl gets a reference to the given NullableString and assigns it to the AppUrl field.
-func (o *NotificationWithMeta) SetAppUrl(v string) {
+func (o *BasicNotificationAllOf) SetAppUrl(v string) {
 	o.AppUrl.Set(&v)
 }
 // SetAppUrlNil sets the value for AppUrl to be an explicit nil
-func (o *NotificationWithMeta) SetAppUrlNil() {
+func (o *BasicNotificationAllOf) SetAppUrlNil() {
 	o.AppUrl.Set(nil)
 }
 
 // UnsetAppUrl ensures that no value is present for AppUrl, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAppUrl() {
+func (o *BasicNotificationAllOf) UnsetAppUrl() {
 	o.AppUrl.Unset()
 }
 
 // GetIosAttachments returns the IosAttachments field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIosAttachments() map[string]interface{} {
+func (o *BasicNotificationAllOf) GetIosAttachments() map[string]interface{} {
 	if o == nil {
 		var ret map[string]interface{}
 		return ret
@@ -2032,7 +1201,7 @@ func (o *NotificationWithMeta) GetIosAttachments() map[string]interface{} {
 // GetIosAttachmentsOk returns a tuple with the IosAttachments field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIosAttachmentsOk() (map[string]interface{}, bool) {
+func (o *BasicNotificationAllOf) GetIosAttachmentsOk() (map[string]interface{}, bool) {
 	if o == nil || o.IosAttachments == nil {
 		return nil, false
 	}
@@ -2040,7 +1209,7 @@ func (o *NotificationWithMeta) GetIosAttachmentsOk() (map[string]interface{}, bo
 }
 
 // HasIosAttachments returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIosAttachments() bool {
+func (o *BasicNotificationAllOf) HasIosAttachments() bool {
 	if o != nil && o.IosAttachments != nil {
 		return true
 	}
@@ -2049,12 +1218,12 @@ func (o *NotificationWithMeta) HasIosAttachments() bool {
 }
 
 // SetIosAttachments gets a reference to the given map[string]interface{} and assigns it to the IosAttachments field.
-func (o *NotificationWithMeta) SetIosAttachments(v map[string]interface{}) {
+func (o *BasicNotificationAllOf) SetIosAttachments(v map[string]interface{}) {
 	o.IosAttachments = v
 }
 
 // GetTemplateId returns the TemplateId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetTemplateId() string {
+func (o *BasicNotificationAllOf) GetTemplateId() string {
 	if o == nil || o.TemplateId.Get() == nil {
 		var ret string
 		return ret
@@ -2065,7 +1234,7 @@ func (o *NotificationWithMeta) GetTemplateId() string {
 // GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetTemplateIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetTemplateIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2073,7 +1242,7 @@ func (o *NotificationWithMeta) GetTemplateIdOk() (*string, bool) {
 }
 
 // HasTemplateId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasTemplateId() bool {
+func (o *BasicNotificationAllOf) HasTemplateId() bool {
 	if o != nil && o.TemplateId.IsSet() {
 		return true
 	}
@@ -2082,21 +1251,21 @@ func (o *NotificationWithMeta) HasTemplateId() bool {
 }
 
 // SetTemplateId gets a reference to the given NullableString and assigns it to the TemplateId field.
-func (o *NotificationWithMeta) SetTemplateId(v string) {
+func (o *BasicNotificationAllOf) SetTemplateId(v string) {
 	o.TemplateId.Set(&v)
 }
 // SetTemplateIdNil sets the value for TemplateId to be an explicit nil
-func (o *NotificationWithMeta) SetTemplateIdNil() {
+func (o *BasicNotificationAllOf) SetTemplateIdNil() {
 	o.TemplateId.Set(nil)
 }
 
 // UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
-func (o *NotificationWithMeta) UnsetTemplateId() {
+func (o *BasicNotificationAllOf) UnsetTemplateId() {
 	o.TemplateId.Unset()
 }
 
 // GetContentAvailable returns the ContentAvailable field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetContentAvailable() bool {
+func (o *BasicNotificationAllOf) GetContentAvailable() bool {
 	if o == nil || o.ContentAvailable.Get() == nil {
 		var ret bool
 		return ret
@@ -2107,7 +1276,7 @@ func (o *NotificationWithMeta) GetContentAvailable() bool {
 // GetContentAvailableOk returns a tuple with the ContentAvailable field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetContentAvailableOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetContentAvailableOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2115,7 +1284,7 @@ func (o *NotificationWithMeta) GetContentAvailableOk() (*bool, bool) {
 }
 
 // HasContentAvailable returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasContentAvailable() bool {
+func (o *BasicNotificationAllOf) HasContentAvailable() bool {
 	if o != nil && o.ContentAvailable.IsSet() {
 		return true
 	}
@@ -2124,21 +1293,21 @@ func (o *NotificationWithMeta) HasContentAvailable() bool {
 }
 
 // SetContentAvailable gets a reference to the given NullableBool and assigns it to the ContentAvailable field.
-func (o *NotificationWithMeta) SetContentAvailable(v bool) {
+func (o *BasicNotificationAllOf) SetContentAvailable(v bool) {
 	o.ContentAvailable.Set(&v)
 }
 // SetContentAvailableNil sets the value for ContentAvailable to be an explicit nil
-func (o *NotificationWithMeta) SetContentAvailableNil() {
+func (o *BasicNotificationAllOf) SetContentAvailableNil() {
 	o.ContentAvailable.Set(nil)
 }
 
 // UnsetContentAvailable ensures that no value is present for ContentAvailable, not even an explicit nil
-func (o *NotificationWithMeta) UnsetContentAvailable() {
+func (o *BasicNotificationAllOf) UnsetContentAvailable() {
 	o.ContentAvailable.Unset()
 }
 
 // GetMutableContent returns the MutableContent field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetMutableContent() bool {
+func (o *BasicNotificationAllOf) GetMutableContent() bool {
 	if o == nil || o.MutableContent == nil {
 		var ret bool
 		return ret
@@ -2148,7 +1317,7 @@ func (o *NotificationWithMeta) GetMutableContent() bool {
 
 // GetMutableContentOk returns a tuple with the MutableContent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetMutableContentOk() (*bool, bool) {
+func (o *BasicNotificationAllOf) GetMutableContentOk() (*bool, bool) {
 	if o == nil || o.MutableContent == nil {
 		return nil, false
 	}
@@ -2156,7 +1325,7 @@ func (o *NotificationWithMeta) GetMutableContentOk() (*bool, bool) {
 }
 
 // HasMutableContent returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasMutableContent() bool {
+func (o *BasicNotificationAllOf) HasMutableContent() bool {
 	if o != nil && o.MutableContent != nil {
 		return true
 	}
@@ -2165,12 +1334,12 @@ func (o *NotificationWithMeta) HasMutableContent() bool {
 }
 
 // SetMutableContent gets a reference to the given bool and assigns it to the MutableContent field.
-func (o *NotificationWithMeta) SetMutableContent(v bool) {
+func (o *BasicNotificationAllOf) SetMutableContent(v bool) {
 	o.MutableContent = &v
 }
 
 // GetTargetContentIdentifier returns the TargetContentIdentifier field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetTargetContentIdentifier() string {
+func (o *BasicNotificationAllOf) GetTargetContentIdentifier() string {
 	if o == nil || o.TargetContentIdentifier.Get() == nil {
 		var ret string
 		return ret
@@ -2181,7 +1350,7 @@ func (o *NotificationWithMeta) GetTargetContentIdentifier() string {
 // GetTargetContentIdentifierOk returns a tuple with the TargetContentIdentifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetTargetContentIdentifierOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetTargetContentIdentifierOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2189,7 +1358,7 @@ func (o *NotificationWithMeta) GetTargetContentIdentifierOk() (*string, bool) {
 }
 
 // HasTargetContentIdentifier returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasTargetContentIdentifier() bool {
+func (o *BasicNotificationAllOf) HasTargetContentIdentifier() bool {
 	if o != nil && o.TargetContentIdentifier.IsSet() {
 		return true
 	}
@@ -2198,21 +1367,21 @@ func (o *NotificationWithMeta) HasTargetContentIdentifier() bool {
 }
 
 // SetTargetContentIdentifier gets a reference to the given NullableString and assigns it to the TargetContentIdentifier field.
-func (o *NotificationWithMeta) SetTargetContentIdentifier(v string) {
+func (o *BasicNotificationAllOf) SetTargetContentIdentifier(v string) {
 	o.TargetContentIdentifier.Set(&v)
 }
 // SetTargetContentIdentifierNil sets the value for TargetContentIdentifier to be an explicit nil
-func (o *NotificationWithMeta) SetTargetContentIdentifierNil() {
+func (o *BasicNotificationAllOf) SetTargetContentIdentifierNil() {
 	o.TargetContentIdentifier.Set(nil)
 }
 
 // UnsetTargetContentIdentifier ensures that no value is present for TargetContentIdentifier, not even an explicit nil
-func (o *NotificationWithMeta) UnsetTargetContentIdentifier() {
+func (o *BasicNotificationAllOf) UnsetTargetContentIdentifier() {
 	o.TargetContentIdentifier.Unset()
 }
 
 // GetBigPicture returns the BigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetBigPicture() string {
+func (o *BasicNotificationAllOf) GetBigPicture() string {
 	if o == nil || o.BigPicture.Get() == nil {
 		var ret string
 		return ret
@@ -2223,7 +1392,7 @@ func (o *NotificationWithMeta) GetBigPicture() string {
 // GetBigPictureOk returns a tuple with the BigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetBigPictureOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetBigPictureOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2231,7 +1400,7 @@ func (o *NotificationWithMeta) GetBigPictureOk() (*string, bool) {
 }
 
 // HasBigPicture returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasBigPicture() bool {
+func (o *BasicNotificationAllOf) HasBigPicture() bool {
 	if o != nil && o.BigPicture.IsSet() {
 		return true
 	}
@@ -2240,21 +1409,21 @@ func (o *NotificationWithMeta) HasBigPicture() bool {
 }
 
 // SetBigPicture gets a reference to the given NullableString and assigns it to the BigPicture field.
-func (o *NotificationWithMeta) SetBigPicture(v string) {
+func (o *BasicNotificationAllOf) SetBigPicture(v string) {
 	o.BigPicture.Set(&v)
 }
 // SetBigPictureNil sets the value for BigPicture to be an explicit nil
-func (o *NotificationWithMeta) SetBigPictureNil() {
+func (o *BasicNotificationAllOf) SetBigPictureNil() {
 	o.BigPicture.Set(nil)
 }
 
 // UnsetBigPicture ensures that no value is present for BigPicture, not even an explicit nil
-func (o *NotificationWithMeta) UnsetBigPicture() {
+func (o *BasicNotificationAllOf) UnsetBigPicture() {
 	o.BigPicture.Unset()
 }
 
 // GetHuaweiBigPicture returns the HuaweiBigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiBigPicture() string {
+func (o *BasicNotificationAllOf) GetHuaweiBigPicture() string {
 	if o == nil || o.HuaweiBigPicture.Get() == nil {
 		var ret string
 		return ret
@@ -2265,7 +1434,7 @@ func (o *NotificationWithMeta) GetHuaweiBigPicture() string {
 // GetHuaweiBigPictureOk returns a tuple with the HuaweiBigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiBigPictureOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiBigPictureOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2273,7 +1442,7 @@ func (o *NotificationWithMeta) GetHuaweiBigPictureOk() (*string, bool) {
 }
 
 // HasHuaweiBigPicture returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiBigPicture() bool {
+func (o *BasicNotificationAllOf) HasHuaweiBigPicture() bool {
 	if o != nil && o.HuaweiBigPicture.IsSet() {
 		return true
 	}
@@ -2282,21 +1451,21 @@ func (o *NotificationWithMeta) HasHuaweiBigPicture() bool {
 }
 
 // SetHuaweiBigPicture gets a reference to the given NullableString and assigns it to the HuaweiBigPicture field.
-func (o *NotificationWithMeta) SetHuaweiBigPicture(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiBigPicture(v string) {
 	o.HuaweiBigPicture.Set(&v)
 }
 // SetHuaweiBigPictureNil sets the value for HuaweiBigPicture to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiBigPictureNil() {
+func (o *BasicNotificationAllOf) SetHuaweiBigPictureNil() {
 	o.HuaweiBigPicture.Set(nil)
 }
 
 // UnsetHuaweiBigPicture ensures that no value is present for HuaweiBigPicture, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiBigPicture() {
+func (o *BasicNotificationAllOf) UnsetHuaweiBigPicture() {
 	o.HuaweiBigPicture.Unset()
 }
 
 // GetAdmBigPicture returns the AdmBigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAdmBigPicture() string {
+func (o *BasicNotificationAllOf) GetAdmBigPicture() string {
 	if o == nil || o.AdmBigPicture.Get() == nil {
 		var ret string
 		return ret
@@ -2307,7 +1476,7 @@ func (o *NotificationWithMeta) GetAdmBigPicture() string {
 // GetAdmBigPictureOk returns a tuple with the AdmBigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAdmBigPictureOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAdmBigPictureOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2315,7 +1484,7 @@ func (o *NotificationWithMeta) GetAdmBigPictureOk() (*string, bool) {
 }
 
 // HasAdmBigPicture returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAdmBigPicture() bool {
+func (o *BasicNotificationAllOf) HasAdmBigPicture() bool {
 	if o != nil && o.AdmBigPicture.IsSet() {
 		return true
 	}
@@ -2324,21 +1493,21 @@ func (o *NotificationWithMeta) HasAdmBigPicture() bool {
 }
 
 // SetAdmBigPicture gets a reference to the given NullableString and assigns it to the AdmBigPicture field.
-func (o *NotificationWithMeta) SetAdmBigPicture(v string) {
+func (o *BasicNotificationAllOf) SetAdmBigPicture(v string) {
 	o.AdmBigPicture.Set(&v)
 }
 // SetAdmBigPictureNil sets the value for AdmBigPicture to be an explicit nil
-func (o *NotificationWithMeta) SetAdmBigPictureNil() {
+func (o *BasicNotificationAllOf) SetAdmBigPictureNil() {
 	o.AdmBigPicture.Set(nil)
 }
 
 // UnsetAdmBigPicture ensures that no value is present for AdmBigPicture, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAdmBigPicture() {
+func (o *BasicNotificationAllOf) UnsetAdmBigPicture() {
 	o.AdmBigPicture.Unset()
 }
 
 // GetChromeBigPicture returns the ChromeBigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetChromeBigPicture() string {
+func (o *BasicNotificationAllOf) GetChromeBigPicture() string {
 	if o == nil || o.ChromeBigPicture.Get() == nil {
 		var ret string
 		return ret
@@ -2349,7 +1518,7 @@ func (o *NotificationWithMeta) GetChromeBigPicture() string {
 // GetChromeBigPictureOk returns a tuple with the ChromeBigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetChromeBigPictureOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetChromeBigPictureOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2357,7 +1526,7 @@ func (o *NotificationWithMeta) GetChromeBigPictureOk() (*string, bool) {
 }
 
 // HasChromeBigPicture returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasChromeBigPicture() bool {
+func (o *BasicNotificationAllOf) HasChromeBigPicture() bool {
 	if o != nil && o.ChromeBigPicture.IsSet() {
 		return true
 	}
@@ -2366,21 +1535,21 @@ func (o *NotificationWithMeta) HasChromeBigPicture() bool {
 }
 
 // SetChromeBigPicture gets a reference to the given NullableString and assigns it to the ChromeBigPicture field.
-func (o *NotificationWithMeta) SetChromeBigPicture(v string) {
+func (o *BasicNotificationAllOf) SetChromeBigPicture(v string) {
 	o.ChromeBigPicture.Set(&v)
 }
 // SetChromeBigPictureNil sets the value for ChromeBigPicture to be an explicit nil
-func (o *NotificationWithMeta) SetChromeBigPictureNil() {
+func (o *BasicNotificationAllOf) SetChromeBigPictureNil() {
 	o.ChromeBigPicture.Set(nil)
 }
 
 // UnsetChromeBigPicture ensures that no value is present for ChromeBigPicture, not even an explicit nil
-func (o *NotificationWithMeta) UnsetChromeBigPicture() {
+func (o *BasicNotificationAllOf) UnsetChromeBigPicture() {
 	o.ChromeBigPicture.Unset()
 }
 
 // GetChromeWebImage returns the ChromeWebImage field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetChromeWebImage() string {
+func (o *BasicNotificationAllOf) GetChromeWebImage() string {
 	if o == nil || o.ChromeWebImage.Get() == nil {
 		var ret string
 		return ret
@@ -2391,7 +1560,7 @@ func (o *NotificationWithMeta) GetChromeWebImage() string {
 // GetChromeWebImageOk returns a tuple with the ChromeWebImage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetChromeWebImageOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetChromeWebImageOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2399,7 +1568,7 @@ func (o *NotificationWithMeta) GetChromeWebImageOk() (*string, bool) {
 }
 
 // HasChromeWebImage returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasChromeWebImage() bool {
+func (o *BasicNotificationAllOf) HasChromeWebImage() bool {
 	if o != nil && o.ChromeWebImage.IsSet() {
 		return true
 	}
@@ -2408,21 +1577,21 @@ func (o *NotificationWithMeta) HasChromeWebImage() bool {
 }
 
 // SetChromeWebImage gets a reference to the given NullableString and assigns it to the ChromeWebImage field.
-func (o *NotificationWithMeta) SetChromeWebImage(v string) {
+func (o *BasicNotificationAllOf) SetChromeWebImage(v string) {
 	o.ChromeWebImage.Set(&v)
 }
 // SetChromeWebImageNil sets the value for ChromeWebImage to be an explicit nil
-func (o *NotificationWithMeta) SetChromeWebImageNil() {
+func (o *BasicNotificationAllOf) SetChromeWebImageNil() {
 	o.ChromeWebImage.Set(nil)
 }
 
 // UnsetChromeWebImage ensures that no value is present for ChromeWebImage, not even an explicit nil
-func (o *NotificationWithMeta) UnsetChromeWebImage() {
+func (o *BasicNotificationAllOf) UnsetChromeWebImage() {
 	o.ChromeWebImage.Unset()
 }
 
 // GetButtons returns the Buttons field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetButtons() []Button {
+func (o *BasicNotificationAllOf) GetButtons() []Button {
 	if o == nil {
 		var ret []Button
 		return ret
@@ -2433,7 +1602,7 @@ func (o *NotificationWithMeta) GetButtons() []Button {
 // GetButtonsOk returns a tuple with the Buttons field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetButtonsOk() ([]Button, bool) {
+func (o *BasicNotificationAllOf) GetButtonsOk() ([]Button, bool) {
 	if o == nil || o.Buttons == nil {
 		return nil, false
 	}
@@ -2441,7 +1610,7 @@ func (o *NotificationWithMeta) GetButtonsOk() ([]Button, bool) {
 }
 
 // HasButtons returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasButtons() bool {
+func (o *BasicNotificationAllOf) HasButtons() bool {
 	if o != nil && o.Buttons != nil {
 		return true
 	}
@@ -2450,12 +1619,12 @@ func (o *NotificationWithMeta) HasButtons() bool {
 }
 
 // SetButtons gets a reference to the given []Button and assigns it to the Buttons field.
-func (o *NotificationWithMeta) SetButtons(v []Button) {
+func (o *BasicNotificationAllOf) SetButtons(v []Button) {
 	o.Buttons = v
 }
 
 // GetWebButtons returns the WebButtons field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetWebButtons() []Button {
+func (o *BasicNotificationAllOf) GetWebButtons() []Button {
 	if o == nil {
 		var ret []Button
 		return ret
@@ -2466,7 +1635,7 @@ func (o *NotificationWithMeta) GetWebButtons() []Button {
 // GetWebButtonsOk returns a tuple with the WebButtons field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetWebButtonsOk() ([]Button, bool) {
+func (o *BasicNotificationAllOf) GetWebButtonsOk() ([]Button, bool) {
 	if o == nil || o.WebButtons == nil {
 		return nil, false
 	}
@@ -2474,7 +1643,7 @@ func (o *NotificationWithMeta) GetWebButtonsOk() ([]Button, bool) {
 }
 
 // HasWebButtons returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasWebButtons() bool {
+func (o *BasicNotificationAllOf) HasWebButtons() bool {
 	if o != nil && o.WebButtons != nil {
 		return true
 	}
@@ -2483,12 +1652,12 @@ func (o *NotificationWithMeta) HasWebButtons() bool {
 }
 
 // SetWebButtons gets a reference to the given []Button and assigns it to the WebButtons field.
-func (o *NotificationWithMeta) SetWebButtons(v []Button) {
+func (o *BasicNotificationAllOf) SetWebButtons(v []Button) {
 	o.WebButtons = v
 }
 
 // GetIosCategory returns the IosCategory field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIosCategory() string {
+func (o *BasicNotificationAllOf) GetIosCategory() string {
 	if o == nil || o.IosCategory.Get() == nil {
 		var ret string
 		return ret
@@ -2499,7 +1668,7 @@ func (o *NotificationWithMeta) GetIosCategory() string {
 // GetIosCategoryOk returns a tuple with the IosCategory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIosCategoryOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetIosCategoryOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2507,7 +1676,7 @@ func (o *NotificationWithMeta) GetIosCategoryOk() (*string, bool) {
 }
 
 // HasIosCategory returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIosCategory() bool {
+func (o *BasicNotificationAllOf) HasIosCategory() bool {
 	if o != nil && o.IosCategory.IsSet() {
 		return true
 	}
@@ -2516,21 +1685,21 @@ func (o *NotificationWithMeta) HasIosCategory() bool {
 }
 
 // SetIosCategory gets a reference to the given NullableString and assigns it to the IosCategory field.
-func (o *NotificationWithMeta) SetIosCategory(v string) {
+func (o *BasicNotificationAllOf) SetIosCategory(v string) {
 	o.IosCategory.Set(&v)
 }
 // SetIosCategoryNil sets the value for IosCategory to be an explicit nil
-func (o *NotificationWithMeta) SetIosCategoryNil() {
+func (o *BasicNotificationAllOf) SetIosCategoryNil() {
 	o.IosCategory.Set(nil)
 }
 
 // UnsetIosCategory ensures that no value is present for IosCategory, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIosCategory() {
+func (o *BasicNotificationAllOf) UnsetIosCategory() {
 	o.IosCategory.Unset()
 }
 
 // GetAndroidChannelId returns the AndroidChannelId field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetAndroidChannelId() string {
+func (o *BasicNotificationAllOf) GetAndroidChannelId() string {
 	if o == nil || o.AndroidChannelId == nil {
 		var ret string
 		return ret
@@ -2540,7 +1709,7 @@ func (o *NotificationWithMeta) GetAndroidChannelId() string {
 
 // GetAndroidChannelIdOk returns a tuple with the AndroidChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAndroidChannelIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAndroidChannelIdOk() (*string, bool) {
 	if o == nil || o.AndroidChannelId == nil {
 		return nil, false
 	}
@@ -2548,7 +1717,7 @@ func (o *NotificationWithMeta) GetAndroidChannelIdOk() (*string, bool) {
 }
 
 // HasAndroidChannelId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidChannelId() bool {
+func (o *BasicNotificationAllOf) HasAndroidChannelId() bool {
 	if o != nil && o.AndroidChannelId != nil {
 		return true
 	}
@@ -2557,12 +1726,12 @@ func (o *NotificationWithMeta) HasAndroidChannelId() bool {
 }
 
 // SetAndroidChannelId gets a reference to the given string and assigns it to the AndroidChannelId field.
-func (o *NotificationWithMeta) SetAndroidChannelId(v string) {
+func (o *BasicNotificationAllOf) SetAndroidChannelId(v string) {
 	o.AndroidChannelId = &v
 }
 
 // GetHuaweiChannelId returns the HuaweiChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiChannelId() string {
+func (o *BasicNotificationAllOf) GetHuaweiChannelId() string {
 	if o == nil || o.HuaweiChannelId.Get() == nil {
 		var ret string
 		return ret
@@ -2573,7 +1742,7 @@ func (o *NotificationWithMeta) GetHuaweiChannelId() string {
 // GetHuaweiChannelIdOk returns a tuple with the HuaweiChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiChannelIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiChannelIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2581,7 +1750,7 @@ func (o *NotificationWithMeta) GetHuaweiChannelIdOk() (*string, bool) {
 }
 
 // HasHuaweiChannelId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiChannelId() bool {
+func (o *BasicNotificationAllOf) HasHuaweiChannelId() bool {
 	if o != nil && o.HuaweiChannelId.IsSet() {
 		return true
 	}
@@ -2590,21 +1759,21 @@ func (o *NotificationWithMeta) HasHuaweiChannelId() bool {
 }
 
 // SetHuaweiChannelId gets a reference to the given NullableString and assigns it to the HuaweiChannelId field.
-func (o *NotificationWithMeta) SetHuaweiChannelId(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiChannelId(v string) {
 	o.HuaweiChannelId.Set(&v)
 }
 // SetHuaweiChannelIdNil sets the value for HuaweiChannelId to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiChannelIdNil() {
+func (o *BasicNotificationAllOf) SetHuaweiChannelIdNil() {
 	o.HuaweiChannelId.Set(nil)
 }
 
 // UnsetHuaweiChannelId ensures that no value is present for HuaweiChannelId, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiChannelId() {
+func (o *BasicNotificationAllOf) UnsetHuaweiChannelId() {
 	o.HuaweiChannelId.Unset()
 }
 
 // GetExistingAndroidChannelId returns the ExistingAndroidChannelId field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetExistingAndroidChannelId() string {
+func (o *BasicNotificationAllOf) GetExistingAndroidChannelId() string {
 	if o == nil || o.ExistingAndroidChannelId == nil {
 		var ret string
 		return ret
@@ -2614,7 +1783,7 @@ func (o *NotificationWithMeta) GetExistingAndroidChannelId() string {
 
 // GetExistingAndroidChannelIdOk returns a tuple with the ExistingAndroidChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetExistingAndroidChannelIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetExistingAndroidChannelIdOk() (*string, bool) {
 	if o == nil || o.ExistingAndroidChannelId == nil {
 		return nil, false
 	}
@@ -2622,7 +1791,7 @@ func (o *NotificationWithMeta) GetExistingAndroidChannelIdOk() (*string, bool) {
 }
 
 // HasExistingAndroidChannelId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasExistingAndroidChannelId() bool {
+func (o *BasicNotificationAllOf) HasExistingAndroidChannelId() bool {
 	if o != nil && o.ExistingAndroidChannelId != nil {
 		return true
 	}
@@ -2631,12 +1800,12 @@ func (o *NotificationWithMeta) HasExistingAndroidChannelId() bool {
 }
 
 // SetExistingAndroidChannelId gets a reference to the given string and assigns it to the ExistingAndroidChannelId field.
-func (o *NotificationWithMeta) SetExistingAndroidChannelId(v string) {
+func (o *BasicNotificationAllOf) SetExistingAndroidChannelId(v string) {
 	o.ExistingAndroidChannelId = &v
 }
 
 // GetHuaweiExistingChannelId returns the HuaweiExistingChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiExistingChannelId() string {
+func (o *BasicNotificationAllOf) GetHuaweiExistingChannelId() string {
 	if o == nil || o.HuaweiExistingChannelId.Get() == nil {
 		var ret string
 		return ret
@@ -2647,7 +1816,7 @@ func (o *NotificationWithMeta) GetHuaweiExistingChannelId() string {
 // GetHuaweiExistingChannelIdOk returns a tuple with the HuaweiExistingChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiExistingChannelIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiExistingChannelIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2655,7 +1824,7 @@ func (o *NotificationWithMeta) GetHuaweiExistingChannelIdOk() (*string, bool) {
 }
 
 // HasHuaweiExistingChannelId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiExistingChannelId() bool {
+func (o *BasicNotificationAllOf) HasHuaweiExistingChannelId() bool {
 	if o != nil && o.HuaweiExistingChannelId.IsSet() {
 		return true
 	}
@@ -2664,21 +1833,21 @@ func (o *NotificationWithMeta) HasHuaweiExistingChannelId() bool {
 }
 
 // SetHuaweiExistingChannelId gets a reference to the given NullableString and assigns it to the HuaweiExistingChannelId field.
-func (o *NotificationWithMeta) SetHuaweiExistingChannelId(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiExistingChannelId(v string) {
 	o.HuaweiExistingChannelId.Set(&v)
 }
 // SetHuaweiExistingChannelIdNil sets the value for HuaweiExistingChannelId to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiExistingChannelIdNil() {
+func (o *BasicNotificationAllOf) SetHuaweiExistingChannelIdNil() {
 	o.HuaweiExistingChannelId.Set(nil)
 }
 
 // UnsetHuaweiExistingChannelId ensures that no value is present for HuaweiExistingChannelId, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiExistingChannelId() {
+func (o *BasicNotificationAllOf) UnsetHuaweiExistingChannelId() {
 	o.HuaweiExistingChannelId.Unset()
 }
 
 // GetAndroidBackgroundLayout returns the AndroidBackgroundLayout field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetAndroidBackgroundLayout() BasicNotificationAllOfAndroidBackgroundLayout {
+func (o *BasicNotificationAllOf) GetAndroidBackgroundLayout() BasicNotificationAllOfAndroidBackgroundLayout {
 	if o == nil || o.AndroidBackgroundLayout == nil {
 		var ret BasicNotificationAllOfAndroidBackgroundLayout
 		return ret
@@ -2688,7 +1857,7 @@ func (o *NotificationWithMeta) GetAndroidBackgroundLayout() BasicNotificationAll
 
 // GetAndroidBackgroundLayoutOk returns a tuple with the AndroidBackgroundLayout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAndroidBackgroundLayoutOk() (*BasicNotificationAllOfAndroidBackgroundLayout, bool) {
+func (o *BasicNotificationAllOf) GetAndroidBackgroundLayoutOk() (*BasicNotificationAllOfAndroidBackgroundLayout, bool) {
 	if o == nil || o.AndroidBackgroundLayout == nil {
 		return nil, false
 	}
@@ -2696,7 +1865,7 @@ func (o *NotificationWithMeta) GetAndroidBackgroundLayoutOk() (*BasicNotificatio
 }
 
 // HasAndroidBackgroundLayout returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidBackgroundLayout() bool {
+func (o *BasicNotificationAllOf) HasAndroidBackgroundLayout() bool {
 	if o != nil && o.AndroidBackgroundLayout != nil {
 		return true
 	}
@@ -2705,12 +1874,12 @@ func (o *NotificationWithMeta) HasAndroidBackgroundLayout() bool {
 }
 
 // SetAndroidBackgroundLayout gets a reference to the given BasicNotificationAllOfAndroidBackgroundLayout and assigns it to the AndroidBackgroundLayout field.
-func (o *NotificationWithMeta) SetAndroidBackgroundLayout(v BasicNotificationAllOfAndroidBackgroundLayout) {
+func (o *BasicNotificationAllOf) SetAndroidBackgroundLayout(v BasicNotificationAllOfAndroidBackgroundLayout) {
 	o.AndroidBackgroundLayout = &v
 }
 
 // GetSmallIcon returns the SmallIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetSmallIcon() string {
+func (o *BasicNotificationAllOf) GetSmallIcon() string {
 	if o == nil || o.SmallIcon.Get() == nil {
 		var ret string
 		return ret
@@ -2721,7 +1890,7 @@ func (o *NotificationWithMeta) GetSmallIcon() string {
 // GetSmallIconOk returns a tuple with the SmallIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetSmallIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetSmallIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2729,7 +1898,7 @@ func (o *NotificationWithMeta) GetSmallIconOk() (*string, bool) {
 }
 
 // HasSmallIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSmallIcon() bool {
+func (o *BasicNotificationAllOf) HasSmallIcon() bool {
 	if o != nil && o.SmallIcon.IsSet() {
 		return true
 	}
@@ -2738,21 +1907,21 @@ func (o *NotificationWithMeta) HasSmallIcon() bool {
 }
 
 // SetSmallIcon gets a reference to the given NullableString and assigns it to the SmallIcon field.
-func (o *NotificationWithMeta) SetSmallIcon(v string) {
+func (o *BasicNotificationAllOf) SetSmallIcon(v string) {
 	o.SmallIcon.Set(&v)
 }
 // SetSmallIconNil sets the value for SmallIcon to be an explicit nil
-func (o *NotificationWithMeta) SetSmallIconNil() {
+func (o *BasicNotificationAllOf) SetSmallIconNil() {
 	o.SmallIcon.Set(nil)
 }
 
 // UnsetSmallIcon ensures that no value is present for SmallIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetSmallIcon() {
+func (o *BasicNotificationAllOf) UnsetSmallIcon() {
 	o.SmallIcon.Unset()
 }
 
 // GetHuaweiSmallIcon returns the HuaweiSmallIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiSmallIcon() string {
+func (o *BasicNotificationAllOf) GetHuaweiSmallIcon() string {
 	if o == nil || o.HuaweiSmallIcon.Get() == nil {
 		var ret string
 		return ret
@@ -2763,7 +1932,7 @@ func (o *NotificationWithMeta) GetHuaweiSmallIcon() string {
 // GetHuaweiSmallIconOk returns a tuple with the HuaweiSmallIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiSmallIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiSmallIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2771,7 +1940,7 @@ func (o *NotificationWithMeta) GetHuaweiSmallIconOk() (*string, bool) {
 }
 
 // HasHuaweiSmallIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiSmallIcon() bool {
+func (o *BasicNotificationAllOf) HasHuaweiSmallIcon() bool {
 	if o != nil && o.HuaweiSmallIcon.IsSet() {
 		return true
 	}
@@ -2780,21 +1949,21 @@ func (o *NotificationWithMeta) HasHuaweiSmallIcon() bool {
 }
 
 // SetHuaweiSmallIcon gets a reference to the given NullableString and assigns it to the HuaweiSmallIcon field.
-func (o *NotificationWithMeta) SetHuaweiSmallIcon(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiSmallIcon(v string) {
 	o.HuaweiSmallIcon.Set(&v)
 }
 // SetHuaweiSmallIconNil sets the value for HuaweiSmallIcon to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiSmallIconNil() {
+func (o *BasicNotificationAllOf) SetHuaweiSmallIconNil() {
 	o.HuaweiSmallIcon.Set(nil)
 }
 
 // UnsetHuaweiSmallIcon ensures that no value is present for HuaweiSmallIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiSmallIcon() {
+func (o *BasicNotificationAllOf) UnsetHuaweiSmallIcon() {
 	o.HuaweiSmallIcon.Unset()
 }
 
 // GetLargeIcon returns the LargeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetLargeIcon() string {
+func (o *BasicNotificationAllOf) GetLargeIcon() string {
 	if o == nil || o.LargeIcon.Get() == nil {
 		var ret string
 		return ret
@@ -2805,7 +1974,7 @@ func (o *NotificationWithMeta) GetLargeIcon() string {
 // GetLargeIconOk returns a tuple with the LargeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetLargeIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetLargeIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2813,7 +1982,7 @@ func (o *NotificationWithMeta) GetLargeIconOk() (*string, bool) {
 }
 
 // HasLargeIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasLargeIcon() bool {
+func (o *BasicNotificationAllOf) HasLargeIcon() bool {
 	if o != nil && o.LargeIcon.IsSet() {
 		return true
 	}
@@ -2822,21 +1991,21 @@ func (o *NotificationWithMeta) HasLargeIcon() bool {
 }
 
 // SetLargeIcon gets a reference to the given NullableString and assigns it to the LargeIcon field.
-func (o *NotificationWithMeta) SetLargeIcon(v string) {
+func (o *BasicNotificationAllOf) SetLargeIcon(v string) {
 	o.LargeIcon.Set(&v)
 }
 // SetLargeIconNil sets the value for LargeIcon to be an explicit nil
-func (o *NotificationWithMeta) SetLargeIconNil() {
+func (o *BasicNotificationAllOf) SetLargeIconNil() {
 	o.LargeIcon.Set(nil)
 }
 
 // UnsetLargeIcon ensures that no value is present for LargeIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetLargeIcon() {
+func (o *BasicNotificationAllOf) UnsetLargeIcon() {
 	o.LargeIcon.Unset()
 }
 
 // GetHuaweiLargeIcon returns the HuaweiLargeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiLargeIcon() string {
+func (o *BasicNotificationAllOf) GetHuaweiLargeIcon() string {
 	if o == nil || o.HuaweiLargeIcon.Get() == nil {
 		var ret string
 		return ret
@@ -2847,7 +2016,7 @@ func (o *NotificationWithMeta) GetHuaweiLargeIcon() string {
 // GetHuaweiLargeIconOk returns a tuple with the HuaweiLargeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiLargeIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiLargeIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2855,7 +2024,7 @@ func (o *NotificationWithMeta) GetHuaweiLargeIconOk() (*string, bool) {
 }
 
 // HasHuaweiLargeIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiLargeIcon() bool {
+func (o *BasicNotificationAllOf) HasHuaweiLargeIcon() bool {
 	if o != nil && o.HuaweiLargeIcon.IsSet() {
 		return true
 	}
@@ -2864,21 +2033,21 @@ func (o *NotificationWithMeta) HasHuaweiLargeIcon() bool {
 }
 
 // SetHuaweiLargeIcon gets a reference to the given NullableString and assigns it to the HuaweiLargeIcon field.
-func (o *NotificationWithMeta) SetHuaweiLargeIcon(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiLargeIcon(v string) {
 	o.HuaweiLargeIcon.Set(&v)
 }
 // SetHuaweiLargeIconNil sets the value for HuaweiLargeIcon to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiLargeIconNil() {
+func (o *BasicNotificationAllOf) SetHuaweiLargeIconNil() {
 	o.HuaweiLargeIcon.Set(nil)
 }
 
 // UnsetHuaweiLargeIcon ensures that no value is present for HuaweiLargeIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiLargeIcon() {
+func (o *BasicNotificationAllOf) UnsetHuaweiLargeIcon() {
 	o.HuaweiLargeIcon.Unset()
 }
 
 // GetAdmSmallIcon returns the AdmSmallIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAdmSmallIcon() string {
+func (o *BasicNotificationAllOf) GetAdmSmallIcon() string {
 	if o == nil || o.AdmSmallIcon.Get() == nil {
 		var ret string
 		return ret
@@ -2889,7 +2058,7 @@ func (o *NotificationWithMeta) GetAdmSmallIcon() string {
 // GetAdmSmallIconOk returns a tuple with the AdmSmallIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAdmSmallIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAdmSmallIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2897,7 +2066,7 @@ func (o *NotificationWithMeta) GetAdmSmallIconOk() (*string, bool) {
 }
 
 // HasAdmSmallIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAdmSmallIcon() bool {
+func (o *BasicNotificationAllOf) HasAdmSmallIcon() bool {
 	if o != nil && o.AdmSmallIcon.IsSet() {
 		return true
 	}
@@ -2906,21 +2075,21 @@ func (o *NotificationWithMeta) HasAdmSmallIcon() bool {
 }
 
 // SetAdmSmallIcon gets a reference to the given NullableString and assigns it to the AdmSmallIcon field.
-func (o *NotificationWithMeta) SetAdmSmallIcon(v string) {
+func (o *BasicNotificationAllOf) SetAdmSmallIcon(v string) {
 	o.AdmSmallIcon.Set(&v)
 }
 // SetAdmSmallIconNil sets the value for AdmSmallIcon to be an explicit nil
-func (o *NotificationWithMeta) SetAdmSmallIconNil() {
+func (o *BasicNotificationAllOf) SetAdmSmallIconNil() {
 	o.AdmSmallIcon.Set(nil)
 }
 
 // UnsetAdmSmallIcon ensures that no value is present for AdmSmallIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAdmSmallIcon() {
+func (o *BasicNotificationAllOf) UnsetAdmSmallIcon() {
 	o.AdmSmallIcon.Unset()
 }
 
 // GetAdmLargeIcon returns the AdmLargeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAdmLargeIcon() string {
+func (o *BasicNotificationAllOf) GetAdmLargeIcon() string {
 	if o == nil || o.AdmLargeIcon.Get() == nil {
 		var ret string
 		return ret
@@ -2931,7 +2100,7 @@ func (o *NotificationWithMeta) GetAdmLargeIcon() string {
 // GetAdmLargeIconOk returns a tuple with the AdmLargeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAdmLargeIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAdmLargeIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2939,7 +2108,7 @@ func (o *NotificationWithMeta) GetAdmLargeIconOk() (*string, bool) {
 }
 
 // HasAdmLargeIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAdmLargeIcon() bool {
+func (o *BasicNotificationAllOf) HasAdmLargeIcon() bool {
 	if o != nil && o.AdmLargeIcon.IsSet() {
 		return true
 	}
@@ -2948,21 +2117,21 @@ func (o *NotificationWithMeta) HasAdmLargeIcon() bool {
 }
 
 // SetAdmLargeIcon gets a reference to the given NullableString and assigns it to the AdmLargeIcon field.
-func (o *NotificationWithMeta) SetAdmLargeIcon(v string) {
+func (o *BasicNotificationAllOf) SetAdmLargeIcon(v string) {
 	o.AdmLargeIcon.Set(&v)
 }
 // SetAdmLargeIconNil sets the value for AdmLargeIcon to be an explicit nil
-func (o *NotificationWithMeta) SetAdmLargeIconNil() {
+func (o *BasicNotificationAllOf) SetAdmLargeIconNil() {
 	o.AdmLargeIcon.Set(nil)
 }
 
 // UnsetAdmLargeIcon ensures that no value is present for AdmLargeIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAdmLargeIcon() {
+func (o *BasicNotificationAllOf) UnsetAdmLargeIcon() {
 	o.AdmLargeIcon.Unset()
 }
 
 // GetChromeWebIcon returns the ChromeWebIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetChromeWebIcon() string {
+func (o *BasicNotificationAllOf) GetChromeWebIcon() string {
 	if o == nil || o.ChromeWebIcon.Get() == nil {
 		var ret string
 		return ret
@@ -2973,7 +2142,7 @@ func (o *NotificationWithMeta) GetChromeWebIcon() string {
 // GetChromeWebIconOk returns a tuple with the ChromeWebIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetChromeWebIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetChromeWebIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -2981,7 +2150,7 @@ func (o *NotificationWithMeta) GetChromeWebIconOk() (*string, bool) {
 }
 
 // HasChromeWebIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasChromeWebIcon() bool {
+func (o *BasicNotificationAllOf) HasChromeWebIcon() bool {
 	if o != nil && o.ChromeWebIcon.IsSet() {
 		return true
 	}
@@ -2990,21 +2159,21 @@ func (o *NotificationWithMeta) HasChromeWebIcon() bool {
 }
 
 // SetChromeWebIcon gets a reference to the given NullableString and assigns it to the ChromeWebIcon field.
-func (o *NotificationWithMeta) SetChromeWebIcon(v string) {
+func (o *BasicNotificationAllOf) SetChromeWebIcon(v string) {
 	o.ChromeWebIcon.Set(&v)
 }
 // SetChromeWebIconNil sets the value for ChromeWebIcon to be an explicit nil
-func (o *NotificationWithMeta) SetChromeWebIconNil() {
+func (o *BasicNotificationAllOf) SetChromeWebIconNil() {
 	o.ChromeWebIcon.Set(nil)
 }
 
 // UnsetChromeWebIcon ensures that no value is present for ChromeWebIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetChromeWebIcon() {
+func (o *BasicNotificationAllOf) UnsetChromeWebIcon() {
 	o.ChromeWebIcon.Unset()
 }
 
 // GetChromeWebBadge returns the ChromeWebBadge field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetChromeWebBadge() string {
+func (o *BasicNotificationAllOf) GetChromeWebBadge() string {
 	if o == nil || o.ChromeWebBadge.Get() == nil {
 		var ret string
 		return ret
@@ -3015,7 +2184,7 @@ func (o *NotificationWithMeta) GetChromeWebBadge() string {
 // GetChromeWebBadgeOk returns a tuple with the ChromeWebBadge field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetChromeWebBadgeOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetChromeWebBadgeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3023,7 +2192,7 @@ func (o *NotificationWithMeta) GetChromeWebBadgeOk() (*string, bool) {
 }
 
 // HasChromeWebBadge returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasChromeWebBadge() bool {
+func (o *BasicNotificationAllOf) HasChromeWebBadge() bool {
 	if o != nil && o.ChromeWebBadge.IsSet() {
 		return true
 	}
@@ -3032,21 +2201,21 @@ func (o *NotificationWithMeta) HasChromeWebBadge() bool {
 }
 
 // SetChromeWebBadge gets a reference to the given NullableString and assigns it to the ChromeWebBadge field.
-func (o *NotificationWithMeta) SetChromeWebBadge(v string) {
+func (o *BasicNotificationAllOf) SetChromeWebBadge(v string) {
 	o.ChromeWebBadge.Set(&v)
 }
 // SetChromeWebBadgeNil sets the value for ChromeWebBadge to be an explicit nil
-func (o *NotificationWithMeta) SetChromeWebBadgeNil() {
+func (o *BasicNotificationAllOf) SetChromeWebBadgeNil() {
 	o.ChromeWebBadge.Set(nil)
 }
 
 // UnsetChromeWebBadge ensures that no value is present for ChromeWebBadge, not even an explicit nil
-func (o *NotificationWithMeta) UnsetChromeWebBadge() {
+func (o *BasicNotificationAllOf) UnsetChromeWebBadge() {
 	o.ChromeWebBadge.Unset()
 }
 
 // GetFirefoxIcon returns the FirefoxIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetFirefoxIcon() string {
+func (o *BasicNotificationAllOf) GetFirefoxIcon() string {
 	if o == nil || o.FirefoxIcon.Get() == nil {
 		var ret string
 		return ret
@@ -3057,7 +2226,7 @@ func (o *NotificationWithMeta) GetFirefoxIcon() string {
 // GetFirefoxIconOk returns a tuple with the FirefoxIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetFirefoxIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetFirefoxIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3065,7 +2234,7 @@ func (o *NotificationWithMeta) GetFirefoxIconOk() (*string, bool) {
 }
 
 // HasFirefoxIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasFirefoxIcon() bool {
+func (o *BasicNotificationAllOf) HasFirefoxIcon() bool {
 	if o != nil && o.FirefoxIcon.IsSet() {
 		return true
 	}
@@ -3074,21 +2243,21 @@ func (o *NotificationWithMeta) HasFirefoxIcon() bool {
 }
 
 // SetFirefoxIcon gets a reference to the given NullableString and assigns it to the FirefoxIcon field.
-func (o *NotificationWithMeta) SetFirefoxIcon(v string) {
+func (o *BasicNotificationAllOf) SetFirefoxIcon(v string) {
 	o.FirefoxIcon.Set(&v)
 }
 // SetFirefoxIconNil sets the value for FirefoxIcon to be an explicit nil
-func (o *NotificationWithMeta) SetFirefoxIconNil() {
+func (o *BasicNotificationAllOf) SetFirefoxIconNil() {
 	o.FirefoxIcon.Set(nil)
 }
 
 // UnsetFirefoxIcon ensures that no value is present for FirefoxIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetFirefoxIcon() {
+func (o *BasicNotificationAllOf) UnsetFirefoxIcon() {
 	o.FirefoxIcon.Unset()
 }
 
 // GetChromeIcon returns the ChromeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetChromeIcon() string {
+func (o *BasicNotificationAllOf) GetChromeIcon() string {
 	if o == nil || o.ChromeIcon.Get() == nil {
 		var ret string
 		return ret
@@ -3099,7 +2268,7 @@ func (o *NotificationWithMeta) GetChromeIcon() string {
 // GetChromeIconOk returns a tuple with the ChromeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetChromeIconOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetChromeIconOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3107,7 +2276,7 @@ func (o *NotificationWithMeta) GetChromeIconOk() (*string, bool) {
 }
 
 // HasChromeIcon returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasChromeIcon() bool {
+func (o *BasicNotificationAllOf) HasChromeIcon() bool {
 	if o != nil && o.ChromeIcon.IsSet() {
 		return true
 	}
@@ -3116,21 +2285,21 @@ func (o *NotificationWithMeta) HasChromeIcon() bool {
 }
 
 // SetChromeIcon gets a reference to the given NullableString and assigns it to the ChromeIcon field.
-func (o *NotificationWithMeta) SetChromeIcon(v string) {
+func (o *BasicNotificationAllOf) SetChromeIcon(v string) {
 	o.ChromeIcon.Set(&v)
 }
 // SetChromeIconNil sets the value for ChromeIcon to be an explicit nil
-func (o *NotificationWithMeta) SetChromeIconNil() {
+func (o *BasicNotificationAllOf) SetChromeIconNil() {
 	o.ChromeIcon.Set(nil)
 }
 
 // UnsetChromeIcon ensures that no value is present for ChromeIcon, not even an explicit nil
-func (o *NotificationWithMeta) UnsetChromeIcon() {
+func (o *BasicNotificationAllOf) UnsetChromeIcon() {
 	o.ChromeIcon.Unset()
 }
 
 // GetIosSound returns the IosSound field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIosSound() string {
+func (o *BasicNotificationAllOf) GetIosSound() string {
 	if o == nil || o.IosSound.Get() == nil {
 		var ret string
 		return ret
@@ -3141,7 +2310,7 @@ func (o *NotificationWithMeta) GetIosSound() string {
 // GetIosSoundOk returns a tuple with the IosSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIosSoundOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetIosSoundOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3149,7 +2318,7 @@ func (o *NotificationWithMeta) GetIosSoundOk() (*string, bool) {
 }
 
 // HasIosSound returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIosSound() bool {
+func (o *BasicNotificationAllOf) HasIosSound() bool {
 	if o != nil && o.IosSound.IsSet() {
 		return true
 	}
@@ -3158,21 +2327,21 @@ func (o *NotificationWithMeta) HasIosSound() bool {
 }
 
 // SetIosSound gets a reference to the given NullableString and assigns it to the IosSound field.
-func (o *NotificationWithMeta) SetIosSound(v string) {
+func (o *BasicNotificationAllOf) SetIosSound(v string) {
 	o.IosSound.Set(&v)
 }
 // SetIosSoundNil sets the value for IosSound to be an explicit nil
-func (o *NotificationWithMeta) SetIosSoundNil() {
+func (o *BasicNotificationAllOf) SetIosSoundNil() {
 	o.IosSound.Set(nil)
 }
 
 // UnsetIosSound ensures that no value is present for IosSound, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIosSound() {
+func (o *BasicNotificationAllOf) UnsetIosSound() {
 	o.IosSound.Unset()
 }
 
 // GetAndroidSound returns the AndroidSound field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAndroidSound() string {
+func (o *BasicNotificationAllOf) GetAndroidSound() string {
 	if o == nil || o.AndroidSound.Get() == nil {
 		var ret string
 		return ret
@@ -3183,7 +2352,7 @@ func (o *NotificationWithMeta) GetAndroidSound() string {
 // GetAndroidSoundOk returns a tuple with the AndroidSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAndroidSoundOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAndroidSoundOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3191,7 +2360,7 @@ func (o *NotificationWithMeta) GetAndroidSoundOk() (*string, bool) {
 }
 
 // HasAndroidSound returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidSound() bool {
+func (o *BasicNotificationAllOf) HasAndroidSound() bool {
 	if o != nil && o.AndroidSound.IsSet() {
 		return true
 	}
@@ -3200,21 +2369,21 @@ func (o *NotificationWithMeta) HasAndroidSound() bool {
 }
 
 // SetAndroidSound gets a reference to the given NullableString and assigns it to the AndroidSound field.
-func (o *NotificationWithMeta) SetAndroidSound(v string) {
+func (o *BasicNotificationAllOf) SetAndroidSound(v string) {
 	o.AndroidSound.Set(&v)
 }
 // SetAndroidSoundNil sets the value for AndroidSound to be an explicit nil
-func (o *NotificationWithMeta) SetAndroidSoundNil() {
+func (o *BasicNotificationAllOf) SetAndroidSoundNil() {
 	o.AndroidSound.Set(nil)
 }
 
 // UnsetAndroidSound ensures that no value is present for AndroidSound, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAndroidSound() {
+func (o *BasicNotificationAllOf) UnsetAndroidSound() {
 	o.AndroidSound.Unset()
 }
 
 // GetHuaweiSound returns the HuaweiSound field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiSound() string {
+func (o *BasicNotificationAllOf) GetHuaweiSound() string {
 	if o == nil || o.HuaweiSound.Get() == nil {
 		var ret string
 		return ret
@@ -3225,7 +2394,7 @@ func (o *NotificationWithMeta) GetHuaweiSound() string {
 // GetHuaweiSoundOk returns a tuple with the HuaweiSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiSoundOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiSoundOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3233,7 +2402,7 @@ func (o *NotificationWithMeta) GetHuaweiSoundOk() (*string, bool) {
 }
 
 // HasHuaweiSound returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiSound() bool {
+func (o *BasicNotificationAllOf) HasHuaweiSound() bool {
 	if o != nil && o.HuaweiSound.IsSet() {
 		return true
 	}
@@ -3242,21 +2411,21 @@ func (o *NotificationWithMeta) HasHuaweiSound() bool {
 }
 
 // SetHuaweiSound gets a reference to the given NullableString and assigns it to the HuaweiSound field.
-func (o *NotificationWithMeta) SetHuaweiSound(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiSound(v string) {
 	o.HuaweiSound.Set(&v)
 }
 // SetHuaweiSoundNil sets the value for HuaweiSound to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiSoundNil() {
+func (o *BasicNotificationAllOf) SetHuaweiSoundNil() {
 	o.HuaweiSound.Set(nil)
 }
 
 // UnsetHuaweiSound ensures that no value is present for HuaweiSound, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiSound() {
+func (o *BasicNotificationAllOf) UnsetHuaweiSound() {
 	o.HuaweiSound.Unset()
 }
 
 // GetAdmSound returns the AdmSound field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAdmSound() string {
+func (o *BasicNotificationAllOf) GetAdmSound() string {
 	if o == nil || o.AdmSound.Get() == nil {
 		var ret string
 		return ret
@@ -3267,7 +2436,7 @@ func (o *NotificationWithMeta) GetAdmSound() string {
 // GetAdmSoundOk returns a tuple with the AdmSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAdmSoundOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAdmSoundOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3275,7 +2444,7 @@ func (o *NotificationWithMeta) GetAdmSoundOk() (*string, bool) {
 }
 
 // HasAdmSound returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAdmSound() bool {
+func (o *BasicNotificationAllOf) HasAdmSound() bool {
 	if o != nil && o.AdmSound.IsSet() {
 		return true
 	}
@@ -3284,21 +2453,21 @@ func (o *NotificationWithMeta) HasAdmSound() bool {
 }
 
 // SetAdmSound gets a reference to the given NullableString and assigns it to the AdmSound field.
-func (o *NotificationWithMeta) SetAdmSound(v string) {
+func (o *BasicNotificationAllOf) SetAdmSound(v string) {
 	o.AdmSound.Set(&v)
 }
 // SetAdmSoundNil sets the value for AdmSound to be an explicit nil
-func (o *NotificationWithMeta) SetAdmSoundNil() {
+func (o *BasicNotificationAllOf) SetAdmSoundNil() {
 	o.AdmSound.Set(nil)
 }
 
 // UnsetAdmSound ensures that no value is present for AdmSound, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAdmSound() {
+func (o *BasicNotificationAllOf) UnsetAdmSound() {
 	o.AdmSound.Unset()
 }
 
 // GetWpWnsSound returns the WpWnsSound field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetWpWnsSound() string {
+func (o *BasicNotificationAllOf) GetWpWnsSound() string {
 	if o == nil || o.WpWnsSound.Get() == nil {
 		var ret string
 		return ret
@@ -3309,7 +2478,7 @@ func (o *NotificationWithMeta) GetWpWnsSound() string {
 // GetWpWnsSoundOk returns a tuple with the WpWnsSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetWpWnsSoundOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetWpWnsSoundOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3317,7 +2486,7 @@ func (o *NotificationWithMeta) GetWpWnsSoundOk() (*string, bool) {
 }
 
 // HasWpWnsSound returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasWpWnsSound() bool {
+func (o *BasicNotificationAllOf) HasWpWnsSound() bool {
 	if o != nil && o.WpWnsSound.IsSet() {
 		return true
 	}
@@ -3326,21 +2495,21 @@ func (o *NotificationWithMeta) HasWpWnsSound() bool {
 }
 
 // SetWpWnsSound gets a reference to the given NullableString and assigns it to the WpWnsSound field.
-func (o *NotificationWithMeta) SetWpWnsSound(v string) {
+func (o *BasicNotificationAllOf) SetWpWnsSound(v string) {
 	o.WpWnsSound.Set(&v)
 }
 // SetWpWnsSoundNil sets the value for WpWnsSound to be an explicit nil
-func (o *NotificationWithMeta) SetWpWnsSoundNil() {
+func (o *BasicNotificationAllOf) SetWpWnsSoundNil() {
 	o.WpWnsSound.Set(nil)
 }
 
 // UnsetWpWnsSound ensures that no value is present for WpWnsSound, not even an explicit nil
-func (o *NotificationWithMeta) UnsetWpWnsSound() {
+func (o *BasicNotificationAllOf) UnsetWpWnsSound() {
 	o.WpWnsSound.Unset()
 }
 
 // GetAndroidLedColor returns the AndroidLedColor field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAndroidLedColor() string {
+func (o *BasicNotificationAllOf) GetAndroidLedColor() string {
 	if o == nil || o.AndroidLedColor.Get() == nil {
 		var ret string
 		return ret
@@ -3351,7 +2520,7 @@ func (o *NotificationWithMeta) GetAndroidLedColor() string {
 // GetAndroidLedColorOk returns a tuple with the AndroidLedColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAndroidLedColorOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAndroidLedColorOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3359,7 +2528,7 @@ func (o *NotificationWithMeta) GetAndroidLedColorOk() (*string, bool) {
 }
 
 // HasAndroidLedColor returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidLedColor() bool {
+func (o *BasicNotificationAllOf) HasAndroidLedColor() bool {
 	if o != nil && o.AndroidLedColor.IsSet() {
 		return true
 	}
@@ -3368,21 +2537,21 @@ func (o *NotificationWithMeta) HasAndroidLedColor() bool {
 }
 
 // SetAndroidLedColor gets a reference to the given NullableString and assigns it to the AndroidLedColor field.
-func (o *NotificationWithMeta) SetAndroidLedColor(v string) {
+func (o *BasicNotificationAllOf) SetAndroidLedColor(v string) {
 	o.AndroidLedColor.Set(&v)
 }
 // SetAndroidLedColorNil sets the value for AndroidLedColor to be an explicit nil
-func (o *NotificationWithMeta) SetAndroidLedColorNil() {
+func (o *BasicNotificationAllOf) SetAndroidLedColorNil() {
 	o.AndroidLedColor.Set(nil)
 }
 
 // UnsetAndroidLedColor ensures that no value is present for AndroidLedColor, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAndroidLedColor() {
+func (o *BasicNotificationAllOf) UnsetAndroidLedColor() {
 	o.AndroidLedColor.Unset()
 }
 
 // GetHuaweiLedColor returns the HuaweiLedColor field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiLedColor() string {
+func (o *BasicNotificationAllOf) GetHuaweiLedColor() string {
 	if o == nil || o.HuaweiLedColor.Get() == nil {
 		var ret string
 		return ret
@@ -3393,7 +2562,7 @@ func (o *NotificationWithMeta) GetHuaweiLedColor() string {
 // GetHuaweiLedColorOk returns a tuple with the HuaweiLedColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiLedColorOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiLedColorOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3401,7 +2570,7 @@ func (o *NotificationWithMeta) GetHuaweiLedColorOk() (*string, bool) {
 }
 
 // HasHuaweiLedColor returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiLedColor() bool {
+func (o *BasicNotificationAllOf) HasHuaweiLedColor() bool {
 	if o != nil && o.HuaweiLedColor.IsSet() {
 		return true
 	}
@@ -3410,21 +2579,21 @@ func (o *NotificationWithMeta) HasHuaweiLedColor() bool {
 }
 
 // SetHuaweiLedColor gets a reference to the given NullableString and assigns it to the HuaweiLedColor field.
-func (o *NotificationWithMeta) SetHuaweiLedColor(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiLedColor(v string) {
 	o.HuaweiLedColor.Set(&v)
 }
 // SetHuaweiLedColorNil sets the value for HuaweiLedColor to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiLedColorNil() {
+func (o *BasicNotificationAllOf) SetHuaweiLedColorNil() {
 	o.HuaweiLedColor.Set(nil)
 }
 
 // UnsetHuaweiLedColor ensures that no value is present for HuaweiLedColor, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiLedColor() {
+func (o *BasicNotificationAllOf) UnsetHuaweiLedColor() {
 	o.HuaweiLedColor.Unset()
 }
 
 // GetAndroidAccentColor returns the AndroidAccentColor field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAndroidAccentColor() string {
+func (o *BasicNotificationAllOf) GetAndroidAccentColor() string {
 	if o == nil || o.AndroidAccentColor.Get() == nil {
 		var ret string
 		return ret
@@ -3435,7 +2604,7 @@ func (o *NotificationWithMeta) GetAndroidAccentColor() string {
 // GetAndroidAccentColorOk returns a tuple with the AndroidAccentColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAndroidAccentColorOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAndroidAccentColorOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3443,7 +2612,7 @@ func (o *NotificationWithMeta) GetAndroidAccentColorOk() (*string, bool) {
 }
 
 // HasAndroidAccentColor returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidAccentColor() bool {
+func (o *BasicNotificationAllOf) HasAndroidAccentColor() bool {
 	if o != nil && o.AndroidAccentColor.IsSet() {
 		return true
 	}
@@ -3452,21 +2621,21 @@ func (o *NotificationWithMeta) HasAndroidAccentColor() bool {
 }
 
 // SetAndroidAccentColor gets a reference to the given NullableString and assigns it to the AndroidAccentColor field.
-func (o *NotificationWithMeta) SetAndroidAccentColor(v string) {
+func (o *BasicNotificationAllOf) SetAndroidAccentColor(v string) {
 	o.AndroidAccentColor.Set(&v)
 }
 // SetAndroidAccentColorNil sets the value for AndroidAccentColor to be an explicit nil
-func (o *NotificationWithMeta) SetAndroidAccentColorNil() {
+func (o *BasicNotificationAllOf) SetAndroidAccentColorNil() {
 	o.AndroidAccentColor.Set(nil)
 }
 
 // UnsetAndroidAccentColor ensures that no value is present for AndroidAccentColor, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAndroidAccentColor() {
+func (o *BasicNotificationAllOf) UnsetAndroidAccentColor() {
 	o.AndroidAccentColor.Unset()
 }
 
 // GetHuaweiAccentColor returns the HuaweiAccentColor field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiAccentColor() string {
+func (o *BasicNotificationAllOf) GetHuaweiAccentColor() string {
 	if o == nil || o.HuaweiAccentColor.Get() == nil {
 		var ret string
 		return ret
@@ -3477,7 +2646,7 @@ func (o *NotificationWithMeta) GetHuaweiAccentColor() string {
 // GetHuaweiAccentColorOk returns a tuple with the HuaweiAccentColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiAccentColorOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiAccentColorOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3485,7 +2654,7 @@ func (o *NotificationWithMeta) GetHuaweiAccentColorOk() (*string, bool) {
 }
 
 // HasHuaweiAccentColor returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiAccentColor() bool {
+func (o *BasicNotificationAllOf) HasHuaweiAccentColor() bool {
 	if o != nil && o.HuaweiAccentColor.IsSet() {
 		return true
 	}
@@ -3494,21 +2663,21 @@ func (o *NotificationWithMeta) HasHuaweiAccentColor() bool {
 }
 
 // SetHuaweiAccentColor gets a reference to the given NullableString and assigns it to the HuaweiAccentColor field.
-func (o *NotificationWithMeta) SetHuaweiAccentColor(v string) {
+func (o *BasicNotificationAllOf) SetHuaweiAccentColor(v string) {
 	o.HuaweiAccentColor.Set(&v)
 }
 // SetHuaweiAccentColorNil sets the value for HuaweiAccentColor to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiAccentColorNil() {
+func (o *BasicNotificationAllOf) SetHuaweiAccentColorNil() {
 	o.HuaweiAccentColor.Set(nil)
 }
 
 // UnsetHuaweiAccentColor ensures that no value is present for HuaweiAccentColor, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiAccentColor() {
+func (o *BasicNotificationAllOf) UnsetHuaweiAccentColor() {
 	o.HuaweiAccentColor.Unset()
 }
 
 // GetAndroidVisibility returns the AndroidVisibility field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAndroidVisibility() int32 {
+func (o *BasicNotificationAllOf) GetAndroidVisibility() int32 {
 	if o == nil || o.AndroidVisibility.Get() == nil {
 		var ret int32
 		return ret
@@ -3519,7 +2688,7 @@ func (o *NotificationWithMeta) GetAndroidVisibility() int32 {
 // GetAndroidVisibilityOk returns a tuple with the AndroidVisibility field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAndroidVisibilityOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetAndroidVisibilityOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3527,7 +2696,7 @@ func (o *NotificationWithMeta) GetAndroidVisibilityOk() (*int32, bool) {
 }
 
 // HasAndroidVisibility returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidVisibility() bool {
+func (o *BasicNotificationAllOf) HasAndroidVisibility() bool {
 	if o != nil && o.AndroidVisibility.IsSet() {
 		return true
 	}
@@ -3536,21 +2705,21 @@ func (o *NotificationWithMeta) HasAndroidVisibility() bool {
 }
 
 // SetAndroidVisibility gets a reference to the given NullableInt32 and assigns it to the AndroidVisibility field.
-func (o *NotificationWithMeta) SetAndroidVisibility(v int32) {
+func (o *BasicNotificationAllOf) SetAndroidVisibility(v int32) {
 	o.AndroidVisibility.Set(&v)
 }
 // SetAndroidVisibilityNil sets the value for AndroidVisibility to be an explicit nil
-func (o *NotificationWithMeta) SetAndroidVisibilityNil() {
+func (o *BasicNotificationAllOf) SetAndroidVisibilityNil() {
 	o.AndroidVisibility.Set(nil)
 }
 
 // UnsetAndroidVisibility ensures that no value is present for AndroidVisibility, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAndroidVisibility() {
+func (o *BasicNotificationAllOf) UnsetAndroidVisibility() {
 	o.AndroidVisibility.Unset()
 }
 
 // GetHuaweiVisibility returns the HuaweiVisibility field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetHuaweiVisibility() int32 {
+func (o *BasicNotificationAllOf) GetHuaweiVisibility() int32 {
 	if o == nil || o.HuaweiVisibility.Get() == nil {
 		var ret int32
 		return ret
@@ -3561,7 +2730,7 @@ func (o *NotificationWithMeta) GetHuaweiVisibility() int32 {
 // GetHuaweiVisibilityOk returns a tuple with the HuaweiVisibility field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetHuaweiVisibilityOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetHuaweiVisibilityOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3569,7 +2738,7 @@ func (o *NotificationWithMeta) GetHuaweiVisibilityOk() (*int32, bool) {
 }
 
 // HasHuaweiVisibility returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasHuaweiVisibility() bool {
+func (o *BasicNotificationAllOf) HasHuaweiVisibility() bool {
 	if o != nil && o.HuaweiVisibility.IsSet() {
 		return true
 	}
@@ -3578,21 +2747,21 @@ func (o *NotificationWithMeta) HasHuaweiVisibility() bool {
 }
 
 // SetHuaweiVisibility gets a reference to the given NullableInt32 and assigns it to the HuaweiVisibility field.
-func (o *NotificationWithMeta) SetHuaweiVisibility(v int32) {
+func (o *BasicNotificationAllOf) SetHuaweiVisibility(v int32) {
 	o.HuaweiVisibility.Set(&v)
 }
 // SetHuaweiVisibilityNil sets the value for HuaweiVisibility to be an explicit nil
-func (o *NotificationWithMeta) SetHuaweiVisibilityNil() {
+func (o *BasicNotificationAllOf) SetHuaweiVisibilityNil() {
 	o.HuaweiVisibility.Set(nil)
 }
 
 // UnsetHuaweiVisibility ensures that no value is present for HuaweiVisibility, not even an explicit nil
-func (o *NotificationWithMeta) UnsetHuaweiVisibility() {
+func (o *BasicNotificationAllOf) UnsetHuaweiVisibility() {
 	o.HuaweiVisibility.Unset()
 }
 
 // GetIosBadgeType returns the IosBadgeType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIosBadgeType() string {
+func (o *BasicNotificationAllOf) GetIosBadgeType() string {
 	if o == nil || o.IosBadgeType.Get() == nil {
 		var ret string
 		return ret
@@ -3603,7 +2772,7 @@ func (o *NotificationWithMeta) GetIosBadgeType() string {
 // GetIosBadgeTypeOk returns a tuple with the IosBadgeType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIosBadgeTypeOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetIosBadgeTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3611,7 +2780,7 @@ func (o *NotificationWithMeta) GetIosBadgeTypeOk() (*string, bool) {
 }
 
 // HasIosBadgeType returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIosBadgeType() bool {
+func (o *BasicNotificationAllOf) HasIosBadgeType() bool {
 	if o != nil && o.IosBadgeType.IsSet() {
 		return true
 	}
@@ -3620,21 +2789,21 @@ func (o *NotificationWithMeta) HasIosBadgeType() bool {
 }
 
 // SetIosBadgeType gets a reference to the given NullableString and assigns it to the IosBadgeType field.
-func (o *NotificationWithMeta) SetIosBadgeType(v string) {
+func (o *BasicNotificationAllOf) SetIosBadgeType(v string) {
 	o.IosBadgeType.Set(&v)
 }
 // SetIosBadgeTypeNil sets the value for IosBadgeType to be an explicit nil
-func (o *NotificationWithMeta) SetIosBadgeTypeNil() {
+func (o *BasicNotificationAllOf) SetIosBadgeTypeNil() {
 	o.IosBadgeType.Set(nil)
 }
 
 // UnsetIosBadgeType ensures that no value is present for IosBadgeType, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIosBadgeType() {
+func (o *BasicNotificationAllOf) UnsetIosBadgeType() {
 	o.IosBadgeType.Unset()
 }
 
 // GetIosBadgeCount returns the IosBadgeCount field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetIosBadgeCount() int32 {
+func (o *BasicNotificationAllOf) GetIosBadgeCount() int32 {
 	if o == nil || o.IosBadgeCount.Get() == nil {
 		var ret int32
 		return ret
@@ -3645,7 +2814,7 @@ func (o *NotificationWithMeta) GetIosBadgeCount() int32 {
 // GetIosBadgeCountOk returns a tuple with the IosBadgeCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetIosBadgeCountOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetIosBadgeCountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3653,7 +2822,7 @@ func (o *NotificationWithMeta) GetIosBadgeCountOk() (*int32, bool) {
 }
 
 // HasIosBadgeCount returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasIosBadgeCount() bool {
+func (o *BasicNotificationAllOf) HasIosBadgeCount() bool {
 	if o != nil && o.IosBadgeCount.IsSet() {
 		return true
 	}
@@ -3662,21 +2831,21 @@ func (o *NotificationWithMeta) HasIosBadgeCount() bool {
 }
 
 // SetIosBadgeCount gets a reference to the given NullableInt32 and assigns it to the IosBadgeCount field.
-func (o *NotificationWithMeta) SetIosBadgeCount(v int32) {
+func (o *BasicNotificationAllOf) SetIosBadgeCount(v int32) {
 	o.IosBadgeCount.Set(&v)
 }
 // SetIosBadgeCountNil sets the value for IosBadgeCount to be an explicit nil
-func (o *NotificationWithMeta) SetIosBadgeCountNil() {
+func (o *BasicNotificationAllOf) SetIosBadgeCountNil() {
 	o.IosBadgeCount.Set(nil)
 }
 
 // UnsetIosBadgeCount ensures that no value is present for IosBadgeCount, not even an explicit nil
-func (o *NotificationWithMeta) UnsetIosBadgeCount() {
+func (o *BasicNotificationAllOf) UnsetIosBadgeCount() {
 	o.IosBadgeCount.Unset()
 }
 
 // GetCollapseId returns the CollapseId field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetCollapseId() string {
+func (o *BasicNotificationAllOf) GetCollapseId() string {
 	if o == nil || o.CollapseId == nil {
 		var ret string
 		return ret
@@ -3686,7 +2855,7 @@ func (o *NotificationWithMeta) GetCollapseId() string {
 
 // GetCollapseIdOk returns a tuple with the CollapseId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetCollapseIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetCollapseIdOk() (*string, bool) {
 	if o == nil || o.CollapseId == nil {
 		return nil, false
 	}
@@ -3694,7 +2863,7 @@ func (o *NotificationWithMeta) GetCollapseIdOk() (*string, bool) {
 }
 
 // HasCollapseId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasCollapseId() bool {
+func (o *BasicNotificationAllOf) HasCollapseId() bool {
 	if o != nil && o.CollapseId != nil {
 		return true
 	}
@@ -3703,12 +2872,12 @@ func (o *NotificationWithMeta) HasCollapseId() bool {
 }
 
 // SetCollapseId gets a reference to the given string and assigns it to the CollapseId field.
-func (o *NotificationWithMeta) SetCollapseId(v string) {
+func (o *BasicNotificationAllOf) SetCollapseId(v string) {
 	o.CollapseId = &v
 }
 
 // GetWebPushTopic returns the WebPushTopic field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetWebPushTopic() string {
+func (o *BasicNotificationAllOf) GetWebPushTopic() string {
 	if o == nil || o.WebPushTopic.Get() == nil {
 		var ret string
 		return ret
@@ -3719,7 +2888,7 @@ func (o *NotificationWithMeta) GetWebPushTopic() string {
 // GetWebPushTopicOk returns a tuple with the WebPushTopic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetWebPushTopicOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetWebPushTopicOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3727,7 +2896,7 @@ func (o *NotificationWithMeta) GetWebPushTopicOk() (*string, bool) {
 }
 
 // HasWebPushTopic returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasWebPushTopic() bool {
+func (o *BasicNotificationAllOf) HasWebPushTopic() bool {
 	if o != nil && o.WebPushTopic.IsSet() {
 		return true
 	}
@@ -3736,21 +2905,21 @@ func (o *NotificationWithMeta) HasWebPushTopic() bool {
 }
 
 // SetWebPushTopic gets a reference to the given NullableString and assigns it to the WebPushTopic field.
-func (o *NotificationWithMeta) SetWebPushTopic(v string) {
+func (o *BasicNotificationAllOf) SetWebPushTopic(v string) {
 	o.WebPushTopic.Set(&v)
 }
 // SetWebPushTopicNil sets the value for WebPushTopic to be an explicit nil
-func (o *NotificationWithMeta) SetWebPushTopicNil() {
+func (o *BasicNotificationAllOf) SetWebPushTopicNil() {
 	o.WebPushTopic.Set(nil)
 }
 
 // UnsetWebPushTopic ensures that no value is present for WebPushTopic, not even an explicit nil
-func (o *NotificationWithMeta) UnsetWebPushTopic() {
+func (o *BasicNotificationAllOf) UnsetWebPushTopic() {
 	o.WebPushTopic.Unset()
 }
 
 // GetApnsAlert returns the ApnsAlert field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetApnsAlert() map[string]interface{} {
+func (o *BasicNotificationAllOf) GetApnsAlert() map[string]interface{} {
 	if o == nil {
 		var ret map[string]interface{}
 		return ret
@@ -3761,7 +2930,7 @@ func (o *NotificationWithMeta) GetApnsAlert() map[string]interface{} {
 // GetApnsAlertOk returns a tuple with the ApnsAlert field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetApnsAlertOk() (map[string]interface{}, bool) {
+func (o *BasicNotificationAllOf) GetApnsAlertOk() (map[string]interface{}, bool) {
 	if o == nil || o.ApnsAlert == nil {
 		return nil, false
 	}
@@ -3769,7 +2938,7 @@ func (o *NotificationWithMeta) GetApnsAlertOk() (map[string]interface{}, bool) {
 }
 
 // HasApnsAlert returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasApnsAlert() bool {
+func (o *BasicNotificationAllOf) HasApnsAlert() bool {
 	if o != nil && o.ApnsAlert != nil {
 		return true
 	}
@@ -3778,12 +2947,12 @@ func (o *NotificationWithMeta) HasApnsAlert() bool {
 }
 
 // SetApnsAlert gets a reference to the given map[string]interface{} and assigns it to the ApnsAlert field.
-func (o *NotificationWithMeta) SetApnsAlert(v map[string]interface{}) {
+func (o *BasicNotificationAllOf) SetApnsAlert(v map[string]interface{}) {
 	o.ApnsAlert = v
 }
 
 // GetDelayedOption returns the DelayedOption field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetDelayedOption() string {
+func (o *BasicNotificationAllOf) GetDelayedOption() string {
 	if o == nil || o.DelayedOption.Get() == nil {
 		var ret string
 		return ret
@@ -3794,7 +2963,7 @@ func (o *NotificationWithMeta) GetDelayedOption() string {
 // GetDelayedOptionOk returns a tuple with the DelayedOption field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetDelayedOptionOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetDelayedOptionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3802,7 +2971,7 @@ func (o *NotificationWithMeta) GetDelayedOptionOk() (*string, bool) {
 }
 
 // HasDelayedOption returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasDelayedOption() bool {
+func (o *BasicNotificationAllOf) HasDelayedOption() bool {
 	if o != nil && o.DelayedOption.IsSet() {
 		return true
 	}
@@ -3811,21 +2980,21 @@ func (o *NotificationWithMeta) HasDelayedOption() bool {
 }
 
 // SetDelayedOption gets a reference to the given NullableString and assigns it to the DelayedOption field.
-func (o *NotificationWithMeta) SetDelayedOption(v string) {
+func (o *BasicNotificationAllOf) SetDelayedOption(v string) {
 	o.DelayedOption.Set(&v)
 }
 // SetDelayedOptionNil sets the value for DelayedOption to be an explicit nil
-func (o *NotificationWithMeta) SetDelayedOptionNil() {
+func (o *BasicNotificationAllOf) SetDelayedOptionNil() {
 	o.DelayedOption.Set(nil)
 }
 
 // UnsetDelayedOption ensures that no value is present for DelayedOption, not even an explicit nil
-func (o *NotificationWithMeta) UnsetDelayedOption() {
+func (o *BasicNotificationAllOf) UnsetDelayedOption() {
 	o.DelayedOption.Unset()
 }
 
 // GetDeliveryTimeOfDay returns the DeliveryTimeOfDay field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetDeliveryTimeOfDay() string {
+func (o *BasicNotificationAllOf) GetDeliveryTimeOfDay() string {
 	if o == nil || o.DeliveryTimeOfDay.Get() == nil {
 		var ret string
 		return ret
@@ -3836,7 +3005,7 @@ func (o *NotificationWithMeta) GetDeliveryTimeOfDay() string {
 // GetDeliveryTimeOfDayOk returns a tuple with the DeliveryTimeOfDay field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetDeliveryTimeOfDayOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetDeliveryTimeOfDayOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3844,7 +3013,7 @@ func (o *NotificationWithMeta) GetDeliveryTimeOfDayOk() (*string, bool) {
 }
 
 // HasDeliveryTimeOfDay returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasDeliveryTimeOfDay() bool {
+func (o *BasicNotificationAllOf) HasDeliveryTimeOfDay() bool {
 	if o != nil && o.DeliveryTimeOfDay.IsSet() {
 		return true
 	}
@@ -3853,21 +3022,21 @@ func (o *NotificationWithMeta) HasDeliveryTimeOfDay() bool {
 }
 
 // SetDeliveryTimeOfDay gets a reference to the given NullableString and assigns it to the DeliveryTimeOfDay field.
-func (o *NotificationWithMeta) SetDeliveryTimeOfDay(v string) {
+func (o *BasicNotificationAllOf) SetDeliveryTimeOfDay(v string) {
 	o.DeliveryTimeOfDay.Set(&v)
 }
 // SetDeliveryTimeOfDayNil sets the value for DeliveryTimeOfDay to be an explicit nil
-func (o *NotificationWithMeta) SetDeliveryTimeOfDayNil() {
+func (o *BasicNotificationAllOf) SetDeliveryTimeOfDayNil() {
 	o.DeliveryTimeOfDay.Set(nil)
 }
 
 // UnsetDeliveryTimeOfDay ensures that no value is present for DeliveryTimeOfDay, not even an explicit nil
-func (o *NotificationWithMeta) UnsetDeliveryTimeOfDay() {
+func (o *BasicNotificationAllOf) UnsetDeliveryTimeOfDay() {
 	o.DeliveryTimeOfDay.Unset()
 }
 
 // GetTtl returns the Ttl field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetTtl() int32 {
+func (o *BasicNotificationAllOf) GetTtl() int32 {
 	if o == nil || o.Ttl.Get() == nil {
 		var ret int32
 		return ret
@@ -3878,7 +3047,7 @@ func (o *NotificationWithMeta) GetTtl() int32 {
 // GetTtlOk returns a tuple with the Ttl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetTtlOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetTtlOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3886,7 +3055,7 @@ func (o *NotificationWithMeta) GetTtlOk() (*int32, bool) {
 }
 
 // HasTtl returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasTtl() bool {
+func (o *BasicNotificationAllOf) HasTtl() bool {
 	if o != nil && o.Ttl.IsSet() {
 		return true
 	}
@@ -3895,21 +3064,21 @@ func (o *NotificationWithMeta) HasTtl() bool {
 }
 
 // SetTtl gets a reference to the given NullableInt32 and assigns it to the Ttl field.
-func (o *NotificationWithMeta) SetTtl(v int32) {
+func (o *BasicNotificationAllOf) SetTtl(v int32) {
 	o.Ttl.Set(&v)
 }
 // SetTtlNil sets the value for Ttl to be an explicit nil
-func (o *NotificationWithMeta) SetTtlNil() {
+func (o *BasicNotificationAllOf) SetTtlNil() {
 	o.Ttl.Set(nil)
 }
 
 // UnsetTtl ensures that no value is present for Ttl, not even an explicit nil
-func (o *NotificationWithMeta) UnsetTtl() {
+func (o *BasicNotificationAllOf) UnsetTtl() {
 	o.Ttl.Unset()
 }
 
 // GetPriority returns the Priority field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetPriority() int32 {
+func (o *BasicNotificationAllOf) GetPriority() int32 {
 	if o == nil || o.Priority.Get() == nil {
 		var ret int32
 		return ret
@@ -3920,7 +3089,7 @@ func (o *NotificationWithMeta) GetPriority() int32 {
 // GetPriorityOk returns a tuple with the Priority field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetPriorityOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetPriorityOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -3928,7 +3097,7 @@ func (o *NotificationWithMeta) GetPriorityOk() (*int32, bool) {
 }
 
 // HasPriority returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasPriority() bool {
+func (o *BasicNotificationAllOf) HasPriority() bool {
 	if o != nil && o.Priority.IsSet() {
 		return true
 	}
@@ -3937,21 +3106,21 @@ func (o *NotificationWithMeta) HasPriority() bool {
 }
 
 // SetPriority gets a reference to the given NullableInt32 and assigns it to the Priority field.
-func (o *NotificationWithMeta) SetPriority(v int32) {
+func (o *BasicNotificationAllOf) SetPriority(v int32) {
 	o.Priority.Set(&v)
 }
 // SetPriorityNil sets the value for Priority to be an explicit nil
-func (o *NotificationWithMeta) SetPriorityNil() {
+func (o *BasicNotificationAllOf) SetPriorityNil() {
 	o.Priority.Set(nil)
 }
 
 // UnsetPriority ensures that no value is present for Priority, not even an explicit nil
-func (o *NotificationWithMeta) UnsetPriority() {
+func (o *BasicNotificationAllOf) UnsetPriority() {
 	o.Priority.Unset()
 }
 
 // GetApnsPushTypeOverride returns the ApnsPushTypeOverride field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetApnsPushTypeOverride() string {
+func (o *BasicNotificationAllOf) GetApnsPushTypeOverride() string {
 	if o == nil || o.ApnsPushTypeOverride == nil {
 		var ret string
 		return ret
@@ -3961,7 +3130,7 @@ func (o *NotificationWithMeta) GetApnsPushTypeOverride() string {
 
 // GetApnsPushTypeOverrideOk returns a tuple with the ApnsPushTypeOverride field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetApnsPushTypeOverrideOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetApnsPushTypeOverrideOk() (*string, bool) {
 	if o == nil || o.ApnsPushTypeOverride == nil {
 		return nil, false
 	}
@@ -3969,7 +3138,7 @@ func (o *NotificationWithMeta) GetApnsPushTypeOverrideOk() (*string, bool) {
 }
 
 // HasApnsPushTypeOverride returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasApnsPushTypeOverride() bool {
+func (o *BasicNotificationAllOf) HasApnsPushTypeOverride() bool {
 	if o != nil && o.ApnsPushTypeOverride != nil {
 		return true
 	}
@@ -3978,14 +3147,14 @@ func (o *NotificationWithMeta) HasApnsPushTypeOverride() bool {
 }
 
 // SetApnsPushTypeOverride gets a reference to the given string and assigns it to the ApnsPushTypeOverride field.
-func (o *NotificationWithMeta) SetApnsPushTypeOverride(v string) {
+func (o *BasicNotificationAllOf) SetApnsPushTypeOverride(v string) {
 	o.ApnsPushTypeOverride = &v
 }
 
 // GetThrottleRatePerMinute returns the ThrottleRatePerMinute field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetThrottleRatePerMinute() int32 {
+func (o *BasicNotificationAllOf) GetThrottleRatePerMinute() string {
 	if o == nil || o.ThrottleRatePerMinute.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.ThrottleRatePerMinute.Get()
@@ -3994,7 +3163,7 @@ func (o *NotificationWithMeta) GetThrottleRatePerMinute() int32 {
 // GetThrottleRatePerMinuteOk returns a tuple with the ThrottleRatePerMinute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetThrottleRatePerMinuteOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetThrottleRatePerMinuteOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4002,7 +3171,7 @@ func (o *NotificationWithMeta) GetThrottleRatePerMinuteOk() (*int32, bool) {
 }
 
 // HasThrottleRatePerMinute returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasThrottleRatePerMinute() bool {
+func (o *BasicNotificationAllOf) HasThrottleRatePerMinute() bool {
 	if o != nil && o.ThrottleRatePerMinute.IsSet() {
 		return true
 	}
@@ -4010,22 +3179,22 @@ func (o *NotificationWithMeta) HasThrottleRatePerMinute() bool {
 	return false
 }
 
-// SetThrottleRatePerMinute gets a reference to the given NullableInt32 and assigns it to the ThrottleRatePerMinute field.
-func (o *NotificationWithMeta) SetThrottleRatePerMinute(v int32) {
+// SetThrottleRatePerMinute gets a reference to the given NullableString and assigns it to the ThrottleRatePerMinute field.
+func (o *BasicNotificationAllOf) SetThrottleRatePerMinute(v string) {
 	o.ThrottleRatePerMinute.Set(&v)
 }
 // SetThrottleRatePerMinuteNil sets the value for ThrottleRatePerMinute to be an explicit nil
-func (o *NotificationWithMeta) SetThrottleRatePerMinuteNil() {
+func (o *BasicNotificationAllOf) SetThrottleRatePerMinuteNil() {
 	o.ThrottleRatePerMinute.Set(nil)
 }
 
 // UnsetThrottleRatePerMinute ensures that no value is present for ThrottleRatePerMinute, not even an explicit nil
-func (o *NotificationWithMeta) UnsetThrottleRatePerMinute() {
+func (o *BasicNotificationAllOf) UnsetThrottleRatePerMinute() {
 	o.ThrottleRatePerMinute.Unset()
 }
 
 // GetAndroidGroup returns the AndroidGroup field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAndroidGroup() string {
+func (o *BasicNotificationAllOf) GetAndroidGroup() string {
 	if o == nil || o.AndroidGroup.Get() == nil {
 		var ret string
 		return ret
@@ -4036,7 +3205,7 @@ func (o *NotificationWithMeta) GetAndroidGroup() string {
 // GetAndroidGroupOk returns a tuple with the AndroidGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAndroidGroupOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAndroidGroupOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4044,7 +3213,7 @@ func (o *NotificationWithMeta) GetAndroidGroupOk() (*string, bool) {
 }
 
 // HasAndroidGroup returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidGroup() bool {
+func (o *BasicNotificationAllOf) HasAndroidGroup() bool {
 	if o != nil && o.AndroidGroup.IsSet() {
 		return true
 	}
@@ -4053,21 +3222,21 @@ func (o *NotificationWithMeta) HasAndroidGroup() bool {
 }
 
 // SetAndroidGroup gets a reference to the given NullableString and assigns it to the AndroidGroup field.
-func (o *NotificationWithMeta) SetAndroidGroup(v string) {
+func (o *BasicNotificationAllOf) SetAndroidGroup(v string) {
 	o.AndroidGroup.Set(&v)
 }
 // SetAndroidGroupNil sets the value for AndroidGroup to be an explicit nil
-func (o *NotificationWithMeta) SetAndroidGroupNil() {
+func (o *BasicNotificationAllOf) SetAndroidGroupNil() {
 	o.AndroidGroup.Set(nil)
 }
 
 // UnsetAndroidGroup ensures that no value is present for AndroidGroup, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAndroidGroup() {
+func (o *BasicNotificationAllOf) UnsetAndroidGroup() {
 	o.AndroidGroup.Unset()
 }
 
 // GetAndroidGroupMessage returns the AndroidGroupMessage field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAndroidGroupMessage() string {
+func (o *BasicNotificationAllOf) GetAndroidGroupMessage() string {
 	if o == nil || o.AndroidGroupMessage.Get() == nil {
 		var ret string
 		return ret
@@ -4078,7 +3247,7 @@ func (o *NotificationWithMeta) GetAndroidGroupMessage() string {
 // GetAndroidGroupMessageOk returns a tuple with the AndroidGroupMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAndroidGroupMessageOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAndroidGroupMessageOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4086,7 +3255,7 @@ func (o *NotificationWithMeta) GetAndroidGroupMessageOk() (*string, bool) {
 }
 
 // HasAndroidGroupMessage returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAndroidGroupMessage() bool {
+func (o *BasicNotificationAllOf) HasAndroidGroupMessage() bool {
 	if o != nil && o.AndroidGroupMessage.IsSet() {
 		return true
 	}
@@ -4095,21 +3264,21 @@ func (o *NotificationWithMeta) HasAndroidGroupMessage() bool {
 }
 
 // SetAndroidGroupMessage gets a reference to the given NullableString and assigns it to the AndroidGroupMessage field.
-func (o *NotificationWithMeta) SetAndroidGroupMessage(v string) {
+func (o *BasicNotificationAllOf) SetAndroidGroupMessage(v string) {
 	o.AndroidGroupMessage.Set(&v)
 }
 // SetAndroidGroupMessageNil sets the value for AndroidGroupMessage to be an explicit nil
-func (o *NotificationWithMeta) SetAndroidGroupMessageNil() {
+func (o *BasicNotificationAllOf) SetAndroidGroupMessageNil() {
 	o.AndroidGroupMessage.Set(nil)
 }
 
 // UnsetAndroidGroupMessage ensures that no value is present for AndroidGroupMessage, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAndroidGroupMessage() {
+func (o *BasicNotificationAllOf) UnsetAndroidGroupMessage() {
 	o.AndroidGroupMessage.Unset()
 }
 
 // GetAdmGroup returns the AdmGroup field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAdmGroup() string {
+func (o *BasicNotificationAllOf) GetAdmGroup() string {
 	if o == nil || o.AdmGroup.Get() == nil {
 		var ret string
 		return ret
@@ -4120,7 +3289,7 @@ func (o *NotificationWithMeta) GetAdmGroup() string {
 // GetAdmGroupOk returns a tuple with the AdmGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAdmGroupOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetAdmGroupOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4128,7 +3297,7 @@ func (o *NotificationWithMeta) GetAdmGroupOk() (*string, bool) {
 }
 
 // HasAdmGroup returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAdmGroup() bool {
+func (o *BasicNotificationAllOf) HasAdmGroup() bool {
 	if o != nil && o.AdmGroup.IsSet() {
 		return true
 	}
@@ -4137,21 +3306,21 @@ func (o *NotificationWithMeta) HasAdmGroup() bool {
 }
 
 // SetAdmGroup gets a reference to the given NullableString and assigns it to the AdmGroup field.
-func (o *NotificationWithMeta) SetAdmGroup(v string) {
+func (o *BasicNotificationAllOf) SetAdmGroup(v string) {
 	o.AdmGroup.Set(&v)
 }
 // SetAdmGroupNil sets the value for AdmGroup to be an explicit nil
-func (o *NotificationWithMeta) SetAdmGroupNil() {
+func (o *BasicNotificationAllOf) SetAdmGroupNil() {
 	o.AdmGroup.Set(nil)
 }
 
 // UnsetAdmGroup ensures that no value is present for AdmGroup, not even an explicit nil
-func (o *NotificationWithMeta) UnsetAdmGroup() {
+func (o *BasicNotificationAllOf) UnsetAdmGroup() {
 	o.AdmGroup.Unset()
 }
 
 // GetAdmGroupMessage returns the AdmGroupMessage field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetAdmGroupMessage() map[string]interface{} {
+func (o *BasicNotificationAllOf) GetAdmGroupMessage() map[string]interface{} {
 	if o == nil {
 		var ret map[string]interface{}
 		return ret
@@ -4162,7 +3331,7 @@ func (o *NotificationWithMeta) GetAdmGroupMessage() map[string]interface{} {
 // GetAdmGroupMessageOk returns a tuple with the AdmGroupMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetAdmGroupMessageOk() (map[string]interface{}, bool) {
+func (o *BasicNotificationAllOf) GetAdmGroupMessageOk() (map[string]interface{}, bool) {
 	if o == nil || o.AdmGroupMessage == nil {
 		return nil, false
 	}
@@ -4170,7 +3339,7 @@ func (o *NotificationWithMeta) GetAdmGroupMessageOk() (map[string]interface{}, b
 }
 
 // HasAdmGroupMessage returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAdmGroupMessage() bool {
+func (o *BasicNotificationAllOf) HasAdmGroupMessage() bool {
 	if o != nil && o.AdmGroupMessage != nil {
 		return true
 	}
@@ -4179,12 +3348,12 @@ func (o *NotificationWithMeta) HasAdmGroupMessage() bool {
 }
 
 // SetAdmGroupMessage gets a reference to the given map[string]interface{} and assigns it to the AdmGroupMessage field.
-func (o *NotificationWithMeta) SetAdmGroupMessage(v map[string]interface{}) {
+func (o *BasicNotificationAllOf) SetAdmGroupMessage(v map[string]interface{}) {
 	o.AdmGroupMessage = v
 }
 
 // GetThreadId returns the ThreadId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetThreadId() string {
+func (o *BasicNotificationAllOf) GetThreadId() string {
 	if o == nil || o.ThreadId.Get() == nil {
 		var ret string
 		return ret
@@ -4195,7 +3364,7 @@ func (o *NotificationWithMeta) GetThreadId() string {
 // GetThreadIdOk returns a tuple with the ThreadId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetThreadIdOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetThreadIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4203,7 +3372,7 @@ func (o *NotificationWithMeta) GetThreadIdOk() (*string, bool) {
 }
 
 // HasThreadId returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasThreadId() bool {
+func (o *BasicNotificationAllOf) HasThreadId() bool {
 	if o != nil && o.ThreadId.IsSet() {
 		return true
 	}
@@ -4212,21 +3381,21 @@ func (o *NotificationWithMeta) HasThreadId() bool {
 }
 
 // SetThreadId gets a reference to the given NullableString and assigns it to the ThreadId field.
-func (o *NotificationWithMeta) SetThreadId(v string) {
+func (o *BasicNotificationAllOf) SetThreadId(v string) {
 	o.ThreadId.Set(&v)
 }
 // SetThreadIdNil sets the value for ThreadId to be an explicit nil
-func (o *NotificationWithMeta) SetThreadIdNil() {
+func (o *BasicNotificationAllOf) SetThreadIdNil() {
 	o.ThreadId.Set(nil)
 }
 
 // UnsetThreadId ensures that no value is present for ThreadId, not even an explicit nil
-func (o *NotificationWithMeta) UnsetThreadId() {
+func (o *BasicNotificationAllOf) UnsetThreadId() {
 	o.ThreadId.Unset()
 }
 
 // GetSummaryArg returns the SummaryArg field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetSummaryArg() string {
+func (o *BasicNotificationAllOf) GetSummaryArg() string {
 	if o == nil || o.SummaryArg == nil {
 		var ret string
 		return ret
@@ -4236,7 +3405,7 @@ func (o *NotificationWithMeta) GetSummaryArg() string {
 
 // GetSummaryArgOk returns a tuple with the SummaryArg field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetSummaryArgOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetSummaryArgOk() (*string, bool) {
 	if o == nil || o.SummaryArg == nil {
 		return nil, false
 	}
@@ -4244,7 +3413,7 @@ func (o *NotificationWithMeta) GetSummaryArgOk() (*string, bool) {
 }
 
 // HasSummaryArg returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSummaryArg() bool {
+func (o *BasicNotificationAllOf) HasSummaryArg() bool {
 	if o != nil && o.SummaryArg != nil {
 		return true
 	}
@@ -4253,12 +3422,12 @@ func (o *NotificationWithMeta) HasSummaryArg() bool {
 }
 
 // SetSummaryArg gets a reference to the given string and assigns it to the SummaryArg field.
-func (o *NotificationWithMeta) SetSummaryArg(v string) {
+func (o *BasicNotificationAllOf) SetSummaryArg(v string) {
 	o.SummaryArg = &v
 }
 
 // GetSummaryArgCount returns the SummaryArgCount field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetSummaryArgCount() int32 {
+func (o *BasicNotificationAllOf) GetSummaryArgCount() int32 {
 	if o == nil || o.SummaryArgCount == nil {
 		var ret int32
 		return ret
@@ -4268,7 +3437,7 @@ func (o *NotificationWithMeta) GetSummaryArgCount() int32 {
 
 // GetSummaryArgCountOk returns a tuple with the SummaryArgCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetSummaryArgCountOk() (*int32, bool) {
+func (o *BasicNotificationAllOf) GetSummaryArgCountOk() (*int32, bool) {
 	if o == nil || o.SummaryArgCount == nil {
 		return nil, false
 	}
@@ -4276,7 +3445,7 @@ func (o *NotificationWithMeta) GetSummaryArgCountOk() (*int32, bool) {
 }
 
 // HasSummaryArgCount returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSummaryArgCount() bool {
+func (o *BasicNotificationAllOf) HasSummaryArgCount() bool {
 	if o != nil && o.SummaryArgCount != nil {
 		return true
 	}
@@ -4285,12 +3454,12 @@ func (o *NotificationWithMeta) HasSummaryArgCount() bool {
 }
 
 // SetSummaryArgCount gets a reference to the given int32 and assigns it to the SummaryArgCount field.
-func (o *NotificationWithMeta) SetSummaryArgCount(v int32) {
+func (o *BasicNotificationAllOf) SetSummaryArgCount(v int32) {
 	o.SummaryArgCount = &v
 }
 
 // GetEmailSubject returns the EmailSubject field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetEmailSubject() string {
+func (o *BasicNotificationAllOf) GetEmailSubject() string {
 	if o == nil || o.EmailSubject.Get() == nil {
 		var ret string
 		return ret
@@ -4301,7 +3470,7 @@ func (o *NotificationWithMeta) GetEmailSubject() string {
 // GetEmailSubjectOk returns a tuple with the EmailSubject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetEmailSubjectOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetEmailSubjectOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4309,7 +3478,7 @@ func (o *NotificationWithMeta) GetEmailSubjectOk() (*string, bool) {
 }
 
 // HasEmailSubject returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasEmailSubject() bool {
+func (o *BasicNotificationAllOf) HasEmailSubject() bool {
 	if o != nil && o.EmailSubject.IsSet() {
 		return true
 	}
@@ -4318,21 +3487,21 @@ func (o *NotificationWithMeta) HasEmailSubject() bool {
 }
 
 // SetEmailSubject gets a reference to the given NullableString and assigns it to the EmailSubject field.
-func (o *NotificationWithMeta) SetEmailSubject(v string) {
+func (o *BasicNotificationAllOf) SetEmailSubject(v string) {
 	o.EmailSubject.Set(&v)
 }
 // SetEmailSubjectNil sets the value for EmailSubject to be an explicit nil
-func (o *NotificationWithMeta) SetEmailSubjectNil() {
+func (o *BasicNotificationAllOf) SetEmailSubjectNil() {
 	o.EmailSubject.Set(nil)
 }
 
 // UnsetEmailSubject ensures that no value is present for EmailSubject, not even an explicit nil
-func (o *NotificationWithMeta) UnsetEmailSubject() {
+func (o *BasicNotificationAllOf) UnsetEmailSubject() {
 	o.EmailSubject.Unset()
 }
 
 // GetEmailBody returns the EmailBody field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetEmailBody() string {
+func (o *BasicNotificationAllOf) GetEmailBody() string {
 	if o == nil || o.EmailBody == nil {
 		var ret string
 		return ret
@@ -4342,7 +3511,7 @@ func (o *NotificationWithMeta) GetEmailBody() string {
 
 // GetEmailBodyOk returns a tuple with the EmailBody field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetEmailBodyOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetEmailBodyOk() (*string, bool) {
 	if o == nil || o.EmailBody == nil {
 		return nil, false
 	}
@@ -4350,7 +3519,7 @@ func (o *NotificationWithMeta) GetEmailBodyOk() (*string, bool) {
 }
 
 // HasEmailBody returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasEmailBody() bool {
+func (o *BasicNotificationAllOf) HasEmailBody() bool {
 	if o != nil && o.EmailBody != nil {
 		return true
 	}
@@ -4359,12 +3528,12 @@ func (o *NotificationWithMeta) HasEmailBody() bool {
 }
 
 // SetEmailBody gets a reference to the given string and assigns it to the EmailBody field.
-func (o *NotificationWithMeta) SetEmailBody(v string) {
+func (o *BasicNotificationAllOf) SetEmailBody(v string) {
 	o.EmailBody = &v
 }
 
 // GetEmailFromName returns the EmailFromName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetEmailFromName() string {
+func (o *BasicNotificationAllOf) GetEmailFromName() string {
 	if o == nil || o.EmailFromName.Get() == nil {
 		var ret string
 		return ret
@@ -4375,7 +3544,7 @@ func (o *NotificationWithMeta) GetEmailFromName() string {
 // GetEmailFromNameOk returns a tuple with the EmailFromName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetEmailFromNameOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetEmailFromNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4383,7 +3552,7 @@ func (o *NotificationWithMeta) GetEmailFromNameOk() (*string, bool) {
 }
 
 // HasEmailFromName returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasEmailFromName() bool {
+func (o *BasicNotificationAllOf) HasEmailFromName() bool {
 	if o != nil && o.EmailFromName.IsSet() {
 		return true
 	}
@@ -4392,21 +3561,21 @@ func (o *NotificationWithMeta) HasEmailFromName() bool {
 }
 
 // SetEmailFromName gets a reference to the given NullableString and assigns it to the EmailFromName field.
-func (o *NotificationWithMeta) SetEmailFromName(v string) {
+func (o *BasicNotificationAllOf) SetEmailFromName(v string) {
 	o.EmailFromName.Set(&v)
 }
 // SetEmailFromNameNil sets the value for EmailFromName to be an explicit nil
-func (o *NotificationWithMeta) SetEmailFromNameNil() {
+func (o *BasicNotificationAllOf) SetEmailFromNameNil() {
 	o.EmailFromName.Set(nil)
 }
 
 // UnsetEmailFromName ensures that no value is present for EmailFromName, not even an explicit nil
-func (o *NotificationWithMeta) UnsetEmailFromName() {
+func (o *BasicNotificationAllOf) UnsetEmailFromName() {
 	o.EmailFromName.Unset()
 }
 
 // GetEmailFromAddress returns the EmailFromAddress field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetEmailFromAddress() string {
+func (o *BasicNotificationAllOf) GetEmailFromAddress() string {
 	if o == nil || o.EmailFromAddress.Get() == nil {
 		var ret string
 		return ret
@@ -4417,7 +3586,7 @@ func (o *NotificationWithMeta) GetEmailFromAddress() string {
 // GetEmailFromAddressOk returns a tuple with the EmailFromAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetEmailFromAddressOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetEmailFromAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4425,7 +3594,7 @@ func (o *NotificationWithMeta) GetEmailFromAddressOk() (*string, bool) {
 }
 
 // HasEmailFromAddress returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasEmailFromAddress() bool {
+func (o *BasicNotificationAllOf) HasEmailFromAddress() bool {
 	if o != nil && o.EmailFromAddress.IsSet() {
 		return true
 	}
@@ -4434,21 +3603,21 @@ func (o *NotificationWithMeta) HasEmailFromAddress() bool {
 }
 
 // SetEmailFromAddress gets a reference to the given NullableString and assigns it to the EmailFromAddress field.
-func (o *NotificationWithMeta) SetEmailFromAddress(v string) {
+func (o *BasicNotificationAllOf) SetEmailFromAddress(v string) {
 	o.EmailFromAddress.Set(&v)
 }
 // SetEmailFromAddressNil sets the value for EmailFromAddress to be an explicit nil
-func (o *NotificationWithMeta) SetEmailFromAddressNil() {
+func (o *BasicNotificationAllOf) SetEmailFromAddressNil() {
 	o.EmailFromAddress.Set(nil)
 }
 
 // UnsetEmailFromAddress ensures that no value is present for EmailFromAddress, not even an explicit nil
-func (o *NotificationWithMeta) UnsetEmailFromAddress() {
+func (o *BasicNotificationAllOf) UnsetEmailFromAddress() {
 	o.EmailFromAddress.Unset()
 }
 
 // GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetSmsFrom() string {
+func (o *BasicNotificationAllOf) GetSmsFrom() string {
 	if o == nil || o.SmsFrom.Get() == nil {
 		var ret string
 		return ret
@@ -4459,7 +3628,7 @@ func (o *NotificationWithMeta) GetSmsFrom() string {
 // GetSmsFromOk returns a tuple with the SmsFrom field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetSmsFromOk() (*string, bool) {
+func (o *BasicNotificationAllOf) GetSmsFromOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -4467,7 +3636,7 @@ func (o *NotificationWithMeta) GetSmsFromOk() (*string, bool) {
 }
 
 // HasSmsFrom returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSmsFrom() bool {
+func (o *BasicNotificationAllOf) HasSmsFrom() bool {
 	if o != nil && o.SmsFrom.IsSet() {
 		return true
 	}
@@ -4476,21 +3645,21 @@ func (o *NotificationWithMeta) HasSmsFrom() bool {
 }
 
 // SetSmsFrom gets a reference to the given NullableString and assigns it to the SmsFrom field.
-func (o *NotificationWithMeta) SetSmsFrom(v string) {
+func (o *BasicNotificationAllOf) SetSmsFrom(v string) {
 	o.SmsFrom.Set(&v)
 }
 // SetSmsFromNil sets the value for SmsFrom to be an explicit nil
-func (o *NotificationWithMeta) SetSmsFromNil() {
+func (o *BasicNotificationAllOf) SetSmsFromNil() {
 	o.SmsFrom.Set(nil)
 }
 
 // UnsetSmsFrom ensures that no value is present for SmsFrom, not even an explicit nil
-func (o *NotificationWithMeta) UnsetSmsFrom() {
+func (o *BasicNotificationAllOf) UnsetSmsFrom() {
 	o.SmsFrom.Unset()
 }
 
 // GetSmsMediaUrls returns the SmsMediaUrls field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetSmsMediaUrls() []string {
+func (o *BasicNotificationAllOf) GetSmsMediaUrls() []string {
 	if o == nil {
 		var ret []string
 		return ret
@@ -4501,7 +3670,7 @@ func (o *NotificationWithMeta) GetSmsMediaUrls() []string {
 // GetSmsMediaUrlsOk returns a tuple with the SmsMediaUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetSmsMediaUrlsOk() ([]string, bool) {
+func (o *BasicNotificationAllOf) GetSmsMediaUrlsOk() ([]string, bool) {
 	if o == nil || o.SmsMediaUrls == nil {
 		return nil, false
 	}
@@ -4509,7 +3678,7 @@ func (o *NotificationWithMeta) GetSmsMediaUrlsOk() ([]string, bool) {
 }
 
 // HasSmsMediaUrls returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSmsMediaUrls() bool {
+func (o *BasicNotificationAllOf) HasSmsMediaUrls() bool {
 	if o != nil && o.SmsMediaUrls != nil {
 		return true
 	}
@@ -4518,466 +3687,12 @@ func (o *NotificationWithMeta) HasSmsMediaUrls() bool {
 }
 
 // SetSmsMediaUrls gets a reference to the given []string and assigns it to the SmsMediaUrls field.
-func (o *NotificationWithMeta) SetSmsMediaUrls(v []string) {
+func (o *BasicNotificationAllOf) SetSmsMediaUrls(v []string) {
 	o.SmsMediaUrls = v
 }
 
-// GetSuccessful returns the Successful field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetSuccessful() int32 {
-	if o == nil || o.Successful == nil {
-		var ret int32
-		return ret
-	}
-	return *o.Successful
-}
-
-// GetSuccessfulOk returns a tuple with the Successful field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetSuccessfulOk() (*int32, bool) {
-	if o == nil || o.Successful == nil {
-		return nil, false
-	}
-	return o.Successful, true
-}
-
-// HasSuccessful returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSuccessful() bool {
-	if o != nil && o.Successful != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSuccessful gets a reference to the given int32 and assigns it to the Successful field.
-func (o *NotificationWithMeta) SetSuccessful(v int32) {
-	o.Successful = &v
-}
-
-// GetFailed returns the Failed field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetFailed() int32 {
-	if o == nil || o.Failed == nil {
-		var ret int32
-		return ret
-	}
-	return *o.Failed
-}
-
-// GetFailedOk returns a tuple with the Failed field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetFailedOk() (*int32, bool) {
-	if o == nil || o.Failed == nil {
-		return nil, false
-	}
-	return o.Failed, true
-}
-
-// HasFailed returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasFailed() bool {
-	if o != nil && o.Failed != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFailed gets a reference to the given int32 and assigns it to the Failed field.
-func (o *NotificationWithMeta) SetFailed(v int32) {
-	o.Failed = &v
-}
-
-// GetErrored returns the Errored field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetErrored() int32 {
-	if o == nil || o.Errored == nil {
-		var ret int32
-		return ret
-	}
-	return *o.Errored
-}
-
-// GetErroredOk returns a tuple with the Errored field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetErroredOk() (*int32, bool) {
-	if o == nil || o.Errored == nil {
-		return nil, false
-	}
-	return o.Errored, true
-}
-
-// HasErrored returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasErrored() bool {
-	if o != nil && o.Errored != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetErrored gets a reference to the given int32 and assigns it to the Errored field.
-func (o *NotificationWithMeta) SetErrored(v int32) {
-	o.Errored = &v
-}
-
-// GetConverted returns the Converted field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetConverted() int32 {
-	if o == nil || o.Converted == nil {
-		var ret int32
-		return ret
-	}
-	return *o.Converted
-}
-
-// GetConvertedOk returns a tuple with the Converted field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetConvertedOk() (*int32, bool) {
-	if o == nil || o.Converted == nil {
-		return nil, false
-	}
-	return o.Converted, true
-}
-
-// HasConverted returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasConverted() bool {
-	if o != nil && o.Converted != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetConverted gets a reference to the given int32 and assigns it to the Converted field.
-func (o *NotificationWithMeta) SetConverted(v int32) {
-	o.Converted = &v
-}
-
-// GetReceived returns the Received field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetReceived() int32 {
-	if o == nil || o.Received.Get() == nil {
-		var ret int32
-		return ret
-	}
-	return *o.Received.Get()
-}
-
-// GetReceivedOk returns a tuple with the Received field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetReceivedOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Received.Get(), o.Received.IsSet()
-}
-
-// HasReceived returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasReceived() bool {
-	if o != nil && o.Received.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetReceived gets a reference to the given NullableInt32 and assigns it to the Received field.
-func (o *NotificationWithMeta) SetReceived(v int32) {
-	o.Received.Set(&v)
-}
-// SetReceivedNil sets the value for Received to be an explicit nil
-func (o *NotificationWithMeta) SetReceivedNil() {
-	o.Received.Set(nil)
-}
-
-// UnsetReceived ensures that no value is present for Received, not even an explicit nil
-func (o *NotificationWithMeta) UnsetReceived() {
-	o.Received.Unset()
-}
-
-// GetOutcomes returns the Outcomes field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetOutcomes() []OutcomeData {
-	if o == nil || o.Outcomes == nil {
-		var ret []OutcomeData
-		return ret
-	}
-	return o.Outcomes
-}
-
-// GetOutcomesOk returns a tuple with the Outcomes field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetOutcomesOk() ([]OutcomeData, bool) {
-	if o == nil || o.Outcomes == nil {
-		return nil, false
-	}
-	return o.Outcomes, true
-}
-
-// HasOutcomes returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasOutcomes() bool {
-	if o != nil && o.Outcomes != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetOutcomes gets a reference to the given []OutcomeData and assigns it to the Outcomes field.
-func (o *NotificationWithMeta) SetOutcomes(v []OutcomeData) {
-	o.Outcomes = v
-}
-
-// GetRemaining returns the Remaining field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetRemaining() int32 {
-	if o == nil || o.Remaining == nil {
-		var ret int32
-		return ret
-	}
-	return *o.Remaining
-}
-
-// GetRemainingOk returns a tuple with the Remaining field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetRemainingOk() (*int32, bool) {
-	if o == nil || o.Remaining == nil {
-		return nil, false
-	}
-	return o.Remaining, true
-}
-
-// HasRemaining returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasRemaining() bool {
-	if o != nil && o.Remaining != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetRemaining gets a reference to the given int32 and assigns it to the Remaining field.
-func (o *NotificationWithMeta) SetRemaining(v int32) {
-	o.Remaining = &v
-}
-
-// GetQueuedAt returns the QueuedAt field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetQueuedAt() int64 {
-	if o == nil || o.QueuedAt == nil {
-		var ret int64
-		return ret
-	}
-	return *o.QueuedAt
-}
-
-// GetQueuedAtOk returns a tuple with the QueuedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetQueuedAtOk() (*int64, bool) {
-	if o == nil || o.QueuedAt == nil {
-		return nil, false
-	}
-	return o.QueuedAt, true
-}
-
-// HasQueuedAt returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasQueuedAt() bool {
-	if o != nil && o.QueuedAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetQueuedAt gets a reference to the given int64 and assigns it to the QueuedAt field.
-func (o *NotificationWithMeta) SetQueuedAt(v int64) {
-	o.QueuedAt = &v
-}
-
-// GetSendAfter returns the SendAfter field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetSendAfter() int64 {
-	if o == nil || o.SendAfter.Get() == nil {
-		var ret int64
-		return ret
-	}
-	return *o.SendAfter.Get()
-}
-
-// GetSendAfterOk returns a tuple with the SendAfter field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetSendAfterOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.SendAfter.Get(), o.SendAfter.IsSet()
-}
-
-// HasSendAfter returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSendAfter() bool {
-	if o != nil && o.SendAfter.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetSendAfter gets a reference to the given NullableInt64 and assigns it to the SendAfter field.
-func (o *NotificationWithMeta) SetSendAfter(v int64) {
-	o.SendAfter.Set(&v)
-}
-// SetSendAfterNil sets the value for SendAfter to be an explicit nil
-func (o *NotificationWithMeta) SetSendAfterNil() {
-	o.SendAfter.Set(nil)
-}
-
-// UnsetSendAfter ensures that no value is present for SendAfter, not even an explicit nil
-func (o *NotificationWithMeta) UnsetSendAfter() {
-	o.SendAfter.Unset()
-}
-
-// GetCompletedAt returns the CompletedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *NotificationWithMeta) GetCompletedAt() int64 {
-	if o == nil || o.CompletedAt.Get() == nil {
-		var ret int64
-		return ret
-	}
-	return *o.CompletedAt.Get()
-}
-
-// GetCompletedAtOk returns a tuple with the CompletedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *NotificationWithMeta) GetCompletedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.CompletedAt.Get(), o.CompletedAt.IsSet()
-}
-
-// HasCompletedAt returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasCompletedAt() bool {
-	if o != nil && o.CompletedAt.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetCompletedAt gets a reference to the given NullableInt64 and assigns it to the CompletedAt field.
-func (o *NotificationWithMeta) SetCompletedAt(v int64) {
-	o.CompletedAt.Set(&v)
-}
-// SetCompletedAtNil sets the value for CompletedAt to be an explicit nil
-func (o *NotificationWithMeta) SetCompletedAtNil() {
-	o.CompletedAt.Set(nil)
-}
-
-// UnsetCompletedAt ensures that no value is present for CompletedAt, not even an explicit nil
-func (o *NotificationWithMeta) UnsetCompletedAt() {
-	o.CompletedAt.Unset()
-}
-
-// GetPlatformDeliveryStats returns the PlatformDeliveryStats field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetPlatformDeliveryStats() PlatformDeliveryData {
-	if o == nil || o.PlatformDeliveryStats == nil {
-		var ret PlatformDeliveryData
-		return ret
-	}
-	return *o.PlatformDeliveryStats
-}
-
-// GetPlatformDeliveryStatsOk returns a tuple with the PlatformDeliveryStats field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetPlatformDeliveryStatsOk() (*PlatformDeliveryData, bool) {
-	if o == nil || o.PlatformDeliveryStats == nil {
-		return nil, false
-	}
-	return o.PlatformDeliveryStats, true
-}
-
-// HasPlatformDeliveryStats returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasPlatformDeliveryStats() bool {
-	if o != nil && o.PlatformDeliveryStats != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetPlatformDeliveryStats gets a reference to the given PlatformDeliveryData and assigns it to the PlatformDeliveryStats field.
-func (o *NotificationWithMeta) SetPlatformDeliveryStats(v PlatformDeliveryData) {
-	o.PlatformDeliveryStats = &v
-}
-
-func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
+func (o BasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.IncludedSegments != nil {
-		toSerialize["included_segments"] = o.IncludedSegments
-	}
-	if o.ExcludedSegments != nil {
-		toSerialize["excluded_segments"] = o.ExcludedSegments
-	}
-	if o.LastSession != nil {
-		toSerialize["last_session"] = o.LastSession
-	}
-	if o.FirstSession != nil {
-		toSerialize["first_session"] = o.FirstSession
-	}
-	if o.SessionCount != nil {
-		toSerialize["session_count"] = o.SessionCount
-	}
-	if o.SessionTime != nil {
-		toSerialize["session_time"] = o.SessionTime
-	}
-	if o.AmountSpent != nil {
-		toSerialize["amount_spent"] = o.AmountSpent
-	}
-	if o.BoughtSku != nil {
-		toSerialize["bought_sku"] = o.BoughtSku
-	}
-	if o.Tag != nil {
-		toSerialize["tag"] = o.Tag
-	}
-	if o.Language != nil {
-		toSerialize["language"] = o.Language
-	}
-	if o.AppVersion != nil {
-		toSerialize["app_version"] = o.AppVersion
-	}
-	if o.Location != nil {
-		toSerialize["location"] = o.Location
-	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
-	}
-	if o.Country != nil {
-		toSerialize["country"] = o.Country
-	}
-	if o.IncludePlayerIds != nil {
-		toSerialize["include_player_ids"] = o.IncludePlayerIds
-	}
-	if o.IncludeExternalUserIds != nil {
-		toSerialize["include_external_user_ids"] = o.IncludeExternalUserIds
-	}
-	if o.IncludeEmailTokens != nil {
-		toSerialize["include_email_tokens"] = o.IncludeEmailTokens
-	}
-	if o.IncludePhoneNumbers != nil {
-		toSerialize["include_phone_numbers"] = o.IncludePhoneNumbers
-	}
-	if o.IncludeIosTokens != nil {
-		toSerialize["include_ios_tokens"] = o.IncludeIosTokens
-	}
-	if o.IncludeWpWnsUris != nil {
-		toSerialize["include_wp_wns_uris"] = o.IncludeWpWnsUris
-	}
-	if o.IncludeAmazonRegIds != nil {
-		toSerialize["include_amazon_reg_ids"] = o.IncludeAmazonRegIds
-	}
-	if o.IncludeChromeRegIds != nil {
-		toSerialize["include_chrome_reg_ids"] = o.IncludeChromeRegIds
-	}
-	if o.IncludeChromeWebRegIds != nil {
-		toSerialize["include_chrome_web_reg_ids"] = o.IncludeChromeWebRegIds
-	}
-	if o.IncludeAndroidRegIds != nil {
-		toSerialize["include_android_reg_ids"] = o.IncludeAndroidRegIds
-	}
 	if o.Id != nil {
 		toSerialize["id"] = o.Id
 	}
@@ -5023,7 +3738,7 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.ChannelForExternalUserIds != nil {
 		toSerialize["channel_for_external_user_ids"] = o.ChannelForExternalUserIds
 	}
-	if true {
+	if o.AppId != nil {
 		toSerialize["app_id"] = o.AppId
 	}
 	if o.ExternalId != nil {
@@ -5242,39 +3957,6 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.SmsMediaUrls != nil {
 		toSerialize["sms_media_urls"] = o.SmsMediaUrls
 	}
-	if o.Successful != nil {
-		toSerialize["successful"] = o.Successful
-	}
-	if o.Failed != nil {
-		toSerialize["failed"] = o.Failed
-	}
-	if o.Errored != nil {
-		toSerialize["errored"] = o.Errored
-	}
-	if o.Converted != nil {
-		toSerialize["converted"] = o.Converted
-	}
-	if o.Received.IsSet() {
-		toSerialize["received"] = o.Received.Get()
-	}
-	if o.Outcomes != nil {
-		toSerialize["outcomes"] = o.Outcomes
-	}
-	if o.Remaining != nil {
-		toSerialize["remaining"] = o.Remaining
-	}
-	if o.QueuedAt != nil {
-		toSerialize["queued_at"] = o.QueuedAt
-	}
-	if o.SendAfter.IsSet() {
-		toSerialize["send_after"] = o.SendAfter.Get()
-	}
-	if o.CompletedAt.IsSet() {
-		toSerialize["completed_at"] = o.CompletedAt.Get()
-	}
-	if o.PlatformDeliveryStats != nil {
-		toSerialize["platform_delivery_stats"] = o.PlatformDeliveryStats
-	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -5283,40 +3965,16 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
-	varNotificationWithMeta := _NotificationWithMeta{}
+func (o *BasicNotificationAllOf) UnmarshalJSON(bytes []byte) (err error) {
+	varBasicNotificationAllOf := _BasicNotificationAllOf{}
 
-	if err = json.Unmarshal(bytes, &varNotificationWithMeta); err == nil {
-		*o = NotificationWithMeta(varNotificationWithMeta)
+	if err = json.Unmarshal(bytes, &varBasicNotificationAllOf); err == nil {
+		*o = BasicNotificationAllOf(varBasicNotificationAllOf)
 	}
 
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
-		delete(additionalProperties, "included_segments")
-		delete(additionalProperties, "excluded_segments")
-		delete(additionalProperties, "last_session")
-		delete(additionalProperties, "first_session")
-		delete(additionalProperties, "session_count")
-		delete(additionalProperties, "session_time")
-		delete(additionalProperties, "amount_spent")
-		delete(additionalProperties, "bought_sku")
-		delete(additionalProperties, "tag")
-		delete(additionalProperties, "language")
-		delete(additionalProperties, "app_version")
-		delete(additionalProperties, "location")
-		delete(additionalProperties, "email")
-		delete(additionalProperties, "country")
-		delete(additionalProperties, "include_player_ids")
-		delete(additionalProperties, "include_external_user_ids")
-		delete(additionalProperties, "include_email_tokens")
-		delete(additionalProperties, "include_phone_numbers")
-		delete(additionalProperties, "include_ios_tokens")
-		delete(additionalProperties, "include_wp_wns_uris")
-		delete(additionalProperties, "include_amazon_reg_ids")
-		delete(additionalProperties, "include_chrome_reg_ids")
-		delete(additionalProperties, "include_chrome_web_reg_ids")
-		delete(additionalProperties, "include_android_reg_ids")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "value")
 		delete(additionalProperties, "name")
@@ -5405,55 +4063,44 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_from_address")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
-		delete(additionalProperties, "successful")
-		delete(additionalProperties, "failed")
-		delete(additionalProperties, "errored")
-		delete(additionalProperties, "converted")
-		delete(additionalProperties, "received")
-		delete(additionalProperties, "outcomes")
-		delete(additionalProperties, "remaining")
-		delete(additionalProperties, "queued_at")
-		delete(additionalProperties, "send_after")
-		delete(additionalProperties, "completed_at")
-		delete(additionalProperties, "platform_delivery_stats")
 		o.AdditionalProperties = additionalProperties
 	}
 
 	return err
 }
 
-type NullableNotificationWithMeta struct {
-	value *NotificationWithMeta
+type NullableBasicNotificationAllOf struct {
+	value *BasicNotificationAllOf
 	isSet bool
 }
 
-func (v NullableNotificationWithMeta) Get() *NotificationWithMeta {
+func (v NullableBasicNotificationAllOf) Get() *BasicNotificationAllOf {
 	return v.value
 }
 
-func (v *NullableNotificationWithMeta) Set(val *NotificationWithMeta) {
+func (v *NullableBasicNotificationAllOf) Set(val *BasicNotificationAllOf) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableNotificationWithMeta) IsSet() bool {
+func (v NullableBasicNotificationAllOf) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableNotificationWithMeta) Unset() {
+func (v *NullableBasicNotificationAllOf) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableNotificationWithMeta(val *NotificationWithMeta) *NullableNotificationWithMeta {
-	return &NullableNotificationWithMeta{value: val, isSet: true}
+func NewNullableBasicNotificationAllOf(val *BasicNotificationAllOf) *NullableBasicNotificationAllOf {
+	return &NullableBasicNotificationAllOf{value: val, isSet: true}
 }
 
-func (v NullableNotificationWithMeta) MarshalJSON() ([]byte, error) {
+func (v NullableBasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableNotificationWithMeta) UnmarshalJSON(src []byte) error {
+func (v *NullableBasicNotificationAllOf) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

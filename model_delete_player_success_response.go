@@ -17,7 +17,7 @@ import (
 
 // DeletePlayerSuccessResponse struct for DeletePlayerSuccessResponse
 type DeletePlayerSuccessResponse struct {
-	Success *string `json:"success,omitempty"`
+	Success *bool `json:"success,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -41,9 +41,9 @@ func NewDeletePlayerSuccessResponseWithDefaults() *DeletePlayerSuccessResponse {
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *DeletePlayerSuccessResponse) GetSuccess() string {
+func (o *DeletePlayerSuccessResponse) GetSuccess() bool {
 	if o == nil || o.Success == nil {
-		var ret string
+		var ret bool
 		return ret
 	}
 	return *o.Success
@@ -51,7 +51,7 @@ func (o *DeletePlayerSuccessResponse) GetSuccess() string {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeletePlayerSuccessResponse) GetSuccessOk() (*string, bool) {
+func (o *DeletePlayerSuccessResponse) GetSuccessOk() (*bool, bool) {
 	if o == nil || o.Success == nil {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *DeletePlayerSuccessResponse) HasSuccess() bool {
 	return false
 }
 
-// SetSuccess gets a reference to the given string and assigns it to the Success field.
-func (o *DeletePlayerSuccessResponse) SetSuccess(v string) {
+// SetSuccess gets a reference to the given bool and assigns it to the Success field.
+func (o *DeletePlayerSuccessResponse) SetSuccess(v bool) {
 	o.Success = &v
 }
 

@@ -23,6 +23,8 @@ type PlatformDeliveryData struct {
 	SafariWebPush *DeliveryData `json:"safari_web_push,omitempty"`
 	Android *DeliveryData `json:"android,omitempty"`
 	Ios *DeliveryData `json:"ios,omitempty"`
+	Sms NullableDeliveryData `json:"sms,omitempty"`
+	Email NullableDeliveryData `json:"email,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -237,6 +239,90 @@ func (o *PlatformDeliveryData) SetIos(v DeliveryData) {
 	o.Ios = &v
 }
 
+// GetSms returns the Sms field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PlatformDeliveryData) GetSms() DeliveryData {
+	if o == nil || o.Sms.Get() == nil {
+		var ret DeliveryData
+		return ret
+	}
+	return *o.Sms.Get()
+}
+
+// GetSmsOk returns a tuple with the Sms field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PlatformDeliveryData) GetSmsOk() (*DeliveryData, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Sms.Get(), o.Sms.IsSet()
+}
+
+// HasSms returns a boolean if a field has been set.
+func (o *PlatformDeliveryData) HasSms() bool {
+	if o != nil && o.Sms.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSms gets a reference to the given NullableDeliveryData and assigns it to the Sms field.
+func (o *PlatformDeliveryData) SetSms(v DeliveryData) {
+	o.Sms.Set(&v)
+}
+// SetSmsNil sets the value for Sms to be an explicit nil
+func (o *PlatformDeliveryData) SetSmsNil() {
+	o.Sms.Set(nil)
+}
+
+// UnsetSms ensures that no value is present for Sms, not even an explicit nil
+func (o *PlatformDeliveryData) UnsetSms() {
+	o.Sms.Unset()
+}
+
+// GetEmail returns the Email field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PlatformDeliveryData) GetEmail() DeliveryData {
+	if o == nil || o.Email.Get() == nil {
+		var ret DeliveryData
+		return ret
+	}
+	return *o.Email.Get()
+}
+
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PlatformDeliveryData) GetEmailOk() (*DeliveryData, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Email.Get(), o.Email.IsSet()
+}
+
+// HasEmail returns a boolean if a field has been set.
+func (o *PlatformDeliveryData) HasEmail() bool {
+	if o != nil && o.Email.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given NullableDeliveryData and assigns it to the Email field.
+func (o *PlatformDeliveryData) SetEmail(v DeliveryData) {
+	o.Email.Set(&v)
+}
+// SetEmailNil sets the value for Email to be an explicit nil
+func (o *PlatformDeliveryData) SetEmailNil() {
+	o.Email.Set(nil)
+}
+
+// UnsetEmail ensures that no value is present for Email, not even an explicit nil
+func (o *PlatformDeliveryData) UnsetEmail() {
+	o.Email.Unset()
+}
+
 func (o PlatformDeliveryData) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.EdgeWebPush != nil {
@@ -256,6 +342,12 @@ func (o PlatformDeliveryData) MarshalJSON() ([]byte, error) {
 	}
 	if o.Ios != nil {
 		toSerialize["ios"] = o.Ios
+	}
+	if o.Sms.IsSet() {
+		toSerialize["sms"] = o.Sms.Get()
+	}
+	if o.Email.IsSet() {
+		toSerialize["email"] = o.Email.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -281,6 +373,8 @@ func (o *PlatformDeliveryData) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "safari_web_push")
 		delete(additionalProperties, "android")
 		delete(additionalProperties, "ios")
+		delete(additionalProperties, "sms")
+		delete(additionalProperties, "email")
 		o.AdditionalProperties = additionalProperties
 	}
 

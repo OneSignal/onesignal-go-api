@@ -28,30 +28,30 @@ type App struct {
 	// Android: Your Google Project number.  Also known as Sender ID.
 	AndroidGcmSenderId *string `json:"android_gcm_sender_id,omitempty"`
 	// Android: Your Google Push Messaging Auth Key
-	GcmKey *string `json:"gcm_key,omitempty"`
+	GcmKey NullableString `json:"gcm_key,omitempty"`
 	// Chrome (All Browsers except Safari) (Recommended): The URL to your website.  This field is required if you wish to enable web push and specify other web push parameters.
-	ChromeWebOrigin *string `json:"chrome_web_origin,omitempty"`
+	ChromeWebOrigin NullableString `json:"chrome_web_origin,omitempty"`
 	// Not for web push.  Your Google Push Messaging Auth Key if you use Chrome Apps / Extensions.
-	ChromeKey *string `json:"chrome_key,omitempty"`
+	ChromeKey NullableString `json:"chrome_key,omitempty"`
 	// Chrome (All Browsers except Safari): Your default notification icon. Should be 256x256 pixels, min 80x80.
-	ChromeWebDefaultNotificationIcon *string `json:"chrome_web_default_notification_icon,omitempty"`
+	ChromeWebDefaultNotificationIcon NullableString `json:"chrome_web_default_notification_icon,omitempty"`
 	// Chrome (All Browsers except Safari): A subdomain of your choice in order to support Web Push on non-HTTPS websites. This field must be set in order for the chrome_web_gcm_sender_id property to be processed.
-	ChromeWebSubDomain *string `json:"chrome_web_sub_domain,omitempty"`
+	ChromeWebSubDomain NullableString `json:"chrome_web_sub_domain,omitempty"`
 	// iOS: Either sandbox or production
-	ApnsEnv *string `json:"apns_env,omitempty"`
+	ApnsEnv NullableString `json:"apns_env,omitempty"`
 	// iOS: Your apple push notification p12 certificate file, converted to a string and Base64 encoded.
 	ApnsP12 *string `json:"apns_p12,omitempty"`
 	// iOS: Required if using p12 certificate.  Password for the apns_p12 file.
 	ApnsP12Password *string `json:"apns_p12_password,omitempty"`
-	ApnsCertificates *string `json:"apns_certificates,omitempty"`
+	ApnsCertificates NullableString `json:"apns_certificates,omitempty"`
 	SafariApnsCertificates *string `json:"safari_apns_certificates,omitempty"`
 	// Safari: Your apple push notification p12 certificate file for Safari Push Notifications, converted to a string and Base64 encoded.
 	SafariApnsP12 *string `json:"safari_apns_p12,omitempty"`
 	// Safari: Password for safari_apns_p12 file
 	SafariApnsP12Password *string `json:"safari_apns_p12_password,omitempty"`
 	// Safari (Recommended): The hostname to your website including http(s)://
-	SafariSiteOrigin *string `json:"safari_site_origin,omitempty"`
-	SafariPushId *string `json:"safari_push_id,omitempty"`
+	SafariSiteOrigin NullableString `json:"safari_site_origin,omitempty"`
+	SafariPushId NullableString `json:"safari_push_id,omitempty"`
 	SafariIcon1616 *string `json:"safari_icon_16_16,omitempty"`
 	SafariIcon3232 *string `json:"safari_icon_32_32,omitempty"`
 	SafariIcon6464 *string `json:"safari_icon_64_64,omitempty"`
@@ -59,7 +59,7 @@ type App struct {
 	// Safari: A url for a 256x256 png notification icon. This is the only Safari icon URL you need to provide.
 	SafariIcon256256 *string `json:"safari_icon_256_256,omitempty"`
 	// All Browsers (Recommended): The Site Name. Requires both chrome_web_origin and safari_site_origin to be set to add or update it.
-	SiteName *string `json:"site_name,omitempty"`
+	SiteName NullableString `json:"site_name,omitempty"`
 	BasicAuthKey *string `json:"basic_auth_key,omitempty"`
 	// The Id of the Organization you would like to add this app to.
 	OrganizationId *string `json:"organization_id,omitempty"`
@@ -304,196 +304,256 @@ func (o *App) SetAndroidGcmSenderId(v string) {
 	o.AndroidGcmSenderId = &v
 }
 
-// GetGcmKey returns the GcmKey field value if set, zero value otherwise.
+// GetGcmKey returns the GcmKey field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetGcmKey() string {
-	if o == nil || o.GcmKey == nil {
+	if o == nil || o.GcmKey.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.GcmKey
+	return *o.GcmKey.Get()
 }
 
 // GetGcmKeyOk returns a tuple with the GcmKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetGcmKeyOk() (*string, bool) {
-	if o == nil || o.GcmKey == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.GcmKey, true
+	return o.GcmKey.Get(), o.GcmKey.IsSet()
 }
 
 // HasGcmKey returns a boolean if a field has been set.
 func (o *App) HasGcmKey() bool {
-	if o != nil && o.GcmKey != nil {
+	if o != nil && o.GcmKey.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetGcmKey gets a reference to the given string and assigns it to the GcmKey field.
+// SetGcmKey gets a reference to the given NullableString and assigns it to the GcmKey field.
 func (o *App) SetGcmKey(v string) {
-	o.GcmKey = &v
+	o.GcmKey.Set(&v)
+}
+// SetGcmKeyNil sets the value for GcmKey to be an explicit nil
+func (o *App) SetGcmKeyNil() {
+	o.GcmKey.Set(nil)
 }
 
-// GetChromeWebOrigin returns the ChromeWebOrigin field value if set, zero value otherwise.
+// UnsetGcmKey ensures that no value is present for GcmKey, not even an explicit nil
+func (o *App) UnsetGcmKey() {
+	o.GcmKey.Unset()
+}
+
+// GetChromeWebOrigin returns the ChromeWebOrigin field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetChromeWebOrigin() string {
-	if o == nil || o.ChromeWebOrigin == nil {
+	if o == nil || o.ChromeWebOrigin.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeWebOrigin
+	return *o.ChromeWebOrigin.Get()
 }
 
 // GetChromeWebOriginOk returns a tuple with the ChromeWebOrigin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetChromeWebOriginOk() (*string, bool) {
-	if o == nil || o.ChromeWebOrigin == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeWebOrigin, true
+	return o.ChromeWebOrigin.Get(), o.ChromeWebOrigin.IsSet()
 }
 
 // HasChromeWebOrigin returns a boolean if a field has been set.
 func (o *App) HasChromeWebOrigin() bool {
-	if o != nil && o.ChromeWebOrigin != nil {
+	if o != nil && o.ChromeWebOrigin.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeWebOrigin gets a reference to the given string and assigns it to the ChromeWebOrigin field.
+// SetChromeWebOrigin gets a reference to the given NullableString and assigns it to the ChromeWebOrigin field.
 func (o *App) SetChromeWebOrigin(v string) {
-	o.ChromeWebOrigin = &v
+	o.ChromeWebOrigin.Set(&v)
+}
+// SetChromeWebOriginNil sets the value for ChromeWebOrigin to be an explicit nil
+func (o *App) SetChromeWebOriginNil() {
+	o.ChromeWebOrigin.Set(nil)
 }
 
-// GetChromeKey returns the ChromeKey field value if set, zero value otherwise.
+// UnsetChromeWebOrigin ensures that no value is present for ChromeWebOrigin, not even an explicit nil
+func (o *App) UnsetChromeWebOrigin() {
+	o.ChromeWebOrigin.Unset()
+}
+
+// GetChromeKey returns the ChromeKey field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetChromeKey() string {
-	if o == nil || o.ChromeKey == nil {
+	if o == nil || o.ChromeKey.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeKey
+	return *o.ChromeKey.Get()
 }
 
 // GetChromeKeyOk returns a tuple with the ChromeKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetChromeKeyOk() (*string, bool) {
-	if o == nil || o.ChromeKey == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeKey, true
+	return o.ChromeKey.Get(), o.ChromeKey.IsSet()
 }
 
 // HasChromeKey returns a boolean if a field has been set.
 func (o *App) HasChromeKey() bool {
-	if o != nil && o.ChromeKey != nil {
+	if o != nil && o.ChromeKey.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeKey gets a reference to the given string and assigns it to the ChromeKey field.
+// SetChromeKey gets a reference to the given NullableString and assigns it to the ChromeKey field.
 func (o *App) SetChromeKey(v string) {
-	o.ChromeKey = &v
+	o.ChromeKey.Set(&v)
+}
+// SetChromeKeyNil sets the value for ChromeKey to be an explicit nil
+func (o *App) SetChromeKeyNil() {
+	o.ChromeKey.Set(nil)
 }
 
-// GetChromeWebDefaultNotificationIcon returns the ChromeWebDefaultNotificationIcon field value if set, zero value otherwise.
+// UnsetChromeKey ensures that no value is present for ChromeKey, not even an explicit nil
+func (o *App) UnsetChromeKey() {
+	o.ChromeKey.Unset()
+}
+
+// GetChromeWebDefaultNotificationIcon returns the ChromeWebDefaultNotificationIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetChromeWebDefaultNotificationIcon() string {
-	if o == nil || o.ChromeWebDefaultNotificationIcon == nil {
+	if o == nil || o.ChromeWebDefaultNotificationIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeWebDefaultNotificationIcon
+	return *o.ChromeWebDefaultNotificationIcon.Get()
 }
 
 // GetChromeWebDefaultNotificationIconOk returns a tuple with the ChromeWebDefaultNotificationIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetChromeWebDefaultNotificationIconOk() (*string, bool) {
-	if o == nil || o.ChromeWebDefaultNotificationIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeWebDefaultNotificationIcon, true
+	return o.ChromeWebDefaultNotificationIcon.Get(), o.ChromeWebDefaultNotificationIcon.IsSet()
 }
 
 // HasChromeWebDefaultNotificationIcon returns a boolean if a field has been set.
 func (o *App) HasChromeWebDefaultNotificationIcon() bool {
-	if o != nil && o.ChromeWebDefaultNotificationIcon != nil {
+	if o != nil && o.ChromeWebDefaultNotificationIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeWebDefaultNotificationIcon gets a reference to the given string and assigns it to the ChromeWebDefaultNotificationIcon field.
+// SetChromeWebDefaultNotificationIcon gets a reference to the given NullableString and assigns it to the ChromeWebDefaultNotificationIcon field.
 func (o *App) SetChromeWebDefaultNotificationIcon(v string) {
-	o.ChromeWebDefaultNotificationIcon = &v
+	o.ChromeWebDefaultNotificationIcon.Set(&v)
+}
+// SetChromeWebDefaultNotificationIconNil sets the value for ChromeWebDefaultNotificationIcon to be an explicit nil
+func (o *App) SetChromeWebDefaultNotificationIconNil() {
+	o.ChromeWebDefaultNotificationIcon.Set(nil)
 }
 
-// GetChromeWebSubDomain returns the ChromeWebSubDomain field value if set, zero value otherwise.
+// UnsetChromeWebDefaultNotificationIcon ensures that no value is present for ChromeWebDefaultNotificationIcon, not even an explicit nil
+func (o *App) UnsetChromeWebDefaultNotificationIcon() {
+	o.ChromeWebDefaultNotificationIcon.Unset()
+}
+
+// GetChromeWebSubDomain returns the ChromeWebSubDomain field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetChromeWebSubDomain() string {
-	if o == nil || o.ChromeWebSubDomain == nil {
+	if o == nil || o.ChromeWebSubDomain.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeWebSubDomain
+	return *o.ChromeWebSubDomain.Get()
 }
 
 // GetChromeWebSubDomainOk returns a tuple with the ChromeWebSubDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetChromeWebSubDomainOk() (*string, bool) {
-	if o == nil || o.ChromeWebSubDomain == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeWebSubDomain, true
+	return o.ChromeWebSubDomain.Get(), o.ChromeWebSubDomain.IsSet()
 }
 
 // HasChromeWebSubDomain returns a boolean if a field has been set.
 func (o *App) HasChromeWebSubDomain() bool {
-	if o != nil && o.ChromeWebSubDomain != nil {
+	if o != nil && o.ChromeWebSubDomain.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeWebSubDomain gets a reference to the given string and assigns it to the ChromeWebSubDomain field.
+// SetChromeWebSubDomain gets a reference to the given NullableString and assigns it to the ChromeWebSubDomain field.
 func (o *App) SetChromeWebSubDomain(v string) {
-	o.ChromeWebSubDomain = &v
+	o.ChromeWebSubDomain.Set(&v)
+}
+// SetChromeWebSubDomainNil sets the value for ChromeWebSubDomain to be an explicit nil
+func (o *App) SetChromeWebSubDomainNil() {
+	o.ChromeWebSubDomain.Set(nil)
 }
 
-// GetApnsEnv returns the ApnsEnv field value if set, zero value otherwise.
+// UnsetChromeWebSubDomain ensures that no value is present for ChromeWebSubDomain, not even an explicit nil
+func (o *App) UnsetChromeWebSubDomain() {
+	o.ChromeWebSubDomain.Unset()
+}
+
+// GetApnsEnv returns the ApnsEnv field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetApnsEnv() string {
-	if o == nil || o.ApnsEnv == nil {
+	if o == nil || o.ApnsEnv.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ApnsEnv
+	return *o.ApnsEnv.Get()
 }
 
 // GetApnsEnvOk returns a tuple with the ApnsEnv field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetApnsEnvOk() (*string, bool) {
-	if o == nil || o.ApnsEnv == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ApnsEnv, true
+	return o.ApnsEnv.Get(), o.ApnsEnv.IsSet()
 }
 
 // HasApnsEnv returns a boolean if a field has been set.
 func (o *App) HasApnsEnv() bool {
-	if o != nil && o.ApnsEnv != nil {
+	if o != nil && o.ApnsEnv.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetApnsEnv gets a reference to the given string and assigns it to the ApnsEnv field.
+// SetApnsEnv gets a reference to the given NullableString and assigns it to the ApnsEnv field.
 func (o *App) SetApnsEnv(v string) {
-	o.ApnsEnv = &v
+	o.ApnsEnv.Set(&v)
+}
+// SetApnsEnvNil sets the value for ApnsEnv to be an explicit nil
+func (o *App) SetApnsEnvNil() {
+	o.ApnsEnv.Set(nil)
+}
+
+// UnsetApnsEnv ensures that no value is present for ApnsEnv, not even an explicit nil
+func (o *App) UnsetApnsEnv() {
+	o.ApnsEnv.Unset()
 }
 
 // GetApnsP12 returns the ApnsP12 field value if set, zero value otherwise.
@@ -560,36 +620,46 @@ func (o *App) SetApnsP12Password(v string) {
 	o.ApnsP12Password = &v
 }
 
-// GetApnsCertificates returns the ApnsCertificates field value if set, zero value otherwise.
+// GetApnsCertificates returns the ApnsCertificates field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetApnsCertificates() string {
-	if o == nil || o.ApnsCertificates == nil {
+	if o == nil || o.ApnsCertificates.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ApnsCertificates
+	return *o.ApnsCertificates.Get()
 }
 
 // GetApnsCertificatesOk returns a tuple with the ApnsCertificates field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetApnsCertificatesOk() (*string, bool) {
-	if o == nil || o.ApnsCertificates == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ApnsCertificates, true
+	return o.ApnsCertificates.Get(), o.ApnsCertificates.IsSet()
 }
 
 // HasApnsCertificates returns a boolean if a field has been set.
 func (o *App) HasApnsCertificates() bool {
-	if o != nil && o.ApnsCertificates != nil {
+	if o != nil && o.ApnsCertificates.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetApnsCertificates gets a reference to the given string and assigns it to the ApnsCertificates field.
+// SetApnsCertificates gets a reference to the given NullableString and assigns it to the ApnsCertificates field.
 func (o *App) SetApnsCertificates(v string) {
-	o.ApnsCertificates = &v
+	o.ApnsCertificates.Set(&v)
+}
+// SetApnsCertificatesNil sets the value for ApnsCertificates to be an explicit nil
+func (o *App) SetApnsCertificatesNil() {
+	o.ApnsCertificates.Set(nil)
+}
+
+// UnsetApnsCertificates ensures that no value is present for ApnsCertificates, not even an explicit nil
+func (o *App) UnsetApnsCertificates() {
+	o.ApnsCertificates.Unset()
 }
 
 // GetSafariApnsCertificates returns the SafariApnsCertificates field value if set, zero value otherwise.
@@ -688,68 +758,88 @@ func (o *App) SetSafariApnsP12Password(v string) {
 	o.SafariApnsP12Password = &v
 }
 
-// GetSafariSiteOrigin returns the SafariSiteOrigin field value if set, zero value otherwise.
+// GetSafariSiteOrigin returns the SafariSiteOrigin field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetSafariSiteOrigin() string {
-	if o == nil || o.SafariSiteOrigin == nil {
+	if o == nil || o.SafariSiteOrigin.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.SafariSiteOrigin
+	return *o.SafariSiteOrigin.Get()
 }
 
 // GetSafariSiteOriginOk returns a tuple with the SafariSiteOrigin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetSafariSiteOriginOk() (*string, bool) {
-	if o == nil || o.SafariSiteOrigin == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.SafariSiteOrigin, true
+	return o.SafariSiteOrigin.Get(), o.SafariSiteOrigin.IsSet()
 }
 
 // HasSafariSiteOrigin returns a boolean if a field has been set.
 func (o *App) HasSafariSiteOrigin() bool {
-	if o != nil && o.SafariSiteOrigin != nil {
+	if o != nil && o.SafariSiteOrigin.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSafariSiteOrigin gets a reference to the given string and assigns it to the SafariSiteOrigin field.
+// SetSafariSiteOrigin gets a reference to the given NullableString and assigns it to the SafariSiteOrigin field.
 func (o *App) SetSafariSiteOrigin(v string) {
-	o.SafariSiteOrigin = &v
+	o.SafariSiteOrigin.Set(&v)
+}
+// SetSafariSiteOriginNil sets the value for SafariSiteOrigin to be an explicit nil
+func (o *App) SetSafariSiteOriginNil() {
+	o.SafariSiteOrigin.Set(nil)
 }
 
-// GetSafariPushId returns the SafariPushId field value if set, zero value otherwise.
+// UnsetSafariSiteOrigin ensures that no value is present for SafariSiteOrigin, not even an explicit nil
+func (o *App) UnsetSafariSiteOrigin() {
+	o.SafariSiteOrigin.Unset()
+}
+
+// GetSafariPushId returns the SafariPushId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetSafariPushId() string {
-	if o == nil || o.SafariPushId == nil {
+	if o == nil || o.SafariPushId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.SafariPushId
+	return *o.SafariPushId.Get()
 }
 
 // GetSafariPushIdOk returns a tuple with the SafariPushId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetSafariPushIdOk() (*string, bool) {
-	if o == nil || o.SafariPushId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.SafariPushId, true
+	return o.SafariPushId.Get(), o.SafariPushId.IsSet()
 }
 
 // HasSafariPushId returns a boolean if a field has been set.
 func (o *App) HasSafariPushId() bool {
-	if o != nil && o.SafariPushId != nil {
+	if o != nil && o.SafariPushId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSafariPushId gets a reference to the given string and assigns it to the SafariPushId field.
+// SetSafariPushId gets a reference to the given NullableString and assigns it to the SafariPushId field.
 func (o *App) SetSafariPushId(v string) {
-	o.SafariPushId = &v
+	o.SafariPushId.Set(&v)
+}
+// SetSafariPushIdNil sets the value for SafariPushId to be an explicit nil
+func (o *App) SetSafariPushIdNil() {
+	o.SafariPushId.Set(nil)
+}
+
+// UnsetSafariPushId ensures that no value is present for SafariPushId, not even an explicit nil
+func (o *App) UnsetSafariPushId() {
+	o.SafariPushId.Unset()
 }
 
 // GetSafariIcon1616 returns the SafariIcon1616 field value if set, zero value otherwise.
@@ -912,36 +1002,46 @@ func (o *App) SetSafariIcon256256(v string) {
 	o.SafariIcon256256 = &v
 }
 
-// GetSiteName returns the SiteName field value if set, zero value otherwise.
+// GetSiteName returns the SiteName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *App) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || o.SiteName.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.SiteName
+	return *o.SiteName.Get()
 }
 
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *App) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.SiteName, true
+	return o.SiteName.Get(), o.SiteName.IsSet()
 }
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *App) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && o.SiteName.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSiteName gets a reference to the given string and assigns it to the SiteName field.
+// SetSiteName gets a reference to the given NullableString and assigns it to the SiteName field.
 func (o *App) SetSiteName(v string) {
-	o.SiteName = &v
+	o.SiteName.Set(&v)
+}
+// SetSiteNameNil sets the value for SiteName to be an explicit nil
+func (o *App) SetSiteNameNil() {
+	o.SiteName.Set(nil)
+}
+
+// UnsetSiteName ensures that no value is present for SiteName, not even an explicit nil
+func (o *App) UnsetSiteName() {
+	o.SiteName.Unset()
 }
 
 // GetBasicAuthKey returns the BasicAuthKey field value if set, zero value otherwise.
@@ -1063,23 +1163,23 @@ func (o App) MarshalJSON() ([]byte, error) {
 	if o.AndroidGcmSenderId != nil {
 		toSerialize["android_gcm_sender_id"] = o.AndroidGcmSenderId
 	}
-	if o.GcmKey != nil {
-		toSerialize["gcm_key"] = o.GcmKey
+	if o.GcmKey.IsSet() {
+		toSerialize["gcm_key"] = o.GcmKey.Get()
 	}
-	if o.ChromeWebOrigin != nil {
-		toSerialize["chrome_web_origin"] = o.ChromeWebOrigin
+	if o.ChromeWebOrigin.IsSet() {
+		toSerialize["chrome_web_origin"] = o.ChromeWebOrigin.Get()
 	}
-	if o.ChromeKey != nil {
-		toSerialize["chrome_key"] = o.ChromeKey
+	if o.ChromeKey.IsSet() {
+		toSerialize["chrome_key"] = o.ChromeKey.Get()
 	}
-	if o.ChromeWebDefaultNotificationIcon != nil {
-		toSerialize["chrome_web_default_notification_icon"] = o.ChromeWebDefaultNotificationIcon
+	if o.ChromeWebDefaultNotificationIcon.IsSet() {
+		toSerialize["chrome_web_default_notification_icon"] = o.ChromeWebDefaultNotificationIcon.Get()
 	}
-	if o.ChromeWebSubDomain != nil {
-		toSerialize["chrome_web_sub_domain"] = o.ChromeWebSubDomain
+	if o.ChromeWebSubDomain.IsSet() {
+		toSerialize["chrome_web_sub_domain"] = o.ChromeWebSubDomain.Get()
 	}
-	if o.ApnsEnv != nil {
-		toSerialize["apns_env"] = o.ApnsEnv
+	if o.ApnsEnv.IsSet() {
+		toSerialize["apns_env"] = o.ApnsEnv.Get()
 	}
 	if o.ApnsP12 != nil {
 		toSerialize["apns_p12"] = o.ApnsP12
@@ -1087,8 +1187,8 @@ func (o App) MarshalJSON() ([]byte, error) {
 	if o.ApnsP12Password != nil {
 		toSerialize["apns_p12_password"] = o.ApnsP12Password
 	}
-	if o.ApnsCertificates != nil {
-		toSerialize["apns_certificates"] = o.ApnsCertificates
+	if o.ApnsCertificates.IsSet() {
+		toSerialize["apns_certificates"] = o.ApnsCertificates.Get()
 	}
 	if o.SafariApnsCertificates != nil {
 		toSerialize["safari_apns_certificates"] = o.SafariApnsCertificates
@@ -1099,11 +1199,11 @@ func (o App) MarshalJSON() ([]byte, error) {
 	if o.SafariApnsP12Password != nil {
 		toSerialize["safari_apns_p12_password"] = o.SafariApnsP12Password
 	}
-	if o.SafariSiteOrigin != nil {
-		toSerialize["safari_site_origin"] = o.SafariSiteOrigin
+	if o.SafariSiteOrigin.IsSet() {
+		toSerialize["safari_site_origin"] = o.SafariSiteOrigin.Get()
 	}
-	if o.SafariPushId != nil {
-		toSerialize["safari_push_id"] = o.SafariPushId
+	if o.SafariPushId.IsSet() {
+		toSerialize["safari_push_id"] = o.SafariPushId.Get()
 	}
 	if o.SafariIcon1616 != nil {
 		toSerialize["safari_icon_16_16"] = o.SafariIcon1616
@@ -1120,8 +1220,8 @@ func (o App) MarshalJSON() ([]byte, error) {
 	if o.SafariIcon256256 != nil {
 		toSerialize["safari_icon_256_256"] = o.SafariIcon256256
 	}
-	if o.SiteName != nil {
-		toSerialize["site_name"] = o.SiteName
+	if o.SiteName.IsSet() {
+		toSerialize["site_name"] = o.SiteName.Get()
 	}
 	if o.BasicAuthKey != nil {
 		toSerialize["basic_auth_key"] = o.BasicAuthKey

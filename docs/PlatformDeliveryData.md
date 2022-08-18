@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **SafariWebPush** | Pointer to [**DeliveryData**](DeliveryData.md) |  | [optional] 
 **Android** | Pointer to [**DeliveryData**](DeliveryData.md) |  | [optional] 
 **Ios** | Pointer to [**DeliveryData**](DeliveryData.md) |  | [optional] 
+**Sms** | Pointer to [**NullableDeliveryData**](DeliveryData.md) |  | [optional] 
+**Email** | Pointer to [**NullableDeliveryData**](DeliveryData.md) |  | [optional] 
 
 ## Methods
 
@@ -180,6 +182,76 @@ SetIos sets Ios field to given value.
 
 HasIos returns a boolean if a field has been set.
 
+### GetSms
+
+`func (o *PlatformDeliveryData) GetSms() DeliveryData`
+
+GetSms returns the Sms field if non-nil, zero value otherwise.
+
+### GetSmsOk
+
+`func (o *PlatformDeliveryData) GetSmsOk() (*DeliveryData, bool)`
+
+GetSmsOk returns a tuple with the Sms field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSms
+
+`func (o *PlatformDeliveryData) SetSms(v DeliveryData)`
+
+SetSms sets Sms field to given value.
+
+### HasSms
+
+`func (o *PlatformDeliveryData) HasSms() bool`
+
+HasSms returns a boolean if a field has been set.
+
+### SetSmsNil
+
+`func (o *PlatformDeliveryData) SetSmsNil(b bool)`
+
+ SetSmsNil sets the value for Sms to be an explicit nil
+
+### UnsetSms
+`func (o *PlatformDeliveryData) UnsetSms()`
+
+UnsetSms ensures that no value is present for Sms, not even an explicit nil
+### GetEmail
+
+`func (o *PlatformDeliveryData) GetEmail() DeliveryData`
+
+GetEmail returns the Email field if non-nil, zero value otherwise.
+
+### GetEmailOk
+
+`func (o *PlatformDeliveryData) GetEmailOk() (*DeliveryData, bool)`
+
+GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmail
+
+`func (o *PlatformDeliveryData) SetEmail(v DeliveryData)`
+
+SetEmail sets Email field to given value.
+
+### HasEmail
+
+`func (o *PlatformDeliveryData) HasEmail() bool`
+
+HasEmail returns a boolean if a field has been set.
+
+### SetEmailNil
+
+`func (o *PlatformDeliveryData) SetEmailNil(b bool)`
+
+ SetEmailNil sets the value for Email to be an explicit nil
+
+### UnsetEmail
+`func (o *PlatformDeliveryData) UnsetEmail()`
+
+UnsetEmail ensures that no value is present for Email, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

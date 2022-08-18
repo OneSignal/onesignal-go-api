@@ -11,26 +11,26 @@ Name | Type | Description | Notes
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **AndroidGcmSenderId** | Pointer to **string** | Android: Your Google Project number.  Also known as Sender ID. | [optional] 
-**GcmKey** | Pointer to **string** | Android: Your Google Push Messaging Auth Key | [optional] 
-**ChromeWebOrigin** | Pointer to **string** | Chrome (All Browsers except Safari) (Recommended): The URL to your website.  This field is required if you wish to enable web push and specify other web push parameters. | [optional] 
-**ChromeKey** | Pointer to **string** | Not for web push.  Your Google Push Messaging Auth Key if you use Chrome Apps / Extensions. | [optional] 
-**ChromeWebDefaultNotificationIcon** | Pointer to **string** | Chrome (All Browsers except Safari): Your default notification icon. Should be 256x256 pixels, min 80x80. | [optional] 
-**ChromeWebSubDomain** | Pointer to **string** | Chrome (All Browsers except Safari): A subdomain of your choice in order to support Web Push on non-HTTPS websites. This field must be set in order for the chrome_web_gcm_sender_id property to be processed. | [optional] 
-**ApnsEnv** | Pointer to **string** | iOS: Either sandbox or production | [optional] 
+**GcmKey** | Pointer to **NullableString** | Android: Your Google Push Messaging Auth Key | [optional] 
+**ChromeWebOrigin** | Pointer to **NullableString** | Chrome (All Browsers except Safari) (Recommended): The URL to your website.  This field is required if you wish to enable web push and specify other web push parameters. | [optional] 
+**ChromeKey** | Pointer to **NullableString** | Not for web push.  Your Google Push Messaging Auth Key if you use Chrome Apps / Extensions. | [optional] 
+**ChromeWebDefaultNotificationIcon** | Pointer to **NullableString** | Chrome (All Browsers except Safari): Your default notification icon. Should be 256x256 pixels, min 80x80. | [optional] 
+**ChromeWebSubDomain** | Pointer to **NullableString** | Chrome (All Browsers except Safari): A subdomain of your choice in order to support Web Push on non-HTTPS websites. This field must be set in order for the chrome_web_gcm_sender_id property to be processed. | [optional] 
+**ApnsEnv** | Pointer to **NullableString** | iOS: Either sandbox or production | [optional] 
 **ApnsP12** | Pointer to **string** | iOS: Your apple push notification p12 certificate file, converted to a string and Base64 encoded. | [optional] 
 **ApnsP12Password** | Pointer to **string** | iOS: Required if using p12 certificate.  Password for the apns_p12 file. | [optional] 
-**ApnsCertificates** | Pointer to **string** |  | [optional] [readonly] 
+**ApnsCertificates** | Pointer to **NullableString** |  | [optional] [readonly] 
 **SafariApnsCertificates** | Pointer to **string** |  | [optional] [readonly] 
 **SafariApnsP12** | Pointer to **string** | Safari: Your apple push notification p12 certificate file for Safari Push Notifications, converted to a string and Base64 encoded. | [optional] 
 **SafariApnsP12Password** | Pointer to **string** | Safari: Password for safari_apns_p12 file | [optional] 
-**SafariSiteOrigin** | Pointer to **string** | Safari (Recommended): The hostname to your website including http(s):// | [optional] 
-**SafariPushId** | Pointer to **string** |  | [optional] [readonly] 
+**SafariSiteOrigin** | Pointer to **NullableString** | Safari (Recommended): The hostname to your website including http(s):// | [optional] 
+**SafariPushId** | Pointer to **NullableString** |  | [optional] [readonly] 
 **SafariIcon1616** | Pointer to **string** |  | [optional] [readonly] 
 **SafariIcon3232** | Pointer to **string** |  | [optional] [readonly] 
 **SafariIcon6464** | Pointer to **string** |  | [optional] [readonly] 
 **SafariIcon128128** | Pointer to **string** |  | [optional] [readonly] 
 **SafariIcon256256** | Pointer to **string** | Safari: A url for a 256x256 png notification icon. This is the only Safari icon URL you need to provide. | [optional] 
-**SiteName** | Pointer to **string** | All Browsers (Recommended): The Site Name. Requires both chrome_web_origin and safari_site_origin to be set to add or update it. | [optional] 
+**SiteName** | Pointer to **NullableString** | All Browsers (Recommended): The Site Name. Requires both chrome_web_origin and safari_site_origin to be set to add or update it. | [optional] 
 **BasicAuthKey** | Pointer to **string** |  | [optional] [readonly] 
 **OrganizationId** | Pointer to **string** | The Id of the Organization you would like to add this app to. | [optional] 
 **AdditionalDataIsRootPayload** | Pointer to **bool** | iOS: Notification data (additional data) values will be added to the root of the apns payload when sent to the device.  Ignore if you&#39;re not using any other plugins, or not using OneSignal SDK methods to read the payload. | [optional] 
@@ -249,6 +249,16 @@ SetGcmKey sets GcmKey field to given value.
 
 HasGcmKey returns a boolean if a field has been set.
 
+### SetGcmKeyNil
+
+`func (o *App) SetGcmKeyNil(b bool)`
+
+ SetGcmKeyNil sets the value for GcmKey to be an explicit nil
+
+### UnsetGcmKey
+`func (o *App) UnsetGcmKey()`
+
+UnsetGcmKey ensures that no value is present for GcmKey, not even an explicit nil
 ### GetChromeWebOrigin
 
 `func (o *App) GetChromeWebOrigin() string`
@@ -274,6 +284,16 @@ SetChromeWebOrigin sets ChromeWebOrigin field to given value.
 
 HasChromeWebOrigin returns a boolean if a field has been set.
 
+### SetChromeWebOriginNil
+
+`func (o *App) SetChromeWebOriginNil(b bool)`
+
+ SetChromeWebOriginNil sets the value for ChromeWebOrigin to be an explicit nil
+
+### UnsetChromeWebOrigin
+`func (o *App) UnsetChromeWebOrigin()`
+
+UnsetChromeWebOrigin ensures that no value is present for ChromeWebOrigin, not even an explicit nil
 ### GetChromeKey
 
 `func (o *App) GetChromeKey() string`
@@ -299,6 +319,16 @@ SetChromeKey sets ChromeKey field to given value.
 
 HasChromeKey returns a boolean if a field has been set.
 
+### SetChromeKeyNil
+
+`func (o *App) SetChromeKeyNil(b bool)`
+
+ SetChromeKeyNil sets the value for ChromeKey to be an explicit nil
+
+### UnsetChromeKey
+`func (o *App) UnsetChromeKey()`
+
+UnsetChromeKey ensures that no value is present for ChromeKey, not even an explicit nil
 ### GetChromeWebDefaultNotificationIcon
 
 `func (o *App) GetChromeWebDefaultNotificationIcon() string`
@@ -324,6 +354,16 @@ SetChromeWebDefaultNotificationIcon sets ChromeWebDefaultNotificationIcon field 
 
 HasChromeWebDefaultNotificationIcon returns a boolean if a field has been set.
 
+### SetChromeWebDefaultNotificationIconNil
+
+`func (o *App) SetChromeWebDefaultNotificationIconNil(b bool)`
+
+ SetChromeWebDefaultNotificationIconNil sets the value for ChromeWebDefaultNotificationIcon to be an explicit nil
+
+### UnsetChromeWebDefaultNotificationIcon
+`func (o *App) UnsetChromeWebDefaultNotificationIcon()`
+
+UnsetChromeWebDefaultNotificationIcon ensures that no value is present for ChromeWebDefaultNotificationIcon, not even an explicit nil
 ### GetChromeWebSubDomain
 
 `func (o *App) GetChromeWebSubDomain() string`
@@ -349,6 +389,16 @@ SetChromeWebSubDomain sets ChromeWebSubDomain field to given value.
 
 HasChromeWebSubDomain returns a boolean if a field has been set.
 
+### SetChromeWebSubDomainNil
+
+`func (o *App) SetChromeWebSubDomainNil(b bool)`
+
+ SetChromeWebSubDomainNil sets the value for ChromeWebSubDomain to be an explicit nil
+
+### UnsetChromeWebSubDomain
+`func (o *App) UnsetChromeWebSubDomain()`
+
+UnsetChromeWebSubDomain ensures that no value is present for ChromeWebSubDomain, not even an explicit nil
 ### GetApnsEnv
 
 `func (o *App) GetApnsEnv() string`
@@ -374,6 +424,16 @@ SetApnsEnv sets ApnsEnv field to given value.
 
 HasApnsEnv returns a boolean if a field has been set.
 
+### SetApnsEnvNil
+
+`func (o *App) SetApnsEnvNil(b bool)`
+
+ SetApnsEnvNil sets the value for ApnsEnv to be an explicit nil
+
+### UnsetApnsEnv
+`func (o *App) UnsetApnsEnv()`
+
+UnsetApnsEnv ensures that no value is present for ApnsEnv, not even an explicit nil
 ### GetApnsP12
 
 `func (o *App) GetApnsP12() string`
@@ -449,6 +509,16 @@ SetApnsCertificates sets ApnsCertificates field to given value.
 
 HasApnsCertificates returns a boolean if a field has been set.
 
+### SetApnsCertificatesNil
+
+`func (o *App) SetApnsCertificatesNil(b bool)`
+
+ SetApnsCertificatesNil sets the value for ApnsCertificates to be an explicit nil
+
+### UnsetApnsCertificates
+`func (o *App) UnsetApnsCertificates()`
+
+UnsetApnsCertificates ensures that no value is present for ApnsCertificates, not even an explicit nil
 ### GetSafariApnsCertificates
 
 `func (o *App) GetSafariApnsCertificates() string`
@@ -549,6 +619,16 @@ SetSafariSiteOrigin sets SafariSiteOrigin field to given value.
 
 HasSafariSiteOrigin returns a boolean if a field has been set.
 
+### SetSafariSiteOriginNil
+
+`func (o *App) SetSafariSiteOriginNil(b bool)`
+
+ SetSafariSiteOriginNil sets the value for SafariSiteOrigin to be an explicit nil
+
+### UnsetSafariSiteOrigin
+`func (o *App) UnsetSafariSiteOrigin()`
+
+UnsetSafariSiteOrigin ensures that no value is present for SafariSiteOrigin, not even an explicit nil
 ### GetSafariPushId
 
 `func (o *App) GetSafariPushId() string`
@@ -574,6 +654,16 @@ SetSafariPushId sets SafariPushId field to given value.
 
 HasSafariPushId returns a boolean if a field has been set.
 
+### SetSafariPushIdNil
+
+`func (o *App) SetSafariPushIdNil(b bool)`
+
+ SetSafariPushIdNil sets the value for SafariPushId to be an explicit nil
+
+### UnsetSafariPushId
+`func (o *App) UnsetSafariPushId()`
+
+UnsetSafariPushId ensures that no value is present for SafariPushId, not even an explicit nil
 ### GetSafariIcon1616
 
 `func (o *App) GetSafariIcon1616() string`
@@ -724,6 +814,16 @@ SetSiteName sets SiteName field to given value.
 
 HasSiteName returns a boolean if a field has been set.
 
+### SetSiteNameNil
+
+`func (o *App) SetSiteNameNil(b bool)`
+
+ SetSiteNameNil sets the value for SiteName to be an explicit nil
+
+### UnsetSiteName
+`func (o *App) UnsetSiteName()`
+
+UnsetSiteName ensures that no value is present for SiteName, not even an explicit nil
 ### GetBasicAuthKey
 
 `func (o *App) GetBasicAuthKey() string`

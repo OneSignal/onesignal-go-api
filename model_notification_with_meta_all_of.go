@@ -30,7 +30,7 @@ type NotificationWithMetaAllOf struct {
 	// Unix timestamp indicating when the notification was created.
 	QueuedAt *int64 `json:"queued_at,omitempty"`
 	// Unix timestamp indicating when notification delivery should begin.
-	SendAfter *int64 `json:"send_after,omitempty"`
+	SendAfter NullableInt64 `json:"send_after,omitempty"`
 	// Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after.
 	CompletedAt NullableInt64 `json:"completed_at,omitempty"`
 	PlatformDeliveryStats *PlatformDeliveryData `json:"platform_delivery_stats,omitempty"`
@@ -252,36 +252,46 @@ func (o *NotificationWithMetaAllOf) SetQueuedAt(v int64) {
 	o.QueuedAt = &v
 }
 
-// GetSendAfter returns the SendAfter field value if set, zero value otherwise.
+// GetSendAfter returns the SendAfter field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NotificationWithMetaAllOf) GetSendAfter() int64 {
-	if o == nil || o.SendAfter == nil {
+	if o == nil || o.SendAfter.Get() == nil {
 		var ret int64
 		return ret
 	}
-	return *o.SendAfter
+	return *o.SendAfter.Get()
 }
 
 // GetSendAfterOk returns a tuple with the SendAfter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *NotificationWithMetaAllOf) GetSendAfterOk() (*int64, bool) {
-	if o == nil || o.SendAfter == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.SendAfter, true
+	return o.SendAfter.Get(), o.SendAfter.IsSet()
 }
 
 // HasSendAfter returns a boolean if a field has been set.
 func (o *NotificationWithMetaAllOf) HasSendAfter() bool {
-	if o != nil && o.SendAfter != nil {
+	if o != nil && o.SendAfter.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSendAfter gets a reference to the given int64 and assigns it to the SendAfter field.
+// SetSendAfter gets a reference to the given NullableInt64 and assigns it to the SendAfter field.
 func (o *NotificationWithMetaAllOf) SetSendAfter(v int64) {
-	o.SendAfter = &v
+	o.SendAfter.Set(&v)
+}
+// SetSendAfterNil sets the value for SendAfter to be an explicit nil
+func (o *NotificationWithMetaAllOf) SetSendAfterNil() {
+	o.SendAfter.Set(nil)
+}
+
+// UnsetSendAfter ensures that no value is present for SendAfter, not even an explicit nil
+func (o *NotificationWithMetaAllOf) UnsetSendAfter() {
+	o.SendAfter.Unset()
 }
 
 // GetCompletedAt returns the CompletedAt field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -462,8 +472,8 @@ func (o NotificationWithMetaAllOf) MarshalJSON() ([]byte, error) {
 	if o.QueuedAt != nil {
 		toSerialize["queued_at"] = o.QueuedAt
 	}
-	if o.SendAfter != nil {
-		toSerialize["send_after"] = o.SendAfter
+	if o.SendAfter.IsSet() {
+		toSerialize["send_after"] = o.SendAfter.Get()
 	}
 	if o.CompletedAt.IsSet() {
 		toSerialize["completed_at"] = o.CompletedAt.Get()

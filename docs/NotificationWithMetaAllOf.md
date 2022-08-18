@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **Errored** | Pointer to **int32** | Number of notifications that could not be delivered due to an error. You can find more information by viewing the notification in the dashboard. | [optional] 
 **Converted** | Pointer to **int32** | Number of users who have clicked / tapped on your notification. | [optional] 
 **QueuedAt** | Pointer to **int64** | Unix timestamp indicating when the notification was created. | [optional] 
-**SendAfter** | Pointer to **int64** | Unix timestamp indicating when notification delivery should begin. | [optional] 
+**SendAfter** | Pointer to **NullableInt64** | Unix timestamp indicating when notification delivery should begin. | [optional] 
 **CompletedAt** | Pointer to **NullableInt64** | Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after. | [optional] 
 **PlatformDeliveryStats** | Pointer to [**PlatformDeliveryData**](PlatformDeliveryData.md) |  | [optional] 
 **Received** | Pointer to **NullableInt32** | Confirmed Deliveries number of devices that received the push notification. Paid Feature Only. Free accounts will see 0. | [optional] 
@@ -210,6 +210,16 @@ SetSendAfter sets SendAfter field to given value.
 
 HasSendAfter returns a boolean if a field has been set.
 
+### SetSendAfterNil
+
+`func (o *NotificationWithMetaAllOf) SetSendAfterNil(b bool)`
+
+ SetSendAfterNil sets the value for SendAfter to be an explicit nil
+
+### UnsetSendAfter
+`func (o *NotificationWithMetaAllOf) UnsetSendAfter()`
+
+UnsetSendAfter ensures that no value is present for SendAfter, not even an explicit nil
 ### GetCompletedAt
 
 `func (o *NotificationWithMetaAllOf) GetCompletedAt() int64`

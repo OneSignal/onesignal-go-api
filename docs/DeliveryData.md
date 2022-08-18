@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Successful** | Pointer to **NullableInt32** |  | [optional] 
-**Failed** | Pointer to **NullableInt32** |  | [optional] 
-**Errored** | Pointer to **NullableInt32** |  | [optional] 
-**Converted** | Pointer to **NullableInt32** |  | [optional] 
-**Received** | Pointer to **NullableInt32** |  | [optional] 
+**Successful** | Pointer to **NullableInt32** | Number of messages delivered to push servers, mobile carriers, or email service providers. | [optional] 
+**Failed** | Pointer to **NullableInt32** | Number of messages sent to unsubscribed devices. | [optional] 
+**Errored** | Pointer to **NullableInt32** | Number of errors reported. | [optional] 
+**Converted** | Pointer to **NullableInt32** | Number of messages that were clicked. | [optional] 
+**Received** | Pointer to **NullableInt32** | Number of devices that received the message. | [optional] 
 
 ## Methods
 

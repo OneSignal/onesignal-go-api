@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ExtraFields** | Pointer to **[]string** | Additional fields that you wish to include. Currently supports location, country, rooted, notification_types, ip, external_user_id, web_auth, and web_p256. | [optional] 
-**LastActiveSince** | Pointer to **int32** | Export all devices with a last_active timestamp greater than this time.  Unixtime in seconds. | [optional] 
+**LastActiveSince** | Pointer to **string** | Export all devices with a last_active timestamp greater than this time.  Unixtime in seconds. | [optional] 
 **SegmentName** | Pointer to **string** | Export al ldevices belonging to the segment. | [optional] 
 
 ## Methods
@@ -54,20 +54,20 @@ HasExtraFields returns a boolean if a field has been set.
 
 ### GetLastActiveSince
 
-`func (o *ExportPlayersRequestBody) GetLastActiveSince() int32`
+`func (o *ExportPlayersRequestBody) GetLastActiveSince() string`
 
 GetLastActiveSince returns the LastActiveSince field if non-nil, zero value otherwise.
 
 ### GetLastActiveSinceOk
 
-`func (o *ExportPlayersRequestBody) GetLastActiveSinceOk() (*int32, bool)`
+`func (o *ExportPlayersRequestBody) GetLastActiveSinceOk() (*string, bool)`
 
 GetLastActiveSinceOk returns a tuple with the LastActiveSince field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLastActiveSince
 
-`func (o *ExportPlayersRequestBody) SetLastActiveSince(v int32)`
+`func (o *ExportPlayersRequestBody) SetLastActiveSince(v string)`
 
 SetLastActiveSince sets LastActiveSince field to given value.
 

@@ -59,9 +59,9 @@ func NewPlayerNotificationTargetWithDefaults() *PlayerNotificationTarget {
 	return &this
 }
 
-// GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise.
+// GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PlayerNotificationTarget) GetIncludePlayerIds() []string {
-	if o == nil || o.IncludePlayerIds == nil {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -70,6 +70,7 @@ func (o *PlayerNotificationTarget) GetIncludePlayerIds() []string {
 
 // GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PlayerNotificationTarget) GetIncludePlayerIdsOk() ([]string, bool) {
 	if o == nil || o.IncludePlayerIds == nil {
 		return nil, false
@@ -91,9 +92,9 @@ func (o *PlayerNotificationTarget) SetIncludePlayerIds(v []string) {
 	o.IncludePlayerIds = v
 }
 
-// GetIncludeExternalUserIds returns the IncludeExternalUserIds field value if set, zero value otherwise.
+// GetIncludeExternalUserIds returns the IncludeExternalUserIds field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PlayerNotificationTarget) GetIncludeExternalUserIds() []string {
-	if o == nil || o.IncludeExternalUserIds == nil {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -102,6 +103,7 @@ func (o *PlayerNotificationTarget) GetIncludeExternalUserIds() []string {
 
 // GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PlayerNotificationTarget) GetIncludeExternalUserIdsOk() ([]string, bool) {
 	if o == nil || o.IncludeExternalUserIds == nil {
 		return nil, false

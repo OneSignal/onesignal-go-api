@@ -105,6 +105,9 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [App](docs/App.md)
+ - [BasicNotification](docs/BasicNotification.md)
+ - [BasicNotificationAllOf](docs/BasicNotificationAllOf.md)
+ - [BasicNotificationAllOfAndroidBackgroundLayout](docs/BasicNotificationAllOfAndroidBackgroundLayout.md)
  - [Button](docs/Button.md)
  - [CancelNotificationSuccessResponse](docs/CancelNotificationSuccessResponse.md)
  - [CreateNotificationBadRequestResponse](docs/CreateNotificationBadRequestResponse.md)
@@ -130,7 +133,6 @@ Class | Method | HTTP request | Description
  - [Notification](docs/Notification.md)
  - [Notification200Errors](docs/Notification200Errors.md)
  - [NotificationAllOf](docs/NotificationAllOf.md)
- - [NotificationAllOfAndroidBackgroundLayout](docs/NotificationAllOfAndroidBackgroundLayout.md)
  - [NotificationHistoryBadRequestResponse](docs/NotificationHistoryBadRequestResponse.md)
  - [NotificationHistorySuccessResponse](docs/NotificationHistorySuccessResponse.md)
  - [NotificationSlice](docs/NotificationSlice.md)
@@ -141,6 +143,8 @@ Class | Method | HTTP request | Description
  - [OutcomeData](docs/OutcomeData.md)
  - [OutcomesData](docs/OutcomesData.md)
  - [PlatformDeliveryData](docs/PlatformDeliveryData.md)
+ - [PlatformDeliveryDataEmailAllOf](docs/PlatformDeliveryDataEmailAllOf.md)
+ - [PlatformDeliveryDataSmsAllOf](docs/PlatformDeliveryDataSmsAllOf.md)
  - [Player](docs/Player.md)
  - [PlayerNotificationTarget](docs/PlayerNotificationTarget.md)
  - [PlayerSlice](docs/PlayerSlice.md)
