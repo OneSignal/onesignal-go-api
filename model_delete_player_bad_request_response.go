@@ -17,7 +17,7 @@ import (
 
 // DeletePlayerBadRequestResponse struct for DeletePlayerBadRequestResponse
 type DeletePlayerBadRequestResponse struct {
-	Erorrs []string `json:"erorrs,omitempty"`
+	Erorrs []bool `json:"erorrs,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -41,9 +41,9 @@ func NewDeletePlayerBadRequestResponseWithDefaults() *DeletePlayerBadRequestResp
 }
 
 // GetErorrs returns the Erorrs field value if set, zero value otherwise.
-func (o *DeletePlayerBadRequestResponse) GetErorrs() []string {
+func (o *DeletePlayerBadRequestResponse) GetErorrs() []bool {
 	if o == nil || o.Erorrs == nil {
-		var ret []string
+		var ret []bool
 		return ret
 	}
 	return o.Erorrs
@@ -51,7 +51,7 @@ func (o *DeletePlayerBadRequestResponse) GetErorrs() []string {
 
 // GetErorrsOk returns a tuple with the Erorrs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeletePlayerBadRequestResponse) GetErorrsOk() ([]string, bool) {
+func (o *DeletePlayerBadRequestResponse) GetErorrsOk() ([]bool, bool) {
 	if o == nil || o.Erorrs == nil {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *DeletePlayerBadRequestResponse) HasErorrs() bool {
 	return false
 }
 
-// SetErorrs gets a reference to the given []string and assigns it to the Erorrs field.
-func (o *DeletePlayerBadRequestResponse) SetErorrs(v []string) {
+// SetErorrs gets a reference to the given []bool and assigns it to the Erorrs field.
+func (o *DeletePlayerBadRequestResponse) SetErorrs(v []bool) {
 	o.Erorrs = v
 }
 

@@ -17,10 +17,15 @@ import (
 
 // DeliveryData struct for DeliveryData
 type DeliveryData struct {
+	// Number of messages delivered to push servers, mobile carriers, or email service providers.
 	Successful NullableInt32 `json:"successful,omitempty"`
+	// Number of messages sent to unsubscribed devices.
 	Failed NullableInt32 `json:"failed,omitempty"`
+	// Number of errors reported.
 	Errored NullableInt32 `json:"errored,omitempty"`
+	// Number of messages that were clicked.
 	Converted NullableInt32 `json:"converted,omitempty"`
+	// Number of devices that received the message.
 	Received NullableInt32 `json:"received,omitempty"`
 	AdditionalProperties map[string]interface{}
 }

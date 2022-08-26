@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Erorrs** | Pointer to **[]string** |  | [optional] 
+**Erorrs** | Pointer to **[]bool** |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetErorrs
 
-`func (o *DeletePlayerBadRequestResponse) GetErorrs() []string`
+`func (o *DeletePlayerBadRequestResponse) GetErorrs() []bool`
 
 GetErorrs returns the Erorrs field if non-nil, zero value otherwise.
 
 ### GetErorrsOk
 
-`func (o *DeletePlayerBadRequestResponse) GetErorrsOk() (*[]string, bool)`
+`func (o *DeletePlayerBadRequestResponse) GetErorrsOk() (*[]bool, bool)`
 
 GetErorrsOk returns a tuple with the Erorrs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetErorrs
 
-`func (o *DeletePlayerBadRequestResponse) SetErorrs(v []string)`
+`func (o *DeletePlayerBadRequestResponse) SetErorrs(v []bool)`
 
 SetErorrs sets Erorrs field to given value.
 

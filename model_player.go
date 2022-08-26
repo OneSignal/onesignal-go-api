@@ -25,27 +25,27 @@ type Player struct {
 	// Required The device's platform:   0 = iOS   1 = Android   2 = Amazon   3 = WindowsPhone (MPNS)   4 = Chrome Apps / Extensions   5 = Chrome Web Push   6 = Windows (WNS)   7 = Safari   8 = Firefox   9 = MacOS   10 = Alexa   11 = Email   13 = For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 = SMS 
 	DeviceType int32 `json:"device_type"`
 	// a custom user ID
-	ExternalUserId *string `json:"external_user_id,omitempty"`
+	ExternalUserId NullableString `json:"external_user_id,omitempty"`
 	// Only required if you have enabled Identity Verification and device_type is NOT 11 email.
 	ExternalUserIdAuthHash *string `json:"external_user_id_auth_hash,omitempty"`
 	// Email - Only required if you have enabled Identity Verification and device_type is email (11).
 	EmailAuthHash *string `json:"email_auth_hash,omitempty"`
 	// Recommended: For Push Notifications, this is the Push Token Identifier from Google or Apple. For Apple Push identifiers, you must strip all non alphanumeric characters. Examples: iOS: 7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0 Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV... For Email Addresses, set the full email address email@email.com and make sure to set device_type to 11. 
-	Identifier *string `json:"identifier,omitempty"`
+	Identifier NullableString `json:"identifier,omitempty"`
 	// Language code. Typically lower case two letters, except for Chinese where it must be one of zh-Hans or zh-Hant. Example: en 
 	Language *string `json:"language,omitempty"`
 	// Number of seconds away from UTC. Example: -28800 
 	Timezone NullableInt32 `json:"timezone,omitempty"`
 	// Version of your app. Example: 1.1 
-	GameVersion *string `json:"game_version,omitempty"`
+	GameVersion NullableString `json:"game_version,omitempty"`
 	// Device make and model. Example: iPhone5,1 
-	DeviceModel *string `json:"device_model,omitempty"`
+	DeviceModel NullableString `json:"device_model,omitempty"`
 	// Device operating system version. Example: 7.0.4 
-	DeviceOs *string `json:"device_os,omitempty"`
+	DeviceOs NullableString `json:"device_os,omitempty"`
 	// The ad id for the device's platform: Android = Advertising Id iOS = identifierForVendor WP8.0 = DeviceUniqueId WP8.1 = AdvertisingId 
-	AdId *string `json:"ad_id,omitempty"`
+	AdId NullableString `json:"ad_id,omitempty"`
 	// Name and version of the sdk/plugin that's calling this API method (if any)
-	Sdk *string `json:"sdk,omitempty"`
+	Sdk NullableString `json:"sdk,omitempty"`
 	// Number of times the user has played the game, defaults to 1
 	SessionCount *int32 `json:"session_count,omitempty"`
 	// Custom tags for the player. Only support string and integer key value pairs. Does not support arrays or other nested objects. Setting a tag value to null or an empty string will remove the tag. Example: {\"foo\":\"bar\",\"this\":\"that\"} Limitations: - 100 tags per call - Android SDK users: tags cannot be removed or changed via API if set through SDK sendTag methods. Recommended to only tag devices with 1 kilobyte of data Please consider using your own Database to save more than 1 kilobyte of data. See: Internal Database & CRM 
@@ -206,36 +206,46 @@ func (o *Player) SetDeviceType(v int32) {
 	o.DeviceType = v
 }
 
-// GetExternalUserId returns the ExternalUserId field value if set, zero value otherwise.
+// GetExternalUserId returns the ExternalUserId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetExternalUserId() string {
-	if o == nil || o.ExternalUserId == nil {
+	if o == nil || o.ExternalUserId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ExternalUserId
+	return *o.ExternalUserId.Get()
 }
 
 // GetExternalUserIdOk returns a tuple with the ExternalUserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetExternalUserIdOk() (*string, bool) {
-	if o == nil || o.ExternalUserId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ExternalUserId, true
+	return o.ExternalUserId.Get(), o.ExternalUserId.IsSet()
 }
 
 // HasExternalUserId returns a boolean if a field has been set.
 func (o *Player) HasExternalUserId() bool {
-	if o != nil && o.ExternalUserId != nil {
+	if o != nil && o.ExternalUserId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetExternalUserId gets a reference to the given string and assigns it to the ExternalUserId field.
+// SetExternalUserId gets a reference to the given NullableString and assigns it to the ExternalUserId field.
 func (o *Player) SetExternalUserId(v string) {
-	o.ExternalUserId = &v
+	o.ExternalUserId.Set(&v)
+}
+// SetExternalUserIdNil sets the value for ExternalUserId to be an explicit nil
+func (o *Player) SetExternalUserIdNil() {
+	o.ExternalUserId.Set(nil)
+}
+
+// UnsetExternalUserId ensures that no value is present for ExternalUserId, not even an explicit nil
+func (o *Player) UnsetExternalUserId() {
+	o.ExternalUserId.Unset()
 }
 
 // GetExternalUserIdAuthHash returns the ExternalUserIdAuthHash field value if set, zero value otherwise.
@@ -302,36 +312,46 @@ func (o *Player) SetEmailAuthHash(v string) {
 	o.EmailAuthHash = &v
 }
 
-// GetIdentifier returns the Identifier field value if set, zero value otherwise.
+// GetIdentifier returns the Identifier field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetIdentifier() string {
-	if o == nil || o.Identifier == nil {
+	if o == nil || o.Identifier.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Identifier
+	return *o.Identifier.Get()
 }
 
 // GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetIdentifierOk() (*string, bool) {
-	if o == nil || o.Identifier == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Identifier, true
+	return o.Identifier.Get(), o.Identifier.IsSet()
 }
 
 // HasIdentifier returns a boolean if a field has been set.
 func (o *Player) HasIdentifier() bool {
-	if o != nil && o.Identifier != nil {
+	if o != nil && o.Identifier.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
+// SetIdentifier gets a reference to the given NullableString and assigns it to the Identifier field.
 func (o *Player) SetIdentifier(v string) {
-	o.Identifier = &v
+	o.Identifier.Set(&v)
+}
+// SetIdentifierNil sets the value for Identifier to be an explicit nil
+func (o *Player) SetIdentifierNil() {
+	o.Identifier.Set(nil)
+}
+
+// UnsetIdentifier ensures that no value is present for Identifier, not even an explicit nil
+func (o *Player) UnsetIdentifier() {
+	o.Identifier.Unset()
 }
 
 // GetLanguage returns the Language field value if set, zero value otherwise.
@@ -408,164 +428,214 @@ func (o *Player) UnsetTimezone() {
 	o.Timezone.Unset()
 }
 
-// GetGameVersion returns the GameVersion field value if set, zero value otherwise.
+// GetGameVersion returns the GameVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetGameVersion() string {
-	if o == nil || o.GameVersion == nil {
+	if o == nil || o.GameVersion.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.GameVersion
+	return *o.GameVersion.Get()
 }
 
 // GetGameVersionOk returns a tuple with the GameVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetGameVersionOk() (*string, bool) {
-	if o == nil || o.GameVersion == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.GameVersion, true
+	return o.GameVersion.Get(), o.GameVersion.IsSet()
 }
 
 // HasGameVersion returns a boolean if a field has been set.
 func (o *Player) HasGameVersion() bool {
-	if o != nil && o.GameVersion != nil {
+	if o != nil && o.GameVersion.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetGameVersion gets a reference to the given string and assigns it to the GameVersion field.
+// SetGameVersion gets a reference to the given NullableString and assigns it to the GameVersion field.
 func (o *Player) SetGameVersion(v string) {
-	o.GameVersion = &v
+	o.GameVersion.Set(&v)
+}
+// SetGameVersionNil sets the value for GameVersion to be an explicit nil
+func (o *Player) SetGameVersionNil() {
+	o.GameVersion.Set(nil)
 }
 
-// GetDeviceModel returns the DeviceModel field value if set, zero value otherwise.
+// UnsetGameVersion ensures that no value is present for GameVersion, not even an explicit nil
+func (o *Player) UnsetGameVersion() {
+	o.GameVersion.Unset()
+}
+
+// GetDeviceModel returns the DeviceModel field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetDeviceModel() string {
-	if o == nil || o.DeviceModel == nil {
+	if o == nil || o.DeviceModel.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.DeviceModel
+	return *o.DeviceModel.Get()
 }
 
 // GetDeviceModelOk returns a tuple with the DeviceModel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetDeviceModelOk() (*string, bool) {
-	if o == nil || o.DeviceModel == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.DeviceModel, true
+	return o.DeviceModel.Get(), o.DeviceModel.IsSet()
 }
 
 // HasDeviceModel returns a boolean if a field has been set.
 func (o *Player) HasDeviceModel() bool {
-	if o != nil && o.DeviceModel != nil {
+	if o != nil && o.DeviceModel.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetDeviceModel gets a reference to the given string and assigns it to the DeviceModel field.
+// SetDeviceModel gets a reference to the given NullableString and assigns it to the DeviceModel field.
 func (o *Player) SetDeviceModel(v string) {
-	o.DeviceModel = &v
+	o.DeviceModel.Set(&v)
+}
+// SetDeviceModelNil sets the value for DeviceModel to be an explicit nil
+func (o *Player) SetDeviceModelNil() {
+	o.DeviceModel.Set(nil)
 }
 
-// GetDeviceOs returns the DeviceOs field value if set, zero value otherwise.
+// UnsetDeviceModel ensures that no value is present for DeviceModel, not even an explicit nil
+func (o *Player) UnsetDeviceModel() {
+	o.DeviceModel.Unset()
+}
+
+// GetDeviceOs returns the DeviceOs field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetDeviceOs() string {
-	if o == nil || o.DeviceOs == nil {
+	if o == nil || o.DeviceOs.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.DeviceOs
+	return *o.DeviceOs.Get()
 }
 
 // GetDeviceOsOk returns a tuple with the DeviceOs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetDeviceOsOk() (*string, bool) {
-	if o == nil || o.DeviceOs == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.DeviceOs, true
+	return o.DeviceOs.Get(), o.DeviceOs.IsSet()
 }
 
 // HasDeviceOs returns a boolean if a field has been set.
 func (o *Player) HasDeviceOs() bool {
-	if o != nil && o.DeviceOs != nil {
+	if o != nil && o.DeviceOs.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetDeviceOs gets a reference to the given string and assigns it to the DeviceOs field.
+// SetDeviceOs gets a reference to the given NullableString and assigns it to the DeviceOs field.
 func (o *Player) SetDeviceOs(v string) {
-	o.DeviceOs = &v
+	o.DeviceOs.Set(&v)
+}
+// SetDeviceOsNil sets the value for DeviceOs to be an explicit nil
+func (o *Player) SetDeviceOsNil() {
+	o.DeviceOs.Set(nil)
 }
 
-// GetAdId returns the AdId field value if set, zero value otherwise.
+// UnsetDeviceOs ensures that no value is present for DeviceOs, not even an explicit nil
+func (o *Player) UnsetDeviceOs() {
+	o.DeviceOs.Unset()
+}
+
+// GetAdId returns the AdId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetAdId() string {
-	if o == nil || o.AdId == nil {
+	if o == nil || o.AdId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AdId
+	return *o.AdId.Get()
 }
 
 // GetAdIdOk returns a tuple with the AdId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetAdIdOk() (*string, bool) {
-	if o == nil || o.AdId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AdId, true
+	return o.AdId.Get(), o.AdId.IsSet()
 }
 
 // HasAdId returns a boolean if a field has been set.
 func (o *Player) HasAdId() bool {
-	if o != nil && o.AdId != nil {
+	if o != nil && o.AdId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAdId gets a reference to the given string and assigns it to the AdId field.
+// SetAdId gets a reference to the given NullableString and assigns it to the AdId field.
 func (o *Player) SetAdId(v string) {
-	o.AdId = &v
+	o.AdId.Set(&v)
+}
+// SetAdIdNil sets the value for AdId to be an explicit nil
+func (o *Player) SetAdIdNil() {
+	o.AdId.Set(nil)
 }
 
-// GetSdk returns the Sdk field value if set, zero value otherwise.
+// UnsetAdId ensures that no value is present for AdId, not even an explicit nil
+func (o *Player) UnsetAdId() {
+	o.AdId.Unset()
+}
+
+// GetSdk returns the Sdk field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetSdk() string {
-	if o == nil || o.Sdk == nil {
+	if o == nil || o.Sdk.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Sdk
+	return *o.Sdk.Get()
 }
 
 // GetSdkOk returns a tuple with the Sdk field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetSdkOk() (*string, bool) {
-	if o == nil || o.Sdk == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Sdk, true
+	return o.Sdk.Get(), o.Sdk.IsSet()
 }
 
 // HasSdk returns a boolean if a field has been set.
 func (o *Player) HasSdk() bool {
-	if o != nil && o.Sdk != nil {
+	if o != nil && o.Sdk.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSdk gets a reference to the given string and assigns it to the Sdk field.
+// SetSdk gets a reference to the given NullableString and assigns it to the Sdk field.
 func (o *Player) SetSdk(v string) {
-	o.Sdk = &v
+	o.Sdk.Set(&v)
+}
+// SetSdkNil sets the value for Sdk to be an explicit nil
+func (o *Player) SetSdkNil() {
+	o.Sdk.Set(nil)
+}
+
+// UnsetSdk ensures that no value is present for Sdk, not even an explicit nil
+func (o *Player) UnsetSdk() {
+	o.Sdk.Unset()
 }
 
 // GetSessionCount returns the SessionCount field value if set, zero value otherwise.
@@ -600,9 +670,9 @@ func (o *Player) SetSessionCount(v int32) {
 	o.SessionCount = &v
 }
 
-// GetTags returns the Tags field value if set, zero value otherwise.
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Player) GetTags() map[string]interface{} {
-	if o == nil || o.Tags == nil {
+	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -611,6 +681,7 @@ func (o *Player) GetTags() map[string]interface{} {
 
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Player) GetTagsOk() (map[string]interface{}, bool) {
 	if o == nil || o.Tags == nil {
 		return nil, false
@@ -976,8 +1047,8 @@ func (o Player) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["device_type"] = o.DeviceType
 	}
-	if o.ExternalUserId != nil {
-		toSerialize["external_user_id"] = o.ExternalUserId
+	if o.ExternalUserId.IsSet() {
+		toSerialize["external_user_id"] = o.ExternalUserId.Get()
 	}
 	if o.ExternalUserIdAuthHash != nil {
 		toSerialize["external_user_id_auth_hash"] = o.ExternalUserIdAuthHash
@@ -985,8 +1056,8 @@ func (o Player) MarshalJSON() ([]byte, error) {
 	if o.EmailAuthHash != nil {
 		toSerialize["email_auth_hash"] = o.EmailAuthHash
 	}
-	if o.Identifier != nil {
-		toSerialize["identifier"] = o.Identifier
+	if o.Identifier.IsSet() {
+		toSerialize["identifier"] = o.Identifier.Get()
 	}
 	if o.Language != nil {
 		toSerialize["language"] = o.Language
@@ -994,20 +1065,20 @@ func (o Player) MarshalJSON() ([]byte, error) {
 	if o.Timezone.IsSet() {
 		toSerialize["timezone"] = o.Timezone.Get()
 	}
-	if o.GameVersion != nil {
-		toSerialize["game_version"] = o.GameVersion
+	if o.GameVersion.IsSet() {
+		toSerialize["game_version"] = o.GameVersion.Get()
 	}
-	if o.DeviceModel != nil {
-		toSerialize["device_model"] = o.DeviceModel
+	if o.DeviceModel.IsSet() {
+		toSerialize["device_model"] = o.DeviceModel.Get()
 	}
-	if o.DeviceOs != nil {
-		toSerialize["device_os"] = o.DeviceOs
+	if o.DeviceOs.IsSet() {
+		toSerialize["device_os"] = o.DeviceOs.Get()
 	}
-	if o.AdId != nil {
-		toSerialize["ad_id"] = o.AdId
+	if o.AdId.IsSet() {
+		toSerialize["ad_id"] = o.AdId.Get()
 	}
-	if o.Sdk != nil {
-		toSerialize["sdk"] = o.Sdk
+	if o.Sdk.IsSet() {
+		toSerialize["sdk"] = o.Sdk.Get()
 	}
 	if o.SessionCount != nil {
 		toSerialize["session_count"] = o.SessionCount

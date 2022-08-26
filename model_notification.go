@@ -69,7 +69,7 @@ type Notification struct {
 	Id *string `json:"id,omitempty"`
 	Value *int32 `json:"value,omitempty"`
 	// Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user.
-	Name *string `json:"name,omitempty"`
+	Name NullableString `json:"name,omitempty"`
 	Aggregation *string `json:"aggregation,omitempty"`
 	// Indicates whether to send to all devices registered under your app's Apple iOS platform.
 	IsIos NullableBool `json:"isIos,omitempty"`
@@ -103,106 +103,104 @@ type Notification struct {
 	// Channel: Push Notifications Platform: Huawei A custom map of data that is passed back to your app. Same as using Additional Data within the dashboard. Can use up to 2048 bytes of data. Example: {\"abc\": 123, \"foo\": \"bar\", \"event_performed\": true, \"amount\": 12.1} 
 	Data map[string]interface{} `json:"data,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Use \"data\" or \"message\" depending on the type of notification you are sending. More details in Data & Background Notifications. 
-	HuaweiMsgType *string `json:"huawei_msg_type,omitempty"`
+	HuaweiMsgType NullableString `json:"huawei_msg_type,omitempty"`
 	// Channel: Push Notifications Platform: All The URL to open in the browser when a user clicks on the notification. Note: iOS needs https or updated NSAppTransportSecurity in plist This field supports inline substitutions. Omit if including web_url or app_url Example: https://onesignal.com 
-	Url *string `json:"url,omitempty"`
+	Url NullableString `json:"url,omitempty"`
 	// Channel: Push Notifications Platform: All Browsers Same as url but only sent to web push platforms. Including Chrome, Firefox, Safari, Opera, etc. Example: https://onesignal.com 
-	WebUrl *string `json:"web_url,omitempty"`
+	WebUrl NullableString `json:"web_url,omitempty"`
 	// Channel: Push Notifications Platform: All Browsers Same as url but only sent to web push platforms. Including iOS, Android, macOS, Windows, ChromeApps, etc. Example: https://onesignal.com 
-	AppUrl *string `json:"app_url,omitempty"`
+	AppUrl NullableString `json:"app_url,omitempty"`
 	// Channel: Push Notifications Platform: iOS 10+ Adds media attachments to notifications. Set as JSON object, key as a media id of your choice and the value as a valid local filename or URL. User must press and hold on the notification to view. Do not set mutable_content to download attachments. The OneSignal SDK does this automatically Example: {\"id1\": \"https://domain.com/image.jpg\"} 
 	IosAttachments map[string]interface{} `json:"ios_attachments,omitempty"`
 	// Channel: Push Notifications Platform: All Use a template you setup on our dashboard. The template_id is the UUID found in the URL when viewing a template on our dashboard. Example: be4a8044-bbd6-11e4-a581-000c2940e62c 
-	TemplateId *string `json:"template_id,omitempty"`
+	TemplateId NullableString `json:"template_id,omitempty"`
 	// Channel: Push Notifications Platform: iOS Sending true wakes your app from background to run custom native code (Apple interprets this as content-available=1). Note: Not applicable if the app is in the \"force-quit\" state (i.e app was swiped away). Omit the contents field to prevent displaying a visible notification. 
 	ContentAvailable NullableBool `json:"content_available,omitempty"`
 	// Channel: Push Notifications Platform: iOS 10+ Always defaults to true and cannot be turned off. Allows tracking of notification receives and changing of the notification content in your app before it is displayed. Triggers didReceive(_:withContentHandler:) on your UNNotificationServiceExtension. 
 	MutableContent *bool `json:"mutable_content,omitempty"`
 	// Channel: Push Notifications Platform: iOS 13+ Use to target a specific experience in your App Clip, or to target your notification to a specific window in a multi-scene App. 
-	TargetContentIdentifier *string `json:"target_content_identifier,omitempty"`
+	TargetContentIdentifier NullableString `json:"target_content_identifier,omitempty"`
 	// Channel: Push Notifications Platform: Android Picture to display in the expanded view. Can be a drawable resource name or a URL. 
-	BigPicture *string `json:"big_picture,omitempty"`
+	BigPicture NullableString `json:"big_picture,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Picture to display in the expanded view. Can be a drawable resource name or a URL. 
-	HuaweiBigPicture *string `json:"huawei_big_picture,omitempty"`
+	HuaweiBigPicture NullableString `json:"huawei_big_picture,omitempty"`
 	// Channel: Push Notifications Platform: Amazon Picture to display in the expanded view. Can be a drawable resource name or a URL. 
-	AdmBigPicture *string `json:"adm_big_picture,omitempty"`
+	AdmBigPicture NullableString `json:"adm_big_picture,omitempty"`
 	// Channel: Push Notifications Platform: ChromeApp Large picture to display below the notification text. Must be a local URL. 
-	ChromeBigPicture *string `json:"chrome_big_picture,omitempty"`
+	ChromeBigPicture NullableString `json:"chrome_big_picture,omitempty"`
 	// Channel: Push Notifications Platform: Chrome 56+ Sets the web push notification's large image to be shown below the notification's title and text. Please see Web Push Notification Icons. 
-	ChromeWebImage *string `json:"chrome_web_image,omitempty"`
+	ChromeWebImage NullableString `json:"chrome_web_image,omitempty"`
 	// Channel: Push Notifications Platform: iOS 8.0+, Android 4.1+, and derivatives like Amazon Buttons to add to the notification. Icon only works for Android. Buttons show in reverse order of array position i.e. Last item in array shows as first button on device. Example: [{\"id\": \"id2\", \"text\": \"second button\", \"icon\": \"ic_menu_share\"}, {\"id\": \"id1\", \"text\": \"first button\", \"icon\": \"ic_menu_send\"}] 
 	Buttons []Button `json:"buttons,omitempty"`
 	// Channel: Push Notifications Platform: Chrome 48+ Add action buttons to the notification. The id field is required. Example: [{\"id\": \"like-button\", \"text\": \"Like\", \"icon\": \"http://i.imgur.com/N8SN8ZS.png\", \"url\": \"https://yoursite.com\"}, {\"id\": \"read-more-button\", \"text\": \"Read more\", \"icon\": \"http://i.imgur.com/MIxJp1L.png\", \"url\": \"https://yoursite.com\"}] 
 	WebButtons []Button `json:"web_buttons,omitempty"`
 	// Channel: Push Notifications Platform: iOS Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code. Example: calendar category which contains actions like accept and decline iOS 10+ This will trigger your UNNotificationContentExtension whose ID matches this category. 
-	IosCategory *string `json:"ios_category,omitempty"`
+	IosCategory NullableString `json:"ios_category,omitempty"`
 	// Channel: Push Notifications Platform: Android The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it's id. 
 	AndroidChannelId *string `json:"android_channel_id,omitempty"`
 	// Channel: Push Notifications Platform: Huawei The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it's id. 
-	HuaweiChannelId *string `json:"huawei_channel_id,omitempty"`
+	HuaweiChannelId NullableString `json:"huawei_channel_id,omitempty"`
 	// Channel: Push Notifications Platform: Android Use this if you have client side Android Oreo Channels you have already defined in your app with code. 
 	ExistingAndroidChannelId *string `json:"existing_android_channel_id,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Use this if you have client side Android Oreo Channels you have already defined in your app with code. 
-	HuaweiExistingChannelId *string `json:"huawei_existing_channel_id,omitempty"`
-	AndroidBackgroundLayout *NotificationAllOfAndroidBackgroundLayout `json:"android_background_layout,omitempty"`
+	HuaweiExistingChannelId NullableString `json:"huawei_existing_channel_id,omitempty"`
+	AndroidBackgroundLayout *BasicNotificationAllOfAndroidBackgroundLayout `json:"android_background_layout,omitempty"`
 	// Channel: Push Notifications Platform: Android Icon shown in the status bar and on the top left of the notification. If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons 
-	SmallIcon *string `json:"small_icon,omitempty"`
+	SmallIcon NullableString `json:"small_icon,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Icon shown in the status bar and on the top left of the notification. Use an Android resource path (E.g. /drawable/small_icon). Defaults to your app icon if not set. 
-	HuaweiSmallIcon *string `json:"huawei_small_icon,omitempty"`
+	HuaweiSmallIcon NullableString `json:"huawei_small_icon,omitempty"`
 	// Channel: Push Notifications Platform: Android Can be a drawable resource name or a URL. See: How to create large icons 
-	LargeIcon *string `json:"large_icon,omitempty"`
+	LargeIcon NullableString `json:"large_icon,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Can be a drawable resource name or a URL. See: How to create large icons 
-	HuaweiLargeIcon *string `json:"huawei_large_icon,omitempty"`
+	HuaweiLargeIcon NullableString `json:"huawei_large_icon,omitempty"`
 	// Channel: Push Notifications Platform: Amazon If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons 
-	AdmSmallIcon *string `json:"adm_small_icon,omitempty"`
+	AdmSmallIcon NullableString `json:"adm_small_icon,omitempty"`
 	// Channel: Push Notifications Platform: Amazon If blank the small_icon is used. Can be a drawable resource name or a URL. See: How to create large icons 
-	AdmLargeIcon *string `json:"adm_large_icon,omitempty"`
+	AdmLargeIcon NullableString `json:"adm_large_icon,omitempty"`
 	// Channel: Push Notifications Platform: Chrome Sets the web push notification's icon. An image URL linking to a valid image. Common image types are supported; GIF will not animate. We recommend 256x256 (at least 80x80) to display well on high DPI devices. Firefox will also use this icon, unless you specify firefox_icon. 
-	ChromeWebIcon *string `json:"chrome_web_icon,omitempty"`
+	ChromeWebIcon NullableString `json:"chrome_web_icon,omitempty"`
 	// Channel: Push Notifications Platform: Chrome Sets the web push notification icon for Android devices in the notification shade. Please see Web Push Notification Badge. 
-	ChromeWebBadge *string `json:"chrome_web_badge,omitempty"`
+	ChromeWebBadge NullableString `json:"chrome_web_badge,omitempty"`
 	// Channel: Push Notifications Platform: Firefox Not recommended Few people need to set Firefox-specific icons. We recommend setting chrome_web_icon instead, which Firefox will also use. Sets the web push notification's icon for Firefox. An image URL linking to a valid image. Common image types are supported; GIF will not animate. We recommend 256x256 (at least 80x80) to display well on high DPI devices. 
-	FirefoxIcon *string `json:"firefox_icon,omitempty"`
+	FirefoxIcon NullableString `json:"firefox_icon,omitempty"`
 	// Channel: Push Notifications Platform: ChromeApp This flag is not used for web push For web push, please see chrome_web_icon instead. The local URL to an icon to use. If blank, the app icon will be used. 
-	ChromeIcon *string `json:"chrome_icon,omitempty"`
+	ChromeIcon NullableString `json:"chrome_icon,omitempty"`
 	// Channel: Push Notifications Platform: iOS Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable vibration and sound for the notification. Example: \"notification.wav\" 
-	IosSound *string `json:"ios_sound,omitempty"`
+	IosSound NullableString `json:"ios_sound,omitempty"`
 	// Channel: Push Notifications Platform: Android &#9888;&#65039;Deprecated, this field doesn't work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable sound for the notification. NOTE: Leave off file extension for Android. Example: \"notification\" 
-	AndroidSound *string `json:"android_sound,omitempty"`
+	AndroidSound NullableString `json:"android_sound,omitempty"`
 	// Channel: Push Notifications Platform: Huawei &#9888;&#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. Sound file that is included in your app to play instead of the default device notification sound. NOTE: Leave off file extension for and include the full path.  Example: \"/res/raw/notification\" 
-	HuaweiSound *string `json:"huawei_sound,omitempty"`
+	HuaweiSound NullableString `json:"huawei_sound,omitempty"`
 	// Channel: Push Notifications Platform: Amazon &#9888;&#65039;Deprecated, this field doesn't work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sound file that is included in your app to play instead of the default device notification sound. Pass nil to disable sound for the notification. NOTE: Leave off file extension for Android. Example: \"notification\" 
-	AdmSound *string `json:"adm_sound,omitempty"`
+	AdmSound NullableString `json:"adm_sound,omitempty"`
 	// Channel: Push Notifications Platform: Windows Sound file that is included in your app to play instead of the default device notification sound. Example: \"notification.wav\" 
-	WpWnsSound *string `json:"wp_wns_sound,omitempty"`
+	WpWnsSound NullableString `json:"wp_wns_sound,omitempty"`
 	// Channel: Push Notifications Platform: Android &#9888;&#65039;Deprecated, this field doesn't work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. Sets the devices LED notification light if the device has one. ARGB Hex format. Example(Blue): \"FF0000FF\" 
-	AndroidLedColor *string `json:"android_led_color,omitempty"`
+	AndroidLedColor NullableString `json:"android_led_color,omitempty"`
 	// Channel: Push Notifications Platform: Huawei &#9888;&#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. Sets the devices LED notification light if the device has one. RGB Hex format. Example(Blue): \"0000FF\" 
-	HuaweiLedColor *string `json:"huawei_led_color,omitempty"`
+	HuaweiLedColor NullableString `json:"huawei_led_color,omitempty"`
 	// Channel: Push Notifications Platform: Android Sets the background color of the notification circle to the left of the notification text. Only applies to apps targeting Android API level 21+ on Android 5.0+ devices. Example(Red): \"FFFF0000\" 
-	AndroidAccentColor *string `json:"android_accent_color,omitempty"`
+	AndroidAccentColor NullableString `json:"android_accent_color,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Accent Color used on Action Buttons and Group overflow count. Uses RGB Hex value (E.g. #9900FF). Defaults to device's theme color if not set. 
-	HuaweiAccentColor *string `json:"huawei_accent_color,omitempty"`
+	HuaweiAccentColor NullableString `json:"huawei_accent_color,omitempty"`
 	// Channel: Push Notifications Platform: Android 5.0_ &#9888;&#65039;Deprecated, this field doesn't work on Android 8 (Oreo) and newer devices! Please use Notification Categories / Channels noted above instead to support ALL versions of Android. 1 = Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 = Private (Hides message contents on lock screen if the user set \"Hide sensitive notification content\" in the system settings) -1 = Secret (Notification does not show on the lock screen at all) 
 	AndroidVisibility NullableInt32 `json:"android_visibility,omitempty"`
 	// Channel: Push Notifications Platform: Huawei &#9888;&#65039;Deprecated, this field ONLY works on EMUI 5 (Android 7 based) and older devices. Please also set Notification Categories / Channels noted above to support EMUI 8 (Android 8 based) devices. 1 = Public (default) (Shows the full message on the lock screen unless the user has disabled all notifications from showing on the lock screen. Please consider the user and mark private if the contents are.) 0 = Private (Hides message contents on lock screen if the user set \"Hide sensitive notification content\" in the system settings) -1 = Secret (Notification does not show on the lock screen at all) 
 	HuaweiVisibility NullableInt32 `json:"huawei_visibility,omitempty"`
 	// Channel: Push Notifications Platform: iOS Describes whether to set or increase/decrease your app's iOS badge count by the ios_badgeCount specified count. Can specify None, SetTo, or Increase. `None` leaves the count unaffected. `SetTo` directly sets the badge count to the number specified in ios_badgeCount. `Increase` adds the number specified in ios_badgeCount to the total. Use a negative number to decrease the badge count. 
-	IosBadgeType *string `json:"ios_badgeType,omitempty"`
+	IosBadgeType NullableString `json:"ios_badgeType,omitempty"`
 	// Channel: Push Notifications Platform: iOS Used with ios_badgeType, describes the value to set or amount to increase/decrease your app's iOS badge count by. You can use a negative number to decrease the badge count when used with an ios_badgeType of Increase. 
 	IosBadgeCount NullableInt32 `json:"ios_badgeCount,omitempty"`
 	// Channel: Push Notifications Platform: iOS 10+, Android Only one notification with the same id will be shown on the device. Use the same id to update an existing notification instead of showing a new one. Limit of 64 characters. 
 	CollapseId *string `json:"collapse_id,omitempty"`
 	// Channel: Push Notifications Platform: All Browsers Display multiple notifications at once with different topics. 
-	WebPushTopic *string `json:"web_push_topic,omitempty"`
+	WebPushTopic NullableString `json:"web_push_topic,omitempty"`
 	// Channel: Push Notifications Platform: iOS 10+ iOS can localize push notification messages on the client using special parameters such as loc-key. When using the Create Notification endpoint, you must include these parameters inside of a field called apns_alert. Please see Apple's guide on localizing push notifications to learn more. 
 	ApnsAlert map[string]interface{} `json:"apns_alert,omitempty"`
-	// Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date & time. \"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\" \"September 24th 2015, 2:00:00 pm UTC-07:00\" \"2015-09-24 14:00:00 GMT-0700\" \"Sept 24 2015 14:00:00 GMT-0700\" \"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\" Note: SMS currently only supports send_after parameter. 
-	SendAfter *time.Time `json:"send_after,omitempty"`
 	// Channel: All Possible values are: timezone (Deliver at a specific time-of-day in each users own timezone) last-active Same as Intelligent Delivery . (Deliver at the same time of day as each user last used your app). If send_after is used, this takes effect after the send_after time has elapsed. 
-	DelayedOption *string `json:"delayed_option,omitempty"`
+	DelayedOption NullableString `json:"delayed_option,omitempty"`
 	// Channel: All Use with delayed_option=timezone. Examples: \"9:00AM\" \"21:45\" \"9:45:30\" 
-	DeliveryTimeOfDay *string `json:"delivery_time_of_day,omitempty"`
+	DeliveryTimeOfDay NullableString `json:"delivery_time_of_day,omitempty"`
 	// Channel: Push Notifications Platform: iOS, Android, Chrome, Firefox, Safari, ChromeWeb Time To Live - In seconds. The notification will be expired if the device does not come back online within this time. The default is 259,200 seconds (3 days). Max value to set is 2419200 seconds (28 days). 
 	Ttl NullableInt32 `json:"ttl,omitempty"`
 	// Channel: Push Notifications Platform: Android, Chrome, ChromeWeb Delivery priority through the push server (example GCM/FCM). Pass 10 for high priority or any other integer for normal priority. Defaults to normal priority for Android and high for iOS. For Android 6.0+ devices setting priority to high will wake the device out of doze mode. 
@@ -210,33 +208,35 @@ type Notification struct {
 	// Channel: Push Notifications Platform: iOS valid values: voip Set the value to voip for sending VoIP Notifications This field maps to the APNS header apns-push-type. Note: alert and background are automatically set by OneSignal 
 	ApnsPushTypeOverride *string `json:"apns_push_type_override,omitempty"`
 	// Channel: All Apps with throttling enabled:   - the parameter value will be used to override the default application throttling value set from the dashboard settings.   - parameter value 0 indicates not to apply throttling to the notification.   - if the parameter is not passed then the default app throttling value will be applied to the notification. Apps with throttling disabled:   - this parameter can be used to throttle delivery for the notification even though throttling is not enabled at the application level. Refer to throttling for more details. 
-	ThrottleRatePerMinute *string `json:"throttle_rate_per_minute,omitempty"`
+	ThrottleRatePerMinute NullableString `json:"throttle_rate_per_minute,omitempty"`
 	// Channel: Push Notifications Platform: Android Notifications with the same group will be stacked together using Android's Notification Grouping feature. 
-	AndroidGroup *string `json:"android_group,omitempty"`
+	AndroidGroup NullableString `json:"android_group,omitempty"`
 	// Channel: Push Notifications Platform: Android Note: This only works for Android 6 and older. Android 7+ allows full expansion of all message. Summary message to display when 2+ notifications are stacked together. Default is \"# new messages\". Include $[notif_count] in your message and it will be replaced with the current number. Languages - The value of each key is the message that will be sent to users for that language. \"en\" (English) is required. The key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified or Traditional Chinese. Read more: supported languages. Example: {\"en\": \"You have $[notif_count] new messages\"} 
-	AndroidGroupMessage *string `json:"android_group_message,omitempty"`
+	AndroidGroupMessage NullableString `json:"android_group_message,omitempty"`
 	// Channel: Push Notifications Platform: Amazon Notifications with the same group will be stacked together using Android's Notification Grouping feature. 
-	AdmGroup *string `json:"adm_group,omitempty"`
+	AdmGroup NullableString `json:"adm_group,omitempty"`
 	// Channel: Push Notifications Platform: Amazon Summary message to display when 2+ notifications are stacked together. Default is \"# new messages\". Include $[notif_count] in your message and it will be replaced with the current number. \"en\" (English) is required. The key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified or Traditional Chinese. The value of each key is the message that will be sent to users for that language. Example: {\"en\": \"You have $[notif_count] new messages\"} 
 	AdmGroupMessage map[string]interface{} `json:"adm_group_message,omitempty"`
 	// Channel: Push Notifications Platform: iOS 12+ This parameter is supported in iOS 12 and above. It allows you to group related notifications together. If two notifications have the same thread-id, they will both be added to the same group. 
-	ThreadId *string `json:"thread_id,omitempty"`
+	ThreadId NullableString `json:"thread_id,omitempty"`
 	// Channel: Push Notifications Platform: iOS 12+ When using thread_id to create grouped notifications in iOS 12+, you can also control the summary. For example, a grouped notification can say \"12 more notifications from John Doe\". The summary_arg lets you set the name of the person/thing the notifications are coming from, and will show up as \"X more notifications from summary_arg\" 
 	SummaryArg *string `json:"summary_arg,omitempty"`
 	// Channel: Push Notifications Platform: iOS 12+ When using thread_id, you can also control the count of the number of notifications in the group. For example, if the group already has 12 notifications, and you send a new notification with summary_arg_count = 2, the new total will be 14 and the summary will be \"14 more notifications from summary_arg\" 
 	SummaryArgCount *int32 `json:"summary_arg_count,omitempty"`
 	// Channel: Email Required.  The subject of the email. 
-	EmailSubject *string `json:"email_subject,omitempty"`
+	EmailSubject NullableString `json:"email_subject,omitempty"`
 	// Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an <a> tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid. 
 	EmailBody *string `json:"email_body,omitempty"`
 	// Channel: Email The name the email is from. If not specified, will default to \"from name\" set in the OneSignal Dashboard Email Settings. 
-	EmailFromName *string `json:"email_from_name,omitempty"`
+	EmailFromName NullableString `json:"email_from_name,omitempty"`
 	// Channel: Email The email address the email is from. If not specified, will default to \"from email\" set in the OneSignal Dashboard Email Settings. 
-	EmailFromAddress *string `json:"email_from_address,omitempty"`
+	EmailFromAddress NullableString `json:"email_from_address,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
-	SmsFrom *string `json:"sms_from,omitempty"`
+	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
 	SmsMediaUrls []string `json:"sms_media_urls,omitempty"`
+	// Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date & time. \"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\" \"September 24th 2015, 2:00:00 pm UTC-07:00\" \"2015-09-24 14:00:00 GMT-0700\" \"Sept 24 2015 14:00:00 GMT-0700\" \"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\" Note: SMS currently only supports send_after parameter. 
+	SendAfter NullableTime `json:"send_after,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -248,8 +248,6 @@ type _Notification Notification
 // will change when the set of required properties is changed
 func NewNotification(appId string) *Notification {
 	this := Notification{}
-	var isIos bool = true
-	this.IsIos = *NewNullableBool(&isIos)
 	this.AppId = appId
 	return &this
 }
@@ -259,8 +257,6 @@ func NewNotification(appId string) *Notification {
 // but it doesn't guarantee that properties required by API are set
 func NewNotificationWithDefaults() *Notification {
 	this := Notification{}
-	var isIos bool = true
-	this.IsIos = *NewNullableBool(&isIos)
 	return &this
 }
 
@@ -712,9 +708,9 @@ func (o *Notification) SetCountry(v string) {
 	o.Country = &v
 }
 
-// GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise.
+// GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetIncludePlayerIds() []string {
-	if o == nil || o.IncludePlayerIds == nil {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -723,6 +719,7 @@ func (o *Notification) GetIncludePlayerIds() []string {
 
 // GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetIncludePlayerIdsOk() ([]string, bool) {
 	if o == nil || o.IncludePlayerIds == nil {
 		return nil, false
@@ -744,9 +741,9 @@ func (o *Notification) SetIncludePlayerIds(v []string) {
 	o.IncludePlayerIds = v
 }
 
-// GetIncludeExternalUserIds returns the IncludeExternalUserIds field value if set, zero value otherwise.
+// GetIncludeExternalUserIds returns the IncludeExternalUserIds field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetIncludeExternalUserIds() []string {
-	if o == nil || o.IncludeExternalUserIds == nil {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -755,6 +752,7 @@ func (o *Notification) GetIncludeExternalUserIds() []string {
 
 // GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetIncludeExternalUserIdsOk() ([]string, bool) {
 	if o == nil || o.IncludeExternalUserIds == nil {
 		return nil, false
@@ -1096,36 +1094,46 @@ func (o *Notification) SetValue(v int32) {
 	o.Value = &v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || o.Name.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+	return *o.Name.Get()
 }
 
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return o.Name.Get(), o.Name.IsSet()
 }
 
 // HasName returns a boolean if a field has been set.
 func (o *Notification) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && o.Name.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName gets a reference to the given NullableString and assigns it to the Name field.
 func (o *Notification) SetName(v string) {
-	o.Name = &v
+	o.Name.Set(&v)
+}
+// SetNameNil sets the value for Name to be an explicit nil
+func (o *Notification) SetNameNil() {
+	o.Name.Set(nil)
+}
+
+// UnsetName ensures that no value is present for Name, not even an explicit nil
+func (o *Notification) UnsetName() {
+	o.Name.Unset()
 }
 
 // GetAggregation returns the Aggregation field value if set, zero value otherwise.
@@ -1794,9 +1802,9 @@ func (o *Notification) UnsetSubtitle() {
 	o.Subtitle.Unset()
 }
 
-// GetData returns the Data field value if set, zero value otherwise.
+// GetData returns the Data field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetData() map[string]interface{} {
-	if o == nil || o.Data == nil {
+	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -1805,6 +1813,7 @@ func (o *Notification) GetData() map[string]interface{} {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetDataOk() (map[string]interface{}, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
@@ -1826,137 +1835,177 @@ func (o *Notification) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 
-// GetHuaweiMsgType returns the HuaweiMsgType field value if set, zero value otherwise.
+// GetHuaweiMsgType returns the HuaweiMsgType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiMsgType() string {
-	if o == nil || o.HuaweiMsgType == nil {
+	if o == nil || o.HuaweiMsgType.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiMsgType
+	return *o.HuaweiMsgType.Get()
 }
 
 // GetHuaweiMsgTypeOk returns a tuple with the HuaweiMsgType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiMsgTypeOk() (*string, bool) {
-	if o == nil || o.HuaweiMsgType == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiMsgType, true
+	return o.HuaweiMsgType.Get(), o.HuaweiMsgType.IsSet()
 }
 
 // HasHuaweiMsgType returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiMsgType() bool {
-	if o != nil && o.HuaweiMsgType != nil {
+	if o != nil && o.HuaweiMsgType.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiMsgType gets a reference to the given string and assigns it to the HuaweiMsgType field.
+// SetHuaweiMsgType gets a reference to the given NullableString and assigns it to the HuaweiMsgType field.
 func (o *Notification) SetHuaweiMsgType(v string) {
-	o.HuaweiMsgType = &v
+	o.HuaweiMsgType.Set(&v)
+}
+// SetHuaweiMsgTypeNil sets the value for HuaweiMsgType to be an explicit nil
+func (o *Notification) SetHuaweiMsgTypeNil() {
+	o.HuaweiMsgType.Set(nil)
 }
 
-// GetUrl returns the Url field value if set, zero value otherwise.
+// UnsetHuaweiMsgType ensures that no value is present for HuaweiMsgType, not even an explicit nil
+func (o *Notification) UnsetHuaweiMsgType() {
+	o.HuaweiMsgType.Unset()
+}
+
+// GetUrl returns the Url field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetUrl() string {
-	if o == nil || o.Url == nil {
+	if o == nil || o.Url.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Url
+	return *o.Url.Get()
 }
 
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Url, true
+	return o.Url.Get(), o.Url.IsSet()
 }
 
 // HasUrl returns a boolean if a field has been set.
 func (o *Notification) HasUrl() bool {
-	if o != nil && o.Url != nil {
+	if o != nil && o.Url.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetUrl gets a reference to the given string and assigns it to the Url field.
+// SetUrl gets a reference to the given NullableString and assigns it to the Url field.
 func (o *Notification) SetUrl(v string) {
-	o.Url = &v
+	o.Url.Set(&v)
+}
+// SetUrlNil sets the value for Url to be an explicit nil
+func (o *Notification) SetUrlNil() {
+	o.Url.Set(nil)
 }
 
-// GetWebUrl returns the WebUrl field value if set, zero value otherwise.
+// UnsetUrl ensures that no value is present for Url, not even an explicit nil
+func (o *Notification) UnsetUrl() {
+	o.Url.Unset()
+}
+
+// GetWebUrl returns the WebUrl field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetWebUrl() string {
-	if o == nil || o.WebUrl == nil {
+	if o == nil || o.WebUrl.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.WebUrl
+	return *o.WebUrl.Get()
 }
 
 // GetWebUrlOk returns a tuple with the WebUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetWebUrlOk() (*string, bool) {
-	if o == nil || o.WebUrl == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.WebUrl, true
+	return o.WebUrl.Get(), o.WebUrl.IsSet()
 }
 
 // HasWebUrl returns a boolean if a field has been set.
 func (o *Notification) HasWebUrl() bool {
-	if o != nil && o.WebUrl != nil {
+	if o != nil && o.WebUrl.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetWebUrl gets a reference to the given string and assigns it to the WebUrl field.
+// SetWebUrl gets a reference to the given NullableString and assigns it to the WebUrl field.
 func (o *Notification) SetWebUrl(v string) {
-	o.WebUrl = &v
+	o.WebUrl.Set(&v)
+}
+// SetWebUrlNil sets the value for WebUrl to be an explicit nil
+func (o *Notification) SetWebUrlNil() {
+	o.WebUrl.Set(nil)
 }
 
-// GetAppUrl returns the AppUrl field value if set, zero value otherwise.
+// UnsetWebUrl ensures that no value is present for WebUrl, not even an explicit nil
+func (o *Notification) UnsetWebUrl() {
+	o.WebUrl.Unset()
+}
+
+// GetAppUrl returns the AppUrl field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAppUrl() string {
-	if o == nil || o.AppUrl == nil {
+	if o == nil || o.AppUrl.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AppUrl
+	return *o.AppUrl.Get()
 }
 
 // GetAppUrlOk returns a tuple with the AppUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAppUrlOk() (*string, bool) {
-	if o == nil || o.AppUrl == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AppUrl, true
+	return o.AppUrl.Get(), o.AppUrl.IsSet()
 }
 
 // HasAppUrl returns a boolean if a field has been set.
 func (o *Notification) HasAppUrl() bool {
-	if o != nil && o.AppUrl != nil {
+	if o != nil && o.AppUrl.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAppUrl gets a reference to the given string and assigns it to the AppUrl field.
+// SetAppUrl gets a reference to the given NullableString and assigns it to the AppUrl field.
 func (o *Notification) SetAppUrl(v string) {
-	o.AppUrl = &v
+	o.AppUrl.Set(&v)
+}
+// SetAppUrlNil sets the value for AppUrl to be an explicit nil
+func (o *Notification) SetAppUrlNil() {
+	o.AppUrl.Set(nil)
 }
 
-// GetIosAttachments returns the IosAttachments field value if set, zero value otherwise.
+// UnsetAppUrl ensures that no value is present for AppUrl, not even an explicit nil
+func (o *Notification) UnsetAppUrl() {
+	o.AppUrl.Unset()
+}
+
+// GetIosAttachments returns the IosAttachments field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetIosAttachments() map[string]interface{} {
-	if o == nil || o.IosAttachments == nil {
+	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -1965,6 +2014,7 @@ func (o *Notification) GetIosAttachments() map[string]interface{} {
 
 // GetIosAttachmentsOk returns a tuple with the IosAttachments field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetIosAttachmentsOk() (map[string]interface{}, bool) {
 	if o == nil || o.IosAttachments == nil {
 		return nil, false
@@ -1986,36 +2036,46 @@ func (o *Notification) SetIosAttachments(v map[string]interface{}) {
 	o.IosAttachments = v
 }
 
-// GetTemplateId returns the TemplateId field value if set, zero value otherwise.
+// GetTemplateId returns the TemplateId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetTemplateId() string {
-	if o == nil || o.TemplateId == nil {
+	if o == nil || o.TemplateId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.TemplateId
+	return *o.TemplateId.Get()
 }
 
 // GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetTemplateIdOk() (*string, bool) {
-	if o == nil || o.TemplateId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.TemplateId, true
+	return o.TemplateId.Get(), o.TemplateId.IsSet()
 }
 
 // HasTemplateId returns a boolean if a field has been set.
 func (o *Notification) HasTemplateId() bool {
-	if o != nil && o.TemplateId != nil {
+	if o != nil && o.TemplateId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTemplateId gets a reference to the given string and assigns it to the TemplateId field.
+// SetTemplateId gets a reference to the given NullableString and assigns it to the TemplateId field.
 func (o *Notification) SetTemplateId(v string) {
-	o.TemplateId = &v
+	o.TemplateId.Set(&v)
+}
+// SetTemplateIdNil sets the value for TemplateId to be an explicit nil
+func (o *Notification) SetTemplateIdNil() {
+	o.TemplateId.Set(nil)
+}
+
+// UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
+func (o *Notification) UnsetTemplateId() {
+	o.TemplateId.Unset()
 }
 
 // GetContentAvailable returns the ContentAvailable field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -2092,201 +2152,261 @@ func (o *Notification) SetMutableContent(v bool) {
 	o.MutableContent = &v
 }
 
-// GetTargetContentIdentifier returns the TargetContentIdentifier field value if set, zero value otherwise.
+// GetTargetContentIdentifier returns the TargetContentIdentifier field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetTargetContentIdentifier() string {
-	if o == nil || o.TargetContentIdentifier == nil {
+	if o == nil || o.TargetContentIdentifier.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.TargetContentIdentifier
+	return *o.TargetContentIdentifier.Get()
 }
 
 // GetTargetContentIdentifierOk returns a tuple with the TargetContentIdentifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetTargetContentIdentifierOk() (*string, bool) {
-	if o == nil || o.TargetContentIdentifier == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.TargetContentIdentifier, true
+	return o.TargetContentIdentifier.Get(), o.TargetContentIdentifier.IsSet()
 }
 
 // HasTargetContentIdentifier returns a boolean if a field has been set.
 func (o *Notification) HasTargetContentIdentifier() bool {
-	if o != nil && o.TargetContentIdentifier != nil {
+	if o != nil && o.TargetContentIdentifier.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTargetContentIdentifier gets a reference to the given string and assigns it to the TargetContentIdentifier field.
+// SetTargetContentIdentifier gets a reference to the given NullableString and assigns it to the TargetContentIdentifier field.
 func (o *Notification) SetTargetContentIdentifier(v string) {
-	o.TargetContentIdentifier = &v
+	o.TargetContentIdentifier.Set(&v)
+}
+// SetTargetContentIdentifierNil sets the value for TargetContentIdentifier to be an explicit nil
+func (o *Notification) SetTargetContentIdentifierNil() {
+	o.TargetContentIdentifier.Set(nil)
 }
 
-// GetBigPicture returns the BigPicture field value if set, zero value otherwise.
+// UnsetTargetContentIdentifier ensures that no value is present for TargetContentIdentifier, not even an explicit nil
+func (o *Notification) UnsetTargetContentIdentifier() {
+	o.TargetContentIdentifier.Unset()
+}
+
+// GetBigPicture returns the BigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetBigPicture() string {
-	if o == nil || o.BigPicture == nil {
+	if o == nil || o.BigPicture.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.BigPicture
+	return *o.BigPicture.Get()
 }
 
 // GetBigPictureOk returns a tuple with the BigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetBigPictureOk() (*string, bool) {
-	if o == nil || o.BigPicture == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.BigPicture, true
+	return o.BigPicture.Get(), o.BigPicture.IsSet()
 }
 
 // HasBigPicture returns a boolean if a field has been set.
 func (o *Notification) HasBigPicture() bool {
-	if o != nil && o.BigPicture != nil {
+	if o != nil && o.BigPicture.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetBigPicture gets a reference to the given string and assigns it to the BigPicture field.
+// SetBigPicture gets a reference to the given NullableString and assigns it to the BigPicture field.
 func (o *Notification) SetBigPicture(v string) {
-	o.BigPicture = &v
+	o.BigPicture.Set(&v)
+}
+// SetBigPictureNil sets the value for BigPicture to be an explicit nil
+func (o *Notification) SetBigPictureNil() {
+	o.BigPicture.Set(nil)
 }
 
-// GetHuaweiBigPicture returns the HuaweiBigPicture field value if set, zero value otherwise.
+// UnsetBigPicture ensures that no value is present for BigPicture, not even an explicit nil
+func (o *Notification) UnsetBigPicture() {
+	o.BigPicture.Unset()
+}
+
+// GetHuaweiBigPicture returns the HuaweiBigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiBigPicture() string {
-	if o == nil || o.HuaweiBigPicture == nil {
+	if o == nil || o.HuaweiBigPicture.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiBigPicture
+	return *o.HuaweiBigPicture.Get()
 }
 
 // GetHuaweiBigPictureOk returns a tuple with the HuaweiBigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiBigPictureOk() (*string, bool) {
-	if o == nil || o.HuaweiBigPicture == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiBigPicture, true
+	return o.HuaweiBigPicture.Get(), o.HuaweiBigPicture.IsSet()
 }
 
 // HasHuaweiBigPicture returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiBigPicture() bool {
-	if o != nil && o.HuaweiBigPicture != nil {
+	if o != nil && o.HuaweiBigPicture.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiBigPicture gets a reference to the given string and assigns it to the HuaweiBigPicture field.
+// SetHuaweiBigPicture gets a reference to the given NullableString and assigns it to the HuaweiBigPicture field.
 func (o *Notification) SetHuaweiBigPicture(v string) {
-	o.HuaweiBigPicture = &v
+	o.HuaweiBigPicture.Set(&v)
+}
+// SetHuaweiBigPictureNil sets the value for HuaweiBigPicture to be an explicit nil
+func (o *Notification) SetHuaweiBigPictureNil() {
+	o.HuaweiBigPicture.Set(nil)
 }
 
-// GetAdmBigPicture returns the AdmBigPicture field value if set, zero value otherwise.
+// UnsetHuaweiBigPicture ensures that no value is present for HuaweiBigPicture, not even an explicit nil
+func (o *Notification) UnsetHuaweiBigPicture() {
+	o.HuaweiBigPicture.Unset()
+}
+
+// GetAdmBigPicture returns the AdmBigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAdmBigPicture() string {
-	if o == nil || o.AdmBigPicture == nil {
+	if o == nil || o.AdmBigPicture.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AdmBigPicture
+	return *o.AdmBigPicture.Get()
 }
 
 // GetAdmBigPictureOk returns a tuple with the AdmBigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAdmBigPictureOk() (*string, bool) {
-	if o == nil || o.AdmBigPicture == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AdmBigPicture, true
+	return o.AdmBigPicture.Get(), o.AdmBigPicture.IsSet()
 }
 
 // HasAdmBigPicture returns a boolean if a field has been set.
 func (o *Notification) HasAdmBigPicture() bool {
-	if o != nil && o.AdmBigPicture != nil {
+	if o != nil && o.AdmBigPicture.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAdmBigPicture gets a reference to the given string and assigns it to the AdmBigPicture field.
+// SetAdmBigPicture gets a reference to the given NullableString and assigns it to the AdmBigPicture field.
 func (o *Notification) SetAdmBigPicture(v string) {
-	o.AdmBigPicture = &v
+	o.AdmBigPicture.Set(&v)
+}
+// SetAdmBigPictureNil sets the value for AdmBigPicture to be an explicit nil
+func (o *Notification) SetAdmBigPictureNil() {
+	o.AdmBigPicture.Set(nil)
 }
 
-// GetChromeBigPicture returns the ChromeBigPicture field value if set, zero value otherwise.
+// UnsetAdmBigPicture ensures that no value is present for AdmBigPicture, not even an explicit nil
+func (o *Notification) UnsetAdmBigPicture() {
+	o.AdmBigPicture.Unset()
+}
+
+// GetChromeBigPicture returns the ChromeBigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetChromeBigPicture() string {
-	if o == nil || o.ChromeBigPicture == nil {
+	if o == nil || o.ChromeBigPicture.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeBigPicture
+	return *o.ChromeBigPicture.Get()
 }
 
 // GetChromeBigPictureOk returns a tuple with the ChromeBigPicture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetChromeBigPictureOk() (*string, bool) {
-	if o == nil || o.ChromeBigPicture == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeBigPicture, true
+	return o.ChromeBigPicture.Get(), o.ChromeBigPicture.IsSet()
 }
 
 // HasChromeBigPicture returns a boolean if a field has been set.
 func (o *Notification) HasChromeBigPicture() bool {
-	if o != nil && o.ChromeBigPicture != nil {
+	if o != nil && o.ChromeBigPicture.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeBigPicture gets a reference to the given string and assigns it to the ChromeBigPicture field.
+// SetChromeBigPicture gets a reference to the given NullableString and assigns it to the ChromeBigPicture field.
 func (o *Notification) SetChromeBigPicture(v string) {
-	o.ChromeBigPicture = &v
+	o.ChromeBigPicture.Set(&v)
+}
+// SetChromeBigPictureNil sets the value for ChromeBigPicture to be an explicit nil
+func (o *Notification) SetChromeBigPictureNil() {
+	o.ChromeBigPicture.Set(nil)
 }
 
-// GetChromeWebImage returns the ChromeWebImage field value if set, zero value otherwise.
+// UnsetChromeBigPicture ensures that no value is present for ChromeBigPicture, not even an explicit nil
+func (o *Notification) UnsetChromeBigPicture() {
+	o.ChromeBigPicture.Unset()
+}
+
+// GetChromeWebImage returns the ChromeWebImage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetChromeWebImage() string {
-	if o == nil || o.ChromeWebImage == nil {
+	if o == nil || o.ChromeWebImage.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeWebImage
+	return *o.ChromeWebImage.Get()
 }
 
 // GetChromeWebImageOk returns a tuple with the ChromeWebImage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetChromeWebImageOk() (*string, bool) {
-	if o == nil || o.ChromeWebImage == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeWebImage, true
+	return o.ChromeWebImage.Get(), o.ChromeWebImage.IsSet()
 }
 
 // HasChromeWebImage returns a boolean if a field has been set.
 func (o *Notification) HasChromeWebImage() bool {
-	if o != nil && o.ChromeWebImage != nil {
+	if o != nil && o.ChromeWebImage.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeWebImage gets a reference to the given string and assigns it to the ChromeWebImage field.
+// SetChromeWebImage gets a reference to the given NullableString and assigns it to the ChromeWebImage field.
 func (o *Notification) SetChromeWebImage(v string) {
-	o.ChromeWebImage = &v
+	o.ChromeWebImage.Set(&v)
+}
+// SetChromeWebImageNil sets the value for ChromeWebImage to be an explicit nil
+func (o *Notification) SetChromeWebImageNil() {
+	o.ChromeWebImage.Set(nil)
 }
 
-// GetButtons returns the Buttons field value if set, zero value otherwise.
+// UnsetChromeWebImage ensures that no value is present for ChromeWebImage, not even an explicit nil
+func (o *Notification) UnsetChromeWebImage() {
+	o.ChromeWebImage.Unset()
+}
+
+// GetButtons returns the Buttons field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetButtons() []Button {
-	if o == nil || o.Buttons == nil {
+	if o == nil {
 		var ret []Button
 		return ret
 	}
@@ -2295,6 +2415,7 @@ func (o *Notification) GetButtons() []Button {
 
 // GetButtonsOk returns a tuple with the Buttons field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetButtonsOk() ([]Button, bool) {
 	if o == nil || o.Buttons == nil {
 		return nil, false
@@ -2316,9 +2437,9 @@ func (o *Notification) SetButtons(v []Button) {
 	o.Buttons = v
 }
 
-// GetWebButtons returns the WebButtons field value if set, zero value otherwise.
+// GetWebButtons returns the WebButtons field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetWebButtons() []Button {
-	if o == nil || o.WebButtons == nil {
+	if o == nil {
 		var ret []Button
 		return ret
 	}
@@ -2327,6 +2448,7 @@ func (o *Notification) GetWebButtons() []Button {
 
 // GetWebButtonsOk returns a tuple with the WebButtons field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetWebButtonsOk() ([]Button, bool) {
 	if o == nil || o.WebButtons == nil {
 		return nil, false
@@ -2348,36 +2470,46 @@ func (o *Notification) SetWebButtons(v []Button) {
 	o.WebButtons = v
 }
 
-// GetIosCategory returns the IosCategory field value if set, zero value otherwise.
+// GetIosCategory returns the IosCategory field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetIosCategory() string {
-	if o == nil || o.IosCategory == nil {
+	if o == nil || o.IosCategory.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.IosCategory
+	return *o.IosCategory.Get()
 }
 
 // GetIosCategoryOk returns a tuple with the IosCategory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetIosCategoryOk() (*string, bool) {
-	if o == nil || o.IosCategory == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.IosCategory, true
+	return o.IosCategory.Get(), o.IosCategory.IsSet()
 }
 
 // HasIosCategory returns a boolean if a field has been set.
 func (o *Notification) HasIosCategory() bool {
-	if o != nil && o.IosCategory != nil {
+	if o != nil && o.IosCategory.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetIosCategory gets a reference to the given string and assigns it to the IosCategory field.
+// SetIosCategory gets a reference to the given NullableString and assigns it to the IosCategory field.
 func (o *Notification) SetIosCategory(v string) {
-	o.IosCategory = &v
+	o.IosCategory.Set(&v)
+}
+// SetIosCategoryNil sets the value for IosCategory to be an explicit nil
+func (o *Notification) SetIosCategoryNil() {
+	o.IosCategory.Set(nil)
+}
+
+// UnsetIosCategory ensures that no value is present for IosCategory, not even an explicit nil
+func (o *Notification) UnsetIosCategory() {
+	o.IosCategory.Unset()
 }
 
 // GetAndroidChannelId returns the AndroidChannelId field value if set, zero value otherwise.
@@ -2412,36 +2544,46 @@ func (o *Notification) SetAndroidChannelId(v string) {
 	o.AndroidChannelId = &v
 }
 
-// GetHuaweiChannelId returns the HuaweiChannelId field value if set, zero value otherwise.
+// GetHuaweiChannelId returns the HuaweiChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiChannelId() string {
-	if o == nil || o.HuaweiChannelId == nil {
+	if o == nil || o.HuaweiChannelId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiChannelId
+	return *o.HuaweiChannelId.Get()
 }
 
 // GetHuaweiChannelIdOk returns a tuple with the HuaweiChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiChannelIdOk() (*string, bool) {
-	if o == nil || o.HuaweiChannelId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiChannelId, true
+	return o.HuaweiChannelId.Get(), o.HuaweiChannelId.IsSet()
 }
 
 // HasHuaweiChannelId returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiChannelId() bool {
-	if o != nil && o.HuaweiChannelId != nil {
+	if o != nil && o.HuaweiChannelId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiChannelId gets a reference to the given string and assigns it to the HuaweiChannelId field.
+// SetHuaweiChannelId gets a reference to the given NullableString and assigns it to the HuaweiChannelId field.
 func (o *Notification) SetHuaweiChannelId(v string) {
-	o.HuaweiChannelId = &v
+	o.HuaweiChannelId.Set(&v)
+}
+// SetHuaweiChannelIdNil sets the value for HuaweiChannelId to be an explicit nil
+func (o *Notification) SetHuaweiChannelIdNil() {
+	o.HuaweiChannelId.Set(nil)
+}
+
+// UnsetHuaweiChannelId ensures that no value is present for HuaweiChannelId, not even an explicit nil
+func (o *Notification) UnsetHuaweiChannelId() {
+	o.HuaweiChannelId.Unset()
 }
 
 // GetExistingAndroidChannelId returns the ExistingAndroidChannelId field value if set, zero value otherwise.
@@ -2476,42 +2618,52 @@ func (o *Notification) SetExistingAndroidChannelId(v string) {
 	o.ExistingAndroidChannelId = &v
 }
 
-// GetHuaweiExistingChannelId returns the HuaweiExistingChannelId field value if set, zero value otherwise.
+// GetHuaweiExistingChannelId returns the HuaweiExistingChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiExistingChannelId() string {
-	if o == nil || o.HuaweiExistingChannelId == nil {
+	if o == nil || o.HuaweiExistingChannelId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiExistingChannelId
+	return *o.HuaweiExistingChannelId.Get()
 }
 
 // GetHuaweiExistingChannelIdOk returns a tuple with the HuaweiExistingChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiExistingChannelIdOk() (*string, bool) {
-	if o == nil || o.HuaweiExistingChannelId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiExistingChannelId, true
+	return o.HuaweiExistingChannelId.Get(), o.HuaweiExistingChannelId.IsSet()
 }
 
 // HasHuaweiExistingChannelId returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiExistingChannelId() bool {
-	if o != nil && o.HuaweiExistingChannelId != nil {
+	if o != nil && o.HuaweiExistingChannelId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiExistingChannelId gets a reference to the given string and assigns it to the HuaweiExistingChannelId field.
+// SetHuaweiExistingChannelId gets a reference to the given NullableString and assigns it to the HuaweiExistingChannelId field.
 func (o *Notification) SetHuaweiExistingChannelId(v string) {
-	o.HuaweiExistingChannelId = &v
+	o.HuaweiExistingChannelId.Set(&v)
+}
+// SetHuaweiExistingChannelIdNil sets the value for HuaweiExistingChannelId to be an explicit nil
+func (o *Notification) SetHuaweiExistingChannelIdNil() {
+	o.HuaweiExistingChannelId.Set(nil)
+}
+
+// UnsetHuaweiExistingChannelId ensures that no value is present for HuaweiExistingChannelId, not even an explicit nil
+func (o *Notification) UnsetHuaweiExistingChannelId() {
+	o.HuaweiExistingChannelId.Unset()
 }
 
 // GetAndroidBackgroundLayout returns the AndroidBackgroundLayout field value if set, zero value otherwise.
-func (o *Notification) GetAndroidBackgroundLayout() NotificationAllOfAndroidBackgroundLayout {
+func (o *Notification) GetAndroidBackgroundLayout() BasicNotificationAllOfAndroidBackgroundLayout {
 	if o == nil || o.AndroidBackgroundLayout == nil {
-		var ret NotificationAllOfAndroidBackgroundLayout
+		var ret BasicNotificationAllOfAndroidBackgroundLayout
 		return ret
 	}
 	return *o.AndroidBackgroundLayout
@@ -2519,7 +2671,7 @@ func (o *Notification) GetAndroidBackgroundLayout() NotificationAllOfAndroidBack
 
 // GetAndroidBackgroundLayoutOk returns a tuple with the AndroidBackgroundLayout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Notification) GetAndroidBackgroundLayoutOk() (*NotificationAllOfAndroidBackgroundLayout, bool) {
+func (o *Notification) GetAndroidBackgroundLayoutOk() (*BasicNotificationAllOfAndroidBackgroundLayout, bool) {
 	if o == nil || o.AndroidBackgroundLayout == nil {
 		return nil, false
 	}
@@ -2535,617 +2687,807 @@ func (o *Notification) HasAndroidBackgroundLayout() bool {
 	return false
 }
 
-// SetAndroidBackgroundLayout gets a reference to the given NotificationAllOfAndroidBackgroundLayout and assigns it to the AndroidBackgroundLayout field.
-func (o *Notification) SetAndroidBackgroundLayout(v NotificationAllOfAndroidBackgroundLayout) {
+// SetAndroidBackgroundLayout gets a reference to the given BasicNotificationAllOfAndroidBackgroundLayout and assigns it to the AndroidBackgroundLayout field.
+func (o *Notification) SetAndroidBackgroundLayout(v BasicNotificationAllOfAndroidBackgroundLayout) {
 	o.AndroidBackgroundLayout = &v
 }
 
-// GetSmallIcon returns the SmallIcon field value if set, zero value otherwise.
+// GetSmallIcon returns the SmallIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetSmallIcon() string {
-	if o == nil || o.SmallIcon == nil {
+	if o == nil || o.SmallIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.SmallIcon
+	return *o.SmallIcon.Get()
 }
 
 // GetSmallIconOk returns a tuple with the SmallIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetSmallIconOk() (*string, bool) {
-	if o == nil || o.SmallIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.SmallIcon, true
+	return o.SmallIcon.Get(), o.SmallIcon.IsSet()
 }
 
 // HasSmallIcon returns a boolean if a field has been set.
 func (o *Notification) HasSmallIcon() bool {
-	if o != nil && o.SmallIcon != nil {
+	if o != nil && o.SmallIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSmallIcon gets a reference to the given string and assigns it to the SmallIcon field.
+// SetSmallIcon gets a reference to the given NullableString and assigns it to the SmallIcon field.
 func (o *Notification) SetSmallIcon(v string) {
-	o.SmallIcon = &v
+	o.SmallIcon.Set(&v)
+}
+// SetSmallIconNil sets the value for SmallIcon to be an explicit nil
+func (o *Notification) SetSmallIconNil() {
+	o.SmallIcon.Set(nil)
 }
 
-// GetHuaweiSmallIcon returns the HuaweiSmallIcon field value if set, zero value otherwise.
+// UnsetSmallIcon ensures that no value is present for SmallIcon, not even an explicit nil
+func (o *Notification) UnsetSmallIcon() {
+	o.SmallIcon.Unset()
+}
+
+// GetHuaweiSmallIcon returns the HuaweiSmallIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiSmallIcon() string {
-	if o == nil || o.HuaweiSmallIcon == nil {
+	if o == nil || o.HuaweiSmallIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiSmallIcon
+	return *o.HuaweiSmallIcon.Get()
 }
 
 // GetHuaweiSmallIconOk returns a tuple with the HuaweiSmallIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiSmallIconOk() (*string, bool) {
-	if o == nil || o.HuaweiSmallIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiSmallIcon, true
+	return o.HuaweiSmallIcon.Get(), o.HuaweiSmallIcon.IsSet()
 }
 
 // HasHuaweiSmallIcon returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiSmallIcon() bool {
-	if o != nil && o.HuaweiSmallIcon != nil {
+	if o != nil && o.HuaweiSmallIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiSmallIcon gets a reference to the given string and assigns it to the HuaweiSmallIcon field.
+// SetHuaweiSmallIcon gets a reference to the given NullableString and assigns it to the HuaweiSmallIcon field.
 func (o *Notification) SetHuaweiSmallIcon(v string) {
-	o.HuaweiSmallIcon = &v
+	o.HuaweiSmallIcon.Set(&v)
+}
+// SetHuaweiSmallIconNil sets the value for HuaweiSmallIcon to be an explicit nil
+func (o *Notification) SetHuaweiSmallIconNil() {
+	o.HuaweiSmallIcon.Set(nil)
 }
 
-// GetLargeIcon returns the LargeIcon field value if set, zero value otherwise.
+// UnsetHuaweiSmallIcon ensures that no value is present for HuaweiSmallIcon, not even an explicit nil
+func (o *Notification) UnsetHuaweiSmallIcon() {
+	o.HuaweiSmallIcon.Unset()
+}
+
+// GetLargeIcon returns the LargeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetLargeIcon() string {
-	if o == nil || o.LargeIcon == nil {
+	if o == nil || o.LargeIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.LargeIcon
+	return *o.LargeIcon.Get()
 }
 
 // GetLargeIconOk returns a tuple with the LargeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetLargeIconOk() (*string, bool) {
-	if o == nil || o.LargeIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.LargeIcon, true
+	return o.LargeIcon.Get(), o.LargeIcon.IsSet()
 }
 
 // HasLargeIcon returns a boolean if a field has been set.
 func (o *Notification) HasLargeIcon() bool {
-	if o != nil && o.LargeIcon != nil {
+	if o != nil && o.LargeIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetLargeIcon gets a reference to the given string and assigns it to the LargeIcon field.
+// SetLargeIcon gets a reference to the given NullableString and assigns it to the LargeIcon field.
 func (o *Notification) SetLargeIcon(v string) {
-	o.LargeIcon = &v
+	o.LargeIcon.Set(&v)
+}
+// SetLargeIconNil sets the value for LargeIcon to be an explicit nil
+func (o *Notification) SetLargeIconNil() {
+	o.LargeIcon.Set(nil)
 }
 
-// GetHuaweiLargeIcon returns the HuaweiLargeIcon field value if set, zero value otherwise.
+// UnsetLargeIcon ensures that no value is present for LargeIcon, not even an explicit nil
+func (o *Notification) UnsetLargeIcon() {
+	o.LargeIcon.Unset()
+}
+
+// GetHuaweiLargeIcon returns the HuaweiLargeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiLargeIcon() string {
-	if o == nil || o.HuaweiLargeIcon == nil {
+	if o == nil || o.HuaweiLargeIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiLargeIcon
+	return *o.HuaweiLargeIcon.Get()
 }
 
 // GetHuaweiLargeIconOk returns a tuple with the HuaweiLargeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiLargeIconOk() (*string, bool) {
-	if o == nil || o.HuaweiLargeIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiLargeIcon, true
+	return o.HuaweiLargeIcon.Get(), o.HuaweiLargeIcon.IsSet()
 }
 
 // HasHuaweiLargeIcon returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiLargeIcon() bool {
-	if o != nil && o.HuaweiLargeIcon != nil {
+	if o != nil && o.HuaweiLargeIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiLargeIcon gets a reference to the given string and assigns it to the HuaweiLargeIcon field.
+// SetHuaweiLargeIcon gets a reference to the given NullableString and assigns it to the HuaweiLargeIcon field.
 func (o *Notification) SetHuaweiLargeIcon(v string) {
-	o.HuaweiLargeIcon = &v
+	o.HuaweiLargeIcon.Set(&v)
+}
+// SetHuaweiLargeIconNil sets the value for HuaweiLargeIcon to be an explicit nil
+func (o *Notification) SetHuaweiLargeIconNil() {
+	o.HuaweiLargeIcon.Set(nil)
 }
 
-// GetAdmSmallIcon returns the AdmSmallIcon field value if set, zero value otherwise.
+// UnsetHuaweiLargeIcon ensures that no value is present for HuaweiLargeIcon, not even an explicit nil
+func (o *Notification) UnsetHuaweiLargeIcon() {
+	o.HuaweiLargeIcon.Unset()
+}
+
+// GetAdmSmallIcon returns the AdmSmallIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAdmSmallIcon() string {
-	if o == nil || o.AdmSmallIcon == nil {
+	if o == nil || o.AdmSmallIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AdmSmallIcon
+	return *o.AdmSmallIcon.Get()
 }
 
 // GetAdmSmallIconOk returns a tuple with the AdmSmallIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAdmSmallIconOk() (*string, bool) {
-	if o == nil || o.AdmSmallIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AdmSmallIcon, true
+	return o.AdmSmallIcon.Get(), o.AdmSmallIcon.IsSet()
 }
 
 // HasAdmSmallIcon returns a boolean if a field has been set.
 func (o *Notification) HasAdmSmallIcon() bool {
-	if o != nil && o.AdmSmallIcon != nil {
+	if o != nil && o.AdmSmallIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAdmSmallIcon gets a reference to the given string and assigns it to the AdmSmallIcon field.
+// SetAdmSmallIcon gets a reference to the given NullableString and assigns it to the AdmSmallIcon field.
 func (o *Notification) SetAdmSmallIcon(v string) {
-	o.AdmSmallIcon = &v
+	o.AdmSmallIcon.Set(&v)
+}
+// SetAdmSmallIconNil sets the value for AdmSmallIcon to be an explicit nil
+func (o *Notification) SetAdmSmallIconNil() {
+	o.AdmSmallIcon.Set(nil)
 }
 
-// GetAdmLargeIcon returns the AdmLargeIcon field value if set, zero value otherwise.
+// UnsetAdmSmallIcon ensures that no value is present for AdmSmallIcon, not even an explicit nil
+func (o *Notification) UnsetAdmSmallIcon() {
+	o.AdmSmallIcon.Unset()
+}
+
+// GetAdmLargeIcon returns the AdmLargeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAdmLargeIcon() string {
-	if o == nil || o.AdmLargeIcon == nil {
+	if o == nil || o.AdmLargeIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AdmLargeIcon
+	return *o.AdmLargeIcon.Get()
 }
 
 // GetAdmLargeIconOk returns a tuple with the AdmLargeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAdmLargeIconOk() (*string, bool) {
-	if o == nil || o.AdmLargeIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AdmLargeIcon, true
+	return o.AdmLargeIcon.Get(), o.AdmLargeIcon.IsSet()
 }
 
 // HasAdmLargeIcon returns a boolean if a field has been set.
 func (o *Notification) HasAdmLargeIcon() bool {
-	if o != nil && o.AdmLargeIcon != nil {
+	if o != nil && o.AdmLargeIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAdmLargeIcon gets a reference to the given string and assigns it to the AdmLargeIcon field.
+// SetAdmLargeIcon gets a reference to the given NullableString and assigns it to the AdmLargeIcon field.
 func (o *Notification) SetAdmLargeIcon(v string) {
-	o.AdmLargeIcon = &v
+	o.AdmLargeIcon.Set(&v)
+}
+// SetAdmLargeIconNil sets the value for AdmLargeIcon to be an explicit nil
+func (o *Notification) SetAdmLargeIconNil() {
+	o.AdmLargeIcon.Set(nil)
 }
 
-// GetChromeWebIcon returns the ChromeWebIcon field value if set, zero value otherwise.
+// UnsetAdmLargeIcon ensures that no value is present for AdmLargeIcon, not even an explicit nil
+func (o *Notification) UnsetAdmLargeIcon() {
+	o.AdmLargeIcon.Unset()
+}
+
+// GetChromeWebIcon returns the ChromeWebIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetChromeWebIcon() string {
-	if o == nil || o.ChromeWebIcon == nil {
+	if o == nil || o.ChromeWebIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeWebIcon
+	return *o.ChromeWebIcon.Get()
 }
 
 // GetChromeWebIconOk returns a tuple with the ChromeWebIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetChromeWebIconOk() (*string, bool) {
-	if o == nil || o.ChromeWebIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeWebIcon, true
+	return o.ChromeWebIcon.Get(), o.ChromeWebIcon.IsSet()
 }
 
 // HasChromeWebIcon returns a boolean if a field has been set.
 func (o *Notification) HasChromeWebIcon() bool {
-	if o != nil && o.ChromeWebIcon != nil {
+	if o != nil && o.ChromeWebIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeWebIcon gets a reference to the given string and assigns it to the ChromeWebIcon field.
+// SetChromeWebIcon gets a reference to the given NullableString and assigns it to the ChromeWebIcon field.
 func (o *Notification) SetChromeWebIcon(v string) {
-	o.ChromeWebIcon = &v
+	o.ChromeWebIcon.Set(&v)
+}
+// SetChromeWebIconNil sets the value for ChromeWebIcon to be an explicit nil
+func (o *Notification) SetChromeWebIconNil() {
+	o.ChromeWebIcon.Set(nil)
 }
 
-// GetChromeWebBadge returns the ChromeWebBadge field value if set, zero value otherwise.
+// UnsetChromeWebIcon ensures that no value is present for ChromeWebIcon, not even an explicit nil
+func (o *Notification) UnsetChromeWebIcon() {
+	o.ChromeWebIcon.Unset()
+}
+
+// GetChromeWebBadge returns the ChromeWebBadge field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetChromeWebBadge() string {
-	if o == nil || o.ChromeWebBadge == nil {
+	if o == nil || o.ChromeWebBadge.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeWebBadge
+	return *o.ChromeWebBadge.Get()
 }
 
 // GetChromeWebBadgeOk returns a tuple with the ChromeWebBadge field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetChromeWebBadgeOk() (*string, bool) {
-	if o == nil || o.ChromeWebBadge == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeWebBadge, true
+	return o.ChromeWebBadge.Get(), o.ChromeWebBadge.IsSet()
 }
 
 // HasChromeWebBadge returns a boolean if a field has been set.
 func (o *Notification) HasChromeWebBadge() bool {
-	if o != nil && o.ChromeWebBadge != nil {
+	if o != nil && o.ChromeWebBadge.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeWebBadge gets a reference to the given string and assigns it to the ChromeWebBadge field.
+// SetChromeWebBadge gets a reference to the given NullableString and assigns it to the ChromeWebBadge field.
 func (o *Notification) SetChromeWebBadge(v string) {
-	o.ChromeWebBadge = &v
+	o.ChromeWebBadge.Set(&v)
+}
+// SetChromeWebBadgeNil sets the value for ChromeWebBadge to be an explicit nil
+func (o *Notification) SetChromeWebBadgeNil() {
+	o.ChromeWebBadge.Set(nil)
 }
 
-// GetFirefoxIcon returns the FirefoxIcon field value if set, zero value otherwise.
+// UnsetChromeWebBadge ensures that no value is present for ChromeWebBadge, not even an explicit nil
+func (o *Notification) UnsetChromeWebBadge() {
+	o.ChromeWebBadge.Unset()
+}
+
+// GetFirefoxIcon returns the FirefoxIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetFirefoxIcon() string {
-	if o == nil || o.FirefoxIcon == nil {
+	if o == nil || o.FirefoxIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.FirefoxIcon
+	return *o.FirefoxIcon.Get()
 }
 
 // GetFirefoxIconOk returns a tuple with the FirefoxIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetFirefoxIconOk() (*string, bool) {
-	if o == nil || o.FirefoxIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.FirefoxIcon, true
+	return o.FirefoxIcon.Get(), o.FirefoxIcon.IsSet()
 }
 
 // HasFirefoxIcon returns a boolean if a field has been set.
 func (o *Notification) HasFirefoxIcon() bool {
-	if o != nil && o.FirefoxIcon != nil {
+	if o != nil && o.FirefoxIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetFirefoxIcon gets a reference to the given string and assigns it to the FirefoxIcon field.
+// SetFirefoxIcon gets a reference to the given NullableString and assigns it to the FirefoxIcon field.
 func (o *Notification) SetFirefoxIcon(v string) {
-	o.FirefoxIcon = &v
+	o.FirefoxIcon.Set(&v)
+}
+// SetFirefoxIconNil sets the value for FirefoxIcon to be an explicit nil
+func (o *Notification) SetFirefoxIconNil() {
+	o.FirefoxIcon.Set(nil)
 }
 
-// GetChromeIcon returns the ChromeIcon field value if set, zero value otherwise.
+// UnsetFirefoxIcon ensures that no value is present for FirefoxIcon, not even an explicit nil
+func (o *Notification) UnsetFirefoxIcon() {
+	o.FirefoxIcon.Unset()
+}
+
+// GetChromeIcon returns the ChromeIcon field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetChromeIcon() string {
-	if o == nil || o.ChromeIcon == nil {
+	if o == nil || o.ChromeIcon.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ChromeIcon
+	return *o.ChromeIcon.Get()
 }
 
 // GetChromeIconOk returns a tuple with the ChromeIcon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetChromeIconOk() (*string, bool) {
-	if o == nil || o.ChromeIcon == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ChromeIcon, true
+	return o.ChromeIcon.Get(), o.ChromeIcon.IsSet()
 }
 
 // HasChromeIcon returns a boolean if a field has been set.
 func (o *Notification) HasChromeIcon() bool {
-	if o != nil && o.ChromeIcon != nil {
+	if o != nil && o.ChromeIcon.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetChromeIcon gets a reference to the given string and assigns it to the ChromeIcon field.
+// SetChromeIcon gets a reference to the given NullableString and assigns it to the ChromeIcon field.
 func (o *Notification) SetChromeIcon(v string) {
-	o.ChromeIcon = &v
+	o.ChromeIcon.Set(&v)
+}
+// SetChromeIconNil sets the value for ChromeIcon to be an explicit nil
+func (o *Notification) SetChromeIconNil() {
+	o.ChromeIcon.Set(nil)
 }
 
-// GetIosSound returns the IosSound field value if set, zero value otherwise.
+// UnsetChromeIcon ensures that no value is present for ChromeIcon, not even an explicit nil
+func (o *Notification) UnsetChromeIcon() {
+	o.ChromeIcon.Unset()
+}
+
+// GetIosSound returns the IosSound field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetIosSound() string {
-	if o == nil || o.IosSound == nil {
+	if o == nil || o.IosSound.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.IosSound
+	return *o.IosSound.Get()
 }
 
 // GetIosSoundOk returns a tuple with the IosSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetIosSoundOk() (*string, bool) {
-	if o == nil || o.IosSound == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.IosSound, true
+	return o.IosSound.Get(), o.IosSound.IsSet()
 }
 
 // HasIosSound returns a boolean if a field has been set.
 func (o *Notification) HasIosSound() bool {
-	if o != nil && o.IosSound != nil {
+	if o != nil && o.IosSound.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetIosSound gets a reference to the given string and assigns it to the IosSound field.
+// SetIosSound gets a reference to the given NullableString and assigns it to the IosSound field.
 func (o *Notification) SetIosSound(v string) {
-	o.IosSound = &v
+	o.IosSound.Set(&v)
+}
+// SetIosSoundNil sets the value for IosSound to be an explicit nil
+func (o *Notification) SetIosSoundNil() {
+	o.IosSound.Set(nil)
 }
 
-// GetAndroidSound returns the AndroidSound field value if set, zero value otherwise.
+// UnsetIosSound ensures that no value is present for IosSound, not even an explicit nil
+func (o *Notification) UnsetIosSound() {
+	o.IosSound.Unset()
+}
+
+// GetAndroidSound returns the AndroidSound field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAndroidSound() string {
-	if o == nil || o.AndroidSound == nil {
+	if o == nil || o.AndroidSound.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AndroidSound
+	return *o.AndroidSound.Get()
 }
 
 // GetAndroidSoundOk returns a tuple with the AndroidSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAndroidSoundOk() (*string, bool) {
-	if o == nil || o.AndroidSound == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AndroidSound, true
+	return o.AndroidSound.Get(), o.AndroidSound.IsSet()
 }
 
 // HasAndroidSound returns a boolean if a field has been set.
 func (o *Notification) HasAndroidSound() bool {
-	if o != nil && o.AndroidSound != nil {
+	if o != nil && o.AndroidSound.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAndroidSound gets a reference to the given string and assigns it to the AndroidSound field.
+// SetAndroidSound gets a reference to the given NullableString and assigns it to the AndroidSound field.
 func (o *Notification) SetAndroidSound(v string) {
-	o.AndroidSound = &v
+	o.AndroidSound.Set(&v)
+}
+// SetAndroidSoundNil sets the value for AndroidSound to be an explicit nil
+func (o *Notification) SetAndroidSoundNil() {
+	o.AndroidSound.Set(nil)
 }
 
-// GetHuaweiSound returns the HuaweiSound field value if set, zero value otherwise.
+// UnsetAndroidSound ensures that no value is present for AndroidSound, not even an explicit nil
+func (o *Notification) UnsetAndroidSound() {
+	o.AndroidSound.Unset()
+}
+
+// GetHuaweiSound returns the HuaweiSound field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiSound() string {
-	if o == nil || o.HuaweiSound == nil {
+	if o == nil || o.HuaweiSound.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiSound
+	return *o.HuaweiSound.Get()
 }
 
 // GetHuaweiSoundOk returns a tuple with the HuaweiSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiSoundOk() (*string, bool) {
-	if o == nil || o.HuaweiSound == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiSound, true
+	return o.HuaweiSound.Get(), o.HuaweiSound.IsSet()
 }
 
 // HasHuaweiSound returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiSound() bool {
-	if o != nil && o.HuaweiSound != nil {
+	if o != nil && o.HuaweiSound.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiSound gets a reference to the given string and assigns it to the HuaweiSound field.
+// SetHuaweiSound gets a reference to the given NullableString and assigns it to the HuaweiSound field.
 func (o *Notification) SetHuaweiSound(v string) {
-	o.HuaweiSound = &v
+	o.HuaweiSound.Set(&v)
+}
+// SetHuaweiSoundNil sets the value for HuaweiSound to be an explicit nil
+func (o *Notification) SetHuaweiSoundNil() {
+	o.HuaweiSound.Set(nil)
 }
 
-// GetAdmSound returns the AdmSound field value if set, zero value otherwise.
+// UnsetHuaweiSound ensures that no value is present for HuaweiSound, not even an explicit nil
+func (o *Notification) UnsetHuaweiSound() {
+	o.HuaweiSound.Unset()
+}
+
+// GetAdmSound returns the AdmSound field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAdmSound() string {
-	if o == nil || o.AdmSound == nil {
+	if o == nil || o.AdmSound.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AdmSound
+	return *o.AdmSound.Get()
 }
 
 // GetAdmSoundOk returns a tuple with the AdmSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAdmSoundOk() (*string, bool) {
-	if o == nil || o.AdmSound == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AdmSound, true
+	return o.AdmSound.Get(), o.AdmSound.IsSet()
 }
 
 // HasAdmSound returns a boolean if a field has been set.
 func (o *Notification) HasAdmSound() bool {
-	if o != nil && o.AdmSound != nil {
+	if o != nil && o.AdmSound.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAdmSound gets a reference to the given string and assigns it to the AdmSound field.
+// SetAdmSound gets a reference to the given NullableString and assigns it to the AdmSound field.
 func (o *Notification) SetAdmSound(v string) {
-	o.AdmSound = &v
+	o.AdmSound.Set(&v)
+}
+// SetAdmSoundNil sets the value for AdmSound to be an explicit nil
+func (o *Notification) SetAdmSoundNil() {
+	o.AdmSound.Set(nil)
 }
 
-// GetWpWnsSound returns the WpWnsSound field value if set, zero value otherwise.
+// UnsetAdmSound ensures that no value is present for AdmSound, not even an explicit nil
+func (o *Notification) UnsetAdmSound() {
+	o.AdmSound.Unset()
+}
+
+// GetWpWnsSound returns the WpWnsSound field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetWpWnsSound() string {
-	if o == nil || o.WpWnsSound == nil {
+	if o == nil || o.WpWnsSound.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.WpWnsSound
+	return *o.WpWnsSound.Get()
 }
 
 // GetWpWnsSoundOk returns a tuple with the WpWnsSound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetWpWnsSoundOk() (*string, bool) {
-	if o == nil || o.WpWnsSound == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.WpWnsSound, true
+	return o.WpWnsSound.Get(), o.WpWnsSound.IsSet()
 }
 
 // HasWpWnsSound returns a boolean if a field has been set.
 func (o *Notification) HasWpWnsSound() bool {
-	if o != nil && o.WpWnsSound != nil {
+	if o != nil && o.WpWnsSound.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetWpWnsSound gets a reference to the given string and assigns it to the WpWnsSound field.
+// SetWpWnsSound gets a reference to the given NullableString and assigns it to the WpWnsSound field.
 func (o *Notification) SetWpWnsSound(v string) {
-	o.WpWnsSound = &v
+	o.WpWnsSound.Set(&v)
+}
+// SetWpWnsSoundNil sets the value for WpWnsSound to be an explicit nil
+func (o *Notification) SetWpWnsSoundNil() {
+	o.WpWnsSound.Set(nil)
 }
 
-// GetAndroidLedColor returns the AndroidLedColor field value if set, zero value otherwise.
+// UnsetWpWnsSound ensures that no value is present for WpWnsSound, not even an explicit nil
+func (o *Notification) UnsetWpWnsSound() {
+	o.WpWnsSound.Unset()
+}
+
+// GetAndroidLedColor returns the AndroidLedColor field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAndroidLedColor() string {
-	if o == nil || o.AndroidLedColor == nil {
+	if o == nil || o.AndroidLedColor.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AndroidLedColor
+	return *o.AndroidLedColor.Get()
 }
 
 // GetAndroidLedColorOk returns a tuple with the AndroidLedColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAndroidLedColorOk() (*string, bool) {
-	if o == nil || o.AndroidLedColor == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AndroidLedColor, true
+	return o.AndroidLedColor.Get(), o.AndroidLedColor.IsSet()
 }
 
 // HasAndroidLedColor returns a boolean if a field has been set.
 func (o *Notification) HasAndroidLedColor() bool {
-	if o != nil && o.AndroidLedColor != nil {
+	if o != nil && o.AndroidLedColor.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAndroidLedColor gets a reference to the given string and assigns it to the AndroidLedColor field.
+// SetAndroidLedColor gets a reference to the given NullableString and assigns it to the AndroidLedColor field.
 func (o *Notification) SetAndroidLedColor(v string) {
-	o.AndroidLedColor = &v
+	o.AndroidLedColor.Set(&v)
+}
+// SetAndroidLedColorNil sets the value for AndroidLedColor to be an explicit nil
+func (o *Notification) SetAndroidLedColorNil() {
+	o.AndroidLedColor.Set(nil)
 }
 
-// GetHuaweiLedColor returns the HuaweiLedColor field value if set, zero value otherwise.
+// UnsetAndroidLedColor ensures that no value is present for AndroidLedColor, not even an explicit nil
+func (o *Notification) UnsetAndroidLedColor() {
+	o.AndroidLedColor.Unset()
+}
+
+// GetHuaweiLedColor returns the HuaweiLedColor field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiLedColor() string {
-	if o == nil || o.HuaweiLedColor == nil {
+	if o == nil || o.HuaweiLedColor.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiLedColor
+	return *o.HuaweiLedColor.Get()
 }
 
 // GetHuaweiLedColorOk returns a tuple with the HuaweiLedColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiLedColorOk() (*string, bool) {
-	if o == nil || o.HuaweiLedColor == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiLedColor, true
+	return o.HuaweiLedColor.Get(), o.HuaweiLedColor.IsSet()
 }
 
 // HasHuaweiLedColor returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiLedColor() bool {
-	if o != nil && o.HuaweiLedColor != nil {
+	if o != nil && o.HuaweiLedColor.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiLedColor gets a reference to the given string and assigns it to the HuaweiLedColor field.
+// SetHuaweiLedColor gets a reference to the given NullableString and assigns it to the HuaweiLedColor field.
 func (o *Notification) SetHuaweiLedColor(v string) {
-	o.HuaweiLedColor = &v
+	o.HuaweiLedColor.Set(&v)
+}
+// SetHuaweiLedColorNil sets the value for HuaweiLedColor to be an explicit nil
+func (o *Notification) SetHuaweiLedColorNil() {
+	o.HuaweiLedColor.Set(nil)
 }
 
-// GetAndroidAccentColor returns the AndroidAccentColor field value if set, zero value otherwise.
+// UnsetHuaweiLedColor ensures that no value is present for HuaweiLedColor, not even an explicit nil
+func (o *Notification) UnsetHuaweiLedColor() {
+	o.HuaweiLedColor.Unset()
+}
+
+// GetAndroidAccentColor returns the AndroidAccentColor field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAndroidAccentColor() string {
-	if o == nil || o.AndroidAccentColor == nil {
+	if o == nil || o.AndroidAccentColor.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AndroidAccentColor
+	return *o.AndroidAccentColor.Get()
 }
 
 // GetAndroidAccentColorOk returns a tuple with the AndroidAccentColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAndroidAccentColorOk() (*string, bool) {
-	if o == nil || o.AndroidAccentColor == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AndroidAccentColor, true
+	return o.AndroidAccentColor.Get(), o.AndroidAccentColor.IsSet()
 }
 
 // HasAndroidAccentColor returns a boolean if a field has been set.
 func (o *Notification) HasAndroidAccentColor() bool {
-	if o != nil && o.AndroidAccentColor != nil {
+	if o != nil && o.AndroidAccentColor.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAndroidAccentColor gets a reference to the given string and assigns it to the AndroidAccentColor field.
+// SetAndroidAccentColor gets a reference to the given NullableString and assigns it to the AndroidAccentColor field.
 func (o *Notification) SetAndroidAccentColor(v string) {
-	o.AndroidAccentColor = &v
+	o.AndroidAccentColor.Set(&v)
+}
+// SetAndroidAccentColorNil sets the value for AndroidAccentColor to be an explicit nil
+func (o *Notification) SetAndroidAccentColorNil() {
+	o.AndroidAccentColor.Set(nil)
 }
 
-// GetHuaweiAccentColor returns the HuaweiAccentColor field value if set, zero value otherwise.
+// UnsetAndroidAccentColor ensures that no value is present for AndroidAccentColor, not even an explicit nil
+func (o *Notification) UnsetAndroidAccentColor() {
+	o.AndroidAccentColor.Unset()
+}
+
+// GetHuaweiAccentColor returns the HuaweiAccentColor field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetHuaweiAccentColor() string {
-	if o == nil || o.HuaweiAccentColor == nil {
+	if o == nil || o.HuaweiAccentColor.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.HuaweiAccentColor
+	return *o.HuaweiAccentColor.Get()
 }
 
 // GetHuaweiAccentColorOk returns a tuple with the HuaweiAccentColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetHuaweiAccentColorOk() (*string, bool) {
-	if o == nil || o.HuaweiAccentColor == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.HuaweiAccentColor, true
+	return o.HuaweiAccentColor.Get(), o.HuaweiAccentColor.IsSet()
 }
 
 // HasHuaweiAccentColor returns a boolean if a field has been set.
 func (o *Notification) HasHuaweiAccentColor() bool {
-	if o != nil && o.HuaweiAccentColor != nil {
+	if o != nil && o.HuaweiAccentColor.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetHuaweiAccentColor gets a reference to the given string and assigns it to the HuaweiAccentColor field.
+// SetHuaweiAccentColor gets a reference to the given NullableString and assigns it to the HuaweiAccentColor field.
 func (o *Notification) SetHuaweiAccentColor(v string) {
-	o.HuaweiAccentColor = &v
+	o.HuaweiAccentColor.Set(&v)
+}
+// SetHuaweiAccentColorNil sets the value for HuaweiAccentColor to be an explicit nil
+func (o *Notification) SetHuaweiAccentColorNil() {
+	o.HuaweiAccentColor.Set(nil)
+}
+
+// UnsetHuaweiAccentColor ensures that no value is present for HuaweiAccentColor, not even an explicit nil
+func (o *Notification) UnsetHuaweiAccentColor() {
+	o.HuaweiAccentColor.Unset()
 }
 
 // GetAndroidVisibility returns the AndroidVisibility field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -3232,36 +3574,46 @@ func (o *Notification) UnsetHuaweiVisibility() {
 	o.HuaweiVisibility.Unset()
 }
 
-// GetIosBadgeType returns the IosBadgeType field value if set, zero value otherwise.
+// GetIosBadgeType returns the IosBadgeType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetIosBadgeType() string {
-	if o == nil || o.IosBadgeType == nil {
+	if o == nil || o.IosBadgeType.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.IosBadgeType
+	return *o.IosBadgeType.Get()
 }
 
 // GetIosBadgeTypeOk returns a tuple with the IosBadgeType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetIosBadgeTypeOk() (*string, bool) {
-	if o == nil || o.IosBadgeType == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.IosBadgeType, true
+	return o.IosBadgeType.Get(), o.IosBadgeType.IsSet()
 }
 
 // HasIosBadgeType returns a boolean if a field has been set.
 func (o *Notification) HasIosBadgeType() bool {
-	if o != nil && o.IosBadgeType != nil {
+	if o != nil && o.IosBadgeType.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetIosBadgeType gets a reference to the given string and assigns it to the IosBadgeType field.
+// SetIosBadgeType gets a reference to the given NullableString and assigns it to the IosBadgeType field.
 func (o *Notification) SetIosBadgeType(v string) {
-	o.IosBadgeType = &v
+	o.IosBadgeType.Set(&v)
+}
+// SetIosBadgeTypeNil sets the value for IosBadgeType to be an explicit nil
+func (o *Notification) SetIosBadgeTypeNil() {
+	o.IosBadgeType.Set(nil)
+}
+
+// UnsetIosBadgeType ensures that no value is present for IosBadgeType, not even an explicit nil
+func (o *Notification) UnsetIosBadgeType() {
+	o.IosBadgeType.Unset()
 }
 
 // GetIosBadgeCount returns the IosBadgeCount field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -3338,41 +3690,51 @@ func (o *Notification) SetCollapseId(v string) {
 	o.CollapseId = &v
 }
 
-// GetWebPushTopic returns the WebPushTopic field value if set, zero value otherwise.
+// GetWebPushTopic returns the WebPushTopic field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetWebPushTopic() string {
-	if o == nil || o.WebPushTopic == nil {
+	if o == nil || o.WebPushTopic.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.WebPushTopic
+	return *o.WebPushTopic.Get()
 }
 
 // GetWebPushTopicOk returns a tuple with the WebPushTopic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetWebPushTopicOk() (*string, bool) {
-	if o == nil || o.WebPushTopic == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.WebPushTopic, true
+	return o.WebPushTopic.Get(), o.WebPushTopic.IsSet()
 }
 
 // HasWebPushTopic returns a boolean if a field has been set.
 func (o *Notification) HasWebPushTopic() bool {
-	if o != nil && o.WebPushTopic != nil {
+	if o != nil && o.WebPushTopic.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetWebPushTopic gets a reference to the given string and assigns it to the WebPushTopic field.
+// SetWebPushTopic gets a reference to the given NullableString and assigns it to the WebPushTopic field.
 func (o *Notification) SetWebPushTopic(v string) {
-	o.WebPushTopic = &v
+	o.WebPushTopic.Set(&v)
+}
+// SetWebPushTopicNil sets the value for WebPushTopic to be an explicit nil
+func (o *Notification) SetWebPushTopicNil() {
+	o.WebPushTopic.Set(nil)
 }
 
-// GetApnsAlert returns the ApnsAlert field value if set, zero value otherwise.
+// UnsetWebPushTopic ensures that no value is present for WebPushTopic, not even an explicit nil
+func (o *Notification) UnsetWebPushTopic() {
+	o.WebPushTopic.Unset()
+}
+
+// GetApnsAlert returns the ApnsAlert field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetApnsAlert() map[string]interface{} {
-	if o == nil || o.ApnsAlert == nil {
+	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -3381,6 +3743,7 @@ func (o *Notification) GetApnsAlert() map[string]interface{} {
 
 // GetApnsAlertOk returns a tuple with the ApnsAlert field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetApnsAlertOk() (map[string]interface{}, bool) {
 	if o == nil || o.ApnsAlert == nil {
 		return nil, false
@@ -3402,100 +3765,88 @@ func (o *Notification) SetApnsAlert(v map[string]interface{}) {
 	o.ApnsAlert = v
 }
 
-// GetSendAfter returns the SendAfter field value if set, zero value otherwise.
-func (o *Notification) GetSendAfter() time.Time {
-	if o == nil || o.SendAfter == nil {
-		var ret time.Time
-		return ret
-	}
-	return *o.SendAfter
-}
-
-// GetSendAfterOk returns a tuple with the SendAfter field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Notification) GetSendAfterOk() (*time.Time, bool) {
-	if o == nil || o.SendAfter == nil {
-		return nil, false
-	}
-	return o.SendAfter, true
-}
-
-// HasSendAfter returns a boolean if a field has been set.
-func (o *Notification) HasSendAfter() bool {
-	if o != nil && o.SendAfter != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSendAfter gets a reference to the given time.Time and assigns it to the SendAfter field.
-func (o *Notification) SetSendAfter(v time.Time) {
-	o.SendAfter = &v
-}
-
-// GetDelayedOption returns the DelayedOption field value if set, zero value otherwise.
+// GetDelayedOption returns the DelayedOption field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetDelayedOption() string {
-	if o == nil || o.DelayedOption == nil {
+	if o == nil || o.DelayedOption.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.DelayedOption
+	return *o.DelayedOption.Get()
 }
 
 // GetDelayedOptionOk returns a tuple with the DelayedOption field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetDelayedOptionOk() (*string, bool) {
-	if o == nil || o.DelayedOption == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.DelayedOption, true
+	return o.DelayedOption.Get(), o.DelayedOption.IsSet()
 }
 
 // HasDelayedOption returns a boolean if a field has been set.
 func (o *Notification) HasDelayedOption() bool {
-	if o != nil && o.DelayedOption != nil {
+	if o != nil && o.DelayedOption.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetDelayedOption gets a reference to the given string and assigns it to the DelayedOption field.
+// SetDelayedOption gets a reference to the given NullableString and assigns it to the DelayedOption field.
 func (o *Notification) SetDelayedOption(v string) {
-	o.DelayedOption = &v
+	o.DelayedOption.Set(&v)
+}
+// SetDelayedOptionNil sets the value for DelayedOption to be an explicit nil
+func (o *Notification) SetDelayedOptionNil() {
+	o.DelayedOption.Set(nil)
 }
 
-// GetDeliveryTimeOfDay returns the DeliveryTimeOfDay field value if set, zero value otherwise.
+// UnsetDelayedOption ensures that no value is present for DelayedOption, not even an explicit nil
+func (o *Notification) UnsetDelayedOption() {
+	o.DelayedOption.Unset()
+}
+
+// GetDeliveryTimeOfDay returns the DeliveryTimeOfDay field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetDeliveryTimeOfDay() string {
-	if o == nil || o.DeliveryTimeOfDay == nil {
+	if o == nil || o.DeliveryTimeOfDay.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.DeliveryTimeOfDay
+	return *o.DeliveryTimeOfDay.Get()
 }
 
 // GetDeliveryTimeOfDayOk returns a tuple with the DeliveryTimeOfDay field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetDeliveryTimeOfDayOk() (*string, bool) {
-	if o == nil || o.DeliveryTimeOfDay == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.DeliveryTimeOfDay, true
+	return o.DeliveryTimeOfDay.Get(), o.DeliveryTimeOfDay.IsSet()
 }
 
 // HasDeliveryTimeOfDay returns a boolean if a field has been set.
 func (o *Notification) HasDeliveryTimeOfDay() bool {
-	if o != nil && o.DeliveryTimeOfDay != nil {
+	if o != nil && o.DeliveryTimeOfDay.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetDeliveryTimeOfDay gets a reference to the given string and assigns it to the DeliveryTimeOfDay field.
+// SetDeliveryTimeOfDay gets a reference to the given NullableString and assigns it to the DeliveryTimeOfDay field.
 func (o *Notification) SetDeliveryTimeOfDay(v string) {
-	o.DeliveryTimeOfDay = &v
+	o.DeliveryTimeOfDay.Set(&v)
+}
+// SetDeliveryTimeOfDayNil sets the value for DeliveryTimeOfDay to be an explicit nil
+func (o *Notification) SetDeliveryTimeOfDayNil() {
+	o.DeliveryTimeOfDay.Set(nil)
+}
+
+// UnsetDeliveryTimeOfDay ensures that no value is present for DeliveryTimeOfDay, not even an explicit nil
+func (o *Notification) UnsetDeliveryTimeOfDay() {
+	o.DeliveryTimeOfDay.Unset()
 }
 
 // GetTtl returns the Ttl field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -3614,137 +3965,177 @@ func (o *Notification) SetApnsPushTypeOverride(v string) {
 	o.ApnsPushTypeOverride = &v
 }
 
-// GetThrottleRatePerMinute returns the ThrottleRatePerMinute field value if set, zero value otherwise.
+// GetThrottleRatePerMinute returns the ThrottleRatePerMinute field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetThrottleRatePerMinute() string {
-	if o == nil || o.ThrottleRatePerMinute == nil {
+	if o == nil || o.ThrottleRatePerMinute.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ThrottleRatePerMinute
+	return *o.ThrottleRatePerMinute.Get()
 }
 
 // GetThrottleRatePerMinuteOk returns a tuple with the ThrottleRatePerMinute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetThrottleRatePerMinuteOk() (*string, bool) {
-	if o == nil || o.ThrottleRatePerMinute == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ThrottleRatePerMinute, true
+	return o.ThrottleRatePerMinute.Get(), o.ThrottleRatePerMinute.IsSet()
 }
 
 // HasThrottleRatePerMinute returns a boolean if a field has been set.
 func (o *Notification) HasThrottleRatePerMinute() bool {
-	if o != nil && o.ThrottleRatePerMinute != nil {
+	if o != nil && o.ThrottleRatePerMinute.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetThrottleRatePerMinute gets a reference to the given string and assigns it to the ThrottleRatePerMinute field.
+// SetThrottleRatePerMinute gets a reference to the given NullableString and assigns it to the ThrottleRatePerMinute field.
 func (o *Notification) SetThrottleRatePerMinute(v string) {
-	o.ThrottleRatePerMinute = &v
+	o.ThrottleRatePerMinute.Set(&v)
+}
+// SetThrottleRatePerMinuteNil sets the value for ThrottleRatePerMinute to be an explicit nil
+func (o *Notification) SetThrottleRatePerMinuteNil() {
+	o.ThrottleRatePerMinute.Set(nil)
 }
 
-// GetAndroidGroup returns the AndroidGroup field value if set, zero value otherwise.
+// UnsetThrottleRatePerMinute ensures that no value is present for ThrottleRatePerMinute, not even an explicit nil
+func (o *Notification) UnsetThrottleRatePerMinute() {
+	o.ThrottleRatePerMinute.Unset()
+}
+
+// GetAndroidGroup returns the AndroidGroup field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAndroidGroup() string {
-	if o == nil || o.AndroidGroup == nil {
+	if o == nil || o.AndroidGroup.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AndroidGroup
+	return *o.AndroidGroup.Get()
 }
 
 // GetAndroidGroupOk returns a tuple with the AndroidGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAndroidGroupOk() (*string, bool) {
-	if o == nil || o.AndroidGroup == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AndroidGroup, true
+	return o.AndroidGroup.Get(), o.AndroidGroup.IsSet()
 }
 
 // HasAndroidGroup returns a boolean if a field has been set.
 func (o *Notification) HasAndroidGroup() bool {
-	if o != nil && o.AndroidGroup != nil {
+	if o != nil && o.AndroidGroup.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAndroidGroup gets a reference to the given string and assigns it to the AndroidGroup field.
+// SetAndroidGroup gets a reference to the given NullableString and assigns it to the AndroidGroup field.
 func (o *Notification) SetAndroidGroup(v string) {
-	o.AndroidGroup = &v
+	o.AndroidGroup.Set(&v)
+}
+// SetAndroidGroupNil sets the value for AndroidGroup to be an explicit nil
+func (o *Notification) SetAndroidGroupNil() {
+	o.AndroidGroup.Set(nil)
 }
 
-// GetAndroidGroupMessage returns the AndroidGroupMessage field value if set, zero value otherwise.
+// UnsetAndroidGroup ensures that no value is present for AndroidGroup, not even an explicit nil
+func (o *Notification) UnsetAndroidGroup() {
+	o.AndroidGroup.Unset()
+}
+
+// GetAndroidGroupMessage returns the AndroidGroupMessage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAndroidGroupMessage() string {
-	if o == nil || o.AndroidGroupMessage == nil {
+	if o == nil || o.AndroidGroupMessage.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AndroidGroupMessage
+	return *o.AndroidGroupMessage.Get()
 }
 
 // GetAndroidGroupMessageOk returns a tuple with the AndroidGroupMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAndroidGroupMessageOk() (*string, bool) {
-	if o == nil || o.AndroidGroupMessage == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AndroidGroupMessage, true
+	return o.AndroidGroupMessage.Get(), o.AndroidGroupMessage.IsSet()
 }
 
 // HasAndroidGroupMessage returns a boolean if a field has been set.
 func (o *Notification) HasAndroidGroupMessage() bool {
-	if o != nil && o.AndroidGroupMessage != nil {
+	if o != nil && o.AndroidGroupMessage.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAndroidGroupMessage gets a reference to the given string and assigns it to the AndroidGroupMessage field.
+// SetAndroidGroupMessage gets a reference to the given NullableString and assigns it to the AndroidGroupMessage field.
 func (o *Notification) SetAndroidGroupMessage(v string) {
-	o.AndroidGroupMessage = &v
+	o.AndroidGroupMessage.Set(&v)
+}
+// SetAndroidGroupMessageNil sets the value for AndroidGroupMessage to be an explicit nil
+func (o *Notification) SetAndroidGroupMessageNil() {
+	o.AndroidGroupMessage.Set(nil)
 }
 
-// GetAdmGroup returns the AdmGroup field value if set, zero value otherwise.
+// UnsetAndroidGroupMessage ensures that no value is present for AndroidGroupMessage, not even an explicit nil
+func (o *Notification) UnsetAndroidGroupMessage() {
+	o.AndroidGroupMessage.Unset()
+}
+
+// GetAdmGroup returns the AdmGroup field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAdmGroup() string {
-	if o == nil || o.AdmGroup == nil {
+	if o == nil || o.AdmGroup.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AdmGroup
+	return *o.AdmGroup.Get()
 }
 
 // GetAdmGroupOk returns a tuple with the AdmGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAdmGroupOk() (*string, bool) {
-	if o == nil || o.AdmGroup == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AdmGroup, true
+	return o.AdmGroup.Get(), o.AdmGroup.IsSet()
 }
 
 // HasAdmGroup returns a boolean if a field has been set.
 func (o *Notification) HasAdmGroup() bool {
-	if o != nil && o.AdmGroup != nil {
+	if o != nil && o.AdmGroup.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAdmGroup gets a reference to the given string and assigns it to the AdmGroup field.
+// SetAdmGroup gets a reference to the given NullableString and assigns it to the AdmGroup field.
 func (o *Notification) SetAdmGroup(v string) {
-	o.AdmGroup = &v
+	o.AdmGroup.Set(&v)
+}
+// SetAdmGroupNil sets the value for AdmGroup to be an explicit nil
+func (o *Notification) SetAdmGroupNil() {
+	o.AdmGroup.Set(nil)
 }
 
-// GetAdmGroupMessage returns the AdmGroupMessage field value if set, zero value otherwise.
+// UnsetAdmGroup ensures that no value is present for AdmGroup, not even an explicit nil
+func (o *Notification) UnsetAdmGroup() {
+	o.AdmGroup.Unset()
+}
+
+// GetAdmGroupMessage returns the AdmGroupMessage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetAdmGroupMessage() map[string]interface{} {
-	if o == nil || o.AdmGroupMessage == nil {
+	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -3753,6 +4144,7 @@ func (o *Notification) GetAdmGroupMessage() map[string]interface{} {
 
 // GetAdmGroupMessageOk returns a tuple with the AdmGroupMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetAdmGroupMessageOk() (map[string]interface{}, bool) {
 	if o == nil || o.AdmGroupMessage == nil {
 		return nil, false
@@ -3774,36 +4166,46 @@ func (o *Notification) SetAdmGroupMessage(v map[string]interface{}) {
 	o.AdmGroupMessage = v
 }
 
-// GetThreadId returns the ThreadId field value if set, zero value otherwise.
+// GetThreadId returns the ThreadId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetThreadId() string {
-	if o == nil || o.ThreadId == nil {
+	if o == nil || o.ThreadId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ThreadId
+	return *o.ThreadId.Get()
 }
 
 // GetThreadIdOk returns a tuple with the ThreadId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetThreadIdOk() (*string, bool) {
-	if o == nil || o.ThreadId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ThreadId, true
+	return o.ThreadId.Get(), o.ThreadId.IsSet()
 }
 
 // HasThreadId returns a boolean if a field has been set.
 func (o *Notification) HasThreadId() bool {
-	if o != nil && o.ThreadId != nil {
+	if o != nil && o.ThreadId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetThreadId gets a reference to the given string and assigns it to the ThreadId field.
+// SetThreadId gets a reference to the given NullableString and assigns it to the ThreadId field.
 func (o *Notification) SetThreadId(v string) {
-	o.ThreadId = &v
+	o.ThreadId.Set(&v)
+}
+// SetThreadIdNil sets the value for ThreadId to be an explicit nil
+func (o *Notification) SetThreadIdNil() {
+	o.ThreadId.Set(nil)
+}
+
+// UnsetThreadId ensures that no value is present for ThreadId, not even an explicit nil
+func (o *Notification) UnsetThreadId() {
+	o.ThreadId.Unset()
 }
 
 // GetSummaryArg returns the SummaryArg field value if set, zero value otherwise.
@@ -3870,36 +4272,46 @@ func (o *Notification) SetSummaryArgCount(v int32) {
 	o.SummaryArgCount = &v
 }
 
-// GetEmailSubject returns the EmailSubject field value if set, zero value otherwise.
+// GetEmailSubject returns the EmailSubject field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetEmailSubject() string {
-	if o == nil || o.EmailSubject == nil {
+	if o == nil || o.EmailSubject.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.EmailSubject
+	return *o.EmailSubject.Get()
 }
 
 // GetEmailSubjectOk returns a tuple with the EmailSubject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetEmailSubjectOk() (*string, bool) {
-	if o == nil || o.EmailSubject == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.EmailSubject, true
+	return o.EmailSubject.Get(), o.EmailSubject.IsSet()
 }
 
 // HasEmailSubject returns a boolean if a field has been set.
 func (o *Notification) HasEmailSubject() bool {
-	if o != nil && o.EmailSubject != nil {
+	if o != nil && o.EmailSubject.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetEmailSubject gets a reference to the given string and assigns it to the EmailSubject field.
+// SetEmailSubject gets a reference to the given NullableString and assigns it to the EmailSubject field.
 func (o *Notification) SetEmailSubject(v string) {
-	o.EmailSubject = &v
+	o.EmailSubject.Set(&v)
+}
+// SetEmailSubjectNil sets the value for EmailSubject to be an explicit nil
+func (o *Notification) SetEmailSubjectNil() {
+	o.EmailSubject.Set(nil)
+}
+
+// UnsetEmailSubject ensures that no value is present for EmailSubject, not even an explicit nil
+func (o *Notification) UnsetEmailSubject() {
+	o.EmailSubject.Unset()
 }
 
 // GetEmailBody returns the EmailBody field value if set, zero value otherwise.
@@ -3934,105 +4346,135 @@ func (o *Notification) SetEmailBody(v string) {
 	o.EmailBody = &v
 }
 
-// GetEmailFromName returns the EmailFromName field value if set, zero value otherwise.
+// GetEmailFromName returns the EmailFromName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetEmailFromName() string {
-	if o == nil || o.EmailFromName == nil {
+	if o == nil || o.EmailFromName.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.EmailFromName
+	return *o.EmailFromName.Get()
 }
 
 // GetEmailFromNameOk returns a tuple with the EmailFromName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetEmailFromNameOk() (*string, bool) {
-	if o == nil || o.EmailFromName == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.EmailFromName, true
+	return o.EmailFromName.Get(), o.EmailFromName.IsSet()
 }
 
 // HasEmailFromName returns a boolean if a field has been set.
 func (o *Notification) HasEmailFromName() bool {
-	if o != nil && o.EmailFromName != nil {
+	if o != nil && o.EmailFromName.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetEmailFromName gets a reference to the given string and assigns it to the EmailFromName field.
+// SetEmailFromName gets a reference to the given NullableString and assigns it to the EmailFromName field.
 func (o *Notification) SetEmailFromName(v string) {
-	o.EmailFromName = &v
+	o.EmailFromName.Set(&v)
+}
+// SetEmailFromNameNil sets the value for EmailFromName to be an explicit nil
+func (o *Notification) SetEmailFromNameNil() {
+	o.EmailFromName.Set(nil)
 }
 
-// GetEmailFromAddress returns the EmailFromAddress field value if set, zero value otherwise.
+// UnsetEmailFromName ensures that no value is present for EmailFromName, not even an explicit nil
+func (o *Notification) UnsetEmailFromName() {
+	o.EmailFromName.Unset()
+}
+
+// GetEmailFromAddress returns the EmailFromAddress field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetEmailFromAddress() string {
-	if o == nil || o.EmailFromAddress == nil {
+	if o == nil || o.EmailFromAddress.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.EmailFromAddress
+	return *o.EmailFromAddress.Get()
 }
 
 // GetEmailFromAddressOk returns a tuple with the EmailFromAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetEmailFromAddressOk() (*string, bool) {
-	if o == nil || o.EmailFromAddress == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.EmailFromAddress, true
+	return o.EmailFromAddress.Get(), o.EmailFromAddress.IsSet()
 }
 
 // HasEmailFromAddress returns a boolean if a field has been set.
 func (o *Notification) HasEmailFromAddress() bool {
-	if o != nil && o.EmailFromAddress != nil {
+	if o != nil && o.EmailFromAddress.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetEmailFromAddress gets a reference to the given string and assigns it to the EmailFromAddress field.
+// SetEmailFromAddress gets a reference to the given NullableString and assigns it to the EmailFromAddress field.
 func (o *Notification) SetEmailFromAddress(v string) {
-	o.EmailFromAddress = &v
+	o.EmailFromAddress.Set(&v)
+}
+// SetEmailFromAddressNil sets the value for EmailFromAddress to be an explicit nil
+func (o *Notification) SetEmailFromAddressNil() {
+	o.EmailFromAddress.Set(nil)
 }
 
-// GetSmsFrom returns the SmsFrom field value if set, zero value otherwise.
+// UnsetEmailFromAddress ensures that no value is present for EmailFromAddress, not even an explicit nil
+func (o *Notification) UnsetEmailFromAddress() {
+	o.EmailFromAddress.Unset()
+}
+
+// GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetSmsFrom() string {
-	if o == nil || o.SmsFrom == nil {
+	if o == nil || o.SmsFrom.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.SmsFrom
+	return *o.SmsFrom.Get()
 }
 
 // GetSmsFromOk returns a tuple with the SmsFrom field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetSmsFromOk() (*string, bool) {
-	if o == nil || o.SmsFrom == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.SmsFrom, true
+	return o.SmsFrom.Get(), o.SmsFrom.IsSet()
 }
 
 // HasSmsFrom returns a boolean if a field has been set.
 func (o *Notification) HasSmsFrom() bool {
-	if o != nil && o.SmsFrom != nil {
+	if o != nil && o.SmsFrom.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSmsFrom gets a reference to the given string and assigns it to the SmsFrom field.
+// SetSmsFrom gets a reference to the given NullableString and assigns it to the SmsFrom field.
 func (o *Notification) SetSmsFrom(v string) {
-	o.SmsFrom = &v
+	o.SmsFrom.Set(&v)
+}
+// SetSmsFromNil sets the value for SmsFrom to be an explicit nil
+func (o *Notification) SetSmsFromNil() {
+	o.SmsFrom.Set(nil)
 }
 
-// GetSmsMediaUrls returns the SmsMediaUrls field value if set, zero value otherwise.
+// UnsetSmsFrom ensures that no value is present for SmsFrom, not even an explicit nil
+func (o *Notification) UnsetSmsFrom() {
+	o.SmsFrom.Unset()
+}
+
+// GetSmsMediaUrls returns the SmsMediaUrls field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetSmsMediaUrls() []string {
-	if o == nil || o.SmsMediaUrls == nil {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -4041,6 +4483,7 @@ func (o *Notification) GetSmsMediaUrls() []string {
 
 // GetSmsMediaUrlsOk returns a tuple with the SmsMediaUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetSmsMediaUrlsOk() ([]string, bool) {
 	if o == nil || o.SmsMediaUrls == nil {
 		return nil, false
@@ -4060,6 +4503,48 @@ func (o *Notification) HasSmsMediaUrls() bool {
 // SetSmsMediaUrls gets a reference to the given []string and assigns it to the SmsMediaUrls field.
 func (o *Notification) SetSmsMediaUrls(v []string) {
 	o.SmsMediaUrls = v
+}
+
+// GetSendAfter returns the SendAfter field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Notification) GetSendAfter() time.Time {
+	if o == nil || o.SendAfter.Get() == nil {
+		var ret time.Time
+		return ret
+	}
+	return *o.SendAfter.Get()
+}
+
+// GetSendAfterOk returns a tuple with the SendAfter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Notification) GetSendAfterOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SendAfter.Get(), o.SendAfter.IsSet()
+}
+
+// HasSendAfter returns a boolean if a field has been set.
+func (o *Notification) HasSendAfter() bool {
+	if o != nil && o.SendAfter.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSendAfter gets a reference to the given NullableTime and assigns it to the SendAfter field.
+func (o *Notification) SetSendAfter(v time.Time) {
+	o.SendAfter.Set(&v)
+}
+// SetSendAfterNil sets the value for SendAfter to be an explicit nil
+func (o *Notification) SetSendAfterNil() {
+	o.SendAfter.Set(nil)
+}
+
+// UnsetSendAfter ensures that no value is present for SendAfter, not even an explicit nil
+func (o *Notification) UnsetSendAfter() {
+	o.SendAfter.Unset()
 }
 
 func (o Notification) MarshalJSON() ([]byte, error) {
@@ -4142,8 +4627,8 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.Value != nil {
 		toSerialize["value"] = o.Value
 	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
+	if o.Name.IsSet() {
+		toSerialize["name"] = o.Name.Get()
 	}
 	if o.Aggregation != nil {
 		toSerialize["aggregation"] = o.Aggregation
@@ -4199,23 +4684,23 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.Data != nil {
 		toSerialize["data"] = o.Data
 	}
-	if o.HuaweiMsgType != nil {
-		toSerialize["huawei_msg_type"] = o.HuaweiMsgType
+	if o.HuaweiMsgType.IsSet() {
+		toSerialize["huawei_msg_type"] = o.HuaweiMsgType.Get()
 	}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
+	if o.Url.IsSet() {
+		toSerialize["url"] = o.Url.Get()
 	}
-	if o.WebUrl != nil {
-		toSerialize["web_url"] = o.WebUrl
+	if o.WebUrl.IsSet() {
+		toSerialize["web_url"] = o.WebUrl.Get()
 	}
-	if o.AppUrl != nil {
-		toSerialize["app_url"] = o.AppUrl
+	if o.AppUrl.IsSet() {
+		toSerialize["app_url"] = o.AppUrl.Get()
 	}
 	if o.IosAttachments != nil {
 		toSerialize["ios_attachments"] = o.IosAttachments
 	}
-	if o.TemplateId != nil {
-		toSerialize["template_id"] = o.TemplateId
+	if o.TemplateId.IsSet() {
+		toSerialize["template_id"] = o.TemplateId.Get()
 	}
 	if o.ContentAvailable.IsSet() {
 		toSerialize["content_available"] = o.ContentAvailable.Get()
@@ -4223,23 +4708,23 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.MutableContent != nil {
 		toSerialize["mutable_content"] = o.MutableContent
 	}
-	if o.TargetContentIdentifier != nil {
-		toSerialize["target_content_identifier"] = o.TargetContentIdentifier
+	if o.TargetContentIdentifier.IsSet() {
+		toSerialize["target_content_identifier"] = o.TargetContentIdentifier.Get()
 	}
-	if o.BigPicture != nil {
-		toSerialize["big_picture"] = o.BigPicture
+	if o.BigPicture.IsSet() {
+		toSerialize["big_picture"] = o.BigPicture.Get()
 	}
-	if o.HuaweiBigPicture != nil {
-		toSerialize["huawei_big_picture"] = o.HuaweiBigPicture
+	if o.HuaweiBigPicture.IsSet() {
+		toSerialize["huawei_big_picture"] = o.HuaweiBigPicture.Get()
 	}
-	if o.AdmBigPicture != nil {
-		toSerialize["adm_big_picture"] = o.AdmBigPicture
+	if o.AdmBigPicture.IsSet() {
+		toSerialize["adm_big_picture"] = o.AdmBigPicture.Get()
 	}
-	if o.ChromeBigPicture != nil {
-		toSerialize["chrome_big_picture"] = o.ChromeBigPicture
+	if o.ChromeBigPicture.IsSet() {
+		toSerialize["chrome_big_picture"] = o.ChromeBigPicture.Get()
 	}
-	if o.ChromeWebImage != nil {
-		toSerialize["chrome_web_image"] = o.ChromeWebImage
+	if o.ChromeWebImage.IsSet() {
+		toSerialize["chrome_web_image"] = o.ChromeWebImage.Get()
 	}
 	if o.Buttons != nil {
 		toSerialize["buttons"] = o.Buttons
@@ -4247,80 +4732,80 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.WebButtons != nil {
 		toSerialize["web_buttons"] = o.WebButtons
 	}
-	if o.IosCategory != nil {
-		toSerialize["ios_category"] = o.IosCategory
+	if o.IosCategory.IsSet() {
+		toSerialize["ios_category"] = o.IosCategory.Get()
 	}
 	if o.AndroidChannelId != nil {
 		toSerialize["android_channel_id"] = o.AndroidChannelId
 	}
-	if o.HuaweiChannelId != nil {
-		toSerialize["huawei_channel_id"] = o.HuaweiChannelId
+	if o.HuaweiChannelId.IsSet() {
+		toSerialize["huawei_channel_id"] = o.HuaweiChannelId.Get()
 	}
 	if o.ExistingAndroidChannelId != nil {
 		toSerialize["existing_android_channel_id"] = o.ExistingAndroidChannelId
 	}
-	if o.HuaweiExistingChannelId != nil {
-		toSerialize["huawei_existing_channel_id"] = o.HuaweiExistingChannelId
+	if o.HuaweiExistingChannelId.IsSet() {
+		toSerialize["huawei_existing_channel_id"] = o.HuaweiExistingChannelId.Get()
 	}
 	if o.AndroidBackgroundLayout != nil {
 		toSerialize["android_background_layout"] = o.AndroidBackgroundLayout
 	}
-	if o.SmallIcon != nil {
-		toSerialize["small_icon"] = o.SmallIcon
+	if o.SmallIcon.IsSet() {
+		toSerialize["small_icon"] = o.SmallIcon.Get()
 	}
-	if o.HuaweiSmallIcon != nil {
-		toSerialize["huawei_small_icon"] = o.HuaweiSmallIcon
+	if o.HuaweiSmallIcon.IsSet() {
+		toSerialize["huawei_small_icon"] = o.HuaweiSmallIcon.Get()
 	}
-	if o.LargeIcon != nil {
-		toSerialize["large_icon"] = o.LargeIcon
+	if o.LargeIcon.IsSet() {
+		toSerialize["large_icon"] = o.LargeIcon.Get()
 	}
-	if o.HuaweiLargeIcon != nil {
-		toSerialize["huawei_large_icon"] = o.HuaweiLargeIcon
+	if o.HuaweiLargeIcon.IsSet() {
+		toSerialize["huawei_large_icon"] = o.HuaweiLargeIcon.Get()
 	}
-	if o.AdmSmallIcon != nil {
-		toSerialize["adm_small_icon"] = o.AdmSmallIcon
+	if o.AdmSmallIcon.IsSet() {
+		toSerialize["adm_small_icon"] = o.AdmSmallIcon.Get()
 	}
-	if o.AdmLargeIcon != nil {
-		toSerialize["adm_large_icon"] = o.AdmLargeIcon
+	if o.AdmLargeIcon.IsSet() {
+		toSerialize["adm_large_icon"] = o.AdmLargeIcon.Get()
 	}
-	if o.ChromeWebIcon != nil {
-		toSerialize["chrome_web_icon"] = o.ChromeWebIcon
+	if o.ChromeWebIcon.IsSet() {
+		toSerialize["chrome_web_icon"] = o.ChromeWebIcon.Get()
 	}
-	if o.ChromeWebBadge != nil {
-		toSerialize["chrome_web_badge"] = o.ChromeWebBadge
+	if o.ChromeWebBadge.IsSet() {
+		toSerialize["chrome_web_badge"] = o.ChromeWebBadge.Get()
 	}
-	if o.FirefoxIcon != nil {
-		toSerialize["firefox_icon"] = o.FirefoxIcon
+	if o.FirefoxIcon.IsSet() {
+		toSerialize["firefox_icon"] = o.FirefoxIcon.Get()
 	}
-	if o.ChromeIcon != nil {
-		toSerialize["chrome_icon"] = o.ChromeIcon
+	if o.ChromeIcon.IsSet() {
+		toSerialize["chrome_icon"] = o.ChromeIcon.Get()
 	}
-	if o.IosSound != nil {
-		toSerialize["ios_sound"] = o.IosSound
+	if o.IosSound.IsSet() {
+		toSerialize["ios_sound"] = o.IosSound.Get()
 	}
-	if o.AndroidSound != nil {
-		toSerialize["android_sound"] = o.AndroidSound
+	if o.AndroidSound.IsSet() {
+		toSerialize["android_sound"] = o.AndroidSound.Get()
 	}
-	if o.HuaweiSound != nil {
-		toSerialize["huawei_sound"] = o.HuaweiSound
+	if o.HuaweiSound.IsSet() {
+		toSerialize["huawei_sound"] = o.HuaweiSound.Get()
 	}
-	if o.AdmSound != nil {
-		toSerialize["adm_sound"] = o.AdmSound
+	if o.AdmSound.IsSet() {
+		toSerialize["adm_sound"] = o.AdmSound.Get()
 	}
-	if o.WpWnsSound != nil {
-		toSerialize["wp_wns_sound"] = o.WpWnsSound
+	if o.WpWnsSound.IsSet() {
+		toSerialize["wp_wns_sound"] = o.WpWnsSound.Get()
 	}
-	if o.AndroidLedColor != nil {
-		toSerialize["android_led_color"] = o.AndroidLedColor
+	if o.AndroidLedColor.IsSet() {
+		toSerialize["android_led_color"] = o.AndroidLedColor.Get()
 	}
-	if o.HuaweiLedColor != nil {
-		toSerialize["huawei_led_color"] = o.HuaweiLedColor
+	if o.HuaweiLedColor.IsSet() {
+		toSerialize["huawei_led_color"] = o.HuaweiLedColor.Get()
 	}
-	if o.AndroidAccentColor != nil {
-		toSerialize["android_accent_color"] = o.AndroidAccentColor
+	if o.AndroidAccentColor.IsSet() {
+		toSerialize["android_accent_color"] = o.AndroidAccentColor.Get()
 	}
-	if o.HuaweiAccentColor != nil {
-		toSerialize["huawei_accent_color"] = o.HuaweiAccentColor
+	if o.HuaweiAccentColor.IsSet() {
+		toSerialize["huawei_accent_color"] = o.HuaweiAccentColor.Get()
 	}
 	if o.AndroidVisibility.IsSet() {
 		toSerialize["android_visibility"] = o.AndroidVisibility.Get()
@@ -4328,8 +4813,8 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.HuaweiVisibility.IsSet() {
 		toSerialize["huawei_visibility"] = o.HuaweiVisibility.Get()
 	}
-	if o.IosBadgeType != nil {
-		toSerialize["ios_badgeType"] = o.IosBadgeType
+	if o.IosBadgeType.IsSet() {
+		toSerialize["ios_badgeType"] = o.IosBadgeType.Get()
 	}
 	if o.IosBadgeCount.IsSet() {
 		toSerialize["ios_badgeCount"] = o.IosBadgeCount.Get()
@@ -4337,20 +4822,17 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.CollapseId != nil {
 		toSerialize["collapse_id"] = o.CollapseId
 	}
-	if o.WebPushTopic != nil {
-		toSerialize["web_push_topic"] = o.WebPushTopic
+	if o.WebPushTopic.IsSet() {
+		toSerialize["web_push_topic"] = o.WebPushTopic.Get()
 	}
 	if o.ApnsAlert != nil {
 		toSerialize["apns_alert"] = o.ApnsAlert
 	}
-	if o.SendAfter != nil {
-		toSerialize["send_after"] = o.SendAfter
+	if o.DelayedOption.IsSet() {
+		toSerialize["delayed_option"] = o.DelayedOption.Get()
 	}
-	if o.DelayedOption != nil {
-		toSerialize["delayed_option"] = o.DelayedOption
-	}
-	if o.DeliveryTimeOfDay != nil {
-		toSerialize["delivery_time_of_day"] = o.DeliveryTimeOfDay
+	if o.DeliveryTimeOfDay.IsSet() {
+		toSerialize["delivery_time_of_day"] = o.DeliveryTimeOfDay.Get()
 	}
 	if o.Ttl.IsSet() {
 		toSerialize["ttl"] = o.Ttl.Get()
@@ -4361,23 +4843,23 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.ApnsPushTypeOverride != nil {
 		toSerialize["apns_push_type_override"] = o.ApnsPushTypeOverride
 	}
-	if o.ThrottleRatePerMinute != nil {
-		toSerialize["throttle_rate_per_minute"] = o.ThrottleRatePerMinute
+	if o.ThrottleRatePerMinute.IsSet() {
+		toSerialize["throttle_rate_per_minute"] = o.ThrottleRatePerMinute.Get()
 	}
-	if o.AndroidGroup != nil {
-		toSerialize["android_group"] = o.AndroidGroup
+	if o.AndroidGroup.IsSet() {
+		toSerialize["android_group"] = o.AndroidGroup.Get()
 	}
-	if o.AndroidGroupMessage != nil {
-		toSerialize["android_group_message"] = o.AndroidGroupMessage
+	if o.AndroidGroupMessage.IsSet() {
+		toSerialize["android_group_message"] = o.AndroidGroupMessage.Get()
 	}
-	if o.AdmGroup != nil {
-		toSerialize["adm_group"] = o.AdmGroup
+	if o.AdmGroup.IsSet() {
+		toSerialize["adm_group"] = o.AdmGroup.Get()
 	}
 	if o.AdmGroupMessage != nil {
 		toSerialize["adm_group_message"] = o.AdmGroupMessage
 	}
-	if o.ThreadId != nil {
-		toSerialize["thread_id"] = o.ThreadId
+	if o.ThreadId.IsSet() {
+		toSerialize["thread_id"] = o.ThreadId.Get()
 	}
 	if o.SummaryArg != nil {
 		toSerialize["summary_arg"] = o.SummaryArg
@@ -4385,23 +4867,26 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.SummaryArgCount != nil {
 		toSerialize["summary_arg_count"] = o.SummaryArgCount
 	}
-	if o.EmailSubject != nil {
-		toSerialize["email_subject"] = o.EmailSubject
+	if o.EmailSubject.IsSet() {
+		toSerialize["email_subject"] = o.EmailSubject.Get()
 	}
 	if o.EmailBody != nil {
 		toSerialize["email_body"] = o.EmailBody
 	}
-	if o.EmailFromName != nil {
-		toSerialize["email_from_name"] = o.EmailFromName
+	if o.EmailFromName.IsSet() {
+		toSerialize["email_from_name"] = o.EmailFromName.Get()
 	}
-	if o.EmailFromAddress != nil {
-		toSerialize["email_from_address"] = o.EmailFromAddress
+	if o.EmailFromAddress.IsSet() {
+		toSerialize["email_from_address"] = o.EmailFromAddress.Get()
 	}
-	if o.SmsFrom != nil {
-		toSerialize["sms_from"] = o.SmsFrom
+	if o.SmsFrom.IsSet() {
+		toSerialize["sms_from"] = o.SmsFrom.Get()
 	}
 	if o.SmsMediaUrls != nil {
 		toSerialize["sms_media_urls"] = o.SmsMediaUrls
+	}
+	if o.SendAfter.IsSet() {
+		toSerialize["send_after"] = o.SendAfter.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -4514,7 +4999,6 @@ func (o *Notification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "collapse_id")
 		delete(additionalProperties, "web_push_topic")
 		delete(additionalProperties, "apns_alert")
-		delete(additionalProperties, "send_after")
 		delete(additionalProperties, "delayed_option")
 		delete(additionalProperties, "delivery_time_of_day")
 		delete(additionalProperties, "ttl")
@@ -4534,6 +5018,7 @@ func (o *Notification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_from_address")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
+		delete(additionalProperties, "send_after")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -59,6 +59,16 @@ SetIncludePlayerIds sets IncludePlayerIds field to given value.
 
 HasIncludePlayerIds returns a boolean if a field has been set.
 
+### SetIncludePlayerIdsNil
+
+`func (o *PlayerNotificationTarget) SetIncludePlayerIdsNil(b bool)`
+
+ SetIncludePlayerIdsNil sets the value for IncludePlayerIds to be an explicit nil
+
+### UnsetIncludePlayerIds
+`func (o *PlayerNotificationTarget) UnsetIncludePlayerIds()`
+
+UnsetIncludePlayerIds ensures that no value is present for IncludePlayerIds, not even an explicit nil
 ### GetIncludeExternalUserIds
 
 `func (o *PlayerNotificationTarget) GetIncludeExternalUserIds() []string`
@@ -84,6 +94,16 @@ SetIncludeExternalUserIds sets IncludeExternalUserIds field to given value.
 
 HasIncludeExternalUserIds returns a boolean if a field has been set.
 
+### SetIncludeExternalUserIdsNil
+
+`func (o *PlayerNotificationTarget) SetIncludeExternalUserIdsNil(b bool)`
+
+ SetIncludeExternalUserIdsNil sets the value for IncludeExternalUserIds to be an explicit nil
+
+### UnsetIncludeExternalUserIds
+`func (o *PlayerNotificationTarget) UnsetIncludeExternalUserIds()`
+
+UnsetIncludeExternalUserIds ensures that no value is present for IncludeExternalUserIds, not even an explicit nil
 ### GetIncludeEmailTokens
 
 `func (o *PlayerNotificationTarget) GetIncludeEmailTokens() []string`

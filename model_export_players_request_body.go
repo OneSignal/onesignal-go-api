@@ -20,7 +20,7 @@ type ExportPlayersRequestBody struct {
 	// Additional fields that you wish to include. Currently supports location, country, rooted, notification_types, ip, external_user_id, web_auth, and web_p256.
 	ExtraFields []string `json:"extra_fields,omitempty"`
 	// Export all devices with a last_active timestamp greater than this time.  Unixtime in seconds.
-	LastActiveSince *int32 `json:"last_active_since,omitempty"`
+	LastActiveSince *string `json:"last_active_since,omitempty"`
 	// Export al ldevices belonging to the segment.
 	SegmentName *string `json:"segment_name,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -78,9 +78,9 @@ func (o *ExportPlayersRequestBody) SetExtraFields(v []string) {
 }
 
 // GetLastActiveSince returns the LastActiveSince field value if set, zero value otherwise.
-func (o *ExportPlayersRequestBody) GetLastActiveSince() int32 {
+func (o *ExportPlayersRequestBody) GetLastActiveSince() string {
 	if o == nil || o.LastActiveSince == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.LastActiveSince
@@ -88,7 +88,7 @@ func (o *ExportPlayersRequestBody) GetLastActiveSince() int32 {
 
 // GetLastActiveSinceOk returns a tuple with the LastActiveSince field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ExportPlayersRequestBody) GetLastActiveSinceOk() (*int32, bool) {
+func (o *ExportPlayersRequestBody) GetLastActiveSinceOk() (*string, bool) {
 	if o == nil || o.LastActiveSince == nil {
 		return nil, false
 	}
@@ -104,8 +104,8 @@ func (o *ExportPlayersRequestBody) HasLastActiveSince() bool {
 	return false
 }
 
-// SetLastActiveSince gets a reference to the given int32 and assigns it to the LastActiveSince field.
-func (o *ExportPlayersRequestBody) SetLastActiveSince(v int32) {
+// SetLastActiveSince gets a reference to the given string and assigns it to the LastActiveSince field.
+func (o *ExportPlayersRequestBody) SetLastActiveSince(v string) {
 	o.LastActiveSince = &v
 }
 

@@ -814,7 +814,7 @@ paths:
                 last_active_since:
                   description: Export all devices with a last_active timestamp greater
                     than this time.  Unixtime in seconds.
-                  type: integer
+                  type: string
                 segment_name:
                   description: Export al ldevices belonging to the segment.
                   type: string
@@ -917,30 +917,36 @@ components:
           writeOnly: true
         gcm_key:
           description: "Android: Your Google Push Messaging Auth Key"
+          nullable: true
           type: string
         chrome_web_origin:
           description: "Chrome (All Browsers except Safari) (Recommended): The URL\
             \ to your website.  This field is required if you wish to enable web push\
             \ and specify other web push parameters."
+          nullable: true
           type: string
         chrome_key:
           description: Not for web push.  Your Google Push Messaging Auth Key if you
             use Chrome Apps / Extensions.
+          nullable: true
           type: string
         chrome_web_default_notification_icon:
           description: "Chrome (All Browsers except Safari): Your default notification\
             \ icon. Should be 256x256 pixels, min 80x80."
+          nullable: true
           type: string
         chrome_web_sub_domain:
           description: "Chrome (All Browsers except Safari): A subdomain of your choice\
             \ in order to support Web Push on non-HTTPS websites. This field must\
             \ be set in order for the chrome_web_gcm_sender_id property to be processed."
+          nullable: true
           type: string
         apns_env:
           description: "iOS: Either sandbox or production"
           enum:
           - sandbox
           - production
+          nullable: true
           type: string
         apns_p12:
           description: "iOS: Your apple push notification p12 certificate file, converted\
@@ -953,6 +959,7 @@ components:
           type: string
           writeOnly: true
         apns_certificates:
+          nullable: true
           readOnly: true
           type: string
         safari_apns_certificates:
@@ -970,8 +977,10 @@ components:
         safari_site_origin:
           description: "Safari (Recommended): The hostname to your website including\
             \ http(s)://"
+          nullable: true
           type: string
         safari_push_id:
+          nullable: true
           readOnly: true
           type: string
         safari_icon_16_16:
@@ -993,6 +1002,7 @@ components:
         site_name:
           description: "All Browsers (Recommended): The Site Name. Requires both chrome_web_origin\
             \ and safari_site_origin to be set to add or update it."
+          nullable: true
           type: string
         basic_auth_key:
           readOnly: true
@@ -1103,6 +1113,7 @@ components:
             ]\nLimit of 2,000 entries per REST API call\n"
           items:
             type: string
+          nullable: true
           type: array
         include_external_user_ids:
           description: "Target specific devices by custom user IDs assigned via API.\n\
@@ -1113,6 +1124,7 @@ components:
             \ a push or email or sms.\n"
           items:
             type: string
+          nullable: true
           type: array
         include_email_tokens:
           description: "Recommended for Sending Emails - Target specific email addresses.\n\
@@ -1192,15 +1204,19 @@ components:
       - $ref: '#/components/schemas/SegmentNotificationTarget'
       - $ref: '#/components/schemas/FilterNotificationTarget'
       - $ref: '#/components/schemas/PlayerNotificationTarget'
-    Notification:
+    BasicNotification:
       allOf:
       - $ref: '#/components/schemas/NotificationTarget'
-      - $ref: '#/components/schemas/Notification_allOf'
+      - $ref: '#/components/schemas/BasicNotification_allOf'
       - required:
         - app_id
+    Notification:
+      allOf:
+      - $ref: '#/components/schemas/BasicNotification'
+      - $ref: '#/components/schemas/Notification_allOf'
     NotificationWithMeta:
       allOf:
-      - $ref: '#/components/schemas/Notification'
+      - $ref: '#/components/schemas/BasicNotification'
       - $ref: '#/components/schemas/DeliveryData'
       - $ref: '#/components/schemas/OutcomesData'
       - $ref: '#/components/schemas/NotificationWithMeta_allOf'
@@ -1386,22 +1402,36 @@ components:
           $ref: '#/components/schemas/DeliveryData'
         ios:
           $ref: '#/components/schemas/DeliveryData'
+        sms:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryData'
+          - $ref: '#/components/schemas/PlatformDeliveryData_sms_allOf'
+        email:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryData'
+          - $ref: '#/components/schemas/PlatformDeliveryData_email_allOf'
       type: object
     DeliveryData:
       properties:
         successful:
+          description: "Number of messages delivered to push servers, mobile carriers,\
+            \ or email service providers."
           nullable: true
           type: integer
         failed:
+          description: Number of messages sent to unsubscribed devices.
           nullable: true
           type: integer
         errored:
+          description: Number of errors reported.
           nullable: true
           type: integer
         converted:
+          description: Number of messages that were clicked.
           nullable: true
           type: integer
         received:
+          description: Number of devices that received the message.
           nullable: true
           type: integer
       type: object
@@ -1586,6 +1616,7 @@ components:
           type: integer
         external_user_id:
           description: a custom user ID
+          nullable: true
           type: string
         external_user_id_auth_hash:
           description: Only required if you have enabled Identity Verification and
@@ -1602,6 +1633,7 @@ components:
             Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV...\n\
             For Email Addresses, set the full email address email@email.com and make\
             \ sure to set device_type to 11.\n"
+          nullable: true
           type: string
         language:
           description: "Language code. Typically lower case two letters, except for\
@@ -1613,12 +1645,15 @@ components:
           type: integer
         game_version:
           description: "Version of your app. Example: 1.1\n"
+          nullable: true
           type: string
         device_model:
           description: "Device make and model. Example: iPhone5,1\n"
+          nullable: true
           type: string
         device_os:
           description: "Device operating system version. Example: 7.0.4\n"
+          nullable: true
           type: string
         ad_id:
           description: |
@@ -1627,10 +1662,12 @@ components:
             iOS = identifierForVendor
             WP8.0 = DeviceUniqueId
             WP8.1 = AdvertisingId
+          nullable: true
           type: string
         sdk:
           description: Name and version of the sdk/plugin that's calling this API
             method (if any)
+          nullable: true
           type: string
         session_count:
           description: "Number of times the user has played the game, defaults to\
@@ -1645,6 +1682,7 @@ components:
             \ through SDK sendTag methods.\nRecommended to only tag devices with 1\
             \ kilobyte of data\nPlease consider using your own Database to save more\
             \ than 1 kilobyte of data. See: Internal Database & CRM\n"
+          nullable: true
           type: object
         amount_spent:
           description: "Amount the user has spent in USD, up to two decimal places"
@@ -1914,22 +1952,22 @@ components:
       type: object
     DeletePlayerSuccessResponse:
       example:
-        success: success
+        success: true
       properties:
         success:
-          type: string
+          type: boolean
       type: object
     DeletePlayerBadRequestResponse:
       properties:
         erorrs:
           items:
-            type: string
+            type: boolean
           type: array
       type: object
     DeletePlayerNotFoundResponse:
       properties:
         success:
-          type: string
+          type: boolean
       type: object
     UpdatePlayerSuccessResponse:
       example:
@@ -1993,13 +2031,13 @@ components:
         last_active_since:
           description: Export all devices with a last_active timestamp greater than
             this time.  Unixtime in seconds.
-          type: integer
+          type: string
         segment_name:
           description: Export al ldevices belonging to the segment.
           type: string
       title: export_players_request_body
       type: object
-    Notification_allOf_android_background_layout:
+    BasicNotification_allOf_android_background_layout:
       description: "Channel: Push Notifications\nPlatform: Android\nAllowing setting\
         \ a background image for the notification. This is a JSON object containing\
         \ the following keys. See our Background Image documentation for image sizes.\n"
@@ -2015,7 +2053,7 @@ components:
           type: string
       type: object
       writeOnly: true
-    Notification_allOf:
+    BasicNotification_allOf:
       properties:
         id:
           type: string
@@ -2027,6 +2065,7 @@ components:
             Required for SMS Messages.
             An identifier for tracking message within the OneSignal dashboard or export analytics.
             Not shown to end user.
+          nullable: true
           type: string
           writeOnly: true
         aggregation:
@@ -2036,7 +2075,6 @@ components:
           readOnly: true
           type: string
         isIos:
-          default: true
           description: Indicates whether to send to all devices registered under your
             app's Apple iOS platform.
           nullable: true
@@ -2159,12 +2197,14 @@ components:
             \ of data that is passed back to your app. Same as using Additional Data\
             \ within the dashboard. Can use up to 2048 bytes of data.\nExample: {\"\
             abc\": 123, \"foo\": \"bar\", \"event_performed\": true, \"amount\": 12.1}\n"
+          nullable: true
           type: object
           writeOnly: true
         huawei_msg_type:
           description: "Channel: Push Notifications\nPlatform: Huawei\nUse \"data\"\
             \ or \"message\" depending on the type of notification you are sending.\
             \ More details in Data & Background Notifications.\n"
+          nullable: true
           type: string
           writeOnly: true
         url:
@@ -2173,18 +2213,21 @@ components:
             \ https or updated NSAppTransportSecurity in plist\nThis field supports\
             \ inline substitutions.\nOmit if including web_url or app_url\nExample:\
             \ https://onesignal.com\n"
+          nullable: true
           type: string
           writeOnly: true
         web_url:
           description: "Channel: Push Notifications\nPlatform: All Browsers\nSame\
             \ as url but only sent to web push platforms.\nIncluding Chrome, Firefox,\
             \ Safari, Opera, etc.\nExample: https://onesignal.com\n"
+          nullable: true
           type: string
           writeOnly: true
         app_url:
           description: "Channel: Push Notifications\nPlatform: All Browsers\nSame\
             \ as url but only sent to web push platforms.\nIncluding iOS, Android,\
             \ macOS, Windows, ChromeApps, etc.\nExample: https://onesignal.com\n"
+          nullable: true
           type: string
           writeOnly: true
         ios_attachments:
@@ -2194,12 +2237,14 @@ components:
             \ must press and hold on the notification to view.\nDo not set mutable_content\
             \ to download attachments. The OneSignal SDK does this automatically\n\
             Example: {\"id1\": \"https://domain.com/image.jpg\"}\n"
+          nullable: true
           type: object
           writeOnly: true
         template_id:
           description: "Channel: Push Notifications\nPlatform: All\nUse a template\
             \ you setup on our dashboard. The template_id is the UUID found in the\
             \ URL when viewing a template on our dashboard.\nExample: be4a8044-bbd6-11e4-a581-000c2940e62c\n"
+          nullable: true
           type: string
           writeOnly: true
         content_available:
@@ -2222,32 +2267,38 @@ components:
           description: "Channel: Push Notifications\nPlatform: iOS 13+\nUse to target\
             \ a specific experience in your App Clip, or to target your notification\
             \ to a specific window in a multi-scene App.\n"
+          nullable: true
           type: string
           writeOnly: true
         big_picture:
           description: "Channel: Push Notifications\nPlatform: Android\nPicture to\
             \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_big_picture:
           description: "Channel: Push Notifications\nPlatform: Huawei\nPicture to\
             \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          nullable: true
           type: string
           writeOnly: true
         adm_big_picture:
           description: "Channel: Push Notifications\nPlatform: Amazon\nPicture to\
             \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          nullable: true
           type: string
           writeOnly: true
         chrome_big_picture:
           description: "Channel: Push Notifications\nPlatform: ChromeApp\nLarge picture\
             \ to display below the notification text. Must be a local URL.\n"
+          nullable: true
           type: string
           writeOnly: true
         chrome_web_image:
           description: "Channel: Push Notifications\nPlatform: Chrome 56+\nSets the\
             \ web push notification's large image to be shown below the notification's\
             \ title and text. Please see Web Push Notification Icons.\n"
+          nullable: true
           type: string
           writeOnly: true
         buttons:
@@ -2260,6 +2311,7 @@ components:
             }]\n"
           items:
             $ref: '#/components/schemas/Button'
+          nullable: true
           type: array
           writeOnly: true
         web_buttons:
@@ -2271,6 +2323,7 @@ components:
             url\": \"https://yoursite.com\"}]\n"
           items:
             $ref: '#/components/schemas/Button'
+          nullable: true
           type: array
           writeOnly: true
         ios_category:
@@ -2279,6 +2332,7 @@ components:
             \ / Swift code.\nExample: calendar category which contains actions like\
             \ accept and decline\niOS 10+ This will trigger your UNNotificationContentExtension\
             \ whose ID matches this category.\n"
+          nullable: true
           type: string
           writeOnly: true
         android_channel_id:
@@ -2291,6 +2345,7 @@ components:
           description: "Channel: Push Notifications\nPlatform: Huawei\nThe Android\
             \ Oreo Notification Category to send the notification under. See the Category\
             \ documentation on creating one and getting it's id.\n"
+          nullable: true
           type: string
           writeOnly: true
         existing_android_channel_id:
@@ -2303,15 +2358,17 @@ components:
           description: "Channel: Push Notifications\nPlatform: Huawei\nUse this if\
             \ you have client side Android Oreo Channels you have already defined\
             \ in your app with code.\n"
+          nullable: true
           type: string
           writeOnly: true
         android_background_layout:
-          $ref: '#/components/schemas/Notification_allOf_android_background_layout'
+          $ref: '#/components/schemas/BasicNotification_allOf_android_background_layout'
         small_icon:
           description: "Channel: Push Notifications\nPlatform: Android\nIcon shown\
             \ in the status bar and on the top left of the notification.\nIf not set\
             \ a bell icon will be used or ic_stat_onesignal_default if you have set\
             \ this resource name.\nSee: How to create small icons\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_small_icon:
@@ -2319,28 +2376,33 @@ components:
             \ in the status bar and on the top left of the notification.\nUse an Android\
             \ resource path (E.g. /drawable/small_icon).\nDefaults to your app icon\
             \ if not set.\n"
+          nullable: true
           type: string
           writeOnly: true
         large_icon:
           description: "Channel: Push Notifications\nPlatform: Android\nCan be a drawable\
             \ resource name or a URL.\nSee: How to create large icons\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_large_icon:
           description: "Channel: Push Notifications\nPlatform: Huawei\nCan be a drawable\
             \ resource name or a URL.\nSee: How to create large icons\n"
+          nullable: true
           type: string
           writeOnly: true
         adm_small_icon:
           description: "Channel: Push Notifications\nPlatform: Amazon\nIf not set\
             \ a bell icon will be used or ic_stat_onesignal_default if you have set\
             \ this resource name.\nSee: How to create small icons\n"
+          nullable: true
           type: string
           writeOnly: true
         adm_large_icon:
           description: "Channel: Push Notifications\nPlatform: Amazon\nIf blank the\
             \ small_icon is used. Can be a drawable resource name or a URL.\nSee:\
             \ How to create large icons\n"
+          nullable: true
           type: string
           writeOnly: true
         chrome_web_icon:
@@ -2349,11 +2411,13 @@ components:
             \ image types are supported; GIF will not animate. We recommend 256x256\
             \ (at least 80x80) to display well on high DPI devices. Firefox will also\
             \ use this icon, unless you specify firefox_icon.\n"
+          nullable: true
           type: string
         chrome_web_badge:
           description: "Channel: Push Notifications\nPlatform: Chrome\nSets the web\
             \ push notification icon for Android devices in the notification shade.\
             \ Please see Web Push Notification Badge.\n"
+          nullable: true
           type: string
           writeOnly: true
         firefox_icon:
@@ -2363,12 +2427,14 @@ components:
             \ push notification's icon for Firefox. An image URL linking to a valid\
             \ image. Common image types are supported; GIF will not animate. We recommend\
             \ 256x256 (at least 80x80) to display well on high DPI devices.\n"
+          nullable: true
           type: string
           writeOnly: true
         chrome_icon:
           description: "Channel: Push Notifications\nPlatform: ChromeApp\nThis flag\
             \ is not used for web push For web push, please see chrome_web_icon instead.\n\
             The local URL to an icon to use. If blank, the app icon will be used.\n"
+          nullable: true
           type: string
           writeOnly: true
         ios_sound:
@@ -2376,6 +2442,7 @@ components:
             \ is included in your app to play instead of the default device notification\
             \ sound. Pass nil to disable vibration and sound for the notification.\n\
             Example: \"notification.wav\"\n"
+          nullable: true
           type: string
           writeOnly: true
         android_sound:
@@ -2386,6 +2453,7 @@ components:
             \ play instead of the default device notification sound. Pass nil to disable\
             \ sound for the notification.\nNOTE: Leave off file extension for Android.\n\
             Example: \"notification\"\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_sound:
@@ -2396,6 +2464,7 @@ components:
             \ app to play instead of the default device notification sound. NOTE:\
             \ Leave off file extension for and include the full path.\n\nExample:\
             \ \"/res/raw/notification\"\n"
+          nullable: true
           type: string
           writeOnly: true
         adm_sound:
@@ -2406,12 +2475,14 @@ components:
             \ play instead of the default device notification sound. Pass nil to disable\
             \ sound for the notification.\nNOTE: Leave off file extension for Android.\n\
             Example: \"notification\"\n"
+          nullable: true
           type: string
           writeOnly: true
         wp_wns_sound:
           description: "Channel: Push Notifications\nPlatform: Windows\nSound file\
             \ that is included in your app to play instead of the default device notification\
             \ sound.\nExample: \"notification.wav\"\n"
+          nullable: true
           type: string
           writeOnly: true
         android_led_color:
@@ -2420,6 +2491,7 @@ components:
             \ use Notification Categories / Channels noted above instead to support\
             \ ALL versions of Android.\nSets the devices LED notification light if\
             \ the device has one. ARGB Hex format.\nExample(Blue): \"FF0000FF\"\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_led_color:
@@ -2429,6 +2501,7 @@ components:
             \ EMUI 8 (Android 8 based) devices.\nSets the devices LED notification\
             \ light if the device has one. RGB Hex format.\nExample(Blue): \"0000FF\"\
             \n"
+          nullable: true
           type: string
           writeOnly: true
         android_accent_color:
@@ -2436,12 +2509,14 @@ components:
             \ color of the notification circle to the left of the notification text.\
             \ Only applies to apps targeting Android API level 21+ on Android 5.0+\
             \ devices.\nExample(Red): \"FFFF0000\"\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_accent_color:
           description: "Channel: Push Notifications\nPlatform: Huawei\nAccent Color\
             \ used on Action Buttons and Group overflow count.\nUses RGB Hex value\
             \ (E.g. #9900FF).\nDefaults to device's theme color if not set.\n"
+          nullable: true
           type: string
           writeOnly: true
         android_visibility:
@@ -2480,6 +2555,7 @@ components:
             \ number specified in ios_badgeCount.\n`Increase` adds the number specified\
             \ in ios_badgeCount to the total. Use a negative number to decrease the\
             \ badge count.\n"
+          nullable: true
           type: string
           writeOnly: true
         ios_badgeCount:
@@ -2500,6 +2576,7 @@ components:
         web_push_topic:
           description: "Channel: Push Notifications\nPlatform: All Browsers\nDisplay\
             \ multiple notifications at once with different topics.\n"
+          nullable: true
           type: string
         apns_alert:
           description: "Channel: Push Notifications\nPlatform: iOS 10+\niOS can localize\
@@ -2507,17 +2584,8 @@ components:
             \ as loc-key. When using the Create Notification endpoint, you must include\
             \ these parameters inside of a field called apns_alert. Please see Apple's\
             \ guide on localizing push notifications to learn more.\n"
+          nullable: true
           type: object
-          writeOnly: true
-        send_after:
-          description: "Channel: All\nSchedule notification for future delivery. API\
-            \ defaults to UTC -1100\nExamples: All examples are the exact same date\
-            \ & time.\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\"\n\"September 24th\
-            \ 2015, 2:00:00 pm UTC-07:00\"\n\"2015-09-24 14:00:00 GMT-0700\"\n\"Sept\
-            \ 24 2015 14:00:00 GMT-0700\"\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific\
-            \ Daylight Time)\"\nNote: SMS currently only supports send_after parameter.\n"
-          format: date-time
-          type: string
           writeOnly: true
         delayed_option:
           description: "Channel: All\nPossible values are:\ntimezone (Deliver at a\
@@ -2525,11 +2593,13 @@ components:
             \ Intelligent Delivery . (Deliver at the same time of day as each user\
             \ last used your app).\nIf send_after is used, this takes effect after\
             \ the send_after time has elapsed.\n"
+          nullable: true
           type: string
           writeOnly: true
         delivery_time_of_day:
           description: "Channel: All\nUse with delayed_option=timezone.\nExamples:\
             \ \"9:00AM\"\n\"21:45\"\n\"9:45:30\"\n"
+          nullable: true
           type: string
           writeOnly: true
         ttl:
@@ -2567,12 +2637,14 @@ components:
             \ be used to throttle delivery for the notification even though throttling\
             \ is not enabled at the application level.\nRefer to throttling for more\
             \ details.\n"
+          nullable: true
           type: string
           writeOnly: true
         android_group:
           description: "Channel: Push Notifications\nPlatform: Android\nNotifications\
             \ with the same group will be stacked together using Android's Notification\
             \ Grouping feature.\n"
+          nullable: true
           type: string
           writeOnly: true
         android_group_message:
@@ -2586,12 +2658,14 @@ components:
             \ either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified\
             \ or Traditional Chinese. Read more: supported languages.\nExample: {\"\
             en\": \"You have $[notif_count] new messages\"}\n"
+          nullable: true
           type: string
           writeOnly: true
         adm_group:
           description: "Channel: Push Notifications\nPlatform: Amazon\nNotifications\
             \ with the same group will be stacked together using Android's Notification\
             \ Grouping feature.\n"
+          nullable: true
           type: string
           writeOnly: true
         adm_group_message:
@@ -2603,6 +2677,7 @@ components:
             \ for Simplified or Traditional Chinese. The value of each key is the\
             \ message that will be sent to users for that language.\nExample: {\"\
             en\": \"You have $[notif_count] new messages\"}\n"
+          nullable: true
           type: object
           writeOnly: true
         thread_id:
@@ -2610,6 +2685,7 @@ components:
             \ is supported in iOS 12 and above. It allows you to group related notifications\
             \ together.\nIf two notifications have the same thread-id, they will both\
             \ be added to the same group.\n"
+          nullable: true
           type: string
           writeOnly: true
         summary_arg:
@@ -2632,6 +2708,7 @@ components:
           writeOnly: true
         email_subject:
           description: "Channel: Email\nRequired.  The subject of the email.\n"
+          nullable: true
           type: string
           writeOnly: true
         email_body:
@@ -2645,17 +2722,20 @@ components:
         email_from_name:
           description: "Channel: Email\nThe name the email is from. If not specified,\
             \ will default to \"from name\" set in the OneSignal Dashboard Email Settings.\n"
+          nullable: true
           type: string
           writeOnly: true
         email_from_address:
           description: "Channel: Email\nThe email address the email is from. If not\
             \ specified, will default to \"from email\" set in the OneSignal Dashboard\
             \ Email Settings.\n"
+          nullable: true
           type: string
           writeOnly: true
         sms_from:
           description: "Channel: SMS\nPhone Number used to send SMS. Should be a registered\
             \ Twilio phone number in E.164 format.\n"
+          nullable: true
           type: string
           writeOnly: true
         sms_media_urls:
@@ -2663,7 +2743,22 @@ components:
             \ SMS content.\nLimit: 10 media urls with a total max. size of 5MBs.\n"
           items:
             type: string
+          nullable: true
           type: array
+          writeOnly: true
+      type: object
+    Notification_allOf:
+      properties:
+        send_after:
+          description: "Channel: All\nSchedule notification for future delivery. API\
+            \ defaults to UTC -1100\nExamples: All examples are the exact same date\
+            \ & time.\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\"\n\"September 24th\
+            \ 2015, 2:00:00 pm UTC-07:00\"\n\"2015-09-24 14:00:00 GMT-0700\"\n\"Sept\
+            \ 24 2015 14:00:00 GMT-0700\"\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific\
+            \ Daylight Time)\"\nNote: SMS currently only supports send_after parameter.\n"
+          format: date-time
+          nullable: true
+          type: string
           writeOnly: true
       type: object
     NotificationWithMeta_allOf:
@@ -2696,6 +2791,7 @@ components:
           description: Unix timestamp indicating when notification delivery should
             begin.
           format: int64
+          nullable: true
           type: integer
         completed_at:
           description: Unix timestamp indicating when notification delivery completed.
@@ -2719,6 +2815,56 @@ components:
           nullable: true
           type: integer
       type: object
+    PlatformDeliveryData_sms_allOf:
+      properties:
+        provider_successful:
+          description: Number of messages reported as delivered successfully by the
+            SMS service provider.
+          nullable: true
+          type: integer
+        provider_failed:
+          description: Number of recipients who didn't receive your message as reported
+            by the SMS service provider.
+          nullable: true
+          type: integer
+        provider_errored:
+          description: Number of errors reported by the SMS service provider.
+          nullable: true
+          type: integer
+    PlatformDeliveryData_email_allOf:
+      properties:
+        opened:
+          description: Number of times an email has been opened.
+          nullable: true
+          type: integer
+        unique_opens:
+          description: Number of unique recipients who have opened your email.
+          nullable: true
+          type: integer
+        clicks:
+          description: Number of clicked links from your email. This can include the
+            recipient clicking email links multiple times.
+          nullable: true
+          type: integer
+        unique_clicks:
+          description: Number of unique clicks that your recipients have made on links
+            from your email.
+          nullable: true
+          type: integer
+        bounced:
+          description: Number of recipients who registered as a hard or soft bounce
+            and didn't receive your email.
+          nullable: true
+          type: integer
+        reported_spam:
+          description: Number of recipients who reported this email as spam.
+          nullable: true
+          type: integer
+        unsubscribed:
+          description: Number of recipients who opted out of your emails using the
+            unsubscribe link in this email.
+          nullable: true
+          type: integer
   securitySchemes:
     app_key:
       scheme: bearer

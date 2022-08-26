@@ -1,4 +1,4 @@
-# Notification
+# BasicNotification
 
 ## Properties
 
@@ -116,3607 +116,3571 @@ Name | Type | Description | Notes
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
-**SendAfter** | Pointer to **NullableTime** | Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date &amp; time. \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\&quot; \&quot;September 24th 2015, 2:00:00 pm UTC-07:00\&quot; \&quot;2015-09-24 14:00:00 GMT-0700\&quot; \&quot;Sept 24 2015 14:00:00 GMT-0700\&quot; \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\&quot; Note: SMS currently only supports send_after parameter.  | [optional] 
 
 ## Methods
 
-### NewNotification
+### NewBasicNotification
 
-`func NewNotification(appId string, ) *Notification`
+`func NewBasicNotification(appId string, ) *BasicNotification`
 
-NewNotification instantiates a new Notification object
+NewBasicNotification instantiates a new BasicNotification object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewNotificationWithDefaults
+### NewBasicNotificationWithDefaults
 
-`func NewNotificationWithDefaults() *Notification`
+`func NewBasicNotificationWithDefaults() *BasicNotification`
 
-NewNotificationWithDefaults instantiates a new Notification object
+NewBasicNotificationWithDefaults instantiates a new BasicNotification object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetIncludedSegments
 
-`func (o *Notification) GetIncludedSegments() []string`
+`func (o *BasicNotification) GetIncludedSegments() []string`
 
 GetIncludedSegments returns the IncludedSegments field if non-nil, zero value otherwise.
 
 ### GetIncludedSegmentsOk
 
-`func (o *Notification) GetIncludedSegmentsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludedSegmentsOk() (*[]string, bool)`
 
 GetIncludedSegmentsOk returns a tuple with the IncludedSegments field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludedSegments
 
-`func (o *Notification) SetIncludedSegments(v []string)`
+`func (o *BasicNotification) SetIncludedSegments(v []string)`
 
 SetIncludedSegments sets IncludedSegments field to given value.
 
 ### HasIncludedSegments
 
-`func (o *Notification) HasIncludedSegments() bool`
+`func (o *BasicNotification) HasIncludedSegments() bool`
 
 HasIncludedSegments returns a boolean if a field has been set.
 
 ### GetExcludedSegments
 
-`func (o *Notification) GetExcludedSegments() []string`
+`func (o *BasicNotification) GetExcludedSegments() []string`
 
 GetExcludedSegments returns the ExcludedSegments field if non-nil, zero value otherwise.
 
 ### GetExcludedSegmentsOk
 
-`func (o *Notification) GetExcludedSegmentsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetExcludedSegmentsOk() (*[]string, bool)`
 
 GetExcludedSegmentsOk returns a tuple with the ExcludedSegments field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExcludedSegments
 
-`func (o *Notification) SetExcludedSegments(v []string)`
+`func (o *BasicNotification) SetExcludedSegments(v []string)`
 
 SetExcludedSegments sets ExcludedSegments field to given value.
 
 ### HasExcludedSegments
 
-`func (o *Notification) HasExcludedSegments() bool`
+`func (o *BasicNotification) HasExcludedSegments() bool`
 
 HasExcludedSegments returns a boolean if a field has been set.
 
 ### GetLastSession
 
-`func (o *Notification) GetLastSession() string`
+`func (o *BasicNotification) GetLastSession() string`
 
 GetLastSession returns the LastSession field if non-nil, zero value otherwise.
 
 ### GetLastSessionOk
 
-`func (o *Notification) GetLastSessionOk() (*string, bool)`
+`func (o *BasicNotification) GetLastSessionOk() (*string, bool)`
 
 GetLastSessionOk returns a tuple with the LastSession field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLastSession
 
-`func (o *Notification) SetLastSession(v string)`
+`func (o *BasicNotification) SetLastSession(v string)`
 
 SetLastSession sets LastSession field to given value.
 
 ### HasLastSession
 
-`func (o *Notification) HasLastSession() bool`
+`func (o *BasicNotification) HasLastSession() bool`
 
 HasLastSession returns a boolean if a field has been set.
 
 ### GetFirstSession
 
-`func (o *Notification) GetFirstSession() string`
+`func (o *BasicNotification) GetFirstSession() string`
 
 GetFirstSession returns the FirstSession field if non-nil, zero value otherwise.
 
 ### GetFirstSessionOk
 
-`func (o *Notification) GetFirstSessionOk() (*string, bool)`
+`func (o *BasicNotification) GetFirstSessionOk() (*string, bool)`
 
 GetFirstSessionOk returns a tuple with the FirstSession field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFirstSession
 
-`func (o *Notification) SetFirstSession(v string)`
+`func (o *BasicNotification) SetFirstSession(v string)`
 
 SetFirstSession sets FirstSession field to given value.
 
 ### HasFirstSession
 
-`func (o *Notification) HasFirstSession() bool`
+`func (o *BasicNotification) HasFirstSession() bool`
 
 HasFirstSession returns a boolean if a field has been set.
 
 ### GetSessionCount
 
-`func (o *Notification) GetSessionCount() string`
+`func (o *BasicNotification) GetSessionCount() string`
 
 GetSessionCount returns the SessionCount field if non-nil, zero value otherwise.
 
 ### GetSessionCountOk
 
-`func (o *Notification) GetSessionCountOk() (*string, bool)`
+`func (o *BasicNotification) GetSessionCountOk() (*string, bool)`
 
 GetSessionCountOk returns a tuple with the SessionCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSessionCount
 
-`func (o *Notification) SetSessionCount(v string)`
+`func (o *BasicNotification) SetSessionCount(v string)`
 
 SetSessionCount sets SessionCount field to given value.
 
 ### HasSessionCount
 
-`func (o *Notification) HasSessionCount() bool`
+`func (o *BasicNotification) HasSessionCount() bool`
 
 HasSessionCount returns a boolean if a field has been set.
 
 ### GetSessionTime
 
-`func (o *Notification) GetSessionTime() string`
+`func (o *BasicNotification) GetSessionTime() string`
 
 GetSessionTime returns the SessionTime field if non-nil, zero value otherwise.
 
 ### GetSessionTimeOk
 
-`func (o *Notification) GetSessionTimeOk() (*string, bool)`
+`func (o *BasicNotification) GetSessionTimeOk() (*string, bool)`
 
 GetSessionTimeOk returns a tuple with the SessionTime field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSessionTime
 
-`func (o *Notification) SetSessionTime(v string)`
+`func (o *BasicNotification) SetSessionTime(v string)`
 
 SetSessionTime sets SessionTime field to given value.
 
 ### HasSessionTime
 
-`func (o *Notification) HasSessionTime() bool`
+`func (o *BasicNotification) HasSessionTime() bool`
 
 HasSessionTime returns a boolean if a field has been set.
 
 ### GetAmountSpent
 
-`func (o *Notification) GetAmountSpent() string`
+`func (o *BasicNotification) GetAmountSpent() string`
 
 GetAmountSpent returns the AmountSpent field if non-nil, zero value otherwise.
 
 ### GetAmountSpentOk
 
-`func (o *Notification) GetAmountSpentOk() (*string, bool)`
+`func (o *BasicNotification) GetAmountSpentOk() (*string, bool)`
 
 GetAmountSpentOk returns a tuple with the AmountSpent field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAmountSpent
 
-`func (o *Notification) SetAmountSpent(v string)`
+`func (o *BasicNotification) SetAmountSpent(v string)`
 
 SetAmountSpent sets AmountSpent field to given value.
 
 ### HasAmountSpent
 
-`func (o *Notification) HasAmountSpent() bool`
+`func (o *BasicNotification) HasAmountSpent() bool`
 
 HasAmountSpent returns a boolean if a field has been set.
 
 ### GetBoughtSku
 
-`func (o *Notification) GetBoughtSku() string`
+`func (o *BasicNotification) GetBoughtSku() string`
 
 GetBoughtSku returns the BoughtSku field if non-nil, zero value otherwise.
 
 ### GetBoughtSkuOk
 
-`func (o *Notification) GetBoughtSkuOk() (*string, bool)`
+`func (o *BasicNotification) GetBoughtSkuOk() (*string, bool)`
 
 GetBoughtSkuOk returns a tuple with the BoughtSku field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBoughtSku
 
-`func (o *Notification) SetBoughtSku(v string)`
+`func (o *BasicNotification) SetBoughtSku(v string)`
 
 SetBoughtSku sets BoughtSku field to given value.
 
 ### HasBoughtSku
 
-`func (o *Notification) HasBoughtSku() bool`
+`func (o *BasicNotification) HasBoughtSku() bool`
 
 HasBoughtSku returns a boolean if a field has been set.
 
 ### GetTag
 
-`func (o *Notification) GetTag() string`
+`func (o *BasicNotification) GetTag() string`
 
 GetTag returns the Tag field if non-nil, zero value otherwise.
 
 ### GetTagOk
 
-`func (o *Notification) GetTagOk() (*string, bool)`
+`func (o *BasicNotification) GetTagOk() (*string, bool)`
 
 GetTagOk returns a tuple with the Tag field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTag
 
-`func (o *Notification) SetTag(v string)`
+`func (o *BasicNotification) SetTag(v string)`
 
 SetTag sets Tag field to given value.
 
 ### HasTag
 
-`func (o *Notification) HasTag() bool`
+`func (o *BasicNotification) HasTag() bool`
 
 HasTag returns a boolean if a field has been set.
 
 ### GetLanguage
 
-`func (o *Notification) GetLanguage() string`
+`func (o *BasicNotification) GetLanguage() string`
 
 GetLanguage returns the Language field if non-nil, zero value otherwise.
 
 ### GetLanguageOk
 
-`func (o *Notification) GetLanguageOk() (*string, bool)`
+`func (o *BasicNotification) GetLanguageOk() (*string, bool)`
 
 GetLanguageOk returns a tuple with the Language field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLanguage
 
-`func (o *Notification) SetLanguage(v string)`
+`func (o *BasicNotification) SetLanguage(v string)`
 
 SetLanguage sets Language field to given value.
 
 ### HasLanguage
 
-`func (o *Notification) HasLanguage() bool`
+`func (o *BasicNotification) HasLanguage() bool`
 
 HasLanguage returns a boolean if a field has been set.
 
 ### GetAppVersion
 
-`func (o *Notification) GetAppVersion() string`
+`func (o *BasicNotification) GetAppVersion() string`
 
 GetAppVersion returns the AppVersion field if non-nil, zero value otherwise.
 
 ### GetAppVersionOk
 
-`func (o *Notification) GetAppVersionOk() (*string, bool)`
+`func (o *BasicNotification) GetAppVersionOk() (*string, bool)`
 
 GetAppVersionOk returns a tuple with the AppVersion field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAppVersion
 
-`func (o *Notification) SetAppVersion(v string)`
+`func (o *BasicNotification) SetAppVersion(v string)`
 
 SetAppVersion sets AppVersion field to given value.
 
 ### HasAppVersion
 
-`func (o *Notification) HasAppVersion() bool`
+`func (o *BasicNotification) HasAppVersion() bool`
 
 HasAppVersion returns a boolean if a field has been set.
 
 ### GetLocation
 
-`func (o *Notification) GetLocation() string`
+`func (o *BasicNotification) GetLocation() string`
 
 GetLocation returns the Location field if non-nil, zero value otherwise.
 
 ### GetLocationOk
 
-`func (o *Notification) GetLocationOk() (*string, bool)`
+`func (o *BasicNotification) GetLocationOk() (*string, bool)`
 
 GetLocationOk returns a tuple with the Location field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocation
 
-`func (o *Notification) SetLocation(v string)`
+`func (o *BasicNotification) SetLocation(v string)`
 
 SetLocation sets Location field to given value.
 
 ### HasLocation
 
-`func (o *Notification) HasLocation() bool`
+`func (o *BasicNotification) HasLocation() bool`
 
 HasLocation returns a boolean if a field has been set.
 
 ### GetEmail
 
-`func (o *Notification) GetEmail() string`
+`func (o *BasicNotification) GetEmail() string`
 
 GetEmail returns the Email field if non-nil, zero value otherwise.
 
 ### GetEmailOk
 
-`func (o *Notification) GetEmailOk() (*string, bool)`
+`func (o *BasicNotification) GetEmailOk() (*string, bool)`
 
 GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmail
 
-`func (o *Notification) SetEmail(v string)`
+`func (o *BasicNotification) SetEmail(v string)`
 
 SetEmail sets Email field to given value.
 
 ### HasEmail
 
-`func (o *Notification) HasEmail() bool`
+`func (o *BasicNotification) HasEmail() bool`
 
 HasEmail returns a boolean if a field has been set.
 
 ### GetCountry
 
-`func (o *Notification) GetCountry() string`
+`func (o *BasicNotification) GetCountry() string`
 
 GetCountry returns the Country field if non-nil, zero value otherwise.
 
 ### GetCountryOk
 
-`func (o *Notification) GetCountryOk() (*string, bool)`
+`func (o *BasicNotification) GetCountryOk() (*string, bool)`
 
 GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCountry
 
-`func (o *Notification) SetCountry(v string)`
+`func (o *BasicNotification) SetCountry(v string)`
 
 SetCountry sets Country field to given value.
 
 ### HasCountry
 
-`func (o *Notification) HasCountry() bool`
+`func (o *BasicNotification) HasCountry() bool`
 
 HasCountry returns a boolean if a field has been set.
 
 ### GetIncludePlayerIds
 
-`func (o *Notification) GetIncludePlayerIds() []string`
+`func (o *BasicNotification) GetIncludePlayerIds() []string`
 
 GetIncludePlayerIds returns the IncludePlayerIds field if non-nil, zero value otherwise.
 
 ### GetIncludePlayerIdsOk
 
-`func (o *Notification) GetIncludePlayerIdsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludePlayerIdsOk() (*[]string, bool)`
 
 GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludePlayerIds
 
-`func (o *Notification) SetIncludePlayerIds(v []string)`
+`func (o *BasicNotification) SetIncludePlayerIds(v []string)`
 
 SetIncludePlayerIds sets IncludePlayerIds field to given value.
 
 ### HasIncludePlayerIds
 
-`func (o *Notification) HasIncludePlayerIds() bool`
+`func (o *BasicNotification) HasIncludePlayerIds() bool`
 
 HasIncludePlayerIds returns a boolean if a field has been set.
 
 ### SetIncludePlayerIdsNil
 
-`func (o *Notification) SetIncludePlayerIdsNil(b bool)`
+`func (o *BasicNotification) SetIncludePlayerIdsNil(b bool)`
 
  SetIncludePlayerIdsNil sets the value for IncludePlayerIds to be an explicit nil
 
 ### UnsetIncludePlayerIds
-`func (o *Notification) UnsetIncludePlayerIds()`
+`func (o *BasicNotification) UnsetIncludePlayerIds()`
 
 UnsetIncludePlayerIds ensures that no value is present for IncludePlayerIds, not even an explicit nil
 ### GetIncludeExternalUserIds
 
-`func (o *Notification) GetIncludeExternalUserIds() []string`
+`func (o *BasicNotification) GetIncludeExternalUserIds() []string`
 
 GetIncludeExternalUserIds returns the IncludeExternalUserIds field if non-nil, zero value otherwise.
 
 ### GetIncludeExternalUserIdsOk
 
-`func (o *Notification) GetIncludeExternalUserIdsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeExternalUserIdsOk() (*[]string, bool)`
 
 GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeExternalUserIds
 
-`func (o *Notification) SetIncludeExternalUserIds(v []string)`
+`func (o *BasicNotification) SetIncludeExternalUserIds(v []string)`
 
 SetIncludeExternalUserIds sets IncludeExternalUserIds field to given value.
 
 ### HasIncludeExternalUserIds
 
-`func (o *Notification) HasIncludeExternalUserIds() bool`
+`func (o *BasicNotification) HasIncludeExternalUserIds() bool`
 
 HasIncludeExternalUserIds returns a boolean if a field has been set.
 
 ### SetIncludeExternalUserIdsNil
 
-`func (o *Notification) SetIncludeExternalUserIdsNil(b bool)`
+`func (o *BasicNotification) SetIncludeExternalUserIdsNil(b bool)`
 
  SetIncludeExternalUserIdsNil sets the value for IncludeExternalUserIds to be an explicit nil
 
 ### UnsetIncludeExternalUserIds
-`func (o *Notification) UnsetIncludeExternalUserIds()`
+`func (o *BasicNotification) UnsetIncludeExternalUserIds()`
 
 UnsetIncludeExternalUserIds ensures that no value is present for IncludeExternalUserIds, not even an explicit nil
 ### GetIncludeEmailTokens
 
-`func (o *Notification) GetIncludeEmailTokens() []string`
+`func (o *BasicNotification) GetIncludeEmailTokens() []string`
 
 GetIncludeEmailTokens returns the IncludeEmailTokens field if non-nil, zero value otherwise.
 
 ### GetIncludeEmailTokensOk
 
-`func (o *Notification) GetIncludeEmailTokensOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeEmailTokensOk() (*[]string, bool)`
 
 GetIncludeEmailTokensOk returns a tuple with the IncludeEmailTokens field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeEmailTokens
 
-`func (o *Notification) SetIncludeEmailTokens(v []string)`
+`func (o *BasicNotification) SetIncludeEmailTokens(v []string)`
 
 SetIncludeEmailTokens sets IncludeEmailTokens field to given value.
 
 ### HasIncludeEmailTokens
 
-`func (o *Notification) HasIncludeEmailTokens() bool`
+`func (o *BasicNotification) HasIncludeEmailTokens() bool`
 
 HasIncludeEmailTokens returns a boolean if a field has been set.
 
 ### GetIncludePhoneNumbers
 
-`func (o *Notification) GetIncludePhoneNumbers() []string`
+`func (o *BasicNotification) GetIncludePhoneNumbers() []string`
 
 GetIncludePhoneNumbers returns the IncludePhoneNumbers field if non-nil, zero value otherwise.
 
 ### GetIncludePhoneNumbersOk
 
-`func (o *Notification) GetIncludePhoneNumbersOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludePhoneNumbersOk() (*[]string, bool)`
 
 GetIncludePhoneNumbersOk returns a tuple with the IncludePhoneNumbers field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludePhoneNumbers
 
-`func (o *Notification) SetIncludePhoneNumbers(v []string)`
+`func (o *BasicNotification) SetIncludePhoneNumbers(v []string)`
 
 SetIncludePhoneNumbers sets IncludePhoneNumbers field to given value.
 
 ### HasIncludePhoneNumbers
 
-`func (o *Notification) HasIncludePhoneNumbers() bool`
+`func (o *BasicNotification) HasIncludePhoneNumbers() bool`
 
 HasIncludePhoneNumbers returns a boolean if a field has been set.
 
 ### GetIncludeIosTokens
 
-`func (o *Notification) GetIncludeIosTokens() []string`
+`func (o *BasicNotification) GetIncludeIosTokens() []string`
 
 GetIncludeIosTokens returns the IncludeIosTokens field if non-nil, zero value otherwise.
 
 ### GetIncludeIosTokensOk
 
-`func (o *Notification) GetIncludeIosTokensOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeIosTokensOk() (*[]string, bool)`
 
 GetIncludeIosTokensOk returns a tuple with the IncludeIosTokens field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeIosTokens
 
-`func (o *Notification) SetIncludeIosTokens(v []string)`
+`func (o *BasicNotification) SetIncludeIosTokens(v []string)`
 
 SetIncludeIosTokens sets IncludeIosTokens field to given value.
 
 ### HasIncludeIosTokens
 
-`func (o *Notification) HasIncludeIosTokens() bool`
+`func (o *BasicNotification) HasIncludeIosTokens() bool`
 
 HasIncludeIosTokens returns a boolean if a field has been set.
 
 ### GetIncludeWpWnsUris
 
-`func (o *Notification) GetIncludeWpWnsUris() []string`
+`func (o *BasicNotification) GetIncludeWpWnsUris() []string`
 
 GetIncludeWpWnsUris returns the IncludeWpWnsUris field if non-nil, zero value otherwise.
 
 ### GetIncludeWpWnsUrisOk
 
-`func (o *Notification) GetIncludeWpWnsUrisOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeWpWnsUrisOk() (*[]string, bool)`
 
 GetIncludeWpWnsUrisOk returns a tuple with the IncludeWpWnsUris field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeWpWnsUris
 
-`func (o *Notification) SetIncludeWpWnsUris(v []string)`
+`func (o *BasicNotification) SetIncludeWpWnsUris(v []string)`
 
 SetIncludeWpWnsUris sets IncludeWpWnsUris field to given value.
 
 ### HasIncludeWpWnsUris
 
-`func (o *Notification) HasIncludeWpWnsUris() bool`
+`func (o *BasicNotification) HasIncludeWpWnsUris() bool`
 
 HasIncludeWpWnsUris returns a boolean if a field has been set.
 
 ### GetIncludeAmazonRegIds
 
-`func (o *Notification) GetIncludeAmazonRegIds() []string`
+`func (o *BasicNotification) GetIncludeAmazonRegIds() []string`
 
 GetIncludeAmazonRegIds returns the IncludeAmazonRegIds field if non-nil, zero value otherwise.
 
 ### GetIncludeAmazonRegIdsOk
 
-`func (o *Notification) GetIncludeAmazonRegIdsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeAmazonRegIdsOk() (*[]string, bool)`
 
 GetIncludeAmazonRegIdsOk returns a tuple with the IncludeAmazonRegIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeAmazonRegIds
 
-`func (o *Notification) SetIncludeAmazonRegIds(v []string)`
+`func (o *BasicNotification) SetIncludeAmazonRegIds(v []string)`
 
 SetIncludeAmazonRegIds sets IncludeAmazonRegIds field to given value.
 
 ### HasIncludeAmazonRegIds
 
-`func (o *Notification) HasIncludeAmazonRegIds() bool`
+`func (o *BasicNotification) HasIncludeAmazonRegIds() bool`
 
 HasIncludeAmazonRegIds returns a boolean if a field has been set.
 
 ### GetIncludeChromeRegIds
 
-`func (o *Notification) GetIncludeChromeRegIds() []string`
+`func (o *BasicNotification) GetIncludeChromeRegIds() []string`
 
 GetIncludeChromeRegIds returns the IncludeChromeRegIds field if non-nil, zero value otherwise.
 
 ### GetIncludeChromeRegIdsOk
 
-`func (o *Notification) GetIncludeChromeRegIdsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeChromeRegIdsOk() (*[]string, bool)`
 
 GetIncludeChromeRegIdsOk returns a tuple with the IncludeChromeRegIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeChromeRegIds
 
-`func (o *Notification) SetIncludeChromeRegIds(v []string)`
+`func (o *BasicNotification) SetIncludeChromeRegIds(v []string)`
 
 SetIncludeChromeRegIds sets IncludeChromeRegIds field to given value.
 
 ### HasIncludeChromeRegIds
 
-`func (o *Notification) HasIncludeChromeRegIds() bool`
+`func (o *BasicNotification) HasIncludeChromeRegIds() bool`
 
 HasIncludeChromeRegIds returns a boolean if a field has been set.
 
 ### GetIncludeChromeWebRegIds
 
-`func (o *Notification) GetIncludeChromeWebRegIds() []string`
+`func (o *BasicNotification) GetIncludeChromeWebRegIds() []string`
 
 GetIncludeChromeWebRegIds returns the IncludeChromeWebRegIds field if non-nil, zero value otherwise.
 
 ### GetIncludeChromeWebRegIdsOk
 
-`func (o *Notification) GetIncludeChromeWebRegIdsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeChromeWebRegIdsOk() (*[]string, bool)`
 
 GetIncludeChromeWebRegIdsOk returns a tuple with the IncludeChromeWebRegIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeChromeWebRegIds
 
-`func (o *Notification) SetIncludeChromeWebRegIds(v []string)`
+`func (o *BasicNotification) SetIncludeChromeWebRegIds(v []string)`
 
 SetIncludeChromeWebRegIds sets IncludeChromeWebRegIds field to given value.
 
 ### HasIncludeChromeWebRegIds
 
-`func (o *Notification) HasIncludeChromeWebRegIds() bool`
+`func (o *BasicNotification) HasIncludeChromeWebRegIds() bool`
 
 HasIncludeChromeWebRegIds returns a boolean if a field has been set.
 
 ### GetIncludeAndroidRegIds
 
-`func (o *Notification) GetIncludeAndroidRegIds() []string`
+`func (o *BasicNotification) GetIncludeAndroidRegIds() []string`
 
 GetIncludeAndroidRegIds returns the IncludeAndroidRegIds field if non-nil, zero value otherwise.
 
 ### GetIncludeAndroidRegIdsOk
 
-`func (o *Notification) GetIncludeAndroidRegIdsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetIncludeAndroidRegIdsOk() (*[]string, bool)`
 
 GetIncludeAndroidRegIdsOk returns a tuple with the IncludeAndroidRegIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeAndroidRegIds
 
-`func (o *Notification) SetIncludeAndroidRegIds(v []string)`
+`func (o *BasicNotification) SetIncludeAndroidRegIds(v []string)`
 
 SetIncludeAndroidRegIds sets IncludeAndroidRegIds field to given value.
 
 ### HasIncludeAndroidRegIds
 
-`func (o *Notification) HasIncludeAndroidRegIds() bool`
+`func (o *BasicNotification) HasIncludeAndroidRegIds() bool`
 
 HasIncludeAndroidRegIds returns a boolean if a field has been set.
 
 ### GetId
 
-`func (o *Notification) GetId() string`
+`func (o *BasicNotification) GetId() string`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *Notification) GetIdOk() (*string, bool)`
+`func (o *BasicNotification) GetIdOk() (*string, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *Notification) SetId(v string)`
+`func (o *BasicNotification) SetId(v string)`
 
 SetId sets Id field to given value.
 
 ### HasId
 
-`func (o *Notification) HasId() bool`
+`func (o *BasicNotification) HasId() bool`
 
 HasId returns a boolean if a field has been set.
 
 ### GetValue
 
-`func (o *Notification) GetValue() int32`
+`func (o *BasicNotification) GetValue() int32`
 
 GetValue returns the Value field if non-nil, zero value otherwise.
 
 ### GetValueOk
 
-`func (o *Notification) GetValueOk() (*int32, bool)`
+`func (o *BasicNotification) GetValueOk() (*int32, bool)`
 
 GetValueOk returns a tuple with the Value field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValue
 
-`func (o *Notification) SetValue(v int32)`
+`func (o *BasicNotification) SetValue(v int32)`
 
 SetValue sets Value field to given value.
 
 ### HasValue
 
-`func (o *Notification) HasValue() bool`
+`func (o *BasicNotification) HasValue() bool`
 
 HasValue returns a boolean if a field has been set.
 
 ### GetName
 
-`func (o *Notification) GetName() string`
+`func (o *BasicNotification) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *Notification) GetNameOk() (*string, bool)`
+`func (o *BasicNotification) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *Notification) SetName(v string)`
+`func (o *BasicNotification) SetName(v string)`
 
 SetName sets Name field to given value.
 
 ### HasName
 
-`func (o *Notification) HasName() bool`
+`func (o *BasicNotification) HasName() bool`
 
 HasName returns a boolean if a field has been set.
 
 ### SetNameNil
 
-`func (o *Notification) SetNameNil(b bool)`
+`func (o *BasicNotification) SetNameNil(b bool)`
 
  SetNameNil sets the value for Name to be an explicit nil
 
 ### UnsetName
-`func (o *Notification) UnsetName()`
+`func (o *BasicNotification) UnsetName()`
 
 UnsetName ensures that no value is present for Name, not even an explicit nil
 ### GetAggregation
 
-`func (o *Notification) GetAggregation() string`
+`func (o *BasicNotification) GetAggregation() string`
 
 GetAggregation returns the Aggregation field if non-nil, zero value otherwise.
 
 ### GetAggregationOk
 
-`func (o *Notification) GetAggregationOk() (*string, bool)`
+`func (o *BasicNotification) GetAggregationOk() (*string, bool)`
 
 GetAggregationOk returns a tuple with the Aggregation field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAggregation
 
-`func (o *Notification) SetAggregation(v string)`
+`func (o *BasicNotification) SetAggregation(v string)`
 
 SetAggregation sets Aggregation field to given value.
 
 ### HasAggregation
 
-`func (o *Notification) HasAggregation() bool`
+`func (o *BasicNotification) HasAggregation() bool`
 
 HasAggregation returns a boolean if a field has been set.
 
 ### GetIsIos
 
-`func (o *Notification) GetIsIos() bool`
+`func (o *BasicNotification) GetIsIos() bool`
 
 GetIsIos returns the IsIos field if non-nil, zero value otherwise.
 
 ### GetIsIosOk
 
-`func (o *Notification) GetIsIosOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsIosOk() (*bool, bool)`
 
 GetIsIosOk returns a tuple with the IsIos field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsIos
 
-`func (o *Notification) SetIsIos(v bool)`
+`func (o *BasicNotification) SetIsIos(v bool)`
 
 SetIsIos sets IsIos field to given value.
 
 ### HasIsIos
 
-`func (o *Notification) HasIsIos() bool`
+`func (o *BasicNotification) HasIsIos() bool`
 
 HasIsIos returns a boolean if a field has been set.
 
 ### SetIsIosNil
 
-`func (o *Notification) SetIsIosNil(b bool)`
+`func (o *BasicNotification) SetIsIosNil(b bool)`
 
  SetIsIosNil sets the value for IsIos to be an explicit nil
 
 ### UnsetIsIos
-`func (o *Notification) UnsetIsIos()`
+`func (o *BasicNotification) UnsetIsIos()`
 
 UnsetIsIos ensures that no value is present for IsIos, not even an explicit nil
 ### GetIsAndroid
 
-`func (o *Notification) GetIsAndroid() bool`
+`func (o *BasicNotification) GetIsAndroid() bool`
 
 GetIsAndroid returns the IsAndroid field if non-nil, zero value otherwise.
 
 ### GetIsAndroidOk
 
-`func (o *Notification) GetIsAndroidOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsAndroidOk() (*bool, bool)`
 
 GetIsAndroidOk returns a tuple with the IsAndroid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsAndroid
 
-`func (o *Notification) SetIsAndroid(v bool)`
+`func (o *BasicNotification) SetIsAndroid(v bool)`
 
 SetIsAndroid sets IsAndroid field to given value.
 
 ### HasIsAndroid
 
-`func (o *Notification) HasIsAndroid() bool`
+`func (o *BasicNotification) HasIsAndroid() bool`
 
 HasIsAndroid returns a boolean if a field has been set.
 
 ### SetIsAndroidNil
 
-`func (o *Notification) SetIsAndroidNil(b bool)`
+`func (o *BasicNotification) SetIsAndroidNil(b bool)`
 
  SetIsAndroidNil sets the value for IsAndroid to be an explicit nil
 
 ### UnsetIsAndroid
-`func (o *Notification) UnsetIsAndroid()`
+`func (o *BasicNotification) UnsetIsAndroid()`
 
 UnsetIsAndroid ensures that no value is present for IsAndroid, not even an explicit nil
 ### GetIsHuawei
 
-`func (o *Notification) GetIsHuawei() bool`
+`func (o *BasicNotification) GetIsHuawei() bool`
 
 GetIsHuawei returns the IsHuawei field if non-nil, zero value otherwise.
 
 ### GetIsHuaweiOk
 
-`func (o *Notification) GetIsHuaweiOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsHuaweiOk() (*bool, bool)`
 
 GetIsHuaweiOk returns a tuple with the IsHuawei field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsHuawei
 
-`func (o *Notification) SetIsHuawei(v bool)`
+`func (o *BasicNotification) SetIsHuawei(v bool)`
 
 SetIsHuawei sets IsHuawei field to given value.
 
 ### HasIsHuawei
 
-`func (o *Notification) HasIsHuawei() bool`
+`func (o *BasicNotification) HasIsHuawei() bool`
 
 HasIsHuawei returns a boolean if a field has been set.
 
 ### SetIsHuaweiNil
 
-`func (o *Notification) SetIsHuaweiNil(b bool)`
+`func (o *BasicNotification) SetIsHuaweiNil(b bool)`
 
  SetIsHuaweiNil sets the value for IsHuawei to be an explicit nil
 
 ### UnsetIsHuawei
-`func (o *Notification) UnsetIsHuawei()`
+`func (o *BasicNotification) UnsetIsHuawei()`
 
 UnsetIsHuawei ensures that no value is present for IsHuawei, not even an explicit nil
 ### GetIsAnyWeb
 
-`func (o *Notification) GetIsAnyWeb() bool`
+`func (o *BasicNotification) GetIsAnyWeb() bool`
 
 GetIsAnyWeb returns the IsAnyWeb field if non-nil, zero value otherwise.
 
 ### GetIsAnyWebOk
 
-`func (o *Notification) GetIsAnyWebOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsAnyWebOk() (*bool, bool)`
 
 GetIsAnyWebOk returns a tuple with the IsAnyWeb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsAnyWeb
 
-`func (o *Notification) SetIsAnyWeb(v bool)`
+`func (o *BasicNotification) SetIsAnyWeb(v bool)`
 
 SetIsAnyWeb sets IsAnyWeb field to given value.
 
 ### HasIsAnyWeb
 
-`func (o *Notification) HasIsAnyWeb() bool`
+`func (o *BasicNotification) HasIsAnyWeb() bool`
 
 HasIsAnyWeb returns a boolean if a field has been set.
 
 ### SetIsAnyWebNil
 
-`func (o *Notification) SetIsAnyWebNil(b bool)`
+`func (o *BasicNotification) SetIsAnyWebNil(b bool)`
 
  SetIsAnyWebNil sets the value for IsAnyWeb to be an explicit nil
 
 ### UnsetIsAnyWeb
-`func (o *Notification) UnsetIsAnyWeb()`
+`func (o *BasicNotification) UnsetIsAnyWeb()`
 
 UnsetIsAnyWeb ensures that no value is present for IsAnyWeb, not even an explicit nil
 ### GetIsChromeWeb
 
-`func (o *Notification) GetIsChromeWeb() bool`
+`func (o *BasicNotification) GetIsChromeWeb() bool`
 
 GetIsChromeWeb returns the IsChromeWeb field if non-nil, zero value otherwise.
 
 ### GetIsChromeWebOk
 
-`func (o *Notification) GetIsChromeWebOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsChromeWebOk() (*bool, bool)`
 
 GetIsChromeWebOk returns a tuple with the IsChromeWeb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsChromeWeb
 
-`func (o *Notification) SetIsChromeWeb(v bool)`
+`func (o *BasicNotification) SetIsChromeWeb(v bool)`
 
 SetIsChromeWeb sets IsChromeWeb field to given value.
 
 ### HasIsChromeWeb
 
-`func (o *Notification) HasIsChromeWeb() bool`
+`func (o *BasicNotification) HasIsChromeWeb() bool`
 
 HasIsChromeWeb returns a boolean if a field has been set.
 
 ### SetIsChromeWebNil
 
-`func (o *Notification) SetIsChromeWebNil(b bool)`
+`func (o *BasicNotification) SetIsChromeWebNil(b bool)`
 
  SetIsChromeWebNil sets the value for IsChromeWeb to be an explicit nil
 
 ### UnsetIsChromeWeb
-`func (o *Notification) UnsetIsChromeWeb()`
+`func (o *BasicNotification) UnsetIsChromeWeb()`
 
 UnsetIsChromeWeb ensures that no value is present for IsChromeWeb, not even an explicit nil
 ### GetIsFirefox
 
-`func (o *Notification) GetIsFirefox() bool`
+`func (o *BasicNotification) GetIsFirefox() bool`
 
 GetIsFirefox returns the IsFirefox field if non-nil, zero value otherwise.
 
 ### GetIsFirefoxOk
 
-`func (o *Notification) GetIsFirefoxOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsFirefoxOk() (*bool, bool)`
 
 GetIsFirefoxOk returns a tuple with the IsFirefox field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsFirefox
 
-`func (o *Notification) SetIsFirefox(v bool)`
+`func (o *BasicNotification) SetIsFirefox(v bool)`
 
 SetIsFirefox sets IsFirefox field to given value.
 
 ### HasIsFirefox
 
-`func (o *Notification) HasIsFirefox() bool`
+`func (o *BasicNotification) HasIsFirefox() bool`
 
 HasIsFirefox returns a boolean if a field has been set.
 
 ### SetIsFirefoxNil
 
-`func (o *Notification) SetIsFirefoxNil(b bool)`
+`func (o *BasicNotification) SetIsFirefoxNil(b bool)`
 
  SetIsFirefoxNil sets the value for IsFirefox to be an explicit nil
 
 ### UnsetIsFirefox
-`func (o *Notification) UnsetIsFirefox()`
+`func (o *BasicNotification) UnsetIsFirefox()`
 
 UnsetIsFirefox ensures that no value is present for IsFirefox, not even an explicit nil
 ### GetIsSafari
 
-`func (o *Notification) GetIsSafari() bool`
+`func (o *BasicNotification) GetIsSafari() bool`
 
 GetIsSafari returns the IsSafari field if non-nil, zero value otherwise.
 
 ### GetIsSafariOk
 
-`func (o *Notification) GetIsSafariOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsSafariOk() (*bool, bool)`
 
 GetIsSafariOk returns a tuple with the IsSafari field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsSafari
 
-`func (o *Notification) SetIsSafari(v bool)`
+`func (o *BasicNotification) SetIsSafari(v bool)`
 
 SetIsSafari sets IsSafari field to given value.
 
 ### HasIsSafari
 
-`func (o *Notification) HasIsSafari() bool`
+`func (o *BasicNotification) HasIsSafari() bool`
 
 HasIsSafari returns a boolean if a field has been set.
 
 ### SetIsSafariNil
 
-`func (o *Notification) SetIsSafariNil(b bool)`
+`func (o *BasicNotification) SetIsSafariNil(b bool)`
 
  SetIsSafariNil sets the value for IsSafari to be an explicit nil
 
 ### UnsetIsSafari
-`func (o *Notification) UnsetIsSafari()`
+`func (o *BasicNotification) UnsetIsSafari()`
 
 UnsetIsSafari ensures that no value is present for IsSafari, not even an explicit nil
 ### GetIsWPWNS
 
-`func (o *Notification) GetIsWPWNS() bool`
+`func (o *BasicNotification) GetIsWPWNS() bool`
 
 GetIsWPWNS returns the IsWPWNS field if non-nil, zero value otherwise.
 
 ### GetIsWPWNSOk
 
-`func (o *Notification) GetIsWPWNSOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsWPWNSOk() (*bool, bool)`
 
 GetIsWPWNSOk returns a tuple with the IsWPWNS field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsWPWNS
 
-`func (o *Notification) SetIsWPWNS(v bool)`
+`func (o *BasicNotification) SetIsWPWNS(v bool)`
 
 SetIsWPWNS sets IsWPWNS field to given value.
 
 ### HasIsWPWNS
 
-`func (o *Notification) HasIsWPWNS() bool`
+`func (o *BasicNotification) HasIsWPWNS() bool`
 
 HasIsWPWNS returns a boolean if a field has been set.
 
 ### SetIsWPWNSNil
 
-`func (o *Notification) SetIsWPWNSNil(b bool)`
+`func (o *BasicNotification) SetIsWPWNSNil(b bool)`
 
  SetIsWPWNSNil sets the value for IsWPWNS to be an explicit nil
 
 ### UnsetIsWPWNS
-`func (o *Notification) UnsetIsWPWNS()`
+`func (o *BasicNotification) UnsetIsWPWNS()`
 
 UnsetIsWPWNS ensures that no value is present for IsWPWNS, not even an explicit nil
 ### GetIsAdm
 
-`func (o *Notification) GetIsAdm() bool`
+`func (o *BasicNotification) GetIsAdm() bool`
 
 GetIsAdm returns the IsAdm field if non-nil, zero value otherwise.
 
 ### GetIsAdmOk
 
-`func (o *Notification) GetIsAdmOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsAdmOk() (*bool, bool)`
 
 GetIsAdmOk returns a tuple with the IsAdm field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsAdm
 
-`func (o *Notification) SetIsAdm(v bool)`
+`func (o *BasicNotification) SetIsAdm(v bool)`
 
 SetIsAdm sets IsAdm field to given value.
 
 ### HasIsAdm
 
-`func (o *Notification) HasIsAdm() bool`
+`func (o *BasicNotification) HasIsAdm() bool`
 
 HasIsAdm returns a boolean if a field has been set.
 
 ### SetIsAdmNil
 
-`func (o *Notification) SetIsAdmNil(b bool)`
+`func (o *BasicNotification) SetIsAdmNil(b bool)`
 
  SetIsAdmNil sets the value for IsAdm to be an explicit nil
 
 ### UnsetIsAdm
-`func (o *Notification) UnsetIsAdm()`
+`func (o *BasicNotification) UnsetIsAdm()`
 
 UnsetIsAdm ensures that no value is present for IsAdm, not even an explicit nil
 ### GetIsChrome
 
-`func (o *Notification) GetIsChrome() bool`
+`func (o *BasicNotification) GetIsChrome() bool`
 
 GetIsChrome returns the IsChrome field if non-nil, zero value otherwise.
 
 ### GetIsChromeOk
 
-`func (o *Notification) GetIsChromeOk() (*bool, bool)`
+`func (o *BasicNotification) GetIsChromeOk() (*bool, bool)`
 
 GetIsChromeOk returns a tuple with the IsChrome field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsChrome
 
-`func (o *Notification) SetIsChrome(v bool)`
+`func (o *BasicNotification) SetIsChrome(v bool)`
 
 SetIsChrome sets IsChrome field to given value.
 
 ### HasIsChrome
 
-`func (o *Notification) HasIsChrome() bool`
+`func (o *BasicNotification) HasIsChrome() bool`
 
 HasIsChrome returns a boolean if a field has been set.
 
 ### SetIsChromeNil
 
-`func (o *Notification) SetIsChromeNil(b bool)`
+`func (o *BasicNotification) SetIsChromeNil(b bool)`
 
  SetIsChromeNil sets the value for IsChrome to be an explicit nil
 
 ### UnsetIsChrome
-`func (o *Notification) UnsetIsChrome()`
+`func (o *BasicNotification) UnsetIsChrome()`
 
 UnsetIsChrome ensures that no value is present for IsChrome, not even an explicit nil
 ### GetChannelForExternalUserIds
 
-`func (o *Notification) GetChannelForExternalUserIds() string`
+`func (o *BasicNotification) GetChannelForExternalUserIds() string`
 
 GetChannelForExternalUserIds returns the ChannelForExternalUserIds field if non-nil, zero value otherwise.
 
 ### GetChannelForExternalUserIdsOk
 
-`func (o *Notification) GetChannelForExternalUserIdsOk() (*string, bool)`
+`func (o *BasicNotification) GetChannelForExternalUserIdsOk() (*string, bool)`
 
 GetChannelForExternalUserIdsOk returns a tuple with the ChannelForExternalUserIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetChannelForExternalUserIds
 
-`func (o *Notification) SetChannelForExternalUserIds(v string)`
+`func (o *BasicNotification) SetChannelForExternalUserIds(v string)`
 
 SetChannelForExternalUserIds sets ChannelForExternalUserIds field to given value.
 
 ### HasChannelForExternalUserIds
 
-`func (o *Notification) HasChannelForExternalUserIds() bool`
+`func (o *BasicNotification) HasChannelForExternalUserIds() bool`
 
 HasChannelForExternalUserIds returns a boolean if a field has been set.
 
 ### GetAppId
 
-`func (o *Notification) GetAppId() string`
+`func (o *BasicNotification) GetAppId() string`
 
 GetAppId returns the AppId field if non-nil, zero value otherwise.
 
 ### GetAppIdOk
 
-`func (o *Notification) GetAppIdOk() (*string, bool)`
+`func (o *BasicNotification) GetAppIdOk() (*string, bool)`
 
 GetAppIdOk returns a tuple with the AppId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAppId
 
-`func (o *Notification) SetAppId(v string)`
+`func (o *BasicNotification) SetAppId(v string)`
 
 SetAppId sets AppId field to given value.
 
 
 ### GetExternalId
 
-`func (o *Notification) GetExternalId() string`
+`func (o *BasicNotification) GetExternalId() string`
 
 GetExternalId returns the ExternalId field if non-nil, zero value otherwise.
 
 ### GetExternalIdOk
 
-`func (o *Notification) GetExternalIdOk() (*string, bool)`
+`func (o *BasicNotification) GetExternalIdOk() (*string, bool)`
 
 GetExternalIdOk returns a tuple with the ExternalId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExternalId
 
-`func (o *Notification) SetExternalId(v string)`
+`func (o *BasicNotification) SetExternalId(v string)`
 
 SetExternalId sets ExternalId field to given value.
 
 ### HasExternalId
 
-`func (o *Notification) HasExternalId() bool`
+`func (o *BasicNotification) HasExternalId() bool`
 
 HasExternalId returns a boolean if a field has been set.
 
 ### GetContents
 
-`func (o *Notification) GetContents() StringMap`
+`func (o *BasicNotification) GetContents() StringMap`
 
 GetContents returns the Contents field if non-nil, zero value otherwise.
 
 ### GetContentsOk
 
-`func (o *Notification) GetContentsOk() (*StringMap, bool)`
+`func (o *BasicNotification) GetContentsOk() (*StringMap, bool)`
 
 GetContentsOk returns a tuple with the Contents field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContents
 
-`func (o *Notification) SetContents(v StringMap)`
+`func (o *BasicNotification) SetContents(v StringMap)`
 
 SetContents sets Contents field to given value.
 
 ### HasContents
 
-`func (o *Notification) HasContents() bool`
+`func (o *BasicNotification) HasContents() bool`
 
 HasContents returns a boolean if a field has been set.
 
 ### SetContentsNil
 
-`func (o *Notification) SetContentsNil(b bool)`
+`func (o *BasicNotification) SetContentsNil(b bool)`
 
  SetContentsNil sets the value for Contents to be an explicit nil
 
 ### UnsetContents
-`func (o *Notification) UnsetContents()`
+`func (o *BasicNotification) UnsetContents()`
 
 UnsetContents ensures that no value is present for Contents, not even an explicit nil
 ### GetHeadings
 
-`func (o *Notification) GetHeadings() StringMap`
+`func (o *BasicNotification) GetHeadings() StringMap`
 
 GetHeadings returns the Headings field if non-nil, zero value otherwise.
 
 ### GetHeadingsOk
 
-`func (o *Notification) GetHeadingsOk() (*StringMap, bool)`
+`func (o *BasicNotification) GetHeadingsOk() (*StringMap, bool)`
 
 GetHeadingsOk returns a tuple with the Headings field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHeadings
 
-`func (o *Notification) SetHeadings(v StringMap)`
+`func (o *BasicNotification) SetHeadings(v StringMap)`
 
 SetHeadings sets Headings field to given value.
 
 ### HasHeadings
 
-`func (o *Notification) HasHeadings() bool`
+`func (o *BasicNotification) HasHeadings() bool`
 
 HasHeadings returns a boolean if a field has been set.
 
 ### SetHeadingsNil
 
-`func (o *Notification) SetHeadingsNil(b bool)`
+`func (o *BasicNotification) SetHeadingsNil(b bool)`
 
  SetHeadingsNil sets the value for Headings to be an explicit nil
 
 ### UnsetHeadings
-`func (o *Notification) UnsetHeadings()`
+`func (o *BasicNotification) UnsetHeadings()`
 
 UnsetHeadings ensures that no value is present for Headings, not even an explicit nil
 ### GetSubtitle
 
-`func (o *Notification) GetSubtitle() StringMap`
+`func (o *BasicNotification) GetSubtitle() StringMap`
 
 GetSubtitle returns the Subtitle field if non-nil, zero value otherwise.
 
 ### GetSubtitleOk
 
-`func (o *Notification) GetSubtitleOk() (*StringMap, bool)`
+`func (o *BasicNotification) GetSubtitleOk() (*StringMap, bool)`
 
 GetSubtitleOk returns a tuple with the Subtitle field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSubtitle
 
-`func (o *Notification) SetSubtitle(v StringMap)`
+`func (o *BasicNotification) SetSubtitle(v StringMap)`
 
 SetSubtitle sets Subtitle field to given value.
 
 ### HasSubtitle
 
-`func (o *Notification) HasSubtitle() bool`
+`func (o *BasicNotification) HasSubtitle() bool`
 
 HasSubtitle returns a boolean if a field has been set.
 
 ### SetSubtitleNil
 
-`func (o *Notification) SetSubtitleNil(b bool)`
+`func (o *BasicNotification) SetSubtitleNil(b bool)`
 
  SetSubtitleNil sets the value for Subtitle to be an explicit nil
 
 ### UnsetSubtitle
-`func (o *Notification) UnsetSubtitle()`
+`func (o *BasicNotification) UnsetSubtitle()`
 
 UnsetSubtitle ensures that no value is present for Subtitle, not even an explicit nil
 ### GetData
 
-`func (o *Notification) GetData() map[string]interface{}`
+`func (o *BasicNotification) GetData() map[string]interface{}`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *Notification) GetDataOk() (*map[string]interface{}, bool)`
+`func (o *BasicNotification) GetDataOk() (*map[string]interface{}, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *Notification) SetData(v map[string]interface{})`
+`func (o *BasicNotification) SetData(v map[string]interface{})`
 
 SetData sets Data field to given value.
 
 ### HasData
 
-`func (o *Notification) HasData() bool`
+`func (o *BasicNotification) HasData() bool`
 
 HasData returns a boolean if a field has been set.
 
 ### SetDataNil
 
-`func (o *Notification) SetDataNil(b bool)`
+`func (o *BasicNotification) SetDataNil(b bool)`
 
  SetDataNil sets the value for Data to be an explicit nil
 
 ### UnsetData
-`func (o *Notification) UnsetData()`
+`func (o *BasicNotification) UnsetData()`
 
 UnsetData ensures that no value is present for Data, not even an explicit nil
 ### GetHuaweiMsgType
 
-`func (o *Notification) GetHuaweiMsgType() string`
+`func (o *BasicNotification) GetHuaweiMsgType() string`
 
 GetHuaweiMsgType returns the HuaweiMsgType field if non-nil, zero value otherwise.
 
 ### GetHuaweiMsgTypeOk
 
-`func (o *Notification) GetHuaweiMsgTypeOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiMsgTypeOk() (*string, bool)`
 
 GetHuaweiMsgTypeOk returns a tuple with the HuaweiMsgType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiMsgType
 
-`func (o *Notification) SetHuaweiMsgType(v string)`
+`func (o *BasicNotification) SetHuaweiMsgType(v string)`
 
 SetHuaweiMsgType sets HuaweiMsgType field to given value.
 
 ### HasHuaweiMsgType
 
-`func (o *Notification) HasHuaweiMsgType() bool`
+`func (o *BasicNotification) HasHuaweiMsgType() bool`
 
 HasHuaweiMsgType returns a boolean if a field has been set.
 
 ### SetHuaweiMsgTypeNil
 
-`func (o *Notification) SetHuaweiMsgTypeNil(b bool)`
+`func (o *BasicNotification) SetHuaweiMsgTypeNil(b bool)`
 
  SetHuaweiMsgTypeNil sets the value for HuaweiMsgType to be an explicit nil
 
 ### UnsetHuaweiMsgType
-`func (o *Notification) UnsetHuaweiMsgType()`
+`func (o *BasicNotification) UnsetHuaweiMsgType()`
 
 UnsetHuaweiMsgType ensures that no value is present for HuaweiMsgType, not even an explicit nil
 ### GetUrl
 
-`func (o *Notification) GetUrl() string`
+`func (o *BasicNotification) GetUrl() string`
 
 GetUrl returns the Url field if non-nil, zero value otherwise.
 
 ### GetUrlOk
 
-`func (o *Notification) GetUrlOk() (*string, bool)`
+`func (o *BasicNotification) GetUrlOk() (*string, bool)`
 
 GetUrlOk returns a tuple with the Url field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUrl
 
-`func (o *Notification) SetUrl(v string)`
+`func (o *BasicNotification) SetUrl(v string)`
 
 SetUrl sets Url field to given value.
 
 ### HasUrl
 
-`func (o *Notification) HasUrl() bool`
+`func (o *BasicNotification) HasUrl() bool`
 
 HasUrl returns a boolean if a field has been set.
 
 ### SetUrlNil
 
-`func (o *Notification) SetUrlNil(b bool)`
+`func (o *BasicNotification) SetUrlNil(b bool)`
 
  SetUrlNil sets the value for Url to be an explicit nil
 
 ### UnsetUrl
-`func (o *Notification) UnsetUrl()`
+`func (o *BasicNotification) UnsetUrl()`
 
 UnsetUrl ensures that no value is present for Url, not even an explicit nil
 ### GetWebUrl
 
-`func (o *Notification) GetWebUrl() string`
+`func (o *BasicNotification) GetWebUrl() string`
 
 GetWebUrl returns the WebUrl field if non-nil, zero value otherwise.
 
 ### GetWebUrlOk
 
-`func (o *Notification) GetWebUrlOk() (*string, bool)`
+`func (o *BasicNotification) GetWebUrlOk() (*string, bool)`
 
 GetWebUrlOk returns a tuple with the WebUrl field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWebUrl
 
-`func (o *Notification) SetWebUrl(v string)`
+`func (o *BasicNotification) SetWebUrl(v string)`
 
 SetWebUrl sets WebUrl field to given value.
 
 ### HasWebUrl
 
-`func (o *Notification) HasWebUrl() bool`
+`func (o *BasicNotification) HasWebUrl() bool`
 
 HasWebUrl returns a boolean if a field has been set.
 
 ### SetWebUrlNil
 
-`func (o *Notification) SetWebUrlNil(b bool)`
+`func (o *BasicNotification) SetWebUrlNil(b bool)`
 
  SetWebUrlNil sets the value for WebUrl to be an explicit nil
 
 ### UnsetWebUrl
-`func (o *Notification) UnsetWebUrl()`
+`func (o *BasicNotification) UnsetWebUrl()`
 
 UnsetWebUrl ensures that no value is present for WebUrl, not even an explicit nil
 ### GetAppUrl
 
-`func (o *Notification) GetAppUrl() string`
+`func (o *BasicNotification) GetAppUrl() string`
 
 GetAppUrl returns the AppUrl field if non-nil, zero value otherwise.
 
 ### GetAppUrlOk
 
-`func (o *Notification) GetAppUrlOk() (*string, bool)`
+`func (o *BasicNotification) GetAppUrlOk() (*string, bool)`
 
 GetAppUrlOk returns a tuple with the AppUrl field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAppUrl
 
-`func (o *Notification) SetAppUrl(v string)`
+`func (o *BasicNotification) SetAppUrl(v string)`
 
 SetAppUrl sets AppUrl field to given value.
 
 ### HasAppUrl
 
-`func (o *Notification) HasAppUrl() bool`
+`func (o *BasicNotification) HasAppUrl() bool`
 
 HasAppUrl returns a boolean if a field has been set.
 
 ### SetAppUrlNil
 
-`func (o *Notification) SetAppUrlNil(b bool)`
+`func (o *BasicNotification) SetAppUrlNil(b bool)`
 
  SetAppUrlNil sets the value for AppUrl to be an explicit nil
 
 ### UnsetAppUrl
-`func (o *Notification) UnsetAppUrl()`
+`func (o *BasicNotification) UnsetAppUrl()`
 
 UnsetAppUrl ensures that no value is present for AppUrl, not even an explicit nil
 ### GetIosAttachments
 
-`func (o *Notification) GetIosAttachments() map[string]interface{}`
+`func (o *BasicNotification) GetIosAttachments() map[string]interface{}`
 
 GetIosAttachments returns the IosAttachments field if non-nil, zero value otherwise.
 
 ### GetIosAttachmentsOk
 
-`func (o *Notification) GetIosAttachmentsOk() (*map[string]interface{}, bool)`
+`func (o *BasicNotification) GetIosAttachmentsOk() (*map[string]interface{}, bool)`
 
 GetIosAttachmentsOk returns a tuple with the IosAttachments field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIosAttachments
 
-`func (o *Notification) SetIosAttachments(v map[string]interface{})`
+`func (o *BasicNotification) SetIosAttachments(v map[string]interface{})`
 
 SetIosAttachments sets IosAttachments field to given value.
 
 ### HasIosAttachments
 
-`func (o *Notification) HasIosAttachments() bool`
+`func (o *BasicNotification) HasIosAttachments() bool`
 
 HasIosAttachments returns a boolean if a field has been set.
 
 ### SetIosAttachmentsNil
 
-`func (o *Notification) SetIosAttachmentsNil(b bool)`
+`func (o *BasicNotification) SetIosAttachmentsNil(b bool)`
 
  SetIosAttachmentsNil sets the value for IosAttachments to be an explicit nil
 
 ### UnsetIosAttachments
-`func (o *Notification) UnsetIosAttachments()`
+`func (o *BasicNotification) UnsetIosAttachments()`
 
 UnsetIosAttachments ensures that no value is present for IosAttachments, not even an explicit nil
 ### GetTemplateId
 
-`func (o *Notification) GetTemplateId() string`
+`func (o *BasicNotification) GetTemplateId() string`
 
 GetTemplateId returns the TemplateId field if non-nil, zero value otherwise.
 
 ### GetTemplateIdOk
 
-`func (o *Notification) GetTemplateIdOk() (*string, bool)`
+`func (o *BasicNotification) GetTemplateIdOk() (*string, bool)`
 
 GetTemplateIdOk returns a tuple with the TemplateId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTemplateId
 
-`func (o *Notification) SetTemplateId(v string)`
+`func (o *BasicNotification) SetTemplateId(v string)`
 
 SetTemplateId sets TemplateId field to given value.
 
 ### HasTemplateId
 
-`func (o *Notification) HasTemplateId() bool`
+`func (o *BasicNotification) HasTemplateId() bool`
 
 HasTemplateId returns a boolean if a field has been set.
 
 ### SetTemplateIdNil
 
-`func (o *Notification) SetTemplateIdNil(b bool)`
+`func (o *BasicNotification) SetTemplateIdNil(b bool)`
 
  SetTemplateIdNil sets the value for TemplateId to be an explicit nil
 
 ### UnsetTemplateId
-`func (o *Notification) UnsetTemplateId()`
+`func (o *BasicNotification) UnsetTemplateId()`
 
 UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
 ### GetContentAvailable
 
-`func (o *Notification) GetContentAvailable() bool`
+`func (o *BasicNotification) GetContentAvailable() bool`
 
 GetContentAvailable returns the ContentAvailable field if non-nil, zero value otherwise.
 
 ### GetContentAvailableOk
 
-`func (o *Notification) GetContentAvailableOk() (*bool, bool)`
+`func (o *BasicNotification) GetContentAvailableOk() (*bool, bool)`
 
 GetContentAvailableOk returns a tuple with the ContentAvailable field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContentAvailable
 
-`func (o *Notification) SetContentAvailable(v bool)`
+`func (o *BasicNotification) SetContentAvailable(v bool)`
 
 SetContentAvailable sets ContentAvailable field to given value.
 
 ### HasContentAvailable
 
-`func (o *Notification) HasContentAvailable() bool`
+`func (o *BasicNotification) HasContentAvailable() bool`
 
 HasContentAvailable returns a boolean if a field has been set.
 
 ### SetContentAvailableNil
 
-`func (o *Notification) SetContentAvailableNil(b bool)`
+`func (o *BasicNotification) SetContentAvailableNil(b bool)`
 
  SetContentAvailableNil sets the value for ContentAvailable to be an explicit nil
 
 ### UnsetContentAvailable
-`func (o *Notification) UnsetContentAvailable()`
+`func (o *BasicNotification) UnsetContentAvailable()`
 
 UnsetContentAvailable ensures that no value is present for ContentAvailable, not even an explicit nil
 ### GetMutableContent
 
-`func (o *Notification) GetMutableContent() bool`
+`func (o *BasicNotification) GetMutableContent() bool`
 
 GetMutableContent returns the MutableContent field if non-nil, zero value otherwise.
 
 ### GetMutableContentOk
 
-`func (o *Notification) GetMutableContentOk() (*bool, bool)`
+`func (o *BasicNotification) GetMutableContentOk() (*bool, bool)`
 
 GetMutableContentOk returns a tuple with the MutableContent field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMutableContent
 
-`func (o *Notification) SetMutableContent(v bool)`
+`func (o *BasicNotification) SetMutableContent(v bool)`
 
 SetMutableContent sets MutableContent field to given value.
 
 ### HasMutableContent
 
-`func (o *Notification) HasMutableContent() bool`
+`func (o *BasicNotification) HasMutableContent() bool`
 
 HasMutableContent returns a boolean if a field has been set.
 
 ### GetTargetContentIdentifier
 
-`func (o *Notification) GetTargetContentIdentifier() string`
+`func (o *BasicNotification) GetTargetContentIdentifier() string`
 
 GetTargetContentIdentifier returns the TargetContentIdentifier field if non-nil, zero value otherwise.
 
 ### GetTargetContentIdentifierOk
 
-`func (o *Notification) GetTargetContentIdentifierOk() (*string, bool)`
+`func (o *BasicNotification) GetTargetContentIdentifierOk() (*string, bool)`
 
 GetTargetContentIdentifierOk returns a tuple with the TargetContentIdentifier field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTargetContentIdentifier
 
-`func (o *Notification) SetTargetContentIdentifier(v string)`
+`func (o *BasicNotification) SetTargetContentIdentifier(v string)`
 
 SetTargetContentIdentifier sets TargetContentIdentifier field to given value.
 
 ### HasTargetContentIdentifier
 
-`func (o *Notification) HasTargetContentIdentifier() bool`
+`func (o *BasicNotification) HasTargetContentIdentifier() bool`
 
 HasTargetContentIdentifier returns a boolean if a field has been set.
 
 ### SetTargetContentIdentifierNil
 
-`func (o *Notification) SetTargetContentIdentifierNil(b bool)`
+`func (o *BasicNotification) SetTargetContentIdentifierNil(b bool)`
 
  SetTargetContentIdentifierNil sets the value for TargetContentIdentifier to be an explicit nil
 
 ### UnsetTargetContentIdentifier
-`func (o *Notification) UnsetTargetContentIdentifier()`
+`func (o *BasicNotification) UnsetTargetContentIdentifier()`
 
 UnsetTargetContentIdentifier ensures that no value is present for TargetContentIdentifier, not even an explicit nil
 ### GetBigPicture
 
-`func (o *Notification) GetBigPicture() string`
+`func (o *BasicNotification) GetBigPicture() string`
 
 GetBigPicture returns the BigPicture field if non-nil, zero value otherwise.
 
 ### GetBigPictureOk
 
-`func (o *Notification) GetBigPictureOk() (*string, bool)`
+`func (o *BasicNotification) GetBigPictureOk() (*string, bool)`
 
 GetBigPictureOk returns a tuple with the BigPicture field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBigPicture
 
-`func (o *Notification) SetBigPicture(v string)`
+`func (o *BasicNotification) SetBigPicture(v string)`
 
 SetBigPicture sets BigPicture field to given value.
 
 ### HasBigPicture
 
-`func (o *Notification) HasBigPicture() bool`
+`func (o *BasicNotification) HasBigPicture() bool`
 
 HasBigPicture returns a boolean if a field has been set.
 
 ### SetBigPictureNil
 
-`func (o *Notification) SetBigPictureNil(b bool)`
+`func (o *BasicNotification) SetBigPictureNil(b bool)`
 
  SetBigPictureNil sets the value for BigPicture to be an explicit nil
 
 ### UnsetBigPicture
-`func (o *Notification) UnsetBigPicture()`
+`func (o *BasicNotification) UnsetBigPicture()`
 
 UnsetBigPicture ensures that no value is present for BigPicture, not even an explicit nil
 ### GetHuaweiBigPicture
 
-`func (o *Notification) GetHuaweiBigPicture() string`
+`func (o *BasicNotification) GetHuaweiBigPicture() string`
 
 GetHuaweiBigPicture returns the HuaweiBigPicture field if non-nil, zero value otherwise.
 
 ### GetHuaweiBigPictureOk
 
-`func (o *Notification) GetHuaweiBigPictureOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiBigPictureOk() (*string, bool)`
 
 GetHuaweiBigPictureOk returns a tuple with the HuaweiBigPicture field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiBigPicture
 
-`func (o *Notification) SetHuaweiBigPicture(v string)`
+`func (o *BasicNotification) SetHuaweiBigPicture(v string)`
 
 SetHuaweiBigPicture sets HuaweiBigPicture field to given value.
 
 ### HasHuaweiBigPicture
 
-`func (o *Notification) HasHuaweiBigPicture() bool`
+`func (o *BasicNotification) HasHuaweiBigPicture() bool`
 
 HasHuaweiBigPicture returns a boolean if a field has been set.
 
 ### SetHuaweiBigPictureNil
 
-`func (o *Notification) SetHuaweiBigPictureNil(b bool)`
+`func (o *BasicNotification) SetHuaweiBigPictureNil(b bool)`
 
  SetHuaweiBigPictureNil sets the value for HuaweiBigPicture to be an explicit nil
 
 ### UnsetHuaweiBigPicture
-`func (o *Notification) UnsetHuaweiBigPicture()`
+`func (o *BasicNotification) UnsetHuaweiBigPicture()`
 
 UnsetHuaweiBigPicture ensures that no value is present for HuaweiBigPicture, not even an explicit nil
 ### GetAdmBigPicture
 
-`func (o *Notification) GetAdmBigPicture() string`
+`func (o *BasicNotification) GetAdmBigPicture() string`
 
 GetAdmBigPicture returns the AdmBigPicture field if non-nil, zero value otherwise.
 
 ### GetAdmBigPictureOk
 
-`func (o *Notification) GetAdmBigPictureOk() (*string, bool)`
+`func (o *BasicNotification) GetAdmBigPictureOk() (*string, bool)`
 
 GetAdmBigPictureOk returns a tuple with the AdmBigPicture field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdmBigPicture
 
-`func (o *Notification) SetAdmBigPicture(v string)`
+`func (o *BasicNotification) SetAdmBigPicture(v string)`
 
 SetAdmBigPicture sets AdmBigPicture field to given value.
 
 ### HasAdmBigPicture
 
-`func (o *Notification) HasAdmBigPicture() bool`
+`func (o *BasicNotification) HasAdmBigPicture() bool`
 
 HasAdmBigPicture returns a boolean if a field has been set.
 
 ### SetAdmBigPictureNil
 
-`func (o *Notification) SetAdmBigPictureNil(b bool)`
+`func (o *BasicNotification) SetAdmBigPictureNil(b bool)`
 
  SetAdmBigPictureNil sets the value for AdmBigPicture to be an explicit nil
 
 ### UnsetAdmBigPicture
-`func (o *Notification) UnsetAdmBigPicture()`
+`func (o *BasicNotification) UnsetAdmBigPicture()`
 
 UnsetAdmBigPicture ensures that no value is present for AdmBigPicture, not even an explicit nil
 ### GetChromeBigPicture
 
-`func (o *Notification) GetChromeBigPicture() string`
+`func (o *BasicNotification) GetChromeBigPicture() string`
 
 GetChromeBigPicture returns the ChromeBigPicture field if non-nil, zero value otherwise.
 
 ### GetChromeBigPictureOk
 
-`func (o *Notification) GetChromeBigPictureOk() (*string, bool)`
+`func (o *BasicNotification) GetChromeBigPictureOk() (*string, bool)`
 
 GetChromeBigPictureOk returns a tuple with the ChromeBigPicture field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetChromeBigPicture
 
-`func (o *Notification) SetChromeBigPicture(v string)`
+`func (o *BasicNotification) SetChromeBigPicture(v string)`
 
 SetChromeBigPicture sets ChromeBigPicture field to given value.
 
 ### HasChromeBigPicture
 
-`func (o *Notification) HasChromeBigPicture() bool`
+`func (o *BasicNotification) HasChromeBigPicture() bool`
 
 HasChromeBigPicture returns a boolean if a field has been set.
 
 ### SetChromeBigPictureNil
 
-`func (o *Notification) SetChromeBigPictureNil(b bool)`
+`func (o *BasicNotification) SetChromeBigPictureNil(b bool)`
 
  SetChromeBigPictureNil sets the value for ChromeBigPicture to be an explicit nil
 
 ### UnsetChromeBigPicture
-`func (o *Notification) UnsetChromeBigPicture()`
+`func (o *BasicNotification) UnsetChromeBigPicture()`
 
 UnsetChromeBigPicture ensures that no value is present for ChromeBigPicture, not even an explicit nil
 ### GetChromeWebImage
 
-`func (o *Notification) GetChromeWebImage() string`
+`func (o *BasicNotification) GetChromeWebImage() string`
 
 GetChromeWebImage returns the ChromeWebImage field if non-nil, zero value otherwise.
 
 ### GetChromeWebImageOk
 
-`func (o *Notification) GetChromeWebImageOk() (*string, bool)`
+`func (o *BasicNotification) GetChromeWebImageOk() (*string, bool)`
 
 GetChromeWebImageOk returns a tuple with the ChromeWebImage field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetChromeWebImage
 
-`func (o *Notification) SetChromeWebImage(v string)`
+`func (o *BasicNotification) SetChromeWebImage(v string)`
 
 SetChromeWebImage sets ChromeWebImage field to given value.
 
 ### HasChromeWebImage
 
-`func (o *Notification) HasChromeWebImage() bool`
+`func (o *BasicNotification) HasChromeWebImage() bool`
 
 HasChromeWebImage returns a boolean if a field has been set.
 
 ### SetChromeWebImageNil
 
-`func (o *Notification) SetChromeWebImageNil(b bool)`
+`func (o *BasicNotification) SetChromeWebImageNil(b bool)`
 
  SetChromeWebImageNil sets the value for ChromeWebImage to be an explicit nil
 
 ### UnsetChromeWebImage
-`func (o *Notification) UnsetChromeWebImage()`
+`func (o *BasicNotification) UnsetChromeWebImage()`
 
 UnsetChromeWebImage ensures that no value is present for ChromeWebImage, not even an explicit nil
 ### GetButtons
 
-`func (o *Notification) GetButtons() []Button`
+`func (o *BasicNotification) GetButtons() []Button`
 
 GetButtons returns the Buttons field if non-nil, zero value otherwise.
 
 ### GetButtonsOk
 
-`func (o *Notification) GetButtonsOk() (*[]Button, bool)`
+`func (o *BasicNotification) GetButtonsOk() (*[]Button, bool)`
 
 GetButtonsOk returns a tuple with the Buttons field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetButtons
 
-`func (o *Notification) SetButtons(v []Button)`
+`func (o *BasicNotification) SetButtons(v []Button)`
 
 SetButtons sets Buttons field to given value.
 
 ### HasButtons
 
-`func (o *Notification) HasButtons() bool`
+`func (o *BasicNotification) HasButtons() bool`
 
 HasButtons returns a boolean if a field has been set.
 
 ### SetButtonsNil
 
-`func (o *Notification) SetButtonsNil(b bool)`
+`func (o *BasicNotification) SetButtonsNil(b bool)`
 
  SetButtonsNil sets the value for Buttons to be an explicit nil
 
 ### UnsetButtons
-`func (o *Notification) UnsetButtons()`
+`func (o *BasicNotification) UnsetButtons()`
 
 UnsetButtons ensures that no value is present for Buttons, not even an explicit nil
 ### GetWebButtons
 
-`func (o *Notification) GetWebButtons() []Button`
+`func (o *BasicNotification) GetWebButtons() []Button`
 
 GetWebButtons returns the WebButtons field if non-nil, zero value otherwise.
 
 ### GetWebButtonsOk
 
-`func (o *Notification) GetWebButtonsOk() (*[]Button, bool)`
+`func (o *BasicNotification) GetWebButtonsOk() (*[]Button, bool)`
 
 GetWebButtonsOk returns a tuple with the WebButtons field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWebButtons
 
-`func (o *Notification) SetWebButtons(v []Button)`
+`func (o *BasicNotification) SetWebButtons(v []Button)`
 
 SetWebButtons sets WebButtons field to given value.
 
 ### HasWebButtons
 
-`func (o *Notification) HasWebButtons() bool`
+`func (o *BasicNotification) HasWebButtons() bool`
 
 HasWebButtons returns a boolean if a field has been set.
 
 ### SetWebButtonsNil
 
-`func (o *Notification) SetWebButtonsNil(b bool)`
+`func (o *BasicNotification) SetWebButtonsNil(b bool)`
 
  SetWebButtonsNil sets the value for WebButtons to be an explicit nil
 
 ### UnsetWebButtons
-`func (o *Notification) UnsetWebButtons()`
+`func (o *BasicNotification) UnsetWebButtons()`
 
 UnsetWebButtons ensures that no value is present for WebButtons, not even an explicit nil
 ### GetIosCategory
 
-`func (o *Notification) GetIosCategory() string`
+`func (o *BasicNotification) GetIosCategory() string`
 
 GetIosCategory returns the IosCategory field if non-nil, zero value otherwise.
 
 ### GetIosCategoryOk
 
-`func (o *Notification) GetIosCategoryOk() (*string, bool)`
+`func (o *BasicNotification) GetIosCategoryOk() (*string, bool)`
 
 GetIosCategoryOk returns a tuple with the IosCategory field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIosCategory
 
-`func (o *Notification) SetIosCategory(v string)`
+`func (o *BasicNotification) SetIosCategory(v string)`
 
 SetIosCategory sets IosCategory field to given value.
 
 ### HasIosCategory
 
-`func (o *Notification) HasIosCategory() bool`
+`func (o *BasicNotification) HasIosCategory() bool`
 
 HasIosCategory returns a boolean if a field has been set.
 
 ### SetIosCategoryNil
 
-`func (o *Notification) SetIosCategoryNil(b bool)`
+`func (o *BasicNotification) SetIosCategoryNil(b bool)`
 
  SetIosCategoryNil sets the value for IosCategory to be an explicit nil
 
 ### UnsetIosCategory
-`func (o *Notification) UnsetIosCategory()`
+`func (o *BasicNotification) UnsetIosCategory()`
 
 UnsetIosCategory ensures that no value is present for IosCategory, not even an explicit nil
 ### GetAndroidChannelId
 
-`func (o *Notification) GetAndroidChannelId() string`
+`func (o *BasicNotification) GetAndroidChannelId() string`
 
 GetAndroidChannelId returns the AndroidChannelId field if non-nil, zero value otherwise.
 
 ### GetAndroidChannelIdOk
 
-`func (o *Notification) GetAndroidChannelIdOk() (*string, bool)`
+`func (o *BasicNotification) GetAndroidChannelIdOk() (*string, bool)`
 
 GetAndroidChannelIdOk returns a tuple with the AndroidChannelId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidChannelId
 
-`func (o *Notification) SetAndroidChannelId(v string)`
+`func (o *BasicNotification) SetAndroidChannelId(v string)`
 
 SetAndroidChannelId sets AndroidChannelId field to given value.
 
 ### HasAndroidChannelId
 
-`func (o *Notification) HasAndroidChannelId() bool`
+`func (o *BasicNotification) HasAndroidChannelId() bool`
 
 HasAndroidChannelId returns a boolean if a field has been set.
 
 ### GetHuaweiChannelId
 
-`func (o *Notification) GetHuaweiChannelId() string`
+`func (o *BasicNotification) GetHuaweiChannelId() string`
 
 GetHuaweiChannelId returns the HuaweiChannelId field if non-nil, zero value otherwise.
 
 ### GetHuaweiChannelIdOk
 
-`func (o *Notification) GetHuaweiChannelIdOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiChannelIdOk() (*string, bool)`
 
 GetHuaweiChannelIdOk returns a tuple with the HuaweiChannelId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiChannelId
 
-`func (o *Notification) SetHuaweiChannelId(v string)`
+`func (o *BasicNotification) SetHuaweiChannelId(v string)`
 
 SetHuaweiChannelId sets HuaweiChannelId field to given value.
 
 ### HasHuaweiChannelId
 
-`func (o *Notification) HasHuaweiChannelId() bool`
+`func (o *BasicNotification) HasHuaweiChannelId() bool`
 
 HasHuaweiChannelId returns a boolean if a field has been set.
 
 ### SetHuaweiChannelIdNil
 
-`func (o *Notification) SetHuaweiChannelIdNil(b bool)`
+`func (o *BasicNotification) SetHuaweiChannelIdNil(b bool)`
 
  SetHuaweiChannelIdNil sets the value for HuaweiChannelId to be an explicit nil
 
 ### UnsetHuaweiChannelId
-`func (o *Notification) UnsetHuaweiChannelId()`
+`func (o *BasicNotification) UnsetHuaweiChannelId()`
 
 UnsetHuaweiChannelId ensures that no value is present for HuaweiChannelId, not even an explicit nil
 ### GetExistingAndroidChannelId
 
-`func (o *Notification) GetExistingAndroidChannelId() string`
+`func (o *BasicNotification) GetExistingAndroidChannelId() string`
 
 GetExistingAndroidChannelId returns the ExistingAndroidChannelId field if non-nil, zero value otherwise.
 
 ### GetExistingAndroidChannelIdOk
 
-`func (o *Notification) GetExistingAndroidChannelIdOk() (*string, bool)`
+`func (o *BasicNotification) GetExistingAndroidChannelIdOk() (*string, bool)`
 
 GetExistingAndroidChannelIdOk returns a tuple with the ExistingAndroidChannelId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExistingAndroidChannelId
 
-`func (o *Notification) SetExistingAndroidChannelId(v string)`
+`func (o *BasicNotification) SetExistingAndroidChannelId(v string)`
 
 SetExistingAndroidChannelId sets ExistingAndroidChannelId field to given value.
 
 ### HasExistingAndroidChannelId
 
-`func (o *Notification) HasExistingAndroidChannelId() bool`
+`func (o *BasicNotification) HasExistingAndroidChannelId() bool`
 
 HasExistingAndroidChannelId returns a boolean if a field has been set.
 
 ### GetHuaweiExistingChannelId
 
-`func (o *Notification) GetHuaweiExistingChannelId() string`
+`func (o *BasicNotification) GetHuaweiExistingChannelId() string`
 
 GetHuaweiExistingChannelId returns the HuaweiExistingChannelId field if non-nil, zero value otherwise.
 
 ### GetHuaweiExistingChannelIdOk
 
-`func (o *Notification) GetHuaweiExistingChannelIdOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiExistingChannelIdOk() (*string, bool)`
 
 GetHuaweiExistingChannelIdOk returns a tuple with the HuaweiExistingChannelId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiExistingChannelId
 
-`func (o *Notification) SetHuaweiExistingChannelId(v string)`
+`func (o *BasicNotification) SetHuaweiExistingChannelId(v string)`
 
 SetHuaweiExistingChannelId sets HuaweiExistingChannelId field to given value.
 
 ### HasHuaweiExistingChannelId
 
-`func (o *Notification) HasHuaweiExistingChannelId() bool`
+`func (o *BasicNotification) HasHuaweiExistingChannelId() bool`
 
 HasHuaweiExistingChannelId returns a boolean if a field has been set.
 
 ### SetHuaweiExistingChannelIdNil
 
-`func (o *Notification) SetHuaweiExistingChannelIdNil(b bool)`
+`func (o *BasicNotification) SetHuaweiExistingChannelIdNil(b bool)`
 
  SetHuaweiExistingChannelIdNil sets the value for HuaweiExistingChannelId to be an explicit nil
 
 ### UnsetHuaweiExistingChannelId
-`func (o *Notification) UnsetHuaweiExistingChannelId()`
+`func (o *BasicNotification) UnsetHuaweiExistingChannelId()`
 
 UnsetHuaweiExistingChannelId ensures that no value is present for HuaweiExistingChannelId, not even an explicit nil
 ### GetAndroidBackgroundLayout
 
-`func (o *Notification) GetAndroidBackgroundLayout() BasicNotificationAllOfAndroidBackgroundLayout`
+`func (o *BasicNotification) GetAndroidBackgroundLayout() BasicNotificationAllOfAndroidBackgroundLayout`
 
 GetAndroidBackgroundLayout returns the AndroidBackgroundLayout field if non-nil, zero value otherwise.
 
 ### GetAndroidBackgroundLayoutOk
 
-`func (o *Notification) GetAndroidBackgroundLayoutOk() (*BasicNotificationAllOfAndroidBackgroundLayout, bool)`
+`func (o *BasicNotification) GetAndroidBackgroundLayoutOk() (*BasicNotificationAllOfAndroidBackgroundLayout, bool)`
 
 GetAndroidBackgroundLayoutOk returns a tuple with the AndroidBackgroundLayout field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidBackgroundLayout
 
-`func (o *Notification) SetAndroidBackgroundLayout(v BasicNotificationAllOfAndroidBackgroundLayout)`
+`func (o *BasicNotification) SetAndroidBackgroundLayout(v BasicNotificationAllOfAndroidBackgroundLayout)`
 
 SetAndroidBackgroundLayout sets AndroidBackgroundLayout field to given value.
 
 ### HasAndroidBackgroundLayout
 
-`func (o *Notification) HasAndroidBackgroundLayout() bool`
+`func (o *BasicNotification) HasAndroidBackgroundLayout() bool`
 
 HasAndroidBackgroundLayout returns a boolean if a field has been set.
 
 ### GetSmallIcon
 
-`func (o *Notification) GetSmallIcon() string`
+`func (o *BasicNotification) GetSmallIcon() string`
 
 GetSmallIcon returns the SmallIcon field if non-nil, zero value otherwise.
 
 ### GetSmallIconOk
 
-`func (o *Notification) GetSmallIconOk() (*string, bool)`
+`func (o *BasicNotification) GetSmallIconOk() (*string, bool)`
 
 GetSmallIconOk returns a tuple with the SmallIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSmallIcon
 
-`func (o *Notification) SetSmallIcon(v string)`
+`func (o *BasicNotification) SetSmallIcon(v string)`
 
 SetSmallIcon sets SmallIcon field to given value.
 
 ### HasSmallIcon
 
-`func (o *Notification) HasSmallIcon() bool`
+`func (o *BasicNotification) HasSmallIcon() bool`
 
 HasSmallIcon returns a boolean if a field has been set.
 
 ### SetSmallIconNil
 
-`func (o *Notification) SetSmallIconNil(b bool)`
+`func (o *BasicNotification) SetSmallIconNil(b bool)`
 
  SetSmallIconNil sets the value for SmallIcon to be an explicit nil
 
 ### UnsetSmallIcon
-`func (o *Notification) UnsetSmallIcon()`
+`func (o *BasicNotification) UnsetSmallIcon()`
 
 UnsetSmallIcon ensures that no value is present for SmallIcon, not even an explicit nil
 ### GetHuaweiSmallIcon
 
-`func (o *Notification) GetHuaweiSmallIcon() string`
+`func (o *BasicNotification) GetHuaweiSmallIcon() string`
 
 GetHuaweiSmallIcon returns the HuaweiSmallIcon field if non-nil, zero value otherwise.
 
 ### GetHuaweiSmallIconOk
 
-`func (o *Notification) GetHuaweiSmallIconOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiSmallIconOk() (*string, bool)`
 
 GetHuaweiSmallIconOk returns a tuple with the HuaweiSmallIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiSmallIcon
 
-`func (o *Notification) SetHuaweiSmallIcon(v string)`
+`func (o *BasicNotification) SetHuaweiSmallIcon(v string)`
 
 SetHuaweiSmallIcon sets HuaweiSmallIcon field to given value.
 
 ### HasHuaweiSmallIcon
 
-`func (o *Notification) HasHuaweiSmallIcon() bool`
+`func (o *BasicNotification) HasHuaweiSmallIcon() bool`
 
 HasHuaweiSmallIcon returns a boolean if a field has been set.
 
 ### SetHuaweiSmallIconNil
 
-`func (o *Notification) SetHuaweiSmallIconNil(b bool)`
+`func (o *BasicNotification) SetHuaweiSmallIconNil(b bool)`
 
  SetHuaweiSmallIconNil sets the value for HuaweiSmallIcon to be an explicit nil
 
 ### UnsetHuaweiSmallIcon
-`func (o *Notification) UnsetHuaweiSmallIcon()`
+`func (o *BasicNotification) UnsetHuaweiSmallIcon()`
 
 UnsetHuaweiSmallIcon ensures that no value is present for HuaweiSmallIcon, not even an explicit nil
 ### GetLargeIcon
 
-`func (o *Notification) GetLargeIcon() string`
+`func (o *BasicNotification) GetLargeIcon() string`
 
 GetLargeIcon returns the LargeIcon field if non-nil, zero value otherwise.
 
 ### GetLargeIconOk
 
-`func (o *Notification) GetLargeIconOk() (*string, bool)`
+`func (o *BasicNotification) GetLargeIconOk() (*string, bool)`
 
 GetLargeIconOk returns a tuple with the LargeIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLargeIcon
 
-`func (o *Notification) SetLargeIcon(v string)`
+`func (o *BasicNotification) SetLargeIcon(v string)`
 
 SetLargeIcon sets LargeIcon field to given value.
 
 ### HasLargeIcon
 
-`func (o *Notification) HasLargeIcon() bool`
+`func (o *BasicNotification) HasLargeIcon() bool`
 
 HasLargeIcon returns a boolean if a field has been set.
 
 ### SetLargeIconNil
 
-`func (o *Notification) SetLargeIconNil(b bool)`
+`func (o *BasicNotification) SetLargeIconNil(b bool)`
 
  SetLargeIconNil sets the value for LargeIcon to be an explicit nil
 
 ### UnsetLargeIcon
-`func (o *Notification) UnsetLargeIcon()`
+`func (o *BasicNotification) UnsetLargeIcon()`
 
 UnsetLargeIcon ensures that no value is present for LargeIcon, not even an explicit nil
 ### GetHuaweiLargeIcon
 
-`func (o *Notification) GetHuaweiLargeIcon() string`
+`func (o *BasicNotification) GetHuaweiLargeIcon() string`
 
 GetHuaweiLargeIcon returns the HuaweiLargeIcon field if non-nil, zero value otherwise.
 
 ### GetHuaweiLargeIconOk
 
-`func (o *Notification) GetHuaweiLargeIconOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiLargeIconOk() (*string, bool)`
 
 GetHuaweiLargeIconOk returns a tuple with the HuaweiLargeIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiLargeIcon
 
-`func (o *Notification) SetHuaweiLargeIcon(v string)`
+`func (o *BasicNotification) SetHuaweiLargeIcon(v string)`
 
 SetHuaweiLargeIcon sets HuaweiLargeIcon field to given value.
 
 ### HasHuaweiLargeIcon
 
-`func (o *Notification) HasHuaweiLargeIcon() bool`
+`func (o *BasicNotification) HasHuaweiLargeIcon() bool`
 
 HasHuaweiLargeIcon returns a boolean if a field has been set.
 
 ### SetHuaweiLargeIconNil
 
-`func (o *Notification) SetHuaweiLargeIconNil(b bool)`
+`func (o *BasicNotification) SetHuaweiLargeIconNil(b bool)`
 
  SetHuaweiLargeIconNil sets the value for HuaweiLargeIcon to be an explicit nil
 
 ### UnsetHuaweiLargeIcon
-`func (o *Notification) UnsetHuaweiLargeIcon()`
+`func (o *BasicNotification) UnsetHuaweiLargeIcon()`
 
 UnsetHuaweiLargeIcon ensures that no value is present for HuaweiLargeIcon, not even an explicit nil
 ### GetAdmSmallIcon
 
-`func (o *Notification) GetAdmSmallIcon() string`
+`func (o *BasicNotification) GetAdmSmallIcon() string`
 
 GetAdmSmallIcon returns the AdmSmallIcon field if non-nil, zero value otherwise.
 
 ### GetAdmSmallIconOk
 
-`func (o *Notification) GetAdmSmallIconOk() (*string, bool)`
+`func (o *BasicNotification) GetAdmSmallIconOk() (*string, bool)`
 
 GetAdmSmallIconOk returns a tuple with the AdmSmallIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdmSmallIcon
 
-`func (o *Notification) SetAdmSmallIcon(v string)`
+`func (o *BasicNotification) SetAdmSmallIcon(v string)`
 
 SetAdmSmallIcon sets AdmSmallIcon field to given value.
 
 ### HasAdmSmallIcon
 
-`func (o *Notification) HasAdmSmallIcon() bool`
+`func (o *BasicNotification) HasAdmSmallIcon() bool`
 
 HasAdmSmallIcon returns a boolean if a field has been set.
 
 ### SetAdmSmallIconNil
 
-`func (o *Notification) SetAdmSmallIconNil(b bool)`
+`func (o *BasicNotification) SetAdmSmallIconNil(b bool)`
 
  SetAdmSmallIconNil sets the value for AdmSmallIcon to be an explicit nil
 
 ### UnsetAdmSmallIcon
-`func (o *Notification) UnsetAdmSmallIcon()`
+`func (o *BasicNotification) UnsetAdmSmallIcon()`
 
 UnsetAdmSmallIcon ensures that no value is present for AdmSmallIcon, not even an explicit nil
 ### GetAdmLargeIcon
 
-`func (o *Notification) GetAdmLargeIcon() string`
+`func (o *BasicNotification) GetAdmLargeIcon() string`
 
 GetAdmLargeIcon returns the AdmLargeIcon field if non-nil, zero value otherwise.
 
 ### GetAdmLargeIconOk
 
-`func (o *Notification) GetAdmLargeIconOk() (*string, bool)`
+`func (o *BasicNotification) GetAdmLargeIconOk() (*string, bool)`
 
 GetAdmLargeIconOk returns a tuple with the AdmLargeIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdmLargeIcon
 
-`func (o *Notification) SetAdmLargeIcon(v string)`
+`func (o *BasicNotification) SetAdmLargeIcon(v string)`
 
 SetAdmLargeIcon sets AdmLargeIcon field to given value.
 
 ### HasAdmLargeIcon
 
-`func (o *Notification) HasAdmLargeIcon() bool`
+`func (o *BasicNotification) HasAdmLargeIcon() bool`
 
 HasAdmLargeIcon returns a boolean if a field has been set.
 
 ### SetAdmLargeIconNil
 
-`func (o *Notification) SetAdmLargeIconNil(b bool)`
+`func (o *BasicNotification) SetAdmLargeIconNil(b bool)`
 
  SetAdmLargeIconNil sets the value for AdmLargeIcon to be an explicit nil
 
 ### UnsetAdmLargeIcon
-`func (o *Notification) UnsetAdmLargeIcon()`
+`func (o *BasicNotification) UnsetAdmLargeIcon()`
 
 UnsetAdmLargeIcon ensures that no value is present for AdmLargeIcon, not even an explicit nil
 ### GetChromeWebIcon
 
-`func (o *Notification) GetChromeWebIcon() string`
+`func (o *BasicNotification) GetChromeWebIcon() string`
 
 GetChromeWebIcon returns the ChromeWebIcon field if non-nil, zero value otherwise.
 
 ### GetChromeWebIconOk
 
-`func (o *Notification) GetChromeWebIconOk() (*string, bool)`
+`func (o *BasicNotification) GetChromeWebIconOk() (*string, bool)`
 
 GetChromeWebIconOk returns a tuple with the ChromeWebIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetChromeWebIcon
 
-`func (o *Notification) SetChromeWebIcon(v string)`
+`func (o *BasicNotification) SetChromeWebIcon(v string)`
 
 SetChromeWebIcon sets ChromeWebIcon field to given value.
 
 ### HasChromeWebIcon
 
-`func (o *Notification) HasChromeWebIcon() bool`
+`func (o *BasicNotification) HasChromeWebIcon() bool`
 
 HasChromeWebIcon returns a boolean if a field has been set.
 
 ### SetChromeWebIconNil
 
-`func (o *Notification) SetChromeWebIconNil(b bool)`
+`func (o *BasicNotification) SetChromeWebIconNil(b bool)`
 
  SetChromeWebIconNil sets the value for ChromeWebIcon to be an explicit nil
 
 ### UnsetChromeWebIcon
-`func (o *Notification) UnsetChromeWebIcon()`
+`func (o *BasicNotification) UnsetChromeWebIcon()`
 
 UnsetChromeWebIcon ensures that no value is present for ChromeWebIcon, not even an explicit nil
 ### GetChromeWebBadge
 
-`func (o *Notification) GetChromeWebBadge() string`
+`func (o *BasicNotification) GetChromeWebBadge() string`
 
 GetChromeWebBadge returns the ChromeWebBadge field if non-nil, zero value otherwise.
 
 ### GetChromeWebBadgeOk
 
-`func (o *Notification) GetChromeWebBadgeOk() (*string, bool)`
+`func (o *BasicNotification) GetChromeWebBadgeOk() (*string, bool)`
 
 GetChromeWebBadgeOk returns a tuple with the ChromeWebBadge field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetChromeWebBadge
 
-`func (o *Notification) SetChromeWebBadge(v string)`
+`func (o *BasicNotification) SetChromeWebBadge(v string)`
 
 SetChromeWebBadge sets ChromeWebBadge field to given value.
 
 ### HasChromeWebBadge
 
-`func (o *Notification) HasChromeWebBadge() bool`
+`func (o *BasicNotification) HasChromeWebBadge() bool`
 
 HasChromeWebBadge returns a boolean if a field has been set.
 
 ### SetChromeWebBadgeNil
 
-`func (o *Notification) SetChromeWebBadgeNil(b bool)`
+`func (o *BasicNotification) SetChromeWebBadgeNil(b bool)`
 
  SetChromeWebBadgeNil sets the value for ChromeWebBadge to be an explicit nil
 
 ### UnsetChromeWebBadge
-`func (o *Notification) UnsetChromeWebBadge()`
+`func (o *BasicNotification) UnsetChromeWebBadge()`
 
 UnsetChromeWebBadge ensures that no value is present for ChromeWebBadge, not even an explicit nil
 ### GetFirefoxIcon
 
-`func (o *Notification) GetFirefoxIcon() string`
+`func (o *BasicNotification) GetFirefoxIcon() string`
 
 GetFirefoxIcon returns the FirefoxIcon field if non-nil, zero value otherwise.
 
 ### GetFirefoxIconOk
 
-`func (o *Notification) GetFirefoxIconOk() (*string, bool)`
+`func (o *BasicNotification) GetFirefoxIconOk() (*string, bool)`
 
 GetFirefoxIconOk returns a tuple with the FirefoxIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFirefoxIcon
 
-`func (o *Notification) SetFirefoxIcon(v string)`
+`func (o *BasicNotification) SetFirefoxIcon(v string)`
 
 SetFirefoxIcon sets FirefoxIcon field to given value.
 
 ### HasFirefoxIcon
 
-`func (o *Notification) HasFirefoxIcon() bool`
+`func (o *BasicNotification) HasFirefoxIcon() bool`
 
 HasFirefoxIcon returns a boolean if a field has been set.
 
 ### SetFirefoxIconNil
 
-`func (o *Notification) SetFirefoxIconNil(b bool)`
+`func (o *BasicNotification) SetFirefoxIconNil(b bool)`
 
  SetFirefoxIconNil sets the value for FirefoxIcon to be an explicit nil
 
 ### UnsetFirefoxIcon
-`func (o *Notification) UnsetFirefoxIcon()`
+`func (o *BasicNotification) UnsetFirefoxIcon()`
 
 UnsetFirefoxIcon ensures that no value is present for FirefoxIcon, not even an explicit nil
 ### GetChromeIcon
 
-`func (o *Notification) GetChromeIcon() string`
+`func (o *BasicNotification) GetChromeIcon() string`
 
 GetChromeIcon returns the ChromeIcon field if non-nil, zero value otherwise.
 
 ### GetChromeIconOk
 
-`func (o *Notification) GetChromeIconOk() (*string, bool)`
+`func (o *BasicNotification) GetChromeIconOk() (*string, bool)`
 
 GetChromeIconOk returns a tuple with the ChromeIcon field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetChromeIcon
 
-`func (o *Notification) SetChromeIcon(v string)`
+`func (o *BasicNotification) SetChromeIcon(v string)`
 
 SetChromeIcon sets ChromeIcon field to given value.
 
 ### HasChromeIcon
 
-`func (o *Notification) HasChromeIcon() bool`
+`func (o *BasicNotification) HasChromeIcon() bool`
 
 HasChromeIcon returns a boolean if a field has been set.
 
 ### SetChromeIconNil
 
-`func (o *Notification) SetChromeIconNil(b bool)`
+`func (o *BasicNotification) SetChromeIconNil(b bool)`
 
  SetChromeIconNil sets the value for ChromeIcon to be an explicit nil
 
 ### UnsetChromeIcon
-`func (o *Notification) UnsetChromeIcon()`
+`func (o *BasicNotification) UnsetChromeIcon()`
 
 UnsetChromeIcon ensures that no value is present for ChromeIcon, not even an explicit nil
 ### GetIosSound
 
-`func (o *Notification) GetIosSound() string`
+`func (o *BasicNotification) GetIosSound() string`
 
 GetIosSound returns the IosSound field if non-nil, zero value otherwise.
 
 ### GetIosSoundOk
 
-`func (o *Notification) GetIosSoundOk() (*string, bool)`
+`func (o *BasicNotification) GetIosSoundOk() (*string, bool)`
 
 GetIosSoundOk returns a tuple with the IosSound field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIosSound
 
-`func (o *Notification) SetIosSound(v string)`
+`func (o *BasicNotification) SetIosSound(v string)`
 
 SetIosSound sets IosSound field to given value.
 
 ### HasIosSound
 
-`func (o *Notification) HasIosSound() bool`
+`func (o *BasicNotification) HasIosSound() bool`
 
 HasIosSound returns a boolean if a field has been set.
 
 ### SetIosSoundNil
 
-`func (o *Notification) SetIosSoundNil(b bool)`
+`func (o *BasicNotification) SetIosSoundNil(b bool)`
 
  SetIosSoundNil sets the value for IosSound to be an explicit nil
 
 ### UnsetIosSound
-`func (o *Notification) UnsetIosSound()`
+`func (o *BasicNotification) UnsetIosSound()`
 
 UnsetIosSound ensures that no value is present for IosSound, not even an explicit nil
 ### GetAndroidSound
 
-`func (o *Notification) GetAndroidSound() string`
+`func (o *BasicNotification) GetAndroidSound() string`
 
 GetAndroidSound returns the AndroidSound field if non-nil, zero value otherwise.
 
 ### GetAndroidSoundOk
 
-`func (o *Notification) GetAndroidSoundOk() (*string, bool)`
+`func (o *BasicNotification) GetAndroidSoundOk() (*string, bool)`
 
 GetAndroidSoundOk returns a tuple with the AndroidSound field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidSound
 
-`func (o *Notification) SetAndroidSound(v string)`
+`func (o *BasicNotification) SetAndroidSound(v string)`
 
 SetAndroidSound sets AndroidSound field to given value.
 
 ### HasAndroidSound
 
-`func (o *Notification) HasAndroidSound() bool`
+`func (o *BasicNotification) HasAndroidSound() bool`
 
 HasAndroidSound returns a boolean if a field has been set.
 
 ### SetAndroidSoundNil
 
-`func (o *Notification) SetAndroidSoundNil(b bool)`
+`func (o *BasicNotification) SetAndroidSoundNil(b bool)`
 
  SetAndroidSoundNil sets the value for AndroidSound to be an explicit nil
 
 ### UnsetAndroidSound
-`func (o *Notification) UnsetAndroidSound()`
+`func (o *BasicNotification) UnsetAndroidSound()`
 
 UnsetAndroidSound ensures that no value is present for AndroidSound, not even an explicit nil
 ### GetHuaweiSound
 
-`func (o *Notification) GetHuaweiSound() string`
+`func (o *BasicNotification) GetHuaweiSound() string`
 
 GetHuaweiSound returns the HuaweiSound field if non-nil, zero value otherwise.
 
 ### GetHuaweiSoundOk
 
-`func (o *Notification) GetHuaweiSoundOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiSoundOk() (*string, bool)`
 
 GetHuaweiSoundOk returns a tuple with the HuaweiSound field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiSound
 
-`func (o *Notification) SetHuaweiSound(v string)`
+`func (o *BasicNotification) SetHuaweiSound(v string)`
 
 SetHuaweiSound sets HuaweiSound field to given value.
 
 ### HasHuaweiSound
 
-`func (o *Notification) HasHuaweiSound() bool`
+`func (o *BasicNotification) HasHuaweiSound() bool`
 
 HasHuaweiSound returns a boolean if a field has been set.
 
 ### SetHuaweiSoundNil
 
-`func (o *Notification) SetHuaweiSoundNil(b bool)`
+`func (o *BasicNotification) SetHuaweiSoundNil(b bool)`
 
  SetHuaweiSoundNil sets the value for HuaweiSound to be an explicit nil
 
 ### UnsetHuaweiSound
-`func (o *Notification) UnsetHuaweiSound()`
+`func (o *BasicNotification) UnsetHuaweiSound()`
 
 UnsetHuaweiSound ensures that no value is present for HuaweiSound, not even an explicit nil
 ### GetAdmSound
 
-`func (o *Notification) GetAdmSound() string`
+`func (o *BasicNotification) GetAdmSound() string`
 
 GetAdmSound returns the AdmSound field if non-nil, zero value otherwise.
 
 ### GetAdmSoundOk
 
-`func (o *Notification) GetAdmSoundOk() (*string, bool)`
+`func (o *BasicNotification) GetAdmSoundOk() (*string, bool)`
 
 GetAdmSoundOk returns a tuple with the AdmSound field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdmSound
 
-`func (o *Notification) SetAdmSound(v string)`
+`func (o *BasicNotification) SetAdmSound(v string)`
 
 SetAdmSound sets AdmSound field to given value.
 
 ### HasAdmSound
 
-`func (o *Notification) HasAdmSound() bool`
+`func (o *BasicNotification) HasAdmSound() bool`
 
 HasAdmSound returns a boolean if a field has been set.
 
 ### SetAdmSoundNil
 
-`func (o *Notification) SetAdmSoundNil(b bool)`
+`func (o *BasicNotification) SetAdmSoundNil(b bool)`
 
  SetAdmSoundNil sets the value for AdmSound to be an explicit nil
 
 ### UnsetAdmSound
-`func (o *Notification) UnsetAdmSound()`
+`func (o *BasicNotification) UnsetAdmSound()`
 
 UnsetAdmSound ensures that no value is present for AdmSound, not even an explicit nil
 ### GetWpWnsSound
 
-`func (o *Notification) GetWpWnsSound() string`
+`func (o *BasicNotification) GetWpWnsSound() string`
 
 GetWpWnsSound returns the WpWnsSound field if non-nil, zero value otherwise.
 
 ### GetWpWnsSoundOk
 
-`func (o *Notification) GetWpWnsSoundOk() (*string, bool)`
+`func (o *BasicNotification) GetWpWnsSoundOk() (*string, bool)`
 
 GetWpWnsSoundOk returns a tuple with the WpWnsSound field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWpWnsSound
 
-`func (o *Notification) SetWpWnsSound(v string)`
+`func (o *BasicNotification) SetWpWnsSound(v string)`
 
 SetWpWnsSound sets WpWnsSound field to given value.
 
 ### HasWpWnsSound
 
-`func (o *Notification) HasWpWnsSound() bool`
+`func (o *BasicNotification) HasWpWnsSound() bool`
 
 HasWpWnsSound returns a boolean if a field has been set.
 
 ### SetWpWnsSoundNil
 
-`func (o *Notification) SetWpWnsSoundNil(b bool)`
+`func (o *BasicNotification) SetWpWnsSoundNil(b bool)`
 
  SetWpWnsSoundNil sets the value for WpWnsSound to be an explicit nil
 
 ### UnsetWpWnsSound
-`func (o *Notification) UnsetWpWnsSound()`
+`func (o *BasicNotification) UnsetWpWnsSound()`
 
 UnsetWpWnsSound ensures that no value is present for WpWnsSound, not even an explicit nil
 ### GetAndroidLedColor
 
-`func (o *Notification) GetAndroidLedColor() string`
+`func (o *BasicNotification) GetAndroidLedColor() string`
 
 GetAndroidLedColor returns the AndroidLedColor field if non-nil, zero value otherwise.
 
 ### GetAndroidLedColorOk
 
-`func (o *Notification) GetAndroidLedColorOk() (*string, bool)`
+`func (o *BasicNotification) GetAndroidLedColorOk() (*string, bool)`
 
 GetAndroidLedColorOk returns a tuple with the AndroidLedColor field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidLedColor
 
-`func (o *Notification) SetAndroidLedColor(v string)`
+`func (o *BasicNotification) SetAndroidLedColor(v string)`
 
 SetAndroidLedColor sets AndroidLedColor field to given value.
 
 ### HasAndroidLedColor
 
-`func (o *Notification) HasAndroidLedColor() bool`
+`func (o *BasicNotification) HasAndroidLedColor() bool`
 
 HasAndroidLedColor returns a boolean if a field has been set.
 
 ### SetAndroidLedColorNil
 
-`func (o *Notification) SetAndroidLedColorNil(b bool)`
+`func (o *BasicNotification) SetAndroidLedColorNil(b bool)`
 
  SetAndroidLedColorNil sets the value for AndroidLedColor to be an explicit nil
 
 ### UnsetAndroidLedColor
-`func (o *Notification) UnsetAndroidLedColor()`
+`func (o *BasicNotification) UnsetAndroidLedColor()`
 
 UnsetAndroidLedColor ensures that no value is present for AndroidLedColor, not even an explicit nil
 ### GetHuaweiLedColor
 
-`func (o *Notification) GetHuaweiLedColor() string`
+`func (o *BasicNotification) GetHuaweiLedColor() string`
 
 GetHuaweiLedColor returns the HuaweiLedColor field if non-nil, zero value otherwise.
 
 ### GetHuaweiLedColorOk
 
-`func (o *Notification) GetHuaweiLedColorOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiLedColorOk() (*string, bool)`
 
 GetHuaweiLedColorOk returns a tuple with the HuaweiLedColor field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiLedColor
 
-`func (o *Notification) SetHuaweiLedColor(v string)`
+`func (o *BasicNotification) SetHuaweiLedColor(v string)`
 
 SetHuaweiLedColor sets HuaweiLedColor field to given value.
 
 ### HasHuaweiLedColor
 
-`func (o *Notification) HasHuaweiLedColor() bool`
+`func (o *BasicNotification) HasHuaweiLedColor() bool`
 
 HasHuaweiLedColor returns a boolean if a field has been set.
 
 ### SetHuaweiLedColorNil
 
-`func (o *Notification) SetHuaweiLedColorNil(b bool)`
+`func (o *BasicNotification) SetHuaweiLedColorNil(b bool)`
 
  SetHuaweiLedColorNil sets the value for HuaweiLedColor to be an explicit nil
 
 ### UnsetHuaweiLedColor
-`func (o *Notification) UnsetHuaweiLedColor()`
+`func (o *BasicNotification) UnsetHuaweiLedColor()`
 
 UnsetHuaweiLedColor ensures that no value is present for HuaweiLedColor, not even an explicit nil
 ### GetAndroidAccentColor
 
-`func (o *Notification) GetAndroidAccentColor() string`
+`func (o *BasicNotification) GetAndroidAccentColor() string`
 
 GetAndroidAccentColor returns the AndroidAccentColor field if non-nil, zero value otherwise.
 
 ### GetAndroidAccentColorOk
 
-`func (o *Notification) GetAndroidAccentColorOk() (*string, bool)`
+`func (o *BasicNotification) GetAndroidAccentColorOk() (*string, bool)`
 
 GetAndroidAccentColorOk returns a tuple with the AndroidAccentColor field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidAccentColor
 
-`func (o *Notification) SetAndroidAccentColor(v string)`
+`func (o *BasicNotification) SetAndroidAccentColor(v string)`
 
 SetAndroidAccentColor sets AndroidAccentColor field to given value.
 
 ### HasAndroidAccentColor
 
-`func (o *Notification) HasAndroidAccentColor() bool`
+`func (o *BasicNotification) HasAndroidAccentColor() bool`
 
 HasAndroidAccentColor returns a boolean if a field has been set.
 
 ### SetAndroidAccentColorNil
 
-`func (o *Notification) SetAndroidAccentColorNil(b bool)`
+`func (o *BasicNotification) SetAndroidAccentColorNil(b bool)`
 
  SetAndroidAccentColorNil sets the value for AndroidAccentColor to be an explicit nil
 
 ### UnsetAndroidAccentColor
-`func (o *Notification) UnsetAndroidAccentColor()`
+`func (o *BasicNotification) UnsetAndroidAccentColor()`
 
 UnsetAndroidAccentColor ensures that no value is present for AndroidAccentColor, not even an explicit nil
 ### GetHuaweiAccentColor
 
-`func (o *Notification) GetHuaweiAccentColor() string`
+`func (o *BasicNotification) GetHuaweiAccentColor() string`
 
 GetHuaweiAccentColor returns the HuaweiAccentColor field if non-nil, zero value otherwise.
 
 ### GetHuaweiAccentColorOk
 
-`func (o *Notification) GetHuaweiAccentColorOk() (*string, bool)`
+`func (o *BasicNotification) GetHuaweiAccentColorOk() (*string, bool)`
 
 GetHuaweiAccentColorOk returns a tuple with the HuaweiAccentColor field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiAccentColor
 
-`func (o *Notification) SetHuaweiAccentColor(v string)`
+`func (o *BasicNotification) SetHuaweiAccentColor(v string)`
 
 SetHuaweiAccentColor sets HuaweiAccentColor field to given value.
 
 ### HasHuaweiAccentColor
 
-`func (o *Notification) HasHuaweiAccentColor() bool`
+`func (o *BasicNotification) HasHuaweiAccentColor() bool`
 
 HasHuaweiAccentColor returns a boolean if a field has been set.
 
 ### SetHuaweiAccentColorNil
 
-`func (o *Notification) SetHuaweiAccentColorNil(b bool)`
+`func (o *BasicNotification) SetHuaweiAccentColorNil(b bool)`
 
  SetHuaweiAccentColorNil sets the value for HuaweiAccentColor to be an explicit nil
 
 ### UnsetHuaweiAccentColor
-`func (o *Notification) UnsetHuaweiAccentColor()`
+`func (o *BasicNotification) UnsetHuaweiAccentColor()`
 
 UnsetHuaweiAccentColor ensures that no value is present for HuaweiAccentColor, not even an explicit nil
 ### GetAndroidVisibility
 
-`func (o *Notification) GetAndroidVisibility() int32`
+`func (o *BasicNotification) GetAndroidVisibility() int32`
 
 GetAndroidVisibility returns the AndroidVisibility field if non-nil, zero value otherwise.
 
 ### GetAndroidVisibilityOk
 
-`func (o *Notification) GetAndroidVisibilityOk() (*int32, bool)`
+`func (o *BasicNotification) GetAndroidVisibilityOk() (*int32, bool)`
 
 GetAndroidVisibilityOk returns a tuple with the AndroidVisibility field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidVisibility
 
-`func (o *Notification) SetAndroidVisibility(v int32)`
+`func (o *BasicNotification) SetAndroidVisibility(v int32)`
 
 SetAndroidVisibility sets AndroidVisibility field to given value.
 
 ### HasAndroidVisibility
 
-`func (o *Notification) HasAndroidVisibility() bool`
+`func (o *BasicNotification) HasAndroidVisibility() bool`
 
 HasAndroidVisibility returns a boolean if a field has been set.
 
 ### SetAndroidVisibilityNil
 
-`func (o *Notification) SetAndroidVisibilityNil(b bool)`
+`func (o *BasicNotification) SetAndroidVisibilityNil(b bool)`
 
  SetAndroidVisibilityNil sets the value for AndroidVisibility to be an explicit nil
 
 ### UnsetAndroidVisibility
-`func (o *Notification) UnsetAndroidVisibility()`
+`func (o *BasicNotification) UnsetAndroidVisibility()`
 
 UnsetAndroidVisibility ensures that no value is present for AndroidVisibility, not even an explicit nil
 ### GetHuaweiVisibility
 
-`func (o *Notification) GetHuaweiVisibility() int32`
+`func (o *BasicNotification) GetHuaweiVisibility() int32`
 
 GetHuaweiVisibility returns the HuaweiVisibility field if non-nil, zero value otherwise.
 
 ### GetHuaweiVisibilityOk
 
-`func (o *Notification) GetHuaweiVisibilityOk() (*int32, bool)`
+`func (o *BasicNotification) GetHuaweiVisibilityOk() (*int32, bool)`
 
 GetHuaweiVisibilityOk returns a tuple with the HuaweiVisibility field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHuaweiVisibility
 
-`func (o *Notification) SetHuaweiVisibility(v int32)`
+`func (o *BasicNotification) SetHuaweiVisibility(v int32)`
 
 SetHuaweiVisibility sets HuaweiVisibility field to given value.
 
 ### HasHuaweiVisibility
 
-`func (o *Notification) HasHuaweiVisibility() bool`
+`func (o *BasicNotification) HasHuaweiVisibility() bool`
 
 HasHuaweiVisibility returns a boolean if a field has been set.
 
 ### SetHuaweiVisibilityNil
 
-`func (o *Notification) SetHuaweiVisibilityNil(b bool)`
+`func (o *BasicNotification) SetHuaweiVisibilityNil(b bool)`
 
  SetHuaweiVisibilityNil sets the value for HuaweiVisibility to be an explicit nil
 
 ### UnsetHuaweiVisibility
-`func (o *Notification) UnsetHuaweiVisibility()`
+`func (o *BasicNotification) UnsetHuaweiVisibility()`
 
 UnsetHuaweiVisibility ensures that no value is present for HuaweiVisibility, not even an explicit nil
 ### GetIosBadgeType
 
-`func (o *Notification) GetIosBadgeType() string`
+`func (o *BasicNotification) GetIosBadgeType() string`
 
 GetIosBadgeType returns the IosBadgeType field if non-nil, zero value otherwise.
 
 ### GetIosBadgeTypeOk
 
-`func (o *Notification) GetIosBadgeTypeOk() (*string, bool)`
+`func (o *BasicNotification) GetIosBadgeTypeOk() (*string, bool)`
 
 GetIosBadgeTypeOk returns a tuple with the IosBadgeType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIosBadgeType
 
-`func (o *Notification) SetIosBadgeType(v string)`
+`func (o *BasicNotification) SetIosBadgeType(v string)`
 
 SetIosBadgeType sets IosBadgeType field to given value.
 
 ### HasIosBadgeType
 
-`func (o *Notification) HasIosBadgeType() bool`
+`func (o *BasicNotification) HasIosBadgeType() bool`
 
 HasIosBadgeType returns a boolean if a field has been set.
 
 ### SetIosBadgeTypeNil
 
-`func (o *Notification) SetIosBadgeTypeNil(b bool)`
+`func (o *BasicNotification) SetIosBadgeTypeNil(b bool)`
 
  SetIosBadgeTypeNil sets the value for IosBadgeType to be an explicit nil
 
 ### UnsetIosBadgeType
-`func (o *Notification) UnsetIosBadgeType()`
+`func (o *BasicNotification) UnsetIosBadgeType()`
 
 UnsetIosBadgeType ensures that no value is present for IosBadgeType, not even an explicit nil
 ### GetIosBadgeCount
 
-`func (o *Notification) GetIosBadgeCount() int32`
+`func (o *BasicNotification) GetIosBadgeCount() int32`
 
 GetIosBadgeCount returns the IosBadgeCount field if non-nil, zero value otherwise.
 
 ### GetIosBadgeCountOk
 
-`func (o *Notification) GetIosBadgeCountOk() (*int32, bool)`
+`func (o *BasicNotification) GetIosBadgeCountOk() (*int32, bool)`
 
 GetIosBadgeCountOk returns a tuple with the IosBadgeCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIosBadgeCount
 
-`func (o *Notification) SetIosBadgeCount(v int32)`
+`func (o *BasicNotification) SetIosBadgeCount(v int32)`
 
 SetIosBadgeCount sets IosBadgeCount field to given value.
 
 ### HasIosBadgeCount
 
-`func (o *Notification) HasIosBadgeCount() bool`
+`func (o *BasicNotification) HasIosBadgeCount() bool`
 
 HasIosBadgeCount returns a boolean if a field has been set.
 
 ### SetIosBadgeCountNil
 
-`func (o *Notification) SetIosBadgeCountNil(b bool)`
+`func (o *BasicNotification) SetIosBadgeCountNil(b bool)`
 
  SetIosBadgeCountNil sets the value for IosBadgeCount to be an explicit nil
 
 ### UnsetIosBadgeCount
-`func (o *Notification) UnsetIosBadgeCount()`
+`func (o *BasicNotification) UnsetIosBadgeCount()`
 
 UnsetIosBadgeCount ensures that no value is present for IosBadgeCount, not even an explicit nil
 ### GetCollapseId
 
-`func (o *Notification) GetCollapseId() string`
+`func (o *BasicNotification) GetCollapseId() string`
 
 GetCollapseId returns the CollapseId field if non-nil, zero value otherwise.
 
 ### GetCollapseIdOk
 
-`func (o *Notification) GetCollapseIdOk() (*string, bool)`
+`func (o *BasicNotification) GetCollapseIdOk() (*string, bool)`
 
 GetCollapseIdOk returns a tuple with the CollapseId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCollapseId
 
-`func (o *Notification) SetCollapseId(v string)`
+`func (o *BasicNotification) SetCollapseId(v string)`
 
 SetCollapseId sets CollapseId field to given value.
 
 ### HasCollapseId
 
-`func (o *Notification) HasCollapseId() bool`
+`func (o *BasicNotification) HasCollapseId() bool`
 
 HasCollapseId returns a boolean if a field has been set.
 
 ### GetWebPushTopic
 
-`func (o *Notification) GetWebPushTopic() string`
+`func (o *BasicNotification) GetWebPushTopic() string`
 
 GetWebPushTopic returns the WebPushTopic field if non-nil, zero value otherwise.
 
 ### GetWebPushTopicOk
 
-`func (o *Notification) GetWebPushTopicOk() (*string, bool)`
+`func (o *BasicNotification) GetWebPushTopicOk() (*string, bool)`
 
 GetWebPushTopicOk returns a tuple with the WebPushTopic field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWebPushTopic
 
-`func (o *Notification) SetWebPushTopic(v string)`
+`func (o *BasicNotification) SetWebPushTopic(v string)`
 
 SetWebPushTopic sets WebPushTopic field to given value.
 
 ### HasWebPushTopic
 
-`func (o *Notification) HasWebPushTopic() bool`
+`func (o *BasicNotification) HasWebPushTopic() bool`
 
 HasWebPushTopic returns a boolean if a field has been set.
 
 ### SetWebPushTopicNil
 
-`func (o *Notification) SetWebPushTopicNil(b bool)`
+`func (o *BasicNotification) SetWebPushTopicNil(b bool)`
 
  SetWebPushTopicNil sets the value for WebPushTopic to be an explicit nil
 
 ### UnsetWebPushTopic
-`func (o *Notification) UnsetWebPushTopic()`
+`func (o *BasicNotification) UnsetWebPushTopic()`
 
 UnsetWebPushTopic ensures that no value is present for WebPushTopic, not even an explicit nil
 ### GetApnsAlert
 
-`func (o *Notification) GetApnsAlert() map[string]interface{}`
+`func (o *BasicNotification) GetApnsAlert() map[string]interface{}`
 
 GetApnsAlert returns the ApnsAlert field if non-nil, zero value otherwise.
 
 ### GetApnsAlertOk
 
-`func (o *Notification) GetApnsAlertOk() (*map[string]interface{}, bool)`
+`func (o *BasicNotification) GetApnsAlertOk() (*map[string]interface{}, bool)`
 
 GetApnsAlertOk returns a tuple with the ApnsAlert field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetApnsAlert
 
-`func (o *Notification) SetApnsAlert(v map[string]interface{})`
+`func (o *BasicNotification) SetApnsAlert(v map[string]interface{})`
 
 SetApnsAlert sets ApnsAlert field to given value.
 
 ### HasApnsAlert
 
-`func (o *Notification) HasApnsAlert() bool`
+`func (o *BasicNotification) HasApnsAlert() bool`
 
 HasApnsAlert returns a boolean if a field has been set.
 
 ### SetApnsAlertNil
 
-`func (o *Notification) SetApnsAlertNil(b bool)`
+`func (o *BasicNotification) SetApnsAlertNil(b bool)`
 
  SetApnsAlertNil sets the value for ApnsAlert to be an explicit nil
 
 ### UnsetApnsAlert
-`func (o *Notification) UnsetApnsAlert()`
+`func (o *BasicNotification) UnsetApnsAlert()`
 
 UnsetApnsAlert ensures that no value is present for ApnsAlert, not even an explicit nil
 ### GetDelayedOption
 
-`func (o *Notification) GetDelayedOption() string`
+`func (o *BasicNotification) GetDelayedOption() string`
 
 GetDelayedOption returns the DelayedOption field if non-nil, zero value otherwise.
 
 ### GetDelayedOptionOk
 
-`func (o *Notification) GetDelayedOptionOk() (*string, bool)`
+`func (o *BasicNotification) GetDelayedOptionOk() (*string, bool)`
 
 GetDelayedOptionOk returns a tuple with the DelayedOption field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDelayedOption
 
-`func (o *Notification) SetDelayedOption(v string)`
+`func (o *BasicNotification) SetDelayedOption(v string)`
 
 SetDelayedOption sets DelayedOption field to given value.
 
 ### HasDelayedOption
 
-`func (o *Notification) HasDelayedOption() bool`
+`func (o *BasicNotification) HasDelayedOption() bool`
 
 HasDelayedOption returns a boolean if a field has been set.
 
 ### SetDelayedOptionNil
 
-`func (o *Notification) SetDelayedOptionNil(b bool)`
+`func (o *BasicNotification) SetDelayedOptionNil(b bool)`
 
  SetDelayedOptionNil sets the value for DelayedOption to be an explicit nil
 
 ### UnsetDelayedOption
-`func (o *Notification) UnsetDelayedOption()`
+`func (o *BasicNotification) UnsetDelayedOption()`
 
 UnsetDelayedOption ensures that no value is present for DelayedOption, not even an explicit nil
 ### GetDeliveryTimeOfDay
 
-`func (o *Notification) GetDeliveryTimeOfDay() string`
+`func (o *BasicNotification) GetDeliveryTimeOfDay() string`
 
 GetDeliveryTimeOfDay returns the DeliveryTimeOfDay field if non-nil, zero value otherwise.
 
 ### GetDeliveryTimeOfDayOk
 
-`func (o *Notification) GetDeliveryTimeOfDayOk() (*string, bool)`
+`func (o *BasicNotification) GetDeliveryTimeOfDayOk() (*string, bool)`
 
 GetDeliveryTimeOfDayOk returns a tuple with the DeliveryTimeOfDay field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDeliveryTimeOfDay
 
-`func (o *Notification) SetDeliveryTimeOfDay(v string)`
+`func (o *BasicNotification) SetDeliveryTimeOfDay(v string)`
 
 SetDeliveryTimeOfDay sets DeliveryTimeOfDay field to given value.
 
 ### HasDeliveryTimeOfDay
 
-`func (o *Notification) HasDeliveryTimeOfDay() bool`
+`func (o *BasicNotification) HasDeliveryTimeOfDay() bool`
 
 HasDeliveryTimeOfDay returns a boolean if a field has been set.
 
 ### SetDeliveryTimeOfDayNil
 
-`func (o *Notification) SetDeliveryTimeOfDayNil(b bool)`
+`func (o *BasicNotification) SetDeliveryTimeOfDayNil(b bool)`
 
  SetDeliveryTimeOfDayNil sets the value for DeliveryTimeOfDay to be an explicit nil
 
 ### UnsetDeliveryTimeOfDay
-`func (o *Notification) UnsetDeliveryTimeOfDay()`
+`func (o *BasicNotification) UnsetDeliveryTimeOfDay()`
 
 UnsetDeliveryTimeOfDay ensures that no value is present for DeliveryTimeOfDay, not even an explicit nil
 ### GetTtl
 
-`func (o *Notification) GetTtl() int32`
+`func (o *BasicNotification) GetTtl() int32`
 
 GetTtl returns the Ttl field if non-nil, zero value otherwise.
 
 ### GetTtlOk
 
-`func (o *Notification) GetTtlOk() (*int32, bool)`
+`func (o *BasicNotification) GetTtlOk() (*int32, bool)`
 
 GetTtlOk returns a tuple with the Ttl field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTtl
 
-`func (o *Notification) SetTtl(v int32)`
+`func (o *BasicNotification) SetTtl(v int32)`
 
 SetTtl sets Ttl field to given value.
 
 ### HasTtl
 
-`func (o *Notification) HasTtl() bool`
+`func (o *BasicNotification) HasTtl() bool`
 
 HasTtl returns a boolean if a field has been set.
 
 ### SetTtlNil
 
-`func (o *Notification) SetTtlNil(b bool)`
+`func (o *BasicNotification) SetTtlNil(b bool)`
 
  SetTtlNil sets the value for Ttl to be an explicit nil
 
 ### UnsetTtl
-`func (o *Notification) UnsetTtl()`
+`func (o *BasicNotification) UnsetTtl()`
 
 UnsetTtl ensures that no value is present for Ttl, not even an explicit nil
 ### GetPriority
 
-`func (o *Notification) GetPriority() int32`
+`func (o *BasicNotification) GetPriority() int32`
 
 GetPriority returns the Priority field if non-nil, zero value otherwise.
 
 ### GetPriorityOk
 
-`func (o *Notification) GetPriorityOk() (*int32, bool)`
+`func (o *BasicNotification) GetPriorityOk() (*int32, bool)`
 
 GetPriorityOk returns a tuple with the Priority field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPriority
 
-`func (o *Notification) SetPriority(v int32)`
+`func (o *BasicNotification) SetPriority(v int32)`
 
 SetPriority sets Priority field to given value.
 
 ### HasPriority
 
-`func (o *Notification) HasPriority() bool`
+`func (o *BasicNotification) HasPriority() bool`
 
 HasPriority returns a boolean if a field has been set.
 
 ### SetPriorityNil
 
-`func (o *Notification) SetPriorityNil(b bool)`
+`func (o *BasicNotification) SetPriorityNil(b bool)`
 
  SetPriorityNil sets the value for Priority to be an explicit nil
 
 ### UnsetPriority
-`func (o *Notification) UnsetPriority()`
+`func (o *BasicNotification) UnsetPriority()`
 
 UnsetPriority ensures that no value is present for Priority, not even an explicit nil
 ### GetApnsPushTypeOverride
 
-`func (o *Notification) GetApnsPushTypeOverride() string`
+`func (o *BasicNotification) GetApnsPushTypeOverride() string`
 
 GetApnsPushTypeOverride returns the ApnsPushTypeOverride field if non-nil, zero value otherwise.
 
 ### GetApnsPushTypeOverrideOk
 
-`func (o *Notification) GetApnsPushTypeOverrideOk() (*string, bool)`
+`func (o *BasicNotification) GetApnsPushTypeOverrideOk() (*string, bool)`
 
 GetApnsPushTypeOverrideOk returns a tuple with the ApnsPushTypeOverride field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetApnsPushTypeOverride
 
-`func (o *Notification) SetApnsPushTypeOverride(v string)`
+`func (o *BasicNotification) SetApnsPushTypeOverride(v string)`
 
 SetApnsPushTypeOverride sets ApnsPushTypeOverride field to given value.
 
 ### HasApnsPushTypeOverride
 
-`func (o *Notification) HasApnsPushTypeOverride() bool`
+`func (o *BasicNotification) HasApnsPushTypeOverride() bool`
 
 HasApnsPushTypeOverride returns a boolean if a field has been set.
 
 ### GetThrottleRatePerMinute
 
-`func (o *Notification) GetThrottleRatePerMinute() string`
+`func (o *BasicNotification) GetThrottleRatePerMinute() string`
 
 GetThrottleRatePerMinute returns the ThrottleRatePerMinute field if non-nil, zero value otherwise.
 
 ### GetThrottleRatePerMinuteOk
 
-`func (o *Notification) GetThrottleRatePerMinuteOk() (*string, bool)`
+`func (o *BasicNotification) GetThrottleRatePerMinuteOk() (*string, bool)`
 
 GetThrottleRatePerMinuteOk returns a tuple with the ThrottleRatePerMinute field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetThrottleRatePerMinute
 
-`func (o *Notification) SetThrottleRatePerMinute(v string)`
+`func (o *BasicNotification) SetThrottleRatePerMinute(v string)`
 
 SetThrottleRatePerMinute sets ThrottleRatePerMinute field to given value.
 
 ### HasThrottleRatePerMinute
 
-`func (o *Notification) HasThrottleRatePerMinute() bool`
+`func (o *BasicNotification) HasThrottleRatePerMinute() bool`
 
 HasThrottleRatePerMinute returns a boolean if a field has been set.
 
 ### SetThrottleRatePerMinuteNil
 
-`func (o *Notification) SetThrottleRatePerMinuteNil(b bool)`
+`func (o *BasicNotification) SetThrottleRatePerMinuteNil(b bool)`
 
  SetThrottleRatePerMinuteNil sets the value for ThrottleRatePerMinute to be an explicit nil
 
 ### UnsetThrottleRatePerMinute
-`func (o *Notification) UnsetThrottleRatePerMinute()`
+`func (o *BasicNotification) UnsetThrottleRatePerMinute()`
 
 UnsetThrottleRatePerMinute ensures that no value is present for ThrottleRatePerMinute, not even an explicit nil
 ### GetAndroidGroup
 
-`func (o *Notification) GetAndroidGroup() string`
+`func (o *BasicNotification) GetAndroidGroup() string`
 
 GetAndroidGroup returns the AndroidGroup field if non-nil, zero value otherwise.
 
 ### GetAndroidGroupOk
 
-`func (o *Notification) GetAndroidGroupOk() (*string, bool)`
+`func (o *BasicNotification) GetAndroidGroupOk() (*string, bool)`
 
 GetAndroidGroupOk returns a tuple with the AndroidGroup field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidGroup
 
-`func (o *Notification) SetAndroidGroup(v string)`
+`func (o *BasicNotification) SetAndroidGroup(v string)`
 
 SetAndroidGroup sets AndroidGroup field to given value.
 
 ### HasAndroidGroup
 
-`func (o *Notification) HasAndroidGroup() bool`
+`func (o *BasicNotification) HasAndroidGroup() bool`
 
 HasAndroidGroup returns a boolean if a field has been set.
 
 ### SetAndroidGroupNil
 
-`func (o *Notification) SetAndroidGroupNil(b bool)`
+`func (o *BasicNotification) SetAndroidGroupNil(b bool)`
 
  SetAndroidGroupNil sets the value for AndroidGroup to be an explicit nil
 
 ### UnsetAndroidGroup
-`func (o *Notification) UnsetAndroidGroup()`
+`func (o *BasicNotification) UnsetAndroidGroup()`
 
 UnsetAndroidGroup ensures that no value is present for AndroidGroup, not even an explicit nil
 ### GetAndroidGroupMessage
 
-`func (o *Notification) GetAndroidGroupMessage() string`
+`func (o *BasicNotification) GetAndroidGroupMessage() string`
 
 GetAndroidGroupMessage returns the AndroidGroupMessage field if non-nil, zero value otherwise.
 
 ### GetAndroidGroupMessageOk
 
-`func (o *Notification) GetAndroidGroupMessageOk() (*string, bool)`
+`func (o *BasicNotification) GetAndroidGroupMessageOk() (*string, bool)`
 
 GetAndroidGroupMessageOk returns a tuple with the AndroidGroupMessage field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAndroidGroupMessage
 
-`func (o *Notification) SetAndroidGroupMessage(v string)`
+`func (o *BasicNotification) SetAndroidGroupMessage(v string)`
 
 SetAndroidGroupMessage sets AndroidGroupMessage field to given value.
 
 ### HasAndroidGroupMessage
 
-`func (o *Notification) HasAndroidGroupMessage() bool`
+`func (o *BasicNotification) HasAndroidGroupMessage() bool`
 
 HasAndroidGroupMessage returns a boolean if a field has been set.
 
 ### SetAndroidGroupMessageNil
 
-`func (o *Notification) SetAndroidGroupMessageNil(b bool)`
+`func (o *BasicNotification) SetAndroidGroupMessageNil(b bool)`
 
  SetAndroidGroupMessageNil sets the value for AndroidGroupMessage to be an explicit nil
 
 ### UnsetAndroidGroupMessage
-`func (o *Notification) UnsetAndroidGroupMessage()`
+`func (o *BasicNotification) UnsetAndroidGroupMessage()`
 
 UnsetAndroidGroupMessage ensures that no value is present for AndroidGroupMessage, not even an explicit nil
 ### GetAdmGroup
 
-`func (o *Notification) GetAdmGroup() string`
+`func (o *BasicNotification) GetAdmGroup() string`
 
 GetAdmGroup returns the AdmGroup field if non-nil, zero value otherwise.
 
 ### GetAdmGroupOk
 
-`func (o *Notification) GetAdmGroupOk() (*string, bool)`
+`func (o *BasicNotification) GetAdmGroupOk() (*string, bool)`
 
 GetAdmGroupOk returns a tuple with the AdmGroup field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdmGroup
 
-`func (o *Notification) SetAdmGroup(v string)`
+`func (o *BasicNotification) SetAdmGroup(v string)`
 
 SetAdmGroup sets AdmGroup field to given value.
 
 ### HasAdmGroup
 
-`func (o *Notification) HasAdmGroup() bool`
+`func (o *BasicNotification) HasAdmGroup() bool`
 
 HasAdmGroup returns a boolean if a field has been set.
 
 ### SetAdmGroupNil
 
-`func (o *Notification) SetAdmGroupNil(b bool)`
+`func (o *BasicNotification) SetAdmGroupNil(b bool)`
 
  SetAdmGroupNil sets the value for AdmGroup to be an explicit nil
 
 ### UnsetAdmGroup
-`func (o *Notification) UnsetAdmGroup()`
+`func (o *BasicNotification) UnsetAdmGroup()`
 
 UnsetAdmGroup ensures that no value is present for AdmGroup, not even an explicit nil
 ### GetAdmGroupMessage
 
-`func (o *Notification) GetAdmGroupMessage() map[string]interface{}`
+`func (o *BasicNotification) GetAdmGroupMessage() map[string]interface{}`
 
 GetAdmGroupMessage returns the AdmGroupMessage field if non-nil, zero value otherwise.
 
 ### GetAdmGroupMessageOk
 
-`func (o *Notification) GetAdmGroupMessageOk() (*map[string]interface{}, bool)`
+`func (o *BasicNotification) GetAdmGroupMessageOk() (*map[string]interface{}, bool)`
 
 GetAdmGroupMessageOk returns a tuple with the AdmGroupMessage field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdmGroupMessage
 
-`func (o *Notification) SetAdmGroupMessage(v map[string]interface{})`
+`func (o *BasicNotification) SetAdmGroupMessage(v map[string]interface{})`
 
 SetAdmGroupMessage sets AdmGroupMessage field to given value.
 
 ### HasAdmGroupMessage
 
-`func (o *Notification) HasAdmGroupMessage() bool`
+`func (o *BasicNotification) HasAdmGroupMessage() bool`
 
 HasAdmGroupMessage returns a boolean if a field has been set.
 
 ### SetAdmGroupMessageNil
 
-`func (o *Notification) SetAdmGroupMessageNil(b bool)`
+`func (o *BasicNotification) SetAdmGroupMessageNil(b bool)`
 
  SetAdmGroupMessageNil sets the value for AdmGroupMessage to be an explicit nil
 
 ### UnsetAdmGroupMessage
-`func (o *Notification) UnsetAdmGroupMessage()`
+`func (o *BasicNotification) UnsetAdmGroupMessage()`
 
 UnsetAdmGroupMessage ensures that no value is present for AdmGroupMessage, not even an explicit nil
 ### GetThreadId
 
-`func (o *Notification) GetThreadId() string`
+`func (o *BasicNotification) GetThreadId() string`
 
 GetThreadId returns the ThreadId field if non-nil, zero value otherwise.
 
 ### GetThreadIdOk
 
-`func (o *Notification) GetThreadIdOk() (*string, bool)`
+`func (o *BasicNotification) GetThreadIdOk() (*string, bool)`
 
 GetThreadIdOk returns a tuple with the ThreadId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetThreadId
 
-`func (o *Notification) SetThreadId(v string)`
+`func (o *BasicNotification) SetThreadId(v string)`
 
 SetThreadId sets ThreadId field to given value.
 
 ### HasThreadId
 
-`func (o *Notification) HasThreadId() bool`
+`func (o *BasicNotification) HasThreadId() bool`
 
 HasThreadId returns a boolean if a field has been set.
 
 ### SetThreadIdNil
 
-`func (o *Notification) SetThreadIdNil(b bool)`
+`func (o *BasicNotification) SetThreadIdNil(b bool)`
 
  SetThreadIdNil sets the value for ThreadId to be an explicit nil
 
 ### UnsetThreadId
-`func (o *Notification) UnsetThreadId()`
+`func (o *BasicNotification) UnsetThreadId()`
 
 UnsetThreadId ensures that no value is present for ThreadId, not even an explicit nil
 ### GetSummaryArg
 
-`func (o *Notification) GetSummaryArg() string`
+`func (o *BasicNotification) GetSummaryArg() string`
 
 GetSummaryArg returns the SummaryArg field if non-nil, zero value otherwise.
 
 ### GetSummaryArgOk
 
-`func (o *Notification) GetSummaryArgOk() (*string, bool)`
+`func (o *BasicNotification) GetSummaryArgOk() (*string, bool)`
 
 GetSummaryArgOk returns a tuple with the SummaryArg field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSummaryArg
 
-`func (o *Notification) SetSummaryArg(v string)`
+`func (o *BasicNotification) SetSummaryArg(v string)`
 
 SetSummaryArg sets SummaryArg field to given value.
 
 ### HasSummaryArg
 
-`func (o *Notification) HasSummaryArg() bool`
+`func (o *BasicNotification) HasSummaryArg() bool`
 
 HasSummaryArg returns a boolean if a field has been set.
 
 ### GetSummaryArgCount
 
-`func (o *Notification) GetSummaryArgCount() int32`
+`func (o *BasicNotification) GetSummaryArgCount() int32`
 
 GetSummaryArgCount returns the SummaryArgCount field if non-nil, zero value otherwise.
 
 ### GetSummaryArgCountOk
 
-`func (o *Notification) GetSummaryArgCountOk() (*int32, bool)`
+`func (o *BasicNotification) GetSummaryArgCountOk() (*int32, bool)`
 
 GetSummaryArgCountOk returns a tuple with the SummaryArgCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSummaryArgCount
 
-`func (o *Notification) SetSummaryArgCount(v int32)`
+`func (o *BasicNotification) SetSummaryArgCount(v int32)`
 
 SetSummaryArgCount sets SummaryArgCount field to given value.
 
 ### HasSummaryArgCount
 
-`func (o *Notification) HasSummaryArgCount() bool`
+`func (o *BasicNotification) HasSummaryArgCount() bool`
 
 HasSummaryArgCount returns a boolean if a field has been set.
 
 ### GetEmailSubject
 
-`func (o *Notification) GetEmailSubject() string`
+`func (o *BasicNotification) GetEmailSubject() string`
 
 GetEmailSubject returns the EmailSubject field if non-nil, zero value otherwise.
 
 ### GetEmailSubjectOk
 
-`func (o *Notification) GetEmailSubjectOk() (*string, bool)`
+`func (o *BasicNotification) GetEmailSubjectOk() (*string, bool)`
 
 GetEmailSubjectOk returns a tuple with the EmailSubject field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmailSubject
 
-`func (o *Notification) SetEmailSubject(v string)`
+`func (o *BasicNotification) SetEmailSubject(v string)`
 
 SetEmailSubject sets EmailSubject field to given value.
 
 ### HasEmailSubject
 
-`func (o *Notification) HasEmailSubject() bool`
+`func (o *BasicNotification) HasEmailSubject() bool`
 
 HasEmailSubject returns a boolean if a field has been set.
 
 ### SetEmailSubjectNil
 
-`func (o *Notification) SetEmailSubjectNil(b bool)`
+`func (o *BasicNotification) SetEmailSubjectNil(b bool)`
 
  SetEmailSubjectNil sets the value for EmailSubject to be an explicit nil
 
 ### UnsetEmailSubject
-`func (o *Notification) UnsetEmailSubject()`
+`func (o *BasicNotification) UnsetEmailSubject()`
 
 UnsetEmailSubject ensures that no value is present for EmailSubject, not even an explicit nil
 ### GetEmailBody
 
-`func (o *Notification) GetEmailBody() string`
+`func (o *BasicNotification) GetEmailBody() string`
 
 GetEmailBody returns the EmailBody field if non-nil, zero value otherwise.
 
 ### GetEmailBodyOk
 
-`func (o *Notification) GetEmailBodyOk() (*string, bool)`
+`func (o *BasicNotification) GetEmailBodyOk() (*string, bool)`
 
 GetEmailBodyOk returns a tuple with the EmailBody field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmailBody
 
-`func (o *Notification) SetEmailBody(v string)`
+`func (o *BasicNotification) SetEmailBody(v string)`
 
 SetEmailBody sets EmailBody field to given value.
 
 ### HasEmailBody
 
-`func (o *Notification) HasEmailBody() bool`
+`func (o *BasicNotification) HasEmailBody() bool`
 
 HasEmailBody returns a boolean if a field has been set.
 
 ### GetEmailFromName
 
-`func (o *Notification) GetEmailFromName() string`
+`func (o *BasicNotification) GetEmailFromName() string`
 
 GetEmailFromName returns the EmailFromName field if non-nil, zero value otherwise.
 
 ### GetEmailFromNameOk
 
-`func (o *Notification) GetEmailFromNameOk() (*string, bool)`
+`func (o *BasicNotification) GetEmailFromNameOk() (*string, bool)`
 
 GetEmailFromNameOk returns a tuple with the EmailFromName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmailFromName
 
-`func (o *Notification) SetEmailFromName(v string)`
+`func (o *BasicNotification) SetEmailFromName(v string)`
 
 SetEmailFromName sets EmailFromName field to given value.
 
 ### HasEmailFromName
 
-`func (o *Notification) HasEmailFromName() bool`
+`func (o *BasicNotification) HasEmailFromName() bool`
 
 HasEmailFromName returns a boolean if a field has been set.
 
 ### SetEmailFromNameNil
 
-`func (o *Notification) SetEmailFromNameNil(b bool)`
+`func (o *BasicNotification) SetEmailFromNameNil(b bool)`
 
  SetEmailFromNameNil sets the value for EmailFromName to be an explicit nil
 
 ### UnsetEmailFromName
-`func (o *Notification) UnsetEmailFromName()`
+`func (o *BasicNotification) UnsetEmailFromName()`
 
 UnsetEmailFromName ensures that no value is present for EmailFromName, not even an explicit nil
 ### GetEmailFromAddress
 
-`func (o *Notification) GetEmailFromAddress() string`
+`func (o *BasicNotification) GetEmailFromAddress() string`
 
 GetEmailFromAddress returns the EmailFromAddress field if non-nil, zero value otherwise.
 
 ### GetEmailFromAddressOk
 
-`func (o *Notification) GetEmailFromAddressOk() (*string, bool)`
+`func (o *BasicNotification) GetEmailFromAddressOk() (*string, bool)`
 
 GetEmailFromAddressOk returns a tuple with the EmailFromAddress field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmailFromAddress
 
-`func (o *Notification) SetEmailFromAddress(v string)`
+`func (o *BasicNotification) SetEmailFromAddress(v string)`
 
 SetEmailFromAddress sets EmailFromAddress field to given value.
 
 ### HasEmailFromAddress
 
-`func (o *Notification) HasEmailFromAddress() bool`
+`func (o *BasicNotification) HasEmailFromAddress() bool`
 
 HasEmailFromAddress returns a boolean if a field has been set.
 
 ### SetEmailFromAddressNil
 
-`func (o *Notification) SetEmailFromAddressNil(b bool)`
+`func (o *BasicNotification) SetEmailFromAddressNil(b bool)`
 
  SetEmailFromAddressNil sets the value for EmailFromAddress to be an explicit nil
 
 ### UnsetEmailFromAddress
-`func (o *Notification) UnsetEmailFromAddress()`
+`func (o *BasicNotification) UnsetEmailFromAddress()`
 
 UnsetEmailFromAddress ensures that no value is present for EmailFromAddress, not even an explicit nil
 ### GetSmsFrom
 
-`func (o *Notification) GetSmsFrom() string`
+`func (o *BasicNotification) GetSmsFrom() string`
 
 GetSmsFrom returns the SmsFrom field if non-nil, zero value otherwise.
 
 ### GetSmsFromOk
 
-`func (o *Notification) GetSmsFromOk() (*string, bool)`
+`func (o *BasicNotification) GetSmsFromOk() (*string, bool)`
 
 GetSmsFromOk returns a tuple with the SmsFrom field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSmsFrom
 
-`func (o *Notification) SetSmsFrom(v string)`
+`func (o *BasicNotification) SetSmsFrom(v string)`
 
 SetSmsFrom sets SmsFrom field to given value.
 
 ### HasSmsFrom
 
-`func (o *Notification) HasSmsFrom() bool`
+`func (o *BasicNotification) HasSmsFrom() bool`
 
 HasSmsFrom returns a boolean if a field has been set.
 
 ### SetSmsFromNil
 
-`func (o *Notification) SetSmsFromNil(b bool)`
+`func (o *BasicNotification) SetSmsFromNil(b bool)`
 
  SetSmsFromNil sets the value for SmsFrom to be an explicit nil
 
 ### UnsetSmsFrom
-`func (o *Notification) UnsetSmsFrom()`
+`func (o *BasicNotification) UnsetSmsFrom()`
 
 UnsetSmsFrom ensures that no value is present for SmsFrom, not even an explicit nil
 ### GetSmsMediaUrls
 
-`func (o *Notification) GetSmsMediaUrls() []string`
+`func (o *BasicNotification) GetSmsMediaUrls() []string`
 
 GetSmsMediaUrls returns the SmsMediaUrls field if non-nil, zero value otherwise.
 
 ### GetSmsMediaUrlsOk
 
-`func (o *Notification) GetSmsMediaUrlsOk() (*[]string, bool)`
+`func (o *BasicNotification) GetSmsMediaUrlsOk() (*[]string, bool)`
 
 GetSmsMediaUrlsOk returns a tuple with the SmsMediaUrls field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSmsMediaUrls
 
-`func (o *Notification) SetSmsMediaUrls(v []string)`
+`func (o *BasicNotification) SetSmsMediaUrls(v []string)`
 
 SetSmsMediaUrls sets SmsMediaUrls field to given value.
 
 ### HasSmsMediaUrls
 
-`func (o *Notification) HasSmsMediaUrls() bool`
+`func (o *BasicNotification) HasSmsMediaUrls() bool`
 
 HasSmsMediaUrls returns a boolean if a field has been set.
 
 ### SetSmsMediaUrlsNil
 
-`func (o *Notification) SetSmsMediaUrlsNil(b bool)`
+`func (o *BasicNotification) SetSmsMediaUrlsNil(b bool)`
 
  SetSmsMediaUrlsNil sets the value for SmsMediaUrls to be an explicit nil
 
 ### UnsetSmsMediaUrls
-`func (o *Notification) UnsetSmsMediaUrls()`
+`func (o *BasicNotification) UnsetSmsMediaUrls()`
 
 UnsetSmsMediaUrls ensures that no value is present for SmsMediaUrls, not even an explicit nil
-### GetSendAfter
-
-`func (o *Notification) GetSendAfter() time.Time`
-
-GetSendAfter returns the SendAfter field if non-nil, zero value otherwise.
-
-### GetSendAfterOk
-
-`func (o *Notification) GetSendAfterOk() (*time.Time, bool)`
-
-GetSendAfterOk returns a tuple with the SendAfter field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSendAfter
-
-`func (o *Notification) SetSendAfter(v time.Time)`
-
-SetSendAfter sets SendAfter field to given value.
-
-### HasSendAfter
-
-`func (o *Notification) HasSendAfter() bool`
-
-HasSendAfter returns a boolean if a field has been set.
-
-### SetSendAfterNil
-
-`func (o *Notification) SetSendAfterNil(b bool)`
-
- SetSendAfterNil sets the value for SendAfter to be an explicit nil
-
-### UnsetSendAfter
-`func (o *Notification) UnsetSendAfter()`
-
-UnsetSendAfter ensures that no value is present for SendAfter, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
