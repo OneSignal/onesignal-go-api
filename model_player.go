@@ -18,7 +18,7 @@ import (
 // Player struct for Player
 type Player struct {
 	// The device's OneSignal ID
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// If true, this is the equivalent of a user being Unsubscribed
 	InvalidIdentifier *bool `json:"invalid_identifier,omitempty"`
 	AppId *string `json:"app_id,omitempty"`
@@ -79,9 +79,8 @@ type _Player Player
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPlayer(id string, deviceType int32) *Player {
+func NewPlayer(deviceType int32) *Player {
 	this := Player{}
-	this.Id = id
 	this.DeviceType = deviceType
 	return &this
 }
@@ -94,28 +93,36 @@ func NewPlayerWithDefaults() *Player {
 	return &this
 }
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *Player) GetId() string {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Player) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *Player) HasId() bool {
+	if o != nil && o.Id != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *Player) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
 // GetInvalidIdentifier returns the InvalidIdentifier field value if set, zero value otherwise.
@@ -1035,7 +1042,7 @@ func (o *Player) SetCountry(v string) {
 
 func (o Player) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
+	if o.Id != nil {
 		toSerialize["id"] = o.Id
 	}
 	if o.InvalidIdentifier != nil {

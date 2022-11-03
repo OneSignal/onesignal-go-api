@@ -816,7 +816,7 @@ paths:
                     than this time.  Unixtime in seconds.
                   type: string
                 segment_name:
-                  description: Export al ldevices belonging to the segment.
+                  description: Export all devices belonging to the segment.
                   type: string
               title: export_players_request_body
               type: object
@@ -1729,7 +1729,6 @@ components:
           type: string
       required:
       - device_type
-      - id
       type: object
     Players:
       items:
@@ -2033,7 +2032,7 @@ components:
             this time.  Unixtime in seconds.
           type: string
         segment_name:
-          description: Export al ldevices belonging to the segment.
+          description: Export all devices belonging to the segment.
           type: string
       title: export_players_request_body
       type: object
