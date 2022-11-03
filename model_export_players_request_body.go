@@ -21,7 +21,7 @@ type ExportPlayersRequestBody struct {
 	ExtraFields []string `json:"extra_fields,omitempty"`
 	// Export all devices with a last_active timestamp greater than this time.  Unixtime in seconds.
 	LastActiveSince *string `json:"last_active_since,omitempty"`
-	// Export al ldevices belonging to the segment.
+	// Export all devices belonging to the segment.
 	SegmentName *string `json:"segment_name,omitempty"`
 	AdditionalProperties map[string]interface{}
 }

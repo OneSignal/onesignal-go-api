@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** | The device&#39;s OneSignal ID | [readonly] 
+**Id** | Pointer to **string** | The device&#39;s OneSignal ID | [optional] [readonly] 
 **InvalidIdentifier** | Pointer to **bool** | If true, this is the equivalent of a user being Unsubscribed | [optional] [readonly] 
 **AppId** | Pointer to **string** |  | [optional] 
 **DeviceType** | **int32** | Required The device&#39;s platform:   0 &#x3D; iOS   1 &#x3D; Android   2 &#x3D; Amazon   3 &#x3D; WindowsPhone (MPNS)   4 &#x3D; Chrome Apps / Extensions   5 &#x3D; Chrome Web Push   6 &#x3D; Windows (WNS)   7 &#x3D; Safari   8 &#x3D; Firefox   9 &#x3D; MacOS   10 &#x3D; Alexa   11 &#x3D; Email   13 &#x3D; For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 &#x3D; SMS  | 
@@ -36,7 +36,7 @@ Name | Type | Description | Notes
 
 ### NewPlayer
 
-`func NewPlayer(id string, deviceType int32, ) *Player`
+`func NewPlayer(deviceType int32, ) *Player`
 
 NewPlayer instantiates a new Player object
 This constructor will assign default values to properties that have it defined,
@@ -70,6 +70,11 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+### HasId
+
+`func (o *Player) HasId() bool`
+
+HasId returns a boolean if a field has been set.
 
 ### GetInvalidIdentifier
 

@@ -271,7 +271,7 @@ import (
 )
 
 func main() {
-    player := *onesignal.NewPlayer("Id_example", int32(123)) // Player | 
+    player := *onesignal.NewPlayer(int32(123)) // Player | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1340,7 +1340,7 @@ import (
 
 func main() {
     playerId := "playerId_example" // string | Player's OneSignal ID
-    player := *onesignal.NewPlayer("Id_example", int32(123)) // Player | 
+    player := *onesignal.NewPlayer(int32(123)) // Player | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
