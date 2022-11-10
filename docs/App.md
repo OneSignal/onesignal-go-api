@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
+**Id** | Pointer to **string** |  | [optional] [readonly] 
 **Name** | Pointer to **string** | The name of your app, as displayed on your apps list on the dashboard.  This can be renamed. | [optional] 
 **Players** | Pointer to **int32** |  | [optional] [readonly] 
 **MessageablePlayers** | Pointer to **int32** |  | [optional] [readonly] 
@@ -39,7 +39,7 @@ Name | Type | Description | Notes
 
 ### NewApp
 
-`func NewApp(id string, ) *App`
+`func NewApp() *App`
 
 NewApp instantiates a new App object
 This constructor will assign default values to properties that have it defined,
@@ -73,6 +73,11 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+### HasId
+
+`func (o *App) HasId() bool`
+
+HasId returns a boolean if a field has been set.
 
 ### GetName
 
