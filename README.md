@@ -127,7 +127,6 @@ Class | Method | HTTP request | Description
  - [ExportPlayersSuccessResponse](docs/ExportPlayersSuccessResponse.md)
  - [Filter](docs/Filter.md)
  - [FilterExpressions](docs/FilterExpressions.md)
- - [FilterNotificationTarget](docs/FilterNotificationTarget.md)
  - [GetNotificationRequestBody](docs/GetNotificationRequestBody.md)
  - [InvalidIdentifierError](docs/InvalidIdentifierError.md)
  - [Notification](docs/Notification.md)

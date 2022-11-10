@@ -21,30 +21,6 @@ type NotificationWithMeta struct {
 	IncludedSegments []string `json:"included_segments,omitempty"`
 	// Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\"Active Users\", \"Inactive Users\"] 
 	ExcludedSegments []string `json:"excluded_segments,omitempty"`
-	// relation = \">\" or \"<\" hours_ago = number of hours before or after the users last session. Example: \"1.1\" 
-	LastSession *string `json:"last_session,omitempty"`
-	// relation = \">\" or \"<\" hours_ago = number of hours before or after the users first session. Example: \"1.1\" 
-	FirstSession *string `json:"first_session,omitempty"`
-	// relation = \">\", \"<\", \"=\" or \"!=\" value = number sessions. Example: \"1\" 
-	SessionCount *string `json:"session_count,omitempty"`
-	// relation = \">\", \"<\", \"=\" or \"!=\" value = Time in seconds the user has been in your app. Example: \"3600\" 
-	SessionTime *string `json:"session_time,omitempty"`
-	// relation = \">\", \"<\", or \"=\" value = Amount in USD a user has spent on IAP (In App Purchases). Example: \"0.99\" 
-	AmountSpent *string `json:"amount_spent,omitempty"`
-	// relation = \">\", \"<\" or \"=\" key = SKU purchased in your app as an IAP (In App Purchases). Example: \"com.domain.100coinpack\" value = value of SKU to compare to. Example: \"0.99\" 
-	BoughtSku *string `json:"bought_sku,omitempty"`
-	// relation = \">\", \"<\", \"=\", \"!=\", \"exists\", \"not_exists\", \"time_elapsed_gt\" (paid plan only) or \"time_elapsed_lt\" (paid plan only) See Time Operators key = Tag key to compare. value = Tag value to compare. Not required for \"exists\" or \"not_exists\". Example: See Formatting Filters 
-	Tag *string `json:"tag,omitempty"`
-	// relation = \"=\" or \"!=\" value = 2 character language code. Example: \"en\". For a list of all language codes see Language & Localization. 
-	Language *string `json:"language,omitempty"`
-	// relation = \">\", \"<\", \"=\" or \"!=\" value = app version. Example: \"1.0.0\" 
-	AppVersion *string `json:"app_version,omitempty"`
-	// radius = in meters lat = latitude long = longitude 
-	Location *string `json:"location,omitempty"`
-	// value = email address Only for sending Push Notifications Use this for targeting push subscribers associated with an email set with all SDK setEmail methods To send emails to specific email addresses use include_email_tokens parameter 
-	Email *string `json:"email,omitempty"`
-	// relation = \"=\" value = 2-digit Country code Example: \"field\": \"country\", \"relation\": \"=\", \"value\", \"US\" 
-	Country *string `json:"country,omitempty"`
 	// Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
 	IncludePlayerIds []string `json:"include_player_ids,omitempty"`
 	// Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\"custom-id-assigned-by-api\"] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms. 
@@ -234,6 +210,7 @@ type NotificationWithMeta struct {
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
 	SmsMediaUrls []string `json:"sms_media_urls,omitempty"`
+	Filters []Filter `json:"filters,omitempty"`
 	// Number of notifications that were successfully delivered.
 	Successful *int32 `json:"successful,omitempty"`
 	// Number of notifications that could not be delivered due to those devices being unsubscribed.
@@ -339,390 +316,6 @@ func (o *NotificationWithMeta) HasExcludedSegments() bool {
 // SetExcludedSegments gets a reference to the given []string and assigns it to the ExcludedSegments field.
 func (o *NotificationWithMeta) SetExcludedSegments(v []string) {
 	o.ExcludedSegments = v
-}
-
-// GetLastSession returns the LastSession field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetLastSession() string {
-	if o == nil || o.LastSession == nil {
-		var ret string
-		return ret
-	}
-	return *o.LastSession
-}
-
-// GetLastSessionOk returns a tuple with the LastSession field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetLastSessionOk() (*string, bool) {
-	if o == nil || o.LastSession == nil {
-		return nil, false
-	}
-	return o.LastSession, true
-}
-
-// HasLastSession returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasLastSession() bool {
-	if o != nil && o.LastSession != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLastSession gets a reference to the given string and assigns it to the LastSession field.
-func (o *NotificationWithMeta) SetLastSession(v string) {
-	o.LastSession = &v
-}
-
-// GetFirstSession returns the FirstSession field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetFirstSession() string {
-	if o == nil || o.FirstSession == nil {
-		var ret string
-		return ret
-	}
-	return *o.FirstSession
-}
-
-// GetFirstSessionOk returns a tuple with the FirstSession field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetFirstSessionOk() (*string, bool) {
-	if o == nil || o.FirstSession == nil {
-		return nil, false
-	}
-	return o.FirstSession, true
-}
-
-// HasFirstSession returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasFirstSession() bool {
-	if o != nil && o.FirstSession != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFirstSession gets a reference to the given string and assigns it to the FirstSession field.
-func (o *NotificationWithMeta) SetFirstSession(v string) {
-	o.FirstSession = &v
-}
-
-// GetSessionCount returns the SessionCount field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetSessionCount() string {
-	if o == nil || o.SessionCount == nil {
-		var ret string
-		return ret
-	}
-	return *o.SessionCount
-}
-
-// GetSessionCountOk returns a tuple with the SessionCount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetSessionCountOk() (*string, bool) {
-	if o == nil || o.SessionCount == nil {
-		return nil, false
-	}
-	return o.SessionCount, true
-}
-
-// HasSessionCount returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSessionCount() bool {
-	if o != nil && o.SessionCount != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSessionCount gets a reference to the given string and assigns it to the SessionCount field.
-func (o *NotificationWithMeta) SetSessionCount(v string) {
-	o.SessionCount = &v
-}
-
-// GetSessionTime returns the SessionTime field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetSessionTime() string {
-	if o == nil || o.SessionTime == nil {
-		var ret string
-		return ret
-	}
-	return *o.SessionTime
-}
-
-// GetSessionTimeOk returns a tuple with the SessionTime field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetSessionTimeOk() (*string, bool) {
-	if o == nil || o.SessionTime == nil {
-		return nil, false
-	}
-	return o.SessionTime, true
-}
-
-// HasSessionTime returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasSessionTime() bool {
-	if o != nil && o.SessionTime != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSessionTime gets a reference to the given string and assigns it to the SessionTime field.
-func (o *NotificationWithMeta) SetSessionTime(v string) {
-	o.SessionTime = &v
-}
-
-// GetAmountSpent returns the AmountSpent field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetAmountSpent() string {
-	if o == nil || o.AmountSpent == nil {
-		var ret string
-		return ret
-	}
-	return *o.AmountSpent
-}
-
-// GetAmountSpentOk returns a tuple with the AmountSpent field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAmountSpentOk() (*string, bool) {
-	if o == nil || o.AmountSpent == nil {
-		return nil, false
-	}
-	return o.AmountSpent, true
-}
-
-// HasAmountSpent returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAmountSpent() bool {
-	if o != nil && o.AmountSpent != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetAmountSpent gets a reference to the given string and assigns it to the AmountSpent field.
-func (o *NotificationWithMeta) SetAmountSpent(v string) {
-	o.AmountSpent = &v
-}
-
-// GetBoughtSku returns the BoughtSku field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetBoughtSku() string {
-	if o == nil || o.BoughtSku == nil {
-		var ret string
-		return ret
-	}
-	return *o.BoughtSku
-}
-
-// GetBoughtSkuOk returns a tuple with the BoughtSku field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetBoughtSkuOk() (*string, bool) {
-	if o == nil || o.BoughtSku == nil {
-		return nil, false
-	}
-	return o.BoughtSku, true
-}
-
-// HasBoughtSku returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasBoughtSku() bool {
-	if o != nil && o.BoughtSku != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetBoughtSku gets a reference to the given string and assigns it to the BoughtSku field.
-func (o *NotificationWithMeta) SetBoughtSku(v string) {
-	o.BoughtSku = &v
-}
-
-// GetTag returns the Tag field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetTag() string {
-	if o == nil || o.Tag == nil {
-		var ret string
-		return ret
-	}
-	return *o.Tag
-}
-
-// GetTagOk returns a tuple with the Tag field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetTagOk() (*string, bool) {
-	if o == nil || o.Tag == nil {
-		return nil, false
-	}
-	return o.Tag, true
-}
-
-// HasTag returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasTag() bool {
-	if o != nil && o.Tag != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetTag gets a reference to the given string and assigns it to the Tag field.
-func (o *NotificationWithMeta) SetTag(v string) {
-	o.Tag = &v
-}
-
-// GetLanguage returns the Language field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetLanguage() string {
-	if o == nil || o.Language == nil {
-		var ret string
-		return ret
-	}
-	return *o.Language
-}
-
-// GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetLanguageOk() (*string, bool) {
-	if o == nil || o.Language == nil {
-		return nil, false
-	}
-	return o.Language, true
-}
-
-// HasLanguage returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasLanguage() bool {
-	if o != nil && o.Language != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLanguage gets a reference to the given string and assigns it to the Language field.
-func (o *NotificationWithMeta) SetLanguage(v string) {
-	o.Language = &v
-}
-
-// GetAppVersion returns the AppVersion field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetAppVersion() string {
-	if o == nil || o.AppVersion == nil {
-		var ret string
-		return ret
-	}
-	return *o.AppVersion
-}
-
-// GetAppVersionOk returns a tuple with the AppVersion field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetAppVersionOk() (*string, bool) {
-	if o == nil || o.AppVersion == nil {
-		return nil, false
-	}
-	return o.AppVersion, true
-}
-
-// HasAppVersion returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasAppVersion() bool {
-	if o != nil && o.AppVersion != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetAppVersion gets a reference to the given string and assigns it to the AppVersion field.
-func (o *NotificationWithMeta) SetAppVersion(v string) {
-	o.AppVersion = &v
-}
-
-// GetLocation returns the Location field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetLocation() string {
-	if o == nil || o.Location == nil {
-		var ret string
-		return ret
-	}
-	return *o.Location
-}
-
-// GetLocationOk returns a tuple with the Location field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetLocationOk() (*string, bool) {
-	if o == nil || o.Location == nil {
-		return nil, false
-	}
-	return o.Location, true
-}
-
-// HasLocation returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasLocation() bool {
-	if o != nil && o.Location != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLocation gets a reference to the given string and assigns it to the Location field.
-func (o *NotificationWithMeta) SetLocation(v string) {
-	o.Location = &v
-}
-
-// GetEmail returns the Email field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetEmail() string {
-	if o == nil || o.Email == nil {
-		var ret string
-		return ret
-	}
-	return *o.Email
-}
-
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetEmailOk() (*string, bool) {
-	if o == nil || o.Email == nil {
-		return nil, false
-	}
-	return o.Email, true
-}
-
-// HasEmail returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasEmail() bool {
-	if o != nil && o.Email != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetEmail gets a reference to the given string and assigns it to the Email field.
-func (o *NotificationWithMeta) SetEmail(v string) {
-	o.Email = &v
-}
-
-// GetCountry returns the Country field value if set, zero value otherwise.
-func (o *NotificationWithMeta) GetCountry() string {
-	if o == nil || o.Country == nil {
-		var ret string
-		return ret
-	}
-	return *o.Country
-}
-
-// GetCountryOk returns a tuple with the Country field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *NotificationWithMeta) GetCountryOk() (*string, bool) {
-	if o == nil || o.Country == nil {
-		return nil, false
-	}
-	return o.Country, true
-}
-
-// HasCountry returns a boolean if a field has been set.
-func (o *NotificationWithMeta) HasCountry() bool {
-	if o != nil && o.Country != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCountry gets a reference to the given string and assigns it to the Country field.
-func (o *NotificationWithMeta) SetCountry(v string) {
-	o.Country = &v
 }
 
 // GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -4522,6 +4115,39 @@ func (o *NotificationWithMeta) SetSmsMediaUrls(v []string) {
 	o.SmsMediaUrls = v
 }
 
+// GetFilters returns the Filters field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetFilters() []Filter {
+	if o == nil {
+		var ret []Filter
+		return ret
+	}
+	return o.Filters
+}
+
+// GetFiltersOk returns a tuple with the Filters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetFiltersOk() ([]Filter, bool) {
+	if o == nil || o.Filters == nil {
+		return nil, false
+	}
+	return o.Filters, true
+}
+
+// HasFilters returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasFilters() bool {
+	if o != nil && o.Filters != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFilters gets a reference to the given []Filter and assigns it to the Filters field.
+func (o *NotificationWithMeta) SetFilters(v []Filter) {
+	o.Filters = v
+}
+
 // GetSuccessful returns the Successful field value if set, zero value otherwise.
 func (o *NotificationWithMeta) GetSuccessful() int32 {
 	if o == nil || o.Successful == nil {
@@ -4912,42 +4538,6 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.ExcludedSegments != nil {
 		toSerialize["excluded_segments"] = o.ExcludedSegments
 	}
-	if o.LastSession != nil {
-		toSerialize["last_session"] = o.LastSession
-	}
-	if o.FirstSession != nil {
-		toSerialize["first_session"] = o.FirstSession
-	}
-	if o.SessionCount != nil {
-		toSerialize["session_count"] = o.SessionCount
-	}
-	if o.SessionTime != nil {
-		toSerialize["session_time"] = o.SessionTime
-	}
-	if o.AmountSpent != nil {
-		toSerialize["amount_spent"] = o.AmountSpent
-	}
-	if o.BoughtSku != nil {
-		toSerialize["bought_sku"] = o.BoughtSku
-	}
-	if o.Tag != nil {
-		toSerialize["tag"] = o.Tag
-	}
-	if o.Language != nil {
-		toSerialize["language"] = o.Language
-	}
-	if o.AppVersion != nil {
-		toSerialize["app_version"] = o.AppVersion
-	}
-	if o.Location != nil {
-		toSerialize["location"] = o.Location
-	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
-	}
-	if o.Country != nil {
-		toSerialize["country"] = o.Country
-	}
 	if o.IncludePlayerIds != nil {
 		toSerialize["include_player_ids"] = o.IncludePlayerIds
 	}
@@ -5242,6 +4832,9 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.SmsMediaUrls != nil {
 		toSerialize["sms_media_urls"] = o.SmsMediaUrls
 	}
+	if o.Filters != nil {
+		toSerialize["filters"] = o.Filters
+	}
 	if o.Successful != nil {
 		toSerialize["successful"] = o.Successful
 	}
@@ -5295,18 +4888,6 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		delete(additionalProperties, "included_segments")
 		delete(additionalProperties, "excluded_segments")
-		delete(additionalProperties, "last_session")
-		delete(additionalProperties, "first_session")
-		delete(additionalProperties, "session_count")
-		delete(additionalProperties, "session_time")
-		delete(additionalProperties, "amount_spent")
-		delete(additionalProperties, "bought_sku")
-		delete(additionalProperties, "tag")
-		delete(additionalProperties, "language")
-		delete(additionalProperties, "app_version")
-		delete(additionalProperties, "location")
-		delete(additionalProperties, "email")
-		delete(additionalProperties, "country")
 		delete(additionalProperties, "include_player_ids")
 		delete(additionalProperties, "include_external_user_ids")
 		delete(additionalProperties, "include_email_tokens")
@@ -5405,6 +4986,7 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_from_address")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
+		delete(additionalProperties, "filters")
 		delete(additionalProperties, "successful")
 		delete(additionalProperties, "failed")
 		delete(additionalProperties, "errored")

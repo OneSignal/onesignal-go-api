@@ -92,6 +92,7 @@ Name | Type | Description | Notes
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
+**Filters** | Pointer to [**[]Filter**](Filter.md) |  | [optional] 
 
 ## Methods
 
@@ -3042,6 +3043,41 @@ HasSmsMediaUrls returns a boolean if a field has been set.
 `func (o *BasicNotificationAllOf) UnsetSmsMediaUrls()`
 
 UnsetSmsMediaUrls ensures that no value is present for SmsMediaUrls, not even an explicit nil
+### GetFilters
+
+`func (o *BasicNotificationAllOf) GetFilters() []Filter`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *BasicNotificationAllOf) GetFiltersOk() (*[]Filter, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *BasicNotificationAllOf) SetFilters(v []Filter)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *BasicNotificationAllOf) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
+### SetFiltersNil
+
+`func (o *BasicNotificationAllOf) SetFiltersNil(b bool)`
+
+ SetFiltersNil sets the value for Filters to be an explicit nil
+
+### UnsetFilters
+`func (o *BasicNotificationAllOf) UnsetFilters()`
+
+UnsetFilters ensures that no value is present for Filters, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

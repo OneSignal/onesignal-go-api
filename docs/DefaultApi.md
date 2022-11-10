@@ -129,7 +129,7 @@ import (
 )
 
 func main() {
-    app := *onesignal.NewApp("Id_example") // App | 
+    app := *onesignal.NewApp() // App | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1263,7 +1263,7 @@ import (
 
 func main() {
     appId := "appId_example" // string | An app id
-    app := *onesignal.NewApp("Id_example") // App | 
+    app := *onesignal.NewApp() // App | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)

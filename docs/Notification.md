@@ -6,18 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **IncludedSegments** | Pointer to **[]string** | The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
 **ExcludedSegments** | Pointer to **[]string** | Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
-**LastSession** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot; or \&quot;&lt;\&quot; hours_ago &#x3D; number of hours before or after the users last session. Example: \&quot;1.1\&quot;  | [optional] 
-**FirstSession** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot; or \&quot;&lt;\&quot; hours_ago &#x3D; number of hours before or after the users first session. Example: \&quot;1.1\&quot;  | [optional] 
-**SessionCount** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot;, \&quot;&lt;\&quot;, \&quot;&#x3D;\&quot; or \&quot;!&#x3D;\&quot; value &#x3D; number sessions. Example: \&quot;1\&quot;  | [optional] 
-**SessionTime** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot;, \&quot;&lt;\&quot;, \&quot;&#x3D;\&quot; or \&quot;!&#x3D;\&quot; value &#x3D; Time in seconds the user has been in your app. Example: \&quot;3600\&quot;  | [optional] 
-**AmountSpent** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot;, \&quot;&lt;\&quot;, or \&quot;&#x3D;\&quot; value &#x3D; Amount in USD a user has spent on IAP (In App Purchases). Example: \&quot;0.99\&quot;  | [optional] 
-**BoughtSku** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot;, \&quot;&lt;\&quot; or \&quot;&#x3D;\&quot; key &#x3D; SKU purchased in your app as an IAP (In App Purchases). Example: \&quot;com.domain.100coinpack\&quot; value &#x3D; value of SKU to compare to. Example: \&quot;0.99\&quot;  | [optional] 
-**Tag** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot;, \&quot;&lt;\&quot;, \&quot;&#x3D;\&quot;, \&quot;!&#x3D;\&quot;, \&quot;exists\&quot;, \&quot;not_exists\&quot;, \&quot;time_elapsed_gt\&quot; (paid plan only) or \&quot;time_elapsed_lt\&quot; (paid plan only) See Time Operators key &#x3D; Tag key to compare. value &#x3D; Tag value to compare. Not required for \&quot;exists\&quot; or \&quot;not_exists\&quot;. Example: See Formatting Filters  | [optional] 
-**Language** | Pointer to **string** | relation &#x3D; \&quot;&#x3D;\&quot; or \&quot;!&#x3D;\&quot; value &#x3D; 2 character language code. Example: \&quot;en\&quot;. For a list of all language codes see Language &amp; Localization.  | [optional] 
-**AppVersion** | Pointer to **string** | relation &#x3D; \&quot;&gt;\&quot;, \&quot;&lt;\&quot;, \&quot;&#x3D;\&quot; or \&quot;!&#x3D;\&quot; value &#x3D; app version. Example: \&quot;1.0.0\&quot;  | [optional] 
-**Location** | Pointer to **string** | radius &#x3D; in meters lat &#x3D; latitude long &#x3D; longitude  | [optional] 
-**Email** | Pointer to **string** | value &#x3D; email address Only for sending Push Notifications Use this for targeting push subscribers associated with an email set with all SDK setEmail methods To send emails to specific email addresses use include_email_tokens parameter  | [optional] 
-**Country** | Pointer to **string** | relation &#x3D; \&quot;&#x3D;\&quot; value &#x3D; 2-digit Country code Example: \&quot;field\&quot;: \&quot;country\&quot;, \&quot;relation\&quot;: \&quot;&#x3D;\&quot;, \&quot;value\&quot;, \&quot;US\&quot;  | [optional] 
 **IncludePlayerIds** | Pointer to **[]string** | Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\&quot;1dd608f2-c6a1-11e3-851d-000c2940e62c\&quot;] Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeExternalUserIds** | Pointer to **[]string** | Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\&quot;custom-id-assigned-by-api\&quot;] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms.  | [optional] 
 **IncludeEmailTokens** | Pointer to **[]string** | Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call  | [optional] 
@@ -116,6 +104,7 @@ Name | Type | Description | Notes
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
+**Filters** | Pointer to [**[]Filter**](Filter.md) |  | [optional] 
 **SendAfter** | Pointer to **NullableTime** | Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date &amp; time. \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\&quot; \&quot;September 24th 2015, 2:00:00 pm UTC-07:00\&quot; \&quot;2015-09-24 14:00:00 GMT-0700\&quot; \&quot;Sept 24 2015 14:00:00 GMT-0700\&quot; \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\&quot; Note: SMS currently only supports send_after parameter.  | [optional] 
 
 ## Methods
@@ -186,306 +175,6 @@ SetExcludedSegments sets ExcludedSegments field to given value.
 `func (o *Notification) HasExcludedSegments() bool`
 
 HasExcludedSegments returns a boolean if a field has been set.
-
-### GetLastSession
-
-`func (o *Notification) GetLastSession() string`
-
-GetLastSession returns the LastSession field if non-nil, zero value otherwise.
-
-### GetLastSessionOk
-
-`func (o *Notification) GetLastSessionOk() (*string, bool)`
-
-GetLastSessionOk returns a tuple with the LastSession field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLastSession
-
-`func (o *Notification) SetLastSession(v string)`
-
-SetLastSession sets LastSession field to given value.
-
-### HasLastSession
-
-`func (o *Notification) HasLastSession() bool`
-
-HasLastSession returns a boolean if a field has been set.
-
-### GetFirstSession
-
-`func (o *Notification) GetFirstSession() string`
-
-GetFirstSession returns the FirstSession field if non-nil, zero value otherwise.
-
-### GetFirstSessionOk
-
-`func (o *Notification) GetFirstSessionOk() (*string, bool)`
-
-GetFirstSessionOk returns a tuple with the FirstSession field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFirstSession
-
-`func (o *Notification) SetFirstSession(v string)`
-
-SetFirstSession sets FirstSession field to given value.
-
-### HasFirstSession
-
-`func (o *Notification) HasFirstSession() bool`
-
-HasFirstSession returns a boolean if a field has been set.
-
-### GetSessionCount
-
-`func (o *Notification) GetSessionCount() string`
-
-GetSessionCount returns the SessionCount field if non-nil, zero value otherwise.
-
-### GetSessionCountOk
-
-`func (o *Notification) GetSessionCountOk() (*string, bool)`
-
-GetSessionCountOk returns a tuple with the SessionCount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionCount
-
-`func (o *Notification) SetSessionCount(v string)`
-
-SetSessionCount sets SessionCount field to given value.
-
-### HasSessionCount
-
-`func (o *Notification) HasSessionCount() bool`
-
-HasSessionCount returns a boolean if a field has been set.
-
-### GetSessionTime
-
-`func (o *Notification) GetSessionTime() string`
-
-GetSessionTime returns the SessionTime field if non-nil, zero value otherwise.
-
-### GetSessionTimeOk
-
-`func (o *Notification) GetSessionTimeOk() (*string, bool)`
-
-GetSessionTimeOk returns a tuple with the SessionTime field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionTime
-
-`func (o *Notification) SetSessionTime(v string)`
-
-SetSessionTime sets SessionTime field to given value.
-
-### HasSessionTime
-
-`func (o *Notification) HasSessionTime() bool`
-
-HasSessionTime returns a boolean if a field has been set.
-
-### GetAmountSpent
-
-`func (o *Notification) GetAmountSpent() string`
-
-GetAmountSpent returns the AmountSpent field if non-nil, zero value otherwise.
-
-### GetAmountSpentOk
-
-`func (o *Notification) GetAmountSpentOk() (*string, bool)`
-
-GetAmountSpentOk returns a tuple with the AmountSpent field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAmountSpent
-
-`func (o *Notification) SetAmountSpent(v string)`
-
-SetAmountSpent sets AmountSpent field to given value.
-
-### HasAmountSpent
-
-`func (o *Notification) HasAmountSpent() bool`
-
-HasAmountSpent returns a boolean if a field has been set.
-
-### GetBoughtSku
-
-`func (o *Notification) GetBoughtSku() string`
-
-GetBoughtSku returns the BoughtSku field if non-nil, zero value otherwise.
-
-### GetBoughtSkuOk
-
-`func (o *Notification) GetBoughtSkuOk() (*string, bool)`
-
-GetBoughtSkuOk returns a tuple with the BoughtSku field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBoughtSku
-
-`func (o *Notification) SetBoughtSku(v string)`
-
-SetBoughtSku sets BoughtSku field to given value.
-
-### HasBoughtSku
-
-`func (o *Notification) HasBoughtSku() bool`
-
-HasBoughtSku returns a boolean if a field has been set.
-
-### GetTag
-
-`func (o *Notification) GetTag() string`
-
-GetTag returns the Tag field if non-nil, zero value otherwise.
-
-### GetTagOk
-
-`func (o *Notification) GetTagOk() (*string, bool)`
-
-GetTagOk returns a tuple with the Tag field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTag
-
-`func (o *Notification) SetTag(v string)`
-
-SetTag sets Tag field to given value.
-
-### HasTag
-
-`func (o *Notification) HasTag() bool`
-
-HasTag returns a boolean if a field has been set.
-
-### GetLanguage
-
-`func (o *Notification) GetLanguage() string`
-
-GetLanguage returns the Language field if non-nil, zero value otherwise.
-
-### GetLanguageOk
-
-`func (o *Notification) GetLanguageOk() (*string, bool)`
-
-GetLanguageOk returns a tuple with the Language field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLanguage
-
-`func (o *Notification) SetLanguage(v string)`
-
-SetLanguage sets Language field to given value.
-
-### HasLanguage
-
-`func (o *Notification) HasLanguage() bool`
-
-HasLanguage returns a boolean if a field has been set.
-
-### GetAppVersion
-
-`func (o *Notification) GetAppVersion() string`
-
-GetAppVersion returns the AppVersion field if non-nil, zero value otherwise.
-
-### GetAppVersionOk
-
-`func (o *Notification) GetAppVersionOk() (*string, bool)`
-
-GetAppVersionOk returns a tuple with the AppVersion field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAppVersion
-
-`func (o *Notification) SetAppVersion(v string)`
-
-SetAppVersion sets AppVersion field to given value.
-
-### HasAppVersion
-
-`func (o *Notification) HasAppVersion() bool`
-
-HasAppVersion returns a boolean if a field has been set.
-
-### GetLocation
-
-`func (o *Notification) GetLocation() string`
-
-GetLocation returns the Location field if non-nil, zero value otherwise.
-
-### GetLocationOk
-
-`func (o *Notification) GetLocationOk() (*string, bool)`
-
-GetLocationOk returns a tuple with the Location field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLocation
-
-`func (o *Notification) SetLocation(v string)`
-
-SetLocation sets Location field to given value.
-
-### HasLocation
-
-`func (o *Notification) HasLocation() bool`
-
-HasLocation returns a boolean if a field has been set.
-
-### GetEmail
-
-`func (o *Notification) GetEmail() string`
-
-GetEmail returns the Email field if non-nil, zero value otherwise.
-
-### GetEmailOk
-
-`func (o *Notification) GetEmailOk() (*string, bool)`
-
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEmail
-
-`func (o *Notification) SetEmail(v string)`
-
-SetEmail sets Email field to given value.
-
-### HasEmail
-
-`func (o *Notification) HasEmail() bool`
-
-HasEmail returns a boolean if a field has been set.
-
-### GetCountry
-
-`func (o *Notification) GetCountry() string`
-
-GetCountry returns the Country field if non-nil, zero value otherwise.
-
-### GetCountryOk
-
-`func (o *Notification) GetCountryOk() (*string, bool)`
-
-GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCountry
-
-`func (o *Notification) SetCountry(v string)`
-
-SetCountry sets Country field to given value.
-
-### HasCountry
-
-`func (o *Notification) HasCountry() bool`
-
-HasCountry returns a boolean if a field has been set.
 
 ### GetIncludePlayerIds
 
@@ -3682,6 +3371,41 @@ HasSmsMediaUrls returns a boolean if a field has been set.
 `func (o *Notification) UnsetSmsMediaUrls()`
 
 UnsetSmsMediaUrls ensures that no value is present for SmsMediaUrls, not even an explicit nil
+### GetFilters
+
+`func (o *Notification) GetFilters() []Filter`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *Notification) GetFiltersOk() (*[]Filter, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *Notification) SetFilters(v []Filter)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *Notification) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
+### SetFiltersNil
+
+`func (o *Notification) SetFiltersNil(b bool)`
+
+ SetFiltersNil sets the value for Filters to be an explicit nil
+
+### UnsetFilters
+`func (o *Notification) UnsetFilters()`
+
+UnsetFilters ensures that no value is present for Filters, not even an explicit nil
 ### GetSendAfter
 
 `func (o *Notification) GetSendAfter() time.Time`

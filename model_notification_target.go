@@ -18,7 +18,6 @@ import (
 
 // NotificationTarget struct for NotificationTarget
 type NotificationTarget struct {
-	FilterNotificationTarget *FilterNotificationTarget
 	PlayerNotificationTarget *PlayerNotificationTarget
 	SegmentNotificationTarget *SegmentNotificationTarget
 }
@@ -26,19 +25,6 @@ type NotificationTarget struct {
 // Unmarshal JSON data into any of the pointers in the struct
 func (dst *NotificationTarget) UnmarshalJSON(data []byte) error {
 	var err error
-	// try to unmarshal JSON data into FilterNotificationTarget
-	err = json.Unmarshal(data, &dst.FilterNotificationTarget);
-	if err == nil {
-		jsonFilterNotificationTarget, _ := json.Marshal(dst.FilterNotificationTarget)
-		if string(jsonFilterNotificationTarget) == "{}" { // empty struct
-			dst.FilterNotificationTarget = nil
-		} else {
-			return nil // data stored in dst.FilterNotificationTarget, return on the first match
-		}
-	} else {
-		dst.FilterNotificationTarget = nil
-	}
-
 	// try to unmarshal JSON data into PlayerNotificationTarget
 	err = json.Unmarshal(data, &dst.PlayerNotificationTarget);
 	if err == nil {
@@ -70,10 +56,6 @@ func (dst *NotificationTarget) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src *NotificationTarget) MarshalJSON() ([]byte, error) {
-	if src.FilterNotificationTarget != nil {
-		return json.Marshal(&src.FilterNotificationTarget)
-	}
-
 	if src.PlayerNotificationTarget != nil {
 		return json.Marshal(&src.PlayerNotificationTarget)
 	}

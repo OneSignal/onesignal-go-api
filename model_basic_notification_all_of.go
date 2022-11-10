@@ -186,6 +186,7 @@ type BasicNotificationAllOf struct {
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
 	SmsMediaUrls []string `json:"sms_media_urls,omitempty"`
+	Filters []Filter `json:"filters,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -3691,6 +3692,39 @@ func (o *BasicNotificationAllOf) SetSmsMediaUrls(v []string) {
 	o.SmsMediaUrls = v
 }
 
+// GetFilters returns the Filters field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotificationAllOf) GetFilters() []Filter {
+	if o == nil {
+		var ret []Filter
+		return ret
+	}
+	return o.Filters
+}
+
+// GetFiltersOk returns a tuple with the Filters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotificationAllOf) GetFiltersOk() ([]Filter, bool) {
+	if o == nil || o.Filters == nil {
+		return nil, false
+	}
+	return o.Filters, true
+}
+
+// HasFilters returns a boolean if a field has been set.
+func (o *BasicNotificationAllOf) HasFilters() bool {
+	if o != nil && o.Filters != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFilters gets a reference to the given []Filter and assigns it to the Filters field.
+func (o *BasicNotificationAllOf) SetFilters(v []Filter) {
+	o.Filters = v
+}
+
 func (o BasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -3957,6 +3991,9 @@ func (o BasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	if o.SmsMediaUrls != nil {
 		toSerialize["sms_media_urls"] = o.SmsMediaUrls
 	}
+	if o.Filters != nil {
+		toSerialize["filters"] = o.Filters
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -4063,6 +4100,7 @@ func (o *BasicNotificationAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_from_address")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
+		delete(additionalProperties, "filters")
 		o.AdditionalProperties = additionalProperties
 	}
 

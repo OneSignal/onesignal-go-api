@@ -21,7 +21,7 @@ type Filter struct {
 	Field string `json:"field"`
 	// If `field` is `tag`, this field is *required* to specify `key` inside the tags.
 	Key *string `json:"key,omitempty"`
-	// Constant value to use as the second operand in the filter expression.  This value is *required* when the relation operator is a binary operator.
+	// Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator.
 	Value *string `json:"value,omitempty"`
 	// Operator of a filter expression.
 	Relation string `json:"relation"`
