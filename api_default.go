@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.1
+API version: 1.0.2
 Contact: devrel@onesignal.com
 */
 
@@ -23,6 +23,122 @@ import (
 
 // DefaultApiService DefaultApi service
 type DefaultApiService service
+
+type ApiBeginLiveActivityRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	activityId string
+	beginLiveActivityRequest *BeginLiveActivityRequest
+}
+
+func (r ApiBeginLiveActivityRequest) BeginLiveActivityRequest(beginLiveActivityRequest BeginLiveActivityRequest) ApiBeginLiveActivityRequest {
+	r.beginLiveActivityRequest = &beginLiveActivityRequest
+	return r
+}
+
+func (r ApiBeginLiveActivityRequest) Execute() (*http.Response, error) {
+	return r.ApiService.BeginLiveActivityExecute(r)
+}
+
+/*
+BeginLiveActivity Start Live Activity
+
+Starts a Live Activity
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
+ @param activityId Live Activity record ID
+ @return ApiBeginLiveActivityRequest
+*/
+func (a *DefaultApiService) BeginLiveActivity(ctx context.Context, appId string, activityId string) ApiBeginLiveActivityRequest {
+	return ApiBeginLiveActivityRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		activityId: activityId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) BeginLiveActivityExecute(r ApiBeginLiveActivityRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.BeginLiveActivity")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/live_activities/{activity_id}/token"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"activity_id"+"}", url.PathEscape(parameterToString(r.activityId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.beginLiveActivityRequest == nil {
+		return nil, reportError("beginLiveActivityRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.beginLiveActivityRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
 
 type ApiCancelNotificationRequest struct {
 	ctx context.Context
@@ -121,6 +237,15 @@ func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationReq
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -231,6 +356,15 @@ func (a *DefaultApiService) CreateAppExecute(r ApiCreateAppRequest) (*App, *http
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -344,7 +478,7 @@ func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationReq
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v CreateNotificationBadRequestResponse
+			var v BadRequestError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -473,6 +607,15 @@ func (a *DefaultApiService) CreatePlayerExecute(r ApiCreatePlayerRequest) (*Crea
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -590,7 +733,7 @@ func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v CreateSegmentBadRequestResponse
+			var v BadRequestError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -725,7 +868,7 @@ func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*Dele
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v DeletePlayerBadRequestResponse
+			var v BadRequestError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -854,7 +997,7 @@ func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v DeleteSegmentBadRequestResponse
+			var v BadRequestError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -885,6 +1028,115 @@ func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiEndLiveActivityRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	activityId string
+	subscriptionId string
+}
+
+func (r ApiEndLiveActivityRequest) Execute() (*http.Response, error) {
+	return r.ApiService.EndLiveActivityExecute(r)
+}
+
+/*
+EndLiveActivity Stop Live Activity
+
+Stops a Live Activity
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
+ @param activityId Live Activity record ID
+ @param subscriptionId Subscription ID
+ @return ApiEndLiveActivityRequest
+*/
+func (a *DefaultApiService) EndLiveActivity(ctx context.Context, appId string, activityId string, subscriptionId string) ApiEndLiveActivityRequest {
+	return ApiEndLiveActivityRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		activityId: activityId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) EndLiveActivityExecute(r ApiEndLiveActivityRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.EndLiveActivity")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/live_activities/{activity_id}/token/{subscription_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"activity_id"+"}", url.PathEscape(parameterToString(r.activityId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
 }
 
 type ApiExportPlayersRequest struct {
@@ -1029,7 +1281,7 @@ func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*Ex
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v map[string]interface{}
+			var v BadRequestError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1140,6 +1392,15 @@ func (a *DefaultApiService) GetAppExecute(r ApiGetAppRequest) (*App, *http.Respo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -1238,6 +1499,15 @@ func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) ([]App, *http.Re
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1351,6 +1621,15 @@ func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) 
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1467,7 +1746,7 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v NotificationHistoryBadRequestResponse
+			var v BadRequestError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1614,6 +1893,15 @@ func (a *DefaultApiService) GetNotificationsExecute(r ApiGetNotificationsRequest
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1778,6 +2066,15 @@ func (a *DefaultApiService) GetOutcomesExecute(r ApiGetOutcomesRequest) (*Outcom
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -1901,6 +2198,15 @@ func (a *DefaultApiService) GetPlayerExecute(r ApiGetPlayerRequest) (*Player, *h
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2035,6 +2341,15 @@ func (a *DefaultApiService) GetPlayersExecute(r ApiGetPlayersRequest) (*PlayerSl
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -2149,6 +2464,142 @@ func (a *DefaultApiService) UpdateAppExecute(r ApiUpdateAppRequest) (*App, *http
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateLiveActivityRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	activityId string
+	updateLiveActivityRequest *UpdateLiveActivityRequest
+}
+
+func (r ApiUpdateLiveActivityRequest) UpdateLiveActivityRequest(updateLiveActivityRequest UpdateLiveActivityRequest) ApiUpdateLiveActivityRequest {
+	r.updateLiveActivityRequest = &updateLiveActivityRequest
+	return r
+}
+
+func (r ApiUpdateLiveActivityRequest) Execute() (*UpdateLiveActivitySuccessResponse, *http.Response, error) {
+	return r.ApiService.UpdateLiveActivityExecute(r)
+}
+
+/*
+UpdateLiveActivity Update a Live Activity via Push
+
+Updates a specified live activity.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
+ @param activityId Live Activity record ID
+ @return ApiUpdateLiveActivityRequest
+*/
+func (a *DefaultApiService) UpdateLiveActivity(ctx context.Context, appId string, activityId string) ApiUpdateLiveActivityRequest {
+	return ApiUpdateLiveActivityRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		activityId: activityId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateLiveActivitySuccessResponse
+func (a *DefaultApiService) UpdateLiveActivityExecute(r ApiUpdateLiveActivityRequest) (*UpdateLiveActivitySuccessResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateLiveActivitySuccessResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateLiveActivity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/live_activities/{activity_id}/notifications"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"activity_id"+"}", url.PathEscape(parameterToString(r.activityId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateLiveActivityRequest == nil {
+		return localVarReturnValue, nil, reportError("updateLiveActivityRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateLiveActivityRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -2262,6 +2713,15 @@ func (a *DefaultApiService) UpdatePlayerExecute(r ApiUpdatePlayerRequest) (*Upda
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2394,6 +2854,15 @@ func (a *DefaultApiService) UpdatePlayerTagsExecute(r ApiUpdatePlayerTagsRequest
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

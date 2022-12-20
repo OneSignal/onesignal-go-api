@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.1
+API version: 1.0.2
 Contact: devrel@onesignal.com
 */
 
@@ -20,7 +20,7 @@ type CreateNotificationSuccessResponse struct {
 	Id string `json:"id"`
 	// Estimated number of subscribers targetted by notification.
 	Recipients int32 `json:"recipients"`
-	ExternalId *string `json:"external_id,omitempty"`
+	ExternalId NullableString `json:"external_id,omitempty"`
 	Errors *Notification200Errors `json:"errors,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -94,36 +94,46 @@ func (o *CreateNotificationSuccessResponse) SetRecipients(v int32) {
 	o.Recipients = v
 }
 
-// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CreateNotificationSuccessResponse) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || o.ExternalId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ExternalId
+	return *o.ExternalId.Get()
 }
 
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateNotificationSuccessResponse) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ExternalId, true
+	return o.ExternalId.Get(), o.ExternalId.IsSet()
 }
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *CreateNotificationSuccessResponse) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && o.ExternalId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
 func (o *CreateNotificationSuccessResponse) SetExternalId(v string) {
-	o.ExternalId = &v
+	o.ExternalId.Set(&v)
+}
+// SetExternalIdNil sets the value for ExternalId to be an explicit nil
+func (o *CreateNotificationSuccessResponse) SetExternalIdNil() {
+	o.ExternalId.Set(nil)
+}
+
+// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+func (o *CreateNotificationSuccessResponse) UnsetExternalId() {
+	o.ExternalId.Unset()
 }
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
@@ -166,8 +176,8 @@ func (o CreateNotificationSuccessResponse) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["recipients"] = o.Recipients
 	}
-	if o.ExternalId != nil {
-		toSerialize["external_id"] = o.ExternalId
+	if o.ExternalId.IsSet() {
+		toSerialize["external_id"] = o.ExternalId.Get()
 	}
 	if o.Errors != nil {
 		toSerialize["errors"] = o.Errors

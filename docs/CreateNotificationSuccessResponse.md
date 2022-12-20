@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
 **Recipients** | **int32** | Estimated number of subscribers targetted by notification. | 
-**ExternalId** | Pointer to **string** |  | [optional] 
+**ExternalId** | Pointer to **NullableString** |  | [optional] 
 **Errors** | Pointer to [**Notification200Errors**](Notification200Errors.md) |  | [optional] 
 
 ## Methods
@@ -93,6 +93,16 @@ SetExternalId sets ExternalId field to given value.
 
 HasExternalId returns a boolean if a field has been set.
 
+### SetExternalIdNil
+
+`func (o *CreateNotificationSuccessResponse) SetExternalIdNil(b bool)`
+
+ SetExternalIdNil sets the value for ExternalId to be an explicit nil
+
+### UnsetExternalId
+`func (o *CreateNotificationSuccessResponse) UnsetExternalId()`
+
+UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
 ### GetErrors
 
 `func (o *CreateNotificationSuccessResponse) GetErrors() Notification200Errors`
