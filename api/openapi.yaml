@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 1.0.1
+  version: 1.0.2
 servers:
 - url: https://onesignal.com/api/v1
 paths:
@@ -67,6 +67,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotificationSlice'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: View notifications
@@ -98,7 +104,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateNotificationBadRequestResponse'
+                $ref: '#/components/schemas/BadRequestError'
           description: Bad Request
       security:
       - app_key: []
@@ -129,6 +135,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CancelNotificationSuccessResponse'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: Stop a scheduled or currently outgoing notification
@@ -158,6 +170,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotificationWithMeta'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: View notification
@@ -172,6 +190,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Apps'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - user_key: []
       summary: View apps
@@ -191,6 +215,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/App'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - user_key: []
       summary: Create an app
@@ -214,6 +244,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/App'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - user_key: []
       summary: View an app
@@ -243,6 +279,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/App'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - user_key: []
       summary: Update an app
@@ -309,7 +351,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotificationHistoryBadRequestResponse'
+                $ref: '#/components/schemas/BadRequestError'
           description: Bad Request
       security:
       - app_key: []
@@ -378,6 +420,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/UpdatePlayerTagsSuccessResponse'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: Edit tags with external user id
@@ -418,7 +466,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateSegmentBadRequestResponse'
+                $ref: '#/components/schemas/BadRequestError'
           description: Bad Request
         "409":
           content:
@@ -466,7 +514,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteSegmentBadRequestResponse'
+                $ref: '#/components/schemas/BadRequestError'
           description: Bad Request
         "404":
           content:
@@ -555,9 +603,138 @@ paths:
               schema:
                 $ref: '#/components/schemas/OutcomesData'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: View Outcomes
+  /apps/{app_id}/live_activities/{activity_id}/notifications:
+    post:
+      description: Updates a specified live activity.
+      operationId: update_live_activity
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Live Activity record ID
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLiveActivityRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateLiveActivitySuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+      security:
+      - app_key: []
+      summary: Update a Live Activity via Push
+  /apps/{app_id}/live_activities/{activity_id}/token:
+    post:
+      description: Starts a Live Activity
+      operationId: begin_live_activity
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Live Activity record ID
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeginLiveActivityRequest'
+        required: true
+      responses:
+        "204":
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+      security:
+      - app_key: []
+      summary: Start Live Activity
+  /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id}:
+    delete:
+      description: Stops a Live Activity
+      operationId: end_live_activity
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Live Activity record ID
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Subscription ID
+        explode: false
+        in: path
+        name: subscription_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+      security:
+      - app_key: []
+      summary: Stop Live Activity
   /players:
     get:
       description: "View the details of multiple devices in one of your OneSignal\
@@ -597,6 +774,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/PlayerSlice'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: View devices
@@ -629,6 +812,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreatePlayerSuccessResponse'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: Add a device
@@ -665,7 +854,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeletePlayerBadRequestResponse'
+                $ref: '#/components/schemas/BadRequestError'
           description: Bad Request
         "404":
           content:
@@ -713,6 +902,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Player'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: View device
@@ -741,6 +936,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/UpdatePlayerSuccessResponse'
           description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
       security:
       - app_key: []
       summary: Edit device
@@ -831,7 +1032,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExportPlayersBadRequestResponse'
+                $ref: '#/components/schemas/BadRequestError'
           description: Bad Request
       security:
       - app_key: []
@@ -858,6 +1059,8 @@ components:
   schemas:
     App:
       example:
+        apns_key_id: apns_key_id
+        apns_team_id: apns_team_id
         apns_p12: apns_p12
         safari_site_origin: safari_site_origin
         apns_p12_password: apns_p12_password
@@ -865,6 +1068,7 @@ components:
         safari_icon_64_64: safari_icon_64_64
         chrome_web_sub_domain: chrome_web_sub_domain
         gcm_key: gcm_key
+        apns_bundle_id: apns_bundle_id
         chrome_key: chrome_key
         safari_push_id: safari_push_id
         updated_at: 2000-01-23T04:56:07.000+00:00
@@ -878,6 +1082,7 @@ components:
         apns_env: sandbox
         players: 0
         messageable_players: 6
+        apns_p8: apns_p8
         chrome_web_origin: chrome_web_origin
         basic_auth_key: basic_auth_key
         site_name: site_name
@@ -974,6 +1179,21 @@ components:
           description: "Safari: Password for safari_apns_p12 file"
           type: string
           writeOnly: true
+        apns_key_id:
+          description: "iOS: Required if using p8. Unique identifier for the p8 authentication\
+            \ key."
+          type: string
+        apns_team_id:
+          description: "iOS: Required if using p8. Team ID generated by Apple for\
+            \ your developer account."
+          type: string
+        apns_bundle_id:
+          description: "iOS: Required if using p8. Bundle ID for your app in the Apple\
+            \ ecosystem."
+          type: string
+        apns_p8:
+          description: "iOS: Required if using p8. Base64 encoded p8 key"
+          type: string
         safari_site_origin:
           description: "Safari (Recommended): The hostname to your website including\
             \ http(s)://"
@@ -1768,6 +1988,56 @@ components:
       oneOf:
       - $ref: '#/components/schemas/InvalidIdentifierError'
       - $ref: '#/components/schemas/NoSubscribersError'
+    BadRequestError:
+      properties:
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    UpdateLiveActivityRequest:
+      example:
+        event_updates: "{}"
+        name: headings
+        event: update
+        dismiss_at: 0.8008281904610115
+      properties:
+        name:
+          description: Type of live activity
+          enum:
+          - headings
+          - contents
+          - ios_sound
+          - priority_level
+          type: string
+        event:
+          enum:
+          - update
+          - end
+          type: string
+        event_updates:
+          type: object
+        dismiss_at:
+          description: Timestamp; only allowed if event is "end"
+          type: number
+      required:
+      - event
+      - event_updates
+      - name
+      type: object
+    BeginLiveActivityRequest:
+      example:
+        subscription_id: subscription_id
+        push_token: push_token
+      properties:
+        push_token:
+          type: string
+        subscription_id:
+          type: string
+      required:
+      - push_token
+      - subscription_id
+      type: object
     CreateNotificationSuccessResponse:
       example:
         recipients: 0
@@ -1781,19 +2051,13 @@ components:
           description: Estimated number of subscribers targetted by notification.
           type: integer
         external_id:
+          nullable: true
           type: string
         errors:
           $ref: '#/components/schemas/Notification200Errors'
       required:
       - id
       - recipients
-      type: object
-    CreateNotificationBadRequestResponse:
-      properties:
-        errors:
-          items:
-            type: string
-          type: array
       type: object
     CancelNotificationSuccessResponse:
       example:
@@ -1811,15 +2075,6 @@ components:
           type: boolean
         destination_url:
           type: string
-      type: object
-    NotificationHistoryBadRequestResponse:
-      properties:
-        success:
-          type: string
-        errors:
-          items:
-            type: string
-          type: array
       type: object
     UpdatePlayerTagsSuccessResponse:
       example:
@@ -1839,15 +2094,6 @@ components:
           description: UUID of created segment
           type: string
       type: object
-    CreateSegmentBadRequestResponse:
-      properties:
-        success:
-          type: boolean
-        errors:
-          items:
-            type: string
-          type: array
-      type: object
     CreateSegmentConflictResponse:
       properties:
         success:
@@ -1863,13 +2109,6 @@ components:
       properties:
         success:
           type: boolean
-      type: object
-    DeleteSegmentBadRequestResponse:
-      properties:
-        erorrs:
-          items:
-            type: string
-          type: array
       type: object
     DeleteSegmentNotFoundResponse:
       properties:
@@ -1893,13 +2132,6 @@ components:
         success:
           type: boolean
       type: object
-    DeletePlayerBadRequestResponse:
-      properties:
-        erorrs:
-          items:
-            type: boolean
-          type: array
-      type: object
     DeletePlayerNotFoundResponse:
       properties:
         success:
@@ -1919,7 +2151,15 @@ components:
         csv_file_url:
           type: string
       type: object
-    ExportPlayersBadRequestResponse:
+    UpdateLiveActivitySuccessResponse:
+      example:
+        notification_id: notification_id
+        errors: null
+      properties:
+        notification_id:
+          type: string
+        errors:
+          $ref: '#/components/schemas/Notification200Errors'
       type: object
     get_notification_request_body:
       properties:

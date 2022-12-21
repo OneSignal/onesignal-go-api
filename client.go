@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.1
+API version: 1.0.2
 Contact: devrel@onesignal.com
 */
 
@@ -42,7 +42,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the OneSignal API v1.0.1
+// APIClient manages communication with the OneSignal API v1.0.2
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -324,7 +324,7 @@ func (c *APIClient) prepareRequest(
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
 
     // Add the SDK version to OS-Usage header for telemetry
-    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=1.0.4")
+    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=1.0.5")
 
 	if ctx != nil {
 		// add context to the request

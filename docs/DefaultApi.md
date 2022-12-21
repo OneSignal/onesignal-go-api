@@ -4,6 +4,7 @@ All URIs are relative to *https://onesignal.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**BeginLiveActivity**](DefaultApi.md#BeginLiveActivity) | **Post** /apps/{app_id}/live_activities/{activity_id}/token | Start Live Activity
 [**CancelNotification**](DefaultApi.md#CancelNotification) | **Delete** /notifications/{notification_id} | Stop a scheduled or currently outgoing notification
 [**CreateApp**](DefaultApi.md#CreateApp) | **Post** /apps | Create an app
 [**CreateNotification**](DefaultApi.md#CreateNotification) | **Post** /notifications | Create notification
@@ -11,6 +12,7 @@ Method | HTTP request | Description
 [**CreateSegments**](DefaultApi.md#CreateSegments) | **Post** /apps/{app_id}/segments | Create Segments
 [**DeletePlayer**](DefaultApi.md#DeletePlayer) | **Delete** /players/{player_id} | Delete a user record
 [**DeleteSegments**](DefaultApi.md#DeleteSegments) | **Delete** /apps/{app_id}/segments/{segment_id} | Delete Segments
+[**EndLiveActivity**](DefaultApi.md#EndLiveActivity) | **Delete** /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id} | Stop Live Activity
 [**ExportPlayers**](DefaultApi.md#ExportPlayers) | **Post** /players/csv_export?app_id&#x3D;{app_id} | CSV export
 [**GetApp**](DefaultApi.md#GetApp) | **Get** /apps/{app_id} | View an app
 [**GetApps**](DefaultApi.md#GetApps) | **Get** /apps | View apps
@@ -21,9 +23,88 @@ Method | HTTP request | Description
 [**GetPlayer**](DefaultApi.md#GetPlayer) | **Get** /players/{player_id} | View device
 [**GetPlayers**](DefaultApi.md#GetPlayers) | **Get** /players | View devices
 [**UpdateApp**](DefaultApi.md#UpdateApp) | **Put** /apps/{app_id} | Update an app
+[**UpdateLiveActivity**](DefaultApi.md#UpdateLiveActivity) | **Post** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
 [**UpdatePlayer**](DefaultApi.md#UpdatePlayer) | **Put** /players/{player_id} | Edit device
 [**UpdatePlayerTags**](DefaultApi.md#UpdatePlayerTags) | **Put** /apps/{app_id}/users/{external_user_id} | Edit tags with external user id
 
+
+
+## BeginLiveActivity
+
+> BeginLiveActivity(ctx, appId, activityId).BeginLiveActivityRequest(beginLiveActivityRequest).Execute()
+
+Start Live Activity
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    activityId := "activityId_example" // string | Live Activity record ID
+    beginLiveActivityRequest := *onesignal.NewBeginLiveActivityRequest("PushToken_example", "SubscriptionId_example") // BeginLiveActivityRequest | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.BeginLiveActivity(appAuth, appId, activityId).BeginLiveActivityRequest(beginLiveActivityRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.BeginLiveActivity``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**activityId** | **string** | Live Activity record ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBeginLiveActivityRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **beginLiveActivityRequest** | [**BeginLiveActivityRequest**](BeginLiveActivityRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CancelNotification
@@ -537,6 +618,85 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DeleteSegmentSuccessResponse**](DeleteSegmentSuccessResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## EndLiveActivity
+
+> EndLiveActivity(ctx, appId, activityId, subscriptionId).Execute()
+
+Stop Live Activity
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    activityId := "activityId_example" // string | Live Activity record ID
+    subscriptionId := "subscriptionId_example" // string | Subscription ID
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.EndLiveActivity(appAuth, appId, activityId, subscriptionId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.EndLiveActivity``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**activityId** | **string** | Live Activity record ID | 
+**subscriptionId** | **string** | Subscription ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiEndLiveActivityRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+
+### Return type
+
+ (empty response body)
 
 ### HTTP request headers
 
@@ -1302,6 +1462,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**App**](App.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateLiveActivity
+
+> UpdateLiveActivitySuccessResponse UpdateLiveActivity(ctx, appId, activityId).UpdateLiveActivityRequest(updateLiveActivityRequest).Execute()
+
+Update a Live Activity via Push
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    activityId := "activityId_example" // string | Live Activity record ID
+    updateLiveActivityRequest := *onesignal.NewUpdateLiveActivityRequest("Name_example", "Event_example", map[string]interface{}(123)) // UpdateLiveActivityRequest | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.UpdateLiveActivity(appAuth, appId, activityId).UpdateLiveActivityRequest(updateLiveActivityRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateLiveActivity``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UpdateLiveActivity`: UpdateLiveActivitySuccessResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateLiveActivity`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**activityId** | **string** | Live Activity record ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateLiveActivityRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **updateLiveActivityRequest** | [**UpdateLiveActivityRequest**](UpdateLiveActivityRequest.md) |  | 
+
+### Return type
+
+[**UpdateLiveActivitySuccessResponse**](UpdateLiveActivitySuccessResponse.md)
 
 ### HTTP request headers
 
