@@ -2,36 +2,40 @@
 
 All URIs are relative to *https://onesignal.com/api/v1*
 
-| Method                                                             | HTTP request                                                                    | Description                                         |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------- | --------------------------------------------------- |
-| [**BeginLiveActivity**](DefaultApi.md#BeginLiveActivity)           | **Post** /apps/{app_id}/live_activities/{activity_id}/token                     | Start Live Activity                                 |
-| [**CancelNotification**](DefaultApi.md#CancelNotification)         | **Delete** /notifications/{notification_id}                                     | Stop a scheduled or currently outgoing notification |
-| [**CreateApp**](DefaultApi.md#CreateApp)                           | **Post** /apps                                                                  | Create an app                                       |
-| [**CreateNotification**](DefaultApi.md#CreateNotification)         | **Post** /notifications                                                         | Create notification                                 |
-| [**CreatePlayer**](DefaultApi.md#CreatePlayer)                     | **Post** /players                                                               | Add a device                                        |
-| [**CreateSegments**](DefaultApi.md#CreateSegments)                 | **Post** /apps/{app_id}/segments                                                | Create Segments                                     |
-| [**DeletePlayer**](DefaultApi.md#DeletePlayer)                     | **Delete** /players/{player_id}                                                 | Delete a user record                                |
-| [**DeleteSegments**](DefaultApi.md#DeleteSegments)                 | **Delete** /apps/{app_id}/segments/{segment_id}                                 | Delete Segments                                     |
-| [**EndLiveActivity**](DefaultApi.md#EndLiveActivity)               | **Delete** /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id} | Stop Live Activity                                  |
-| [**ExportPlayers**](DefaultApi.md#ExportPlayers)                   | **Post** /players/csv_export?app_id&#x3D;{app_id}                               | CSV export                                          |
-| [**GetApp**](DefaultApi.md#GetApp)                                 | **Get** /apps/{app_id}                                                          | View an app                                         |
-| [**GetApps**](DefaultApi.md#GetApps)                               | **Get** /apps                                                                   | View apps                                           |
-| [**GetNotification**](DefaultApi.md#GetNotification)               | **Get** /notifications/{notification_id}                                        | View notification                                   |
-| [**GetNotificationHistory**](DefaultApi.md#GetNotificationHistory) | **Post** /notifications/{notification_id}/history                               | Notification History                                |
-| [**GetNotifications**](DefaultApi.md#GetNotifications)             | **Get** /notifications                                                          | View notifications                                  |
-| [**GetOutcomes**](DefaultApi.md#GetOutcomes)                       | **Get** /apps/{app_id}/outcomes                                                 | View Outcomes                                       |
-| [**GetPlayer**](DefaultApi.md#GetPlayer)                           | **Get** /players/{player_id}                                                    | View device                                         |
-| [**GetPlayers**](DefaultApi.md#GetPlayers)                         | **Get** /players                                                                | View devices                                        |
-| [**UpdateApp**](DefaultApi.md#UpdateApp)                           | **Put** /apps/{app_id}                                                          | Update an app                                       |
-| [**UpdateLiveActivity**](DefaultApi.md#UpdateLiveActivity)         | **Post** /apps/{app_id}/live_activities/{activity_id}/notifications             | Update a Live Activity via Push                     |
-| [**UpdatePlayer**](DefaultApi.md#UpdatePlayer)                     | **Put** /players/{player_id}                                                    | Edit device                                         |
-| [**UpdatePlayerTags**](DefaultApi.md#UpdatePlayerTags)             | **Put** /apps/{app_id}/users/{external_user_id}                                 | Edit tags with external user id                     |
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**BeginLiveActivity**](DefaultApi.md#BeginLiveActivity) | **Post** /apps/{app_id}/live_activities/{activity_id}/token | Start Live Activity
+[**CancelNotification**](DefaultApi.md#CancelNotification) | **Delete** /notifications/{notification_id} | Stop a scheduled or currently outgoing notification
+[**CreateApp**](DefaultApi.md#CreateApp) | **Post** /apps | Create an app
+[**CreateNotification**](DefaultApi.md#CreateNotification) | **Post** /notifications | Create notification
+[**CreatePlayer**](DefaultApi.md#CreatePlayer) | **Post** /players | Add a device
+[**CreateSegments**](DefaultApi.md#CreateSegments) | **Post** /apps/{app_id}/segments | Create Segments
+[**DeletePlayer**](DefaultApi.md#DeletePlayer) | **Delete** /players/{player_id} | Delete a user record
+[**DeleteSegments**](DefaultApi.md#DeleteSegments) | **Delete** /apps/{app_id}/segments/{segment_id} | Delete Segments
+[**EndLiveActivity**](DefaultApi.md#EndLiveActivity) | **Delete** /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id} | Stop Live Activity
+[**ExportPlayers**](DefaultApi.md#ExportPlayers) | **Post** /players/csv_export?app_id&#x3D;{app_id} | CSV export
+[**GetApp**](DefaultApi.md#GetApp) | **Get** /apps/{app_id} | View an app
+[**GetApps**](DefaultApi.md#GetApps) | **Get** /apps | View apps
+[**GetNotification**](DefaultApi.md#GetNotification) | **Get** /notifications/{notification_id} | View notification
+[**GetNotificationHistory**](DefaultApi.md#GetNotificationHistory) | **Post** /notifications/{notification_id}/history | Notification History
+[**GetNotifications**](DefaultApi.md#GetNotifications) | **Get** /notifications | View notifications
+[**GetOutcomes**](DefaultApi.md#GetOutcomes) | **Get** /apps/{app_id}/outcomes | View Outcomes
+[**GetPlayer**](DefaultApi.md#GetPlayer) | **Get** /players/{player_id} | View device
+[**GetPlayers**](DefaultApi.md#GetPlayers) | **Get** /players | View devices
+[**UpdateApp**](DefaultApi.md#UpdateApp) | **Put** /apps/{app_id} | Update an app
+[**UpdateLiveActivity**](DefaultApi.md#UpdateLiveActivity) | **Post** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
+[**UpdatePlayer**](DefaultApi.md#UpdatePlayer) | **Put** /players/{player_id} | Edit device
+[**UpdatePlayerTags**](DefaultApi.md#UpdatePlayerTags) | **Put** /apps/{app_id}/users/{external_user_id} | Edit tags with external user id
+
+
 
 ## BeginLiveActivity
 
 > BeginLiveActivity(ctx, appId, activityId).BeginLiveActivityRequest(beginLiveActivityRequest).Execute()
 
 Start Live Activity
+
+
 
 ### Authorization
 
@@ -53,7 +57,7 @@ import (
 func main() {
     appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
     activityId := "activityId_example" // string | Live Activity record ID
-    beginLiveActivityRequest := *onesignal.NewBeginLiveActivityRequest("PushToken_example", "SubscriptionId_example") // BeginLiveActivityRequest |
+    beginLiveActivityRequest := *onesignal.NewBeginLiveActivityRequest("PushToken_example", "SubscriptionId_example") // BeginLiveActivityRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -71,24 +75,27 @@ func main() {
 
 ### Path Parameters
 
-| Name           | Type                | Description                                                                 | Notes |
-| -------------- | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**        | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId**      | **string**          | The OneSignal App ID for your app. Available in Keys &amp; IDs.             |
-| **activityId** | **string**          | Live Activity record ID                                                     |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**activityId** | **string** | Live Activity record ID | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiBeginLiveActivityRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**beginLiveActivityRequest** | [**BeginLiveActivityRequest**](BeginLiveActivityRequest.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **beginLiveActivityRequest** | [**BeginLiveActivityRequest**](BeginLiveActivityRequest.md) |  | 
 
 ### Return type
 
-(empty response body)
+ (empty response body)
 
 ### HTTP request headers
 
@@ -99,11 +106,14 @@ Other parameters are passed through a pointer to a apiBeginLiveActivityRequest s
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## CancelNotification
 
 > CancelNotificationSuccessResponse CancelNotification(ctx, notificationId).AppId(appId).Execute()
 
 Stop a scheduled or currently outgoing notification
+
+
 
 ### Authorization
 
@@ -123,8 +133,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string |
-    notificationId := "notificationId_example" // string |
+    appId := "appId_example" // string | 
+    notificationId := "notificationId_example" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -144,18 +154,21 @@ func main() {
 
 ### Path Parameters
 
-| Name               | Type                | Description                                                                 | Notes |
-| ------------------ | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**            | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **notificationId** | **string**          |                                                                             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**notificationId** | **string** |  | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCancelNotificationRequest struct via the builder pattern
 
-| Name      | Type       | Description | Notes |
-| --------- | ---------- | ----------- | ----- |
-| **appId** | **string** |             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appId** | **string** |  | 
+
 
 ### Return type
 
@@ -170,11 +183,14 @@ Other parameters are passed through a pointer to a apiCancelNotificationRequest 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## CreateApp
 
 > App CreateApp(ctx).App(app).Execute()
 
 Create an app
+
+
 
 ### Authorization
 
@@ -194,7 +210,7 @@ import (
 )
 
 func main() {
-    app := *onesignal.NewApp() // App |
+    app := *onesignal.NewApp() // App | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -214,13 +230,16 @@ func main() {
 
 ### Path Parameters
 
+
+
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCreateAppRequest struct via the builder pattern
 
-| Name    | Type              | Description | Notes |
-| ------- | ----------------- | ----------- | ----- |
-| **app** | [**App**](App.md) |             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **app** | [**App**](App.md) |  | 
 
 ### Return type
 
@@ -235,11 +254,14 @@ Other parameters are passed through a pointer to a apiCreateAppRequest struct vi
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## CreateNotification
 
 > CreateNotificationSuccessResponse CreateNotification(ctx).Notification(notification).Execute()
 
 Create notification
+
+
 
 ### Authorization
 
@@ -259,7 +281,7 @@ import (
 )
 
 func main() {
-    notification := *onesignal.NewNotification("AppId_example") // Notification |
+    notification := *onesignal.NewNotification("AppId_example") // Notification | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -279,13 +301,16 @@ func main() {
 
 ### Path Parameters
 
+
+
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCreateNotificationRequest struct via the builder pattern
 
-| Name             | Type                                | Description | Notes |
-| ---------------- | ----------------------------------- | ----------- | ----- |
-| **notification** | [**Notification**](Notification.md) |             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **notification** | [**Notification**](Notification.md) |  | 
 
 ### Return type
 
@@ -300,11 +325,14 @@ Other parameters are passed through a pointer to a apiCreateNotificationRequest 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## CreatePlayer
 
 > CreatePlayerSuccessResponse CreatePlayer(ctx).Player(player).Execute()
 
 Add a device
+
+
 
 ### Authorization
 
@@ -345,13 +373,16 @@ func main() {
 
 ### Path Parameters
 
+
+
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCreatePlayerRequest struct via the builder pattern
 
-| Name       | Type                    | Description | Notes |
-| ---------- | ----------------------- | ----------- | ----- |
-| **player** | [**Player**](Player.md) |             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **player** | [**Player**](Player.md) |  | 
 
 ### Return type
 
@@ -366,11 +397,14 @@ Other parameters are passed through a pointer to a apiCreatePlayerRequest struct
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## CreateSegments
 
 > CreateSegmentSuccessResponse CreateSegments(ctx, appId).Segment(segment).Execute()
 
 Create Segments
+
+
 
 ### Authorization
 
@@ -411,19 +445,21 @@ func main() {
 
 ### Path Parameters
 
-| Name      | Type                | Description                                                                 | Notes |
-| --------- | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**   | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId** | **string**          | The OneSignal App ID for your app. Available in Keys &amp; IDs.             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCreateSegmentsRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**segment** | [**Segment**](Segment.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **segment** | [**Segment**](Segment.md) |  | 
 
 ### Return type
 
@@ -438,11 +474,14 @@ Other parameters are passed through a pointer to a apiCreateSegmentsRequest stru
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## DeletePlayer
 
 > DeletePlayerSuccessResponse DeletePlayer(ctx, playerId).AppId(appId).Execute()
 
 Delete a user record
+
+
 
 ### Authorization
 
@@ -483,18 +522,21 @@ func main() {
 
 ### Path Parameters
 
-| Name         | Type                | Description                                                                 | Notes |
-| ------------ | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**      | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **playerId** | **string**          | The OneSignal player_id                                                     |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**playerId** | **string** | The OneSignal player_id | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeletePlayerRequest struct via the builder pattern
 
-| Name      | Type       | Description                                                     | Notes |
-| --------- | ---------- | --------------------------------------------------------------- | ----- |
-| **appId** | **string** | The OneSignal App ID for your app. Available in Keys &amp; IDs. |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+
 
 ### Return type
 
@@ -509,11 +551,14 @@ Other parameters are passed through a pointer to a apiDeletePlayerRequest struct
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## DeleteSegments
 
 > DeleteSegmentSuccessResponse DeleteSegments(ctx, appId, segmentId).Execute()
 
 Delete Segments
+
+
 
 ### Authorization
 
@@ -554,18 +599,22 @@ func main() {
 
 ### Path Parameters
 
-| Name          | Type                | Description                                                                             | Notes |
-| ------------- | ------------------- | --------------------------------------------------------------------------------------- | ----- |
-| **ctx**       | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.             |
-| **appId**     | **string**          | The OneSignal App ID for your app. Available in Keys &amp; IDs.                         |
-| **segmentId** | **string**          | The segment_id can be found in the URL of the segment when viewing it in the dashboard. |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**segmentId** | **string** | The segment_id can be found in the URL of the segment when viewing it in the dashboard. | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteSegmentsRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
 
 ### Return type
 
@@ -580,11 +629,14 @@ Other parameters are passed through a pointer to a apiDeleteSegmentsRequest stru
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## EndLiveActivity
 
 > EndLiveActivity(ctx, appId, activityId, subscriptionId).Execute()
 
 Stop Live Activity
+
+
 
 ### Authorization
 
@@ -624,23 +676,28 @@ func main() {
 
 ### Path Parameters
 
-| Name               | Type                | Description                                                                 | Notes |
-| ------------------ | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**            | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId**          | **string**          | The OneSignal App ID for your app. Available in Keys &amp; IDs.             |
-| **activityId**     | **string**          | Live Activity record ID                                                     |
-| **subscriptionId** | **string**          | Subscription ID                                                             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**activityId** | **string** | Live Activity record ID | 
+**subscriptionId** | **string** | Subscription ID | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiEndLiveActivityRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
 
 ### Return type
 
-(empty response body)
+ (empty response body)
 
 ### HTTP request headers
 
@@ -651,11 +708,14 @@ Other parameters are passed through a pointer to a apiEndLiveActivityRequest str
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## ExportPlayers
 
 > ExportPlayersSuccessResponse ExportPlayers(ctx, appId).ExportPlayersRequestBody(exportPlayersRequestBody).Execute()
 
 CSV export
+
+
 
 ### Authorization
 
@@ -696,19 +756,21 @@ func main() {
 
 ### Path Parameters
 
-| Name      | Type                | Description                                                                 | Notes |
-| --------- | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**   | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId** | **string**          | The app ID that you want to export devices from                             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The app ID that you want to export devices from | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiExportPlayersRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**exportPlayersRequestBody** | [**ExportPlayersRequestBody**](ExportPlayersRequestBody.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **exportPlayersRequestBody** | [**ExportPlayersRequestBody**](ExportPlayersRequestBody.md) |  | 
 
 ### Return type
 
@@ -723,11 +785,14 @@ Other parameters are passed through a pointer to a apiExportPlayersRequest struc
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetApp
 
 > App GetApp(ctx, appId).Execute()
 
 View an app
+
+
 
 ### Authorization
 
@@ -767,17 +832,20 @@ func main() {
 
 ### Path Parameters
 
-| Name      | Type                | Description                                                                 | Notes |
-| --------- | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**   | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId** | **string**          | An app id                                                                   |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | An app id | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetAppRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
 
 ### Return type
 
@@ -792,11 +860,14 @@ Other parameters are passed through a pointer to a apiGetAppRequest struct via t
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetApps
 
 > []App GetApps(ctx).Execute()
 
 View apps
+
+
 
 ### Authorization
 
@@ -841,6 +912,7 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetAppsRequest struct via the builder pattern
 
+
 ### Return type
 
 [**[]App**](App.md)
@@ -854,11 +926,14 @@ Other parameters are passed through a pointer to a apiGetAppsRequest struct via 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetNotification
 
 > NotificationWithMeta GetNotification(ctx, notificationId).AppId(appId).Execute()
 
 View notification
+
+
 
 ### Authorization
 
@@ -878,8 +953,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string |
-    notificationId := "notificationId_example" // string |
+    appId := "appId_example" // string | 
+    notificationId := "notificationId_example" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -899,18 +974,21 @@ func main() {
 
 ### Path Parameters
 
-| Name               | Type                | Description                                                                 | Notes |
-| ------------------ | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**            | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **notificationId** | **string**          |                                                                             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**notificationId** | **string** |  | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetNotificationRequest struct via the builder pattern
 
-| Name      | Type       | Description | Notes |
-| --------- | ---------- | ----------- | ----- |
-| **appId** | **string** |             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appId** | **string** |  | 
+
 
 ### Return type
 
@@ -925,11 +1003,14 @@ Other parameters are passed through a pointer to a apiGetNotificationRequest str
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetNotificationHistory
 
 > NotificationHistorySuccessResponse GetNotificationHistory(ctx, notificationId).GetNotificationRequestBody(getNotificationRequestBody).Execute()
 
 Notification History
+
+
 
 ### Authorization
 
@@ -950,7 +1031,7 @@ import (
 
 func main() {
     notificationId := "notificationId_example" // string | The \"id\" of the message found in the Notification object
-    getNotificationRequestBody := *onesignal.NewGetNotificationRequestBody() // GetNotificationRequestBody |
+    getNotificationRequestBody := *onesignal.NewGetNotificationRequestBody() // GetNotificationRequestBody | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -970,19 +1051,21 @@ func main() {
 
 ### Path Parameters
 
-| Name               | Type                | Description                                                                 | Notes |
-| ------------------ | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**            | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **notificationId** | **string**          | The \&quot;id\&quot; of the message found in the Notification object        |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**notificationId** | **string** | The \&quot;id\&quot; of the message found in the Notification object | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetNotificationHistoryRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**getNotificationRequestBody** | [**GetNotificationRequestBody**](GetNotificationRequestBody.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **getNotificationRequestBody** | [**GetNotificationRequestBody**](GetNotificationRequestBody.md) |  | 
 
 ### Return type
 
@@ -997,11 +1080,14 @@ Other parameters are passed through a pointer to a apiGetNotificationHistoryRequ
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetNotifications
 
 > NotificationSlice GetNotifications(ctx).AppId(appId).Limit(limit).Offset(offset).Kind(kind).Execute()
 
 View notifications
+
+
 
 ### Authorization
 
@@ -1044,16 +1130,19 @@ func main() {
 
 ### Path Parameters
 
+
+
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetNotificationsRequest struct via the builder pattern
 
-| Name       | Type       | Description                                                                                                                                                             | Notes |
-| ---------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **appId**  | **string** | The app ID that you want to view notifications from                                                                                                                     |
-| **limit**  | **int32**  | How many notifications to return. Max is 50. Default is 50.                                                                                                             |
-| **offset** | **int32**  | Page offset. Default is 0. Results are sorted by queued_at in descending order. queued_at is a representation of the time that the notification was queued at.          |
-| **kind**   | **int32**  | Kind of notifications returned: _ unset - All notification types (default) _ &#x60;0&#x60; - Dashboard only _ &#x60;1&#x60; - API only _ &#x60;3&#x60; - Automated only |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appId** | **string** | The app ID that you want to view notifications from | 
+ **limit** | **int32** | How many notifications to return.  Max is 50.  Default is 50. | 
+ **offset** | **int32** | Page offset.  Default is 0.  Results are sorted by queued_at in descending order.  queued_at is a representation of the time that the notification was queued at. | 
+ **kind** | **int32** | Kind of notifications returned:   * unset - All notification types (default)   * &#x60;0&#x60; - Dashboard only   * &#x60;1&#x60; - API only   * &#x60;3&#x60; - Automated only  | 
 
 ### Return type
 
@@ -1068,11 +1157,14 @@ Other parameters are passed through a pointer to a apiGetNotificationsRequest st
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetOutcomes
 
 > OutcomesData GetOutcomes(ctx, appId).OutcomeNames(outcomeNames).OutcomeNames2(outcomeNames2).OutcomeTimeRange(outcomeTimeRange).OutcomePlatforms(outcomePlatforms).OutcomeAttribution(outcomeAttribution).Execute()
 
 View Outcomes
+
+
 
 ### Authorization
 
@@ -1093,7 +1185,7 @@ import (
 
 func main() {
     appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    outcomeNames := "outcomeNames_example" // string | Required Comma-separated list of names and the value (sum/count) for the returned outcome data. Note: Clicks only support count aggregation. For out-of-the-box OneSignal outcomes such as click and session duration, please use the \"os\" prefix with two underscores. For other outcomes, please use the name specified by the user. Example:os__session_duration.count,os__click.count,CustomOutcomeName.sum
+    outcomeNames := "outcomeNames_example" // string | Required Comma-separated list of names and the value (sum/count) for the returned outcome data. Note: Clicks only support count aggregation. For out-of-the-box OneSignal outcomes such as click and session duration, please use the \"os\" prefix with two underscores. For other outcomes, please use the name specified by the user. Example:os__session_duration.count,os__click.count,CustomOutcomeName.sum 
     outcomeNames2 := "outcomeNames_example" // string | Optional If outcome names contain any commas, then please specify only one value at a time. Example: outcome_names[]=os__click.count&outcome_names[]=Sales, Purchase.count where \"Sales, Purchase\" is the custom outcomes with a comma in the name.  (optional)
     outcomeTimeRange := "outcomeTimeRange_example" // string | Optional Time range for the returned data. The values can be 1h (for the last 1 hour data), 1d (for the last 1 day data), or 1mo (for the last 1 month data). Default is 1h if the parameter is omitted.  (optional)
     outcomePlatforms := "outcomePlatforms_example" // string | Optional Platform id. Refer device's platform ids for values. Example: outcome_platform=0 for iOS outcome_platform=7,8 for Safari and Firefox Default is data from all platforms if the parameter is omitted.  (optional)
@@ -1117,23 +1209,25 @@ func main() {
 
 ### Path Parameters
 
-| Name      | Type                | Description                                                                 | Notes |
-| --------- | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**   | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId** | **string**          | The OneSignal App ID for your app. Available in Keys &amp; IDs.             |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetOutcomesRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**outcomeNames** | **string** | Required Comma-separated list of names and the value (sum/count) for the returned outcome data. Note: Clicks only support count aggregation. For out-of-the-box OneSignal outcomes such as click and session duration, please use the \&quot;os\&quot; prefix with two underscores. For other outcomes, please use the name specified by the user. Example:os**session_duration.count,os**click.count,CustomOutcomeName.sum |
-**outcomeNames2** | **string** | Optional If outcome names contain any commas, then please specify only one value at a time. Example: outcome_names[]&#x3D;os\_\_click.count&amp;outcome_names[]&#x3D;Sales, Purchase.count where \&quot;Sales, Purchase\&quot; is the custom outcomes with a comma in the name. |
-**outcomeTimeRange** | **string** | Optional Time range for the returned data. The values can be 1h (for the last 1 hour data), 1d (for the last 1 day data), or 1mo (for the last 1 month data). Default is 1h if the parameter is omitted. |
-**outcomePlatforms** | **string** | Optional Platform id. Refer device&#39;s platform ids for values. Example: outcome_platform&#x3D;0 for iOS outcome_platform&#x3D;7,8 for Safari and Firefox Default is data from all platforms if the parameter is omitted. |
-**outcomeAttribution** | **string** | Optional Attribution type for the outcomes. The values can be direct or influenced or unattributed. Example: outcome_attribution&#x3D;direct Default is total (returns direct+influenced+unattributed) if the parameter is omitted. |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **outcomeNames** | **string** | Required Comma-separated list of names and the value (sum/count) for the returned outcome data. Note: Clicks only support count aggregation. For out-of-the-box OneSignal outcomes such as click and session duration, please use the \&quot;os\&quot; prefix with two underscores. For other outcomes, please use the name specified by the user. Example:os__session_duration.count,os__click.count,CustomOutcomeName.sum  | 
+ **outcomeNames2** | **string** | Optional If outcome names contain any commas, then please specify only one value at a time. Example: outcome_names[]&#x3D;os__click.count&amp;outcome_names[]&#x3D;Sales, Purchase.count where \&quot;Sales, Purchase\&quot; is the custom outcomes with a comma in the name.  | 
+ **outcomeTimeRange** | **string** | Optional Time range for the returned data. The values can be 1h (for the last 1 hour data), 1d (for the last 1 day data), or 1mo (for the last 1 month data). Default is 1h if the parameter is omitted.  | 
+ **outcomePlatforms** | **string** | Optional Platform id. Refer device&#39;s platform ids for values. Example: outcome_platform&#x3D;0 for iOS outcome_platform&#x3D;7,8 for Safari and Firefox Default is data from all platforms if the parameter is omitted.  | 
+ **outcomeAttribution** | **string** | Optional Attribution type for the outcomes. The values can be direct or influenced or unattributed. Example: outcome_attribution&#x3D;direct Default is total (returns direct+influenced+unattributed) if the parameter is omitted.  | 
 
 ### Return type
 
@@ -1148,11 +1242,14 @@ Other parameters are passed through a pointer to a apiGetOutcomesRequest struct 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetPlayer
 
 > Player GetPlayer(ctx, playerId).AppId(appId).EmailAuthHash(emailAuthHash).Execute()
 
 View device
+
+
 
 ### Authorization
 
@@ -1194,20 +1291,22 @@ func main() {
 
 ### Path Parameters
 
-| Name         | Type                | Description                                                                 | Notes |
-| ------------ | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**      | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **playerId** | **string**          | Player&#39;s OneSignal ID                                                   |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**playerId** | **string** | Player&#39;s OneSignal ID | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetPlayerRequest struct via the builder pattern
 
-| Name      | Type       | Description                 | Notes |
-| --------- | ---------- | --------------------------- | ----- |
-| **appId** | **string** | Your app_id for this device |
 
-**emailAuthHash** | **string** | Email - Only required if you have enabled Identity Verification and device_type is email (11). |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appId** | **string** | Your app_id for this device | 
+
+ **emailAuthHash** | **string** | Email - Only required if you have enabled Identity Verification and device_type is email (11). | 
 
 ### Return type
 
@@ -1222,11 +1321,14 @@ Other parameters are passed through a pointer to a apiGetPlayerRequest struct vi
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## GetPlayers
 
 > PlayerSlice GetPlayers(ctx).AppId(appId).Limit(limit).Offset(offset).Execute()
 
 View devices
+
+
 
 ### Authorization
 
@@ -1268,15 +1370,18 @@ func main() {
 
 ### Path Parameters
 
+
+
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetPlayersRequest struct via the builder pattern
 
-| Name       | Type       | Description                                            | Notes |
-| ---------- | ---------- | ------------------------------------------------------ | ----- |
-| **appId**  | **string** | The app ID that you want to view players from          |
-| **limit**  | **int32**  | How many devices to return. Max is 300. Default is 300 |
-| **offset** | **int32**  | Result offset. Default is 0. Results are sorted by id; |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **appId** | **string** | The app ID that you want to view players from | 
+ **limit** | **int32** | How many devices to return. Max is 300. Default is 300 | 
+ **offset** | **int32** | Result offset. Default is 0. Results are sorted by id; | 
 
 ### Return type
 
@@ -1291,11 +1396,14 @@ Other parameters are passed through a pointer to a apiGetPlayersRequest struct v
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## UpdateApp
 
 > App UpdateApp(ctx, appId).App(app).Execute()
 
 Update an app
+
+
 
 ### Authorization
 
@@ -1316,7 +1424,7 @@ import (
 
 func main() {
     appId := "appId_example" // string | An app id
-    app := *onesignal.NewApp() // App |
+    app := *onesignal.NewApp() // App | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1336,19 +1444,21 @@ func main() {
 
 ### Path Parameters
 
-| Name      | Type                | Description                                                                 | Notes |
-| --------- | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**   | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId** | **string**          | An app id                                                                   |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | An app id | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateAppRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**app** | [**App**](App.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **app** | [**App**](App.md) |  | 
 
 ### Return type
 
@@ -1363,11 +1473,14 @@ Other parameters are passed through a pointer to a apiUpdateAppRequest struct vi
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## UpdateLiveActivity
 
 > UpdateLiveActivitySuccessResponse UpdateLiveActivity(ctx, appId, activityId).UpdateLiveActivityRequest(updateLiveActivityRequest).Execute()
 
 Update a Live Activity via Push
+
+
 
 ### Authorization
 
@@ -1389,7 +1502,7 @@ import (
 func main() {
     appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
     activityId := "activityId_example" // string | Live Activity record ID
-    updateLiveActivityRequest := *onesignal.NewUpdateLiveActivityRequest("Name_example", "Event_example", map[string]interface{}(123)) // UpdateLiveActivityRequest |
+    updateLiveActivityRequest := *onesignal.NewUpdateLiveActivityRequest("Name_example", "Event_example", map[string]interface{}(123)) // UpdateLiveActivityRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1409,20 +1522,23 @@ func main() {
 
 ### Path Parameters
 
-| Name           | Type                | Description                                                                 | Notes |
-| -------------- | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**        | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **appId**      | **string**          | The OneSignal App ID for your app. Available in Keys &amp; IDs.             |
-| **activityId** | **string**          | Live Activity record ID                                                     |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**activityId** | **string** | Live Activity record ID | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateLiveActivityRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**updateLiveActivityRequest** | [**UpdateLiveActivityRequest**](UpdateLiveActivityRequest.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **updateLiveActivityRequest** | [**UpdateLiveActivityRequest**](UpdateLiveActivityRequest.md) |  | 
 
 ### Return type
 
@@ -1437,11 +1553,14 @@ Other parameters are passed through a pointer to a apiUpdateLiveActivityRequest 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## UpdatePlayer
 
 > UpdatePlayerSuccessResponse UpdatePlayer(ctx, playerId).Player(player).Execute()
 
 Edit device
+
+
 
 ### Authorization
 
@@ -1483,19 +1602,21 @@ func main() {
 
 ### Path Parameters
 
-| Name         | Type                | Description                                                                 | Notes |
-| ------------ | ------------------- | --------------------------------------------------------------------------- | ----- |
-| **ctx**      | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
-| **playerId** | **string**          | Player&#39;s OneSignal ID                                                   |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**playerId** | **string** | Player&#39;s OneSignal ID | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdatePlayerRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**player** | [**Player**](Player.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **player** | [**Player**](Player.md) |  | 
 
 ### Return type
 
@@ -1510,11 +1631,14 @@ Other parameters are passed through a pointer to a apiUpdatePlayerRequest struct
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
+
 ## UpdatePlayerTags
 
 > UpdatePlayerTagsSuccessResponse UpdatePlayerTags(ctx, appId, externalUserId).UpdatePlayerTagsRequestBody(updatePlayerTagsRequestBody).Execute()
 
 Edit tags with external user id
+
+
 
 ### Authorization
 
@@ -1556,20 +1680,23 @@ func main() {
 
 ### Path Parameters
 
-| Name               | Type                | Description                                                                                                      | Notes |
-| ------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------- | ----- |
-| **ctx**            | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                      |
-| **appId**          | **string**          | The OneSignal App ID the user record is found under.                                                             |
-| **externalUserId** | **string**          | The External User ID mapped to teh device record in OneSignal. Must be actively set on the device to be updated. |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID the user record is found under. | 
+**externalUserId** | **string** | The External User ID mapped to teh device record in OneSignal.  Must be actively set on the device to be updated. | 
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdatePlayerTagsRequest struct via the builder pattern
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
 
-**updatePlayerTagsRequestBody** | [**UpdatePlayerTagsRequestBody**](UpdatePlayerTagsRequestBody.md) | |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **updatePlayerTagsRequestBody** | [**UpdatePlayerTagsRequestBody**](UpdatePlayerTagsRequestBody.md) |  | 
 
 ### Return type
 
@@ -1583,3 +1710,4 @@ Other parameters are passed through a pointer to a apiUpdatePlayerTagsRequest st
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
+
