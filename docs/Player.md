@@ -2,35 +2,35 @@
 
 ## Properties
 
-| Name                       | Type                                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Notes                 |
-| -------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| **Id**                     | Pointer to **string**                 | The device&#39;s OneSignal ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | [optional] [readonly] |
-| **InvalidIdentifier**      | Pointer to **bool**                   | If true, this is the equivalent of a user being Unsubscribed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | [optional] [readonly] |
-| **AppId**                  | Pointer to **string**                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | [optional]            |
-| **DeviceType**             | **int32**                             | Required The device&#39;s platform: 0 &#x3D; iOS 1 &#x3D; Android 2 &#x3D; Amazon 3 &#x3D; WindowsPhone (MPNS) 4 &#x3D; Chrome Apps / Extensions 5 &#x3D; Chrome Web Push 6 &#x3D; Windows (WNS) 7 &#x3D; Safari 8 &#x3D; Firefox 9 &#x3D; MacOS 10 &#x3D; Alexa 11 &#x3D; Email 13 &#x3D; For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM 14 &#x3D; SMS                                                                                                                                                                                                                |
-| **ExternalUserId**         | Pointer to **NullableString**         | a custom user ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [optional]            |
-| **ExternalUserIdAuthHash** | Pointer to **string**                 | Only required if you have enabled Identity Verification and device_type is NOT 11 email.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | [optional]            |
-| **EmailAuthHash**          | Pointer to **string**                 | Email - Only required if you have enabled Identity Verification and device_type is email (11).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | [optional]            |
-| **Identifier**             | Pointer to **NullableString**         | Recommended: For Push Notifications, this is the Push Token Identifier from Google or Apple. For Apple Push identifiers, you must strip all non alphanumeric characters. Examples: iOS: 7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0 Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV... For Email Addresses, set the full email address email@email.com and make sure to set device_type to 11.                                                                                                                             | [optional]            |
-| **Language**               | Pointer to **string**                 | Language code. Typically lower case two letters, except for Chinese where it must be one of zh-Hans or zh-Hant. Example: en                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | [optional]            |
-| **Timezone**               | Pointer to **NullableInt32**          | Number of seconds away from UTC. Example: -28800                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [optional]            |
-| **GameVersion**            | Pointer to **NullableString**         | Version of your app. Example: 1.1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | [optional]            |
-| **DeviceModel**            | Pointer to **NullableString**         | Device make and model. Example: iPhone5,1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | [optional]            |
-| **DeviceOs**               | Pointer to **NullableString**         | Device operating system version. Example: 7.0.4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | [optional]            |
-| **AdId**                   | Pointer to **NullableString**         | The ad id for the device&#39;s platform: Android &#x3D; Advertising Id iOS &#x3D; identifierForVendor WP8.0 &#x3D; DeviceUniqueId WP8.1 &#x3D; AdvertisingId                                                                                                                                                                                                                                                                                                                                                                                                                                      | [optional]            |
-| **Sdk**                    | Pointer to **NullableString**         | Name and version of the sdk/plugin that&#39;s calling this API method (if any)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | [optional]            |
-| **SessionCount**           | Pointer to **int32**                  | Number of times the user has played the game, defaults to 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | [optional]            |
-| **Tags**                   | Pointer to **map[string]interface{}** | Custom tags for the player. Only support string and integer key value pairs. Does not support arrays or other nested objects. Setting a tag value to null or an empty string will remove the tag. Example: {\&quot;foo\&quot;:\&quot;bar\&quot;,\&quot;this\&quot;:\&quot;that\&quot;} Limitations: - 100 tags per call - Android SDK users: tags cannot be removed or changed via API if set through SDK sendTag methods. Recommended to only tag devices with 1 kilobyte of data Please consider using your own Database to save more than 1 kilobyte of data. See: Internal Database &amp; CRM | [optional]            |
-| **AmountSpent**            | Pointer to **float32**                | Amount the user has spent in USD, up to two decimal places                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | [optional]            |
-| **CreatedAt**              | Pointer to **int64**                  | Unixtime when the player joined the game                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | [optional]            |
-| **Playtime**               | Pointer to **int64**                  | Seconds player was running your app.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | [optional]            |
-| **BadgeCount**             | Pointer to **int32**                  | Current iOS badge count displayed on the app icon NOTE: Not supported for apps created after June 2018, since badge count for apps created after this date are handled on the client.                                                                                                                                                                                                                                                                                                                                                                                                             | [optional]            |
-| **LastActive**             | Pointer to **int32**                  | Unixtime when the player was last active                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | [optional]            |
-| **NotificationTypes**      | Pointer to **int32**                  | 1 &#x3D; subscribed -2 &#x3D; unsubscribed iOS - These values are set each time the user opens the app from the SDK. Use the SDK function set Subscription instead. Android - You may set this but you can no longer use the SDK method setSubscription later in your app as it will create synchronization issues.                                                                                                                                                                                                                                                                               | [optional]            |
-| **TestType**               | Pointer to **NullableInt32**          | This is used in deciding whether to use your iOS Sandbox or Production push certificate when sending a push when both have been uploaded. Set to the iOS provisioning profile that was used to build your app. 1 &#x3D; Development 2 &#x3D; Ad-Hoc Omit this field for App Store builds.                                                                                                                                                                                                                                                                                                         | [optional]            |
-| **Long**                   | Pointer to **float32**                | Longitude of the device, used for geotagging to segment on.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | [optional]            |
-| **Lat**                    | Pointer to **float32**                | Latitude of the device, used for geotagging to segment on.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | [optional]            |
-| **Country**                | Pointer to **string**                 | Country code in the ISO 3166-1 Alpha 2 format                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | [optional]            |
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Id** | Pointer to **string** | The device&#39;s OneSignal ID | [optional] [readonly] 
+**InvalidIdentifier** | Pointer to **bool** | If true, this is the equivalent of a user being Unsubscribed | [optional] [readonly] 
+**AppId** | Pointer to **string** |  | [optional] 
+**DeviceType** | **int32** | Required The device&#39;s platform:   0 &#x3D; iOS   1 &#x3D; Android   2 &#x3D; Amazon   3 &#x3D; WindowsPhone (MPNS)   4 &#x3D; Chrome Apps / Extensions   5 &#x3D; Chrome Web Push   6 &#x3D; Windows (WNS)   7 &#x3D; Safari   8 &#x3D; Firefox   9 &#x3D; MacOS   10 &#x3D; Alexa   11 &#x3D; Email   13 &#x3D; For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 &#x3D; SMS  | 
+**ExternalUserId** | Pointer to **NullableString** | a custom user ID | [optional] 
+**ExternalUserIdAuthHash** | Pointer to **string** | Only required if you have enabled Identity Verification and device_type is NOT 11 email. | [optional] 
+**EmailAuthHash** | Pointer to **string** | Email - Only required if you have enabled Identity Verification and device_type is email (11). | [optional] 
+**Identifier** | Pointer to **NullableString** | Recommended: For Push Notifications, this is the Push Token Identifier from Google or Apple. For Apple Push identifiers, you must strip all non alphanumeric characters. Examples: iOS: 7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0 Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV... For Email Addresses, set the full email address email@email.com and make sure to set device_type to 11.  | [optional] 
+**Language** | Pointer to **string** | Language code. Typically lower case two letters, except for Chinese where it must be one of zh-Hans or zh-Hant. Example: en  | [optional] 
+**Timezone** | Pointer to **NullableInt32** | Number of seconds away from UTC. Example: -28800  | [optional] 
+**GameVersion** | Pointer to **NullableString** | Version of your app. Example: 1.1  | [optional] 
+**DeviceModel** | Pointer to **NullableString** | Device make and model. Example: iPhone5,1  | [optional] 
+**DeviceOs** | Pointer to **NullableString** | Device operating system version. Example: 7.0.4  | [optional] 
+**AdId** | Pointer to **NullableString** | The ad id for the device&#39;s platform: Android &#x3D; Advertising Id iOS &#x3D; identifierForVendor WP8.0 &#x3D; DeviceUniqueId WP8.1 &#x3D; AdvertisingId  | [optional] 
+**Sdk** | Pointer to **NullableString** | Name and version of the sdk/plugin that&#39;s calling this API method (if any) | [optional] 
+**SessionCount** | Pointer to **int32** | Number of times the user has played the game, defaults to 1 | [optional] 
+**Tags** | Pointer to **map[string]interface{}** | Custom tags for the player. Only support string and integer key value pairs. Does not support arrays or other nested objects. Setting a tag value to null or an empty string will remove the tag. Example: {\&quot;foo\&quot;:\&quot;bar\&quot;,\&quot;this\&quot;:\&quot;that\&quot;} Limitations: - 100 tags per call - Android SDK users: tags cannot be removed or changed via API if set through SDK sendTag methods. Recommended to only tag devices with 1 kilobyte of data Please consider using your own Database to save more than 1 kilobyte of data. See: Internal Database &amp; CRM  | [optional] 
+**AmountSpent** | Pointer to **float32** | Amount the user has spent in USD, up to two decimal places | [optional] 
+**CreatedAt** | Pointer to **int64** | Unixtime when the player joined the game | [optional] 
+**Playtime** | Pointer to **int64** | Seconds player was running your app. | [optional] 
+**BadgeCount** | Pointer to **int32** | Current iOS badge count displayed on the app icon NOTE: Not supported for apps created after June 2018, since badge count for apps created after this date are handled on the client.  | [optional] 
+**LastActive** | Pointer to **int32** | Unixtime when the player was last active | [optional] 
+**NotificationTypes** | Pointer to **int32** | 1 &#x3D; subscribed -2 &#x3D; unsubscribed iOS - These values are set each time the user opens the app from the SDK. Use the SDK function set Subscription instead. Android - You may set this but you can no longer use the SDK method setSubscription later in your app as it will create synchronization issues.  | [optional] 
+**TestType** | Pointer to **NullableInt32** | This is used in deciding whether to use your iOS Sandbox or Production push certificate when sending a push when both have been uploaded. Set to the iOS provisioning profile that was used to build your app. 1 &#x3D; Development 2 &#x3D; Ad-Hoc Omit this field for App Store builds.  | [optional] 
+**Long** | Pointer to **float32** | Longitude of the device, used for geotagging to segment on. | [optional] 
+**Lat** | Pointer to **float32** | Latitude of the device, used for geotagging to segment on. | [optional] 
+**Country** | Pointer to **string** | Country code in the ISO 3166-1 Alpha 2 format | [optional] 
 
 ## Methods
 
@@ -145,6 +145,7 @@ and a boolean to check if the value has been set.
 
 SetDeviceType sets DeviceType field to given value.
 
+
 ### GetExternalUserId
 
 `func (o *Player) GetExternalUserId() string`
@@ -174,14 +175,12 @@ HasExternalUserId returns a boolean if a field has been set.
 
 `func (o *Player) SetExternalUserIdNil(b bool)`
 
-SetExternalUserIdNil sets the value for ExternalUserId to be an explicit nil
+ SetExternalUserIdNil sets the value for ExternalUserId to be an explicit nil
 
 ### UnsetExternalUserId
-
 `func (o *Player) UnsetExternalUserId()`
 
 UnsetExternalUserId ensures that no value is present for ExternalUserId, not even an explicit nil
-
 ### GetExternalUserIdAuthHash
 
 `func (o *Player) GetExternalUserIdAuthHash() string`
@@ -261,14 +260,12 @@ HasIdentifier returns a boolean if a field has been set.
 
 `func (o *Player) SetIdentifierNil(b bool)`
 
-SetIdentifierNil sets the value for Identifier to be an explicit nil
+ SetIdentifierNil sets the value for Identifier to be an explicit nil
 
 ### UnsetIdentifier
-
 `func (o *Player) UnsetIdentifier()`
 
 UnsetIdentifier ensures that no value is present for Identifier, not even an explicit nil
-
 ### GetLanguage
 
 `func (o *Player) GetLanguage() string`
@@ -323,14 +320,12 @@ HasTimezone returns a boolean if a field has been set.
 
 `func (o *Player) SetTimezoneNil(b bool)`
 
-SetTimezoneNil sets the value for Timezone to be an explicit nil
+ SetTimezoneNil sets the value for Timezone to be an explicit nil
 
 ### UnsetTimezone
-
 `func (o *Player) UnsetTimezone()`
 
 UnsetTimezone ensures that no value is present for Timezone, not even an explicit nil
-
 ### GetGameVersion
 
 `func (o *Player) GetGameVersion() string`
@@ -360,14 +355,12 @@ HasGameVersion returns a boolean if a field has been set.
 
 `func (o *Player) SetGameVersionNil(b bool)`
 
-SetGameVersionNil sets the value for GameVersion to be an explicit nil
+ SetGameVersionNil sets the value for GameVersion to be an explicit nil
 
 ### UnsetGameVersion
-
 `func (o *Player) UnsetGameVersion()`
 
 UnsetGameVersion ensures that no value is present for GameVersion, not even an explicit nil
-
 ### GetDeviceModel
 
 `func (o *Player) GetDeviceModel() string`
@@ -397,14 +390,12 @@ HasDeviceModel returns a boolean if a field has been set.
 
 `func (o *Player) SetDeviceModelNil(b bool)`
 
-SetDeviceModelNil sets the value for DeviceModel to be an explicit nil
+ SetDeviceModelNil sets the value for DeviceModel to be an explicit nil
 
 ### UnsetDeviceModel
-
 `func (o *Player) UnsetDeviceModel()`
 
 UnsetDeviceModel ensures that no value is present for DeviceModel, not even an explicit nil
-
 ### GetDeviceOs
 
 `func (o *Player) GetDeviceOs() string`
@@ -434,14 +425,12 @@ HasDeviceOs returns a boolean if a field has been set.
 
 `func (o *Player) SetDeviceOsNil(b bool)`
 
-SetDeviceOsNil sets the value for DeviceOs to be an explicit nil
+ SetDeviceOsNil sets the value for DeviceOs to be an explicit nil
 
 ### UnsetDeviceOs
-
 `func (o *Player) UnsetDeviceOs()`
 
 UnsetDeviceOs ensures that no value is present for DeviceOs, not even an explicit nil
-
 ### GetAdId
 
 `func (o *Player) GetAdId() string`
@@ -471,14 +460,12 @@ HasAdId returns a boolean if a field has been set.
 
 `func (o *Player) SetAdIdNil(b bool)`
 
-SetAdIdNil sets the value for AdId to be an explicit nil
+ SetAdIdNil sets the value for AdId to be an explicit nil
 
 ### UnsetAdId
-
 `func (o *Player) UnsetAdId()`
 
 UnsetAdId ensures that no value is present for AdId, not even an explicit nil
-
 ### GetSdk
 
 `func (o *Player) GetSdk() string`
@@ -508,14 +495,12 @@ HasSdk returns a boolean if a field has been set.
 
 `func (o *Player) SetSdkNil(b bool)`
 
-SetSdkNil sets the value for Sdk to be an explicit nil
+ SetSdkNil sets the value for Sdk to be an explicit nil
 
 ### UnsetSdk
-
 `func (o *Player) UnsetSdk()`
 
 UnsetSdk ensures that no value is present for Sdk, not even an explicit nil
-
 ### GetSessionCount
 
 `func (o *Player) GetSessionCount() int32`
@@ -570,14 +555,12 @@ HasTags returns a boolean if a field has been set.
 
 `func (o *Player) SetTagsNil(b bool)`
 
-SetTagsNil sets the value for Tags to be an explicit nil
+ SetTagsNil sets the value for Tags to be an explicit nil
 
 ### UnsetTags
-
 `func (o *Player) UnsetTags()`
 
 UnsetTags ensures that no value is present for Tags, not even an explicit nil
-
 ### GetAmountSpent
 
 `func (o *Player) GetAmountSpent() float32`
@@ -757,14 +740,12 @@ HasTestType returns a boolean if a field has been set.
 
 `func (o *Player) SetTestTypeNil(b bool)`
 
-SetTestTypeNil sets the value for TestType to be an explicit nil
+ SetTestTypeNil sets the value for TestType to be an explicit nil
 
 ### UnsetTestType
-
 `func (o *Player) UnsetTestType()`
 
 UnsetTestType ensures that no value is present for TestType, not even an explicit nil
-
 ### GetLong
 
 `func (o *Player) GetLong() float32`
@@ -840,4 +821,7 @@ SetCountry sets Country field to given value.
 
 HasCountry returns a boolean if a field has been set.
 
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
