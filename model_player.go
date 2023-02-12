@@ -22,7 +22,7 @@ type Player struct {
 	// If true, this is the equivalent of a user being Unsubscribed
 	InvalidIdentifier *bool `json:"invalid_identifier,omitempty"`
 	AppId *string `json:"app_id,omitempty"`
-	// Required The device's platform:   0 = iOS   1 = Android   2 = Amazon   3 = WindowsPhone (MPNS)   4 = Chrome Apps / Extensions   5 = Chrome Web Push   6 = Windows (WNS)   7 = Safari   8 = Firefox   9 = MacOS   10 = Alexa   11 = Email   13 = For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 = SMS 
+	// Required The device's platform:   0 = iOS   1 = Android   2 = Amazon   3 = WindowsPhone (MPNS)   4 = Chrome Apps / Extensions   5 = Chrome Web Push   6 = Windows (WNS)   7 = Safari   8 = Firefox   9 = MacOS   10 = Alexa   11 = Email   13 = For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 = SMS
 	DeviceType int32 `json:"device_type"`
 	// a custom user ID
 	ExternalUserId NullableString `json:"external_user_id,omitempty"`
@@ -30,25 +30,25 @@ type Player struct {
 	ExternalUserIdAuthHash *string `json:"external_user_id_auth_hash,omitempty"`
 	// Email - Only required if you have enabled Identity Verification and device_type is email (11).
 	EmailAuthHash *string `json:"email_auth_hash,omitempty"`
-	// Recommended: For Push Notifications, this is the Push Token Identifier from Google or Apple. For Apple Push identifiers, you must strip all non alphanumeric characters. Examples: iOS: 7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0 Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV... For Email Addresses, set the full email address email@email.com and make sure to set device_type to 11. 
+	// Recommended: For Push Notifications, this is the Push Token Identifier from Google or Apple. For Apple Push identifiers, you must strip all non alphanumeric characters. Examples: iOS: 7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0 Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV... For Email Addresses, set the full email address email@email.com and make sure to set device_type to 11.
 	Identifier NullableString `json:"identifier,omitempty"`
-	// Language code. Typically lower case two letters, except for Chinese where it must be one of zh-Hans or zh-Hant. Example: en 
+	// Language code. Typically lower case two letters, except for Chinese where it must be one of zh-Hans or zh-Hant. Example: en
 	Language *string `json:"language,omitempty"`
-	// Number of seconds away from UTC. Example: -28800 
+	// Number of seconds away from UTC. Example: -28800
 	Timezone NullableInt32 `json:"timezone,omitempty"`
-	// Version of your app. Example: 1.1 
+	// Version of your app. Example: 1.1
 	GameVersion NullableString `json:"game_version,omitempty"`
-	// Device make and model. Example: iPhone5,1 
+	// Device make and model. Example: iPhone5,1
 	DeviceModel NullableString `json:"device_model,omitempty"`
-	// Device operating system version. Example: 7.0.4 
+	// Device operating system version. Example: 7.0.4
 	DeviceOs NullableString `json:"device_os,omitempty"`
-	// The ad id for the device's platform: Android = Advertising Id iOS = identifierForVendor WP8.0 = DeviceUniqueId WP8.1 = AdvertisingId 
+	// The ad id for the device's platform: Android = Advertising Id iOS = identifierForVendor WP8.0 = DeviceUniqueId WP8.1 = AdvertisingId
 	AdId NullableString `json:"ad_id,omitempty"`
 	// Name and version of the sdk/plugin that's calling this API method (if any)
 	Sdk NullableString `json:"sdk,omitempty"`
 	// Number of times the user has played the game, defaults to 1
 	SessionCount *int32 `json:"session_count,omitempty"`
-	// Custom tags for the player. Only support string and integer key value pairs. Does not support arrays or other nested objects. Setting a tag value to null or an empty string will remove the tag. Example: {\"foo\":\"bar\",\"this\":\"that\"} Limitations: - 100 tags per call - Android SDK users: tags cannot be removed or changed via API if set through SDK sendTag methods. Recommended to only tag devices with 1 kilobyte of data Please consider using your own Database to save more than 1 kilobyte of data. See: Internal Database & CRM 
+	// Custom tags for the player. Only support string and integer key value pairs. Does not support arrays or other nested objects. Setting a tag value to null or an empty string will remove the tag. Example: {\"foo\":\"bar\",\"this\":\"that\"} Limitations: - 100 tags per call - Android SDK users: tags cannot be removed or changed via API if set through SDK sendTag methods. Recommended to only tag devices with 1 kilobyte of data Please consider using your own Database to save more than 1 kilobyte of data. See: Internal Database & CRM
 	Tags map[string]interface{} `json:"tags,omitempty"`
 	// Amount the user has spent in USD, up to two decimal places
 	AmountSpent *float32 `json:"amount_spent,omitempty"`
@@ -56,13 +56,13 @@ type Player struct {
 	CreatedAt *int64 `json:"created_at,omitempty"`
 	// Seconds player was running your app.
 	Playtime *int64 `json:"playtime,omitempty"`
-	// Current iOS badge count displayed on the app icon NOTE: Not supported for apps created after June 2018, since badge count for apps created after this date are handled on the client. 
+	// Current iOS badge count displayed on the app icon NOTE: Not supported for apps created after June 2018, since badge count for apps created after this date are handled on the client.
 	BadgeCount *int32 `json:"badge_count,omitempty"`
 	// Unixtime when the player was last active
 	LastActive *int32 `json:"last_active,omitempty"`
-	// 1 = subscribed -2 = unsubscribed iOS - These values are set each time the user opens the app from the SDK. Use the SDK function set Subscription instead. Android - You may set this but you can no longer use the SDK method setSubscription later in your app as it will create synchronization issues. 
+	// 1 = subscribed -2 = unsubscribed iOS - These values are set each time the user opens the app from the SDK. Use the SDK function set Subscription instead. Android - You may set this but you can no longer use the SDK method setSubscription later in your app as it will create synchronization issues.
 	NotificationTypes *int32 `json:"notification_types,omitempty"`
-	// This is used in deciding whether to use your iOS Sandbox or Production push certificate when sending a push when both have been uploaded. Set to the iOS provisioning profile that was used to build your app. 1 = Development 2 = Ad-Hoc Omit this field for App Store builds. 
+	// This is used in deciding whether to use your iOS Sandbox or Production push certificate when sending a push when both have been uploaded. Set to the iOS provisioning profile that was used to build your app. 1 = Development 2 = Ad-Hoc Omit this field for App Store builds.
 	TestType NullableInt32 `json:"test_type,omitempty"`
 	// Longitude of the device, used for geotagging to segment on.
 	Long *float32 `json:"long,omitempty"`
@@ -79,7 +79,7 @@ type _Player Player
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPlayer(deviceType int32) *Player {
+func NewPlayer(id string, deviceType int32, appId *string) *Player {
 	this := Player{}
 	this.DeviceType = deviceType
 	return &this
@@ -1209,5 +1209,3 @@ func (v *NullablePlayer) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
