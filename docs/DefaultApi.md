@@ -10,22 +10,36 @@ Method | HTTP request | Description
 [**CreateNotification**](DefaultApi.md#CreateNotification) | **Post** /notifications | Create notification
 [**CreatePlayer**](DefaultApi.md#CreatePlayer) | **Post** /players | Add a device
 [**CreateSegments**](DefaultApi.md#CreateSegments) | **Post** /apps/{app_id}/segments | Create Segments
+[**CreateSubscription**](DefaultApi.md#CreateSubscription) | **Post** /apps/{app_id}/users/by/{alias_label}/{alias_id}/subscriptions | 
+[**CreateUser**](DefaultApi.md#CreateUser) | **Post** /apps/{app_id}/users | 
+[**DeleteAlias**](DefaultApi.md#DeleteAlias) | **Delete** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete} | 
 [**DeletePlayer**](DefaultApi.md#DeletePlayer) | **Delete** /players/{player_id} | Delete a user record
 [**DeleteSegments**](DefaultApi.md#DeleteSegments) | **Delete** /apps/{app_id}/segments/{segment_id} | Delete Segments
+[**DeleteSubscription**](DefaultApi.md#DeleteSubscription) | **Delete** /apps/{app_id}/subscriptions/{subscription_id} | 
+[**DeleteUser**](DefaultApi.md#DeleteUser) | **Delete** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**EndLiveActivity**](DefaultApi.md#EndLiveActivity) | **Delete** /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id} | Stop Live Activity
 [**ExportPlayers**](DefaultApi.md#ExportPlayers) | **Post** /players/csv_export?app_id&#x3D;{app_id} | CSV export
+[**FetchAliases**](DefaultApi.md#FetchAliases) | **Get** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 
+[**FetchUser**](DefaultApi.md#FetchUser) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
+[**FetchUserIdentity**](DefaultApi.md#FetchUserIdentity) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity | 
 [**GetApp**](DefaultApi.md#GetApp) | **Get** /apps/{app_id} | View an app
 [**GetApps**](DefaultApi.md#GetApps) | **Get** /apps | View apps
+[**GetEligibleIams**](DefaultApi.md#GetEligibleIams) | **Get** /apps/{app_id}/subscriptions/{subscription_id}/iams | 
 [**GetNotification**](DefaultApi.md#GetNotification) | **Get** /notifications/{notification_id} | View notification
 [**GetNotificationHistory**](DefaultApi.md#GetNotificationHistory) | **Post** /notifications/{notification_id}/history | Notification History
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Get** /notifications | View notifications
 [**GetOutcomes**](DefaultApi.md#GetOutcomes) | **Get** /apps/{app_id}/outcomes | View Outcomes
 [**GetPlayer**](DefaultApi.md#GetPlayer) | **Get** /players/{player_id} | View device
 [**GetPlayers**](DefaultApi.md#GetPlayers) | **Get** /players | View devices
+[**IdentifyUserByAlias**](DefaultApi.md#IdentifyUserByAlias) | **Patch** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity | 
+[**IdentifyUserBySubscriptionId**](DefaultApi.md#IdentifyUserBySubscriptionId) | **Patch** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 
+[**TransferSubscription**](DefaultApi.md#TransferSubscription) | **Patch** /apps/{app_id}/subscriptions/{subscription_id}/owner | 
 [**UpdateApp**](DefaultApi.md#UpdateApp) | **Put** /apps/{app_id} | Update an app
 [**UpdateLiveActivity**](DefaultApi.md#UpdateLiveActivity) | **Post** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
 [**UpdatePlayer**](DefaultApi.md#UpdatePlayer) | **Put** /players/{player_id} | Edit device
 [**UpdatePlayerTags**](DefaultApi.md#UpdatePlayerTags) | **Put** /apps/{app_id}/users/{external_user_id} | Edit tags with external user id
+[**UpdateSubscription**](DefaultApi.md#UpdateSubscription) | **Patch** /apps/{app_id}/subscriptions/{subscription_id} | 
+[**UpdateUser**](DefaultApi.md#UpdateUser) | **Patch** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 
 
 
@@ -474,6 +488,250 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateSubscription
+
+> InlineResponse201 CreateSubscription(ctx, appId, aliasLabel, aliasId).CreateSubscriptionRequestBody(createSubscriptionRequestBody).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    aliasLabel := "aliasLabel_example" // string | 
+    aliasId := "aliasId_example" // string | 
+    createSubscriptionRequestBody := *onesignal.NewCreateSubscriptionRequestBody() // CreateSubscriptionRequestBody | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.CreateSubscription(appAuth, appId, aliasLabel, aliasId).CreateSubscriptionRequestBody(createSubscriptionRequestBody).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSubscription``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateSubscription`: InlineResponse201
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateSubscription`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**aliasLabel** | **string** |  | 
+**aliasId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateSubscriptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **createSubscriptionRequestBody** | [**CreateSubscriptionRequestBody**](CreateSubscriptionRequestBody.md) |  | 
+
+### Return type
+
+[**InlineResponse201**](InlineResponse201.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateUser
+
+> User CreateUser(ctx, appId).User(user).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    user := *onesignal.NewUser() // User | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.CreateUser(appAuth, appId).User(user).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateUser``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateUser`: User
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateUser`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateUserRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **user** | [**User**](User.md) |  | 
+
+### Return type
+
+[**User**](User.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteAlias
+
+> InlineResponse200 DeleteAlias(ctx, appId, aliasLabel, aliasId, aliasLabelToDelete).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    aliasLabel := "aliasLabel_example" // string | 
+    aliasId := "aliasId_example" // string | 
+    aliasLabelToDelete := "aliasLabelToDelete_example" // string | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.DeleteAlias(appAuth, appId, aliasLabel, aliasId, aliasLabelToDelete).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteAlias``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `DeleteAlias`: InlineResponse200
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteAlias`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**aliasLabel** | **string** |  | 
+**aliasId** | **string** |  | 
+**aliasLabelToDelete** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteAliasRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+
+
+### Return type
+
+[**InlineResponse200**](InlineResponse200.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeletePlayer
 
 > DeletePlayerSuccessResponse DeletePlayer(ctx, playerId).AppId(appId).Execute()
@@ -623,6 +881,160 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteSubscription
+
+> DeleteSubscription(ctx, appId, subscriptionId).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    subscriptionId := "subscriptionId_example" // string | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.DeleteSubscription(appAuth, appId, subscriptionId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSubscription``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**subscriptionId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteSubscriptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+ (empty response body)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteUser
+
+> DeleteUser(ctx, appId, aliasLabel, aliasId).Execute()
+
+
+
+
+
+### Authorization
+
+No authorization required
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    aliasLabel := "aliasLabel_example" // string | 
+    aliasId := "aliasId_example" // string | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+
+    resp, r, err := apiClient.DefaultApi.DeleteUser(, appId, aliasLabel, aliasId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteUser``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**aliasLabel** | **string** |  | 
+**aliasId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteUserRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+
+### Return type
+
+ (empty response body)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -785,6 +1197,246 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## FetchAliases
+
+> UserIdentityResponse FetchAliases(ctx, appId, subscriptionId).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    subscriptionId := "subscriptionId_example" // string | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.FetchAliases(appAuth, appId, subscriptionId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.FetchAliases``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `FetchAliases`: UserIdentityResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.FetchAliases`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**subscriptionId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiFetchAliasesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**UserIdentityResponse**](UserIdentityResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## FetchUser
+
+> User FetchUser(ctx, appId, aliasLabel, aliasId).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    aliasLabel := "aliasLabel_example" // string | 
+    aliasId := "aliasId_example" // string | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.FetchUser(appAuth, appId, aliasLabel, aliasId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.FetchUser``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `FetchUser`: User
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.FetchUser`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**aliasLabel** | **string** |  | 
+**aliasId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiFetchUserRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+
+### Return type
+
+[**User**](User.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## FetchUserIdentity
+
+> InlineResponse200 FetchUserIdentity(ctx, appId, aliasLabel, aliasId).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    aliasLabel := "aliasLabel_example" // string | 
+    aliasId := "aliasId_example" // string | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.FetchUserIdentity(appAuth, appId, aliasLabel, aliasId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.FetchUserIdentity``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `FetchUserIdentity`: InlineResponse200
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.FetchUserIdentity`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**aliasLabel** | **string** |  | 
+**aliasId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiFetchUserIdentityRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+
+### Return type
+
+[**InlineResponse200**](InlineResponse200.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetApp
 
 > App GetApp(ctx, appId).Execute()
@@ -915,6 +1567,84 @@ Other parameters are passed through a pointer to a apiGetAppsRequest struct via 
 ### Return type
 
 [**[]App**](App.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetEligibleIams
+
+> InlineResponse2003 GetEligibleIams(ctx, appId, subscriptionId).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    subscriptionId := "subscriptionId_example" // string | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.GetEligibleIams(appAuth, appId, subscriptionId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetEligibleIams``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetEligibleIams`: InlineResponse2003
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetEligibleIams`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**subscriptionId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEligibleIamsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**InlineResponse2003**](InlineResponse2003.md)
 
 ### HTTP request headers
 
@@ -1396,6 +2126,249 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## IdentifyUserByAlias
+
+> InlineResponse200 IdentifyUserByAlias(ctx, appId, aliasLabel, aliasId).UserIdentityRequestBody(userIdentityRequestBody).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    aliasLabel := "aliasLabel_example" // string | 
+    aliasId := "aliasId_example" // string | 
+    userIdentityRequestBody := *onesignal.NewUserIdentityRequestBody() // UserIdentityRequestBody | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.IdentifyUserByAlias(appAuth, appId, aliasLabel, aliasId).UserIdentityRequestBody(userIdentityRequestBody).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.IdentifyUserByAlias``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `IdentifyUserByAlias`: InlineResponse200
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.IdentifyUserByAlias`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**aliasLabel** | **string** |  | 
+**aliasId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiIdentifyUserByAliasRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **userIdentityRequestBody** | [**UserIdentityRequestBody**](UserIdentityRequestBody.md) |  | 
+
+### Return type
+
+[**InlineResponse200**](InlineResponse200.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## IdentifyUserBySubscriptionId
+
+> UserIdentityResponse IdentifyUserBySubscriptionId(ctx, appId, subscriptionId).UserIdentityRequestBody(userIdentityRequestBody).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    subscriptionId := "subscriptionId_example" // string | 
+    userIdentityRequestBody := *onesignal.NewUserIdentityRequestBody() // UserIdentityRequestBody | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.IdentifyUserBySubscriptionId(appAuth, appId, subscriptionId).UserIdentityRequestBody(userIdentityRequestBody).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.IdentifyUserBySubscriptionId``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `IdentifyUserBySubscriptionId`: UserIdentityResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.IdentifyUserBySubscriptionId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**subscriptionId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiIdentifyUserBySubscriptionIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **userIdentityRequestBody** | [**UserIdentityRequestBody**](UserIdentityRequestBody.md) |  | 
+
+### Return type
+
+[**UserIdentityResponse**](UserIdentityResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TransferSubscription
+
+> UserIdentityResponse TransferSubscription(ctx, appId, subscriptionId).TransferSubscriptionRequestBody(transferSubscriptionRequestBody).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    subscriptionId := "subscriptionId_example" // string | 
+    transferSubscriptionRequestBody := *onesignal.NewTransferSubscriptionRequestBody() // TransferSubscriptionRequestBody | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.TransferSubscription(appAuth, appId, subscriptionId).TransferSubscriptionRequestBody(transferSubscriptionRequestBody).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TransferSubscription``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `TransferSubscription`: UserIdentityResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TransferSubscription`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**subscriptionId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTransferSubscriptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **transferSubscriptionRequestBody** | [**TransferSubscriptionRequestBody**](TransferSubscriptionRequestBody.md) |  | 
+
+### Return type
+
+[**UserIdentityResponse**](UserIdentityResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateApp
 
 > App UpdateApp(ctx, appId).App(app).Execute()
@@ -1699,6 +2672,167 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdatePlayerTagsSuccessResponse**](UpdatePlayerTagsSuccessResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateSubscription
+
+> UpdateSubscription(ctx, appId, subscriptionId).UpdateSubscriptionRequestBody(updateSubscriptionRequestBody).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    subscriptionId := "subscriptionId_example" // string | 
+    updateSubscriptionRequestBody := *onesignal.NewUpdateSubscriptionRequestBody() // UpdateSubscriptionRequestBody | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.UpdateSubscription(appAuth, appId, subscriptionId).UpdateSubscriptionRequestBody(updateSubscriptionRequestBody).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSubscription``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**subscriptionId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateSubscriptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **updateSubscriptionRequestBody** | [**UpdateSubscriptionRequestBody**](UpdateSubscriptionRequestBody.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateUser
+
+> InlineResponse202 UpdateUser(ctx, appId, aliasLabel, aliasId).UpdateUserRequest(updateUserRequest).Execute()
+
+
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    aliasLabel := "aliasLabel_example" // string | 
+    aliasId := "aliasId_example" // string | 
+    updateUserRequest := *onesignal.NewUpdateUserRequest() // UpdateUserRequest | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.UpdateUser(appAuth, appId, aliasLabel, aliasId).UpdateUserRequest(updateUserRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUser``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UpdateUser`: InlineResponse202
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUser`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**aliasLabel** | **string** |  | 
+**aliasId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateUserRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md) |  | 
+
+### Return type
+
+[**InlineResponse202**](InlineResponse202.md)
 
 ### HTTP request headers
 

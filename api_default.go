@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.2.1
 Contact: devrel@onesignal.com
 */
 
@@ -766,6 +766,367 @@ func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateSubscriptionRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+	createSubscriptionRequestBody *CreateSubscriptionRequestBody
+}
+
+func (r ApiCreateSubscriptionRequest) CreateSubscriptionRequestBody(createSubscriptionRequestBody CreateSubscriptionRequestBody) ApiCreateSubscriptionRequest {
+	r.createSubscriptionRequestBody = &createSubscriptionRequestBody
+	return r
+}
+
+func (r ApiCreateSubscriptionRequest) Execute() (*InlineResponse201, *http.Response, error) {
+	return r.ApiService.CreateSubscriptionExecute(r)
+}
+
+/*
+CreateSubscription Method for CreateSubscription
+
+Creates a new Subscription under the User provided. Useful to add email addresses and SMS numbers to the User.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @return ApiCreateSubscriptionRequest
+*/
+func (a *DefaultApiService) CreateSubscription(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiCreateSubscriptionRequest {
+	return ApiCreateSubscriptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+	}
+}
+
+// Execute executes the request
+//  @return InlineResponse201
+func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionRequest) (*InlineResponse201, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InlineResponse201
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateSubscription")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}/subscriptions"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createSubscriptionRequestBody == nil {
+		return localVarReturnValue, nil, reportError("createSubscriptionRequestBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createSubscriptionRequestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateUserRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	user *User
+}
+
+func (r ApiCreateUserRequest) User(user User) ApiCreateUserRequest {
+	r.user = &user
+	return r
+}
+
+func (r ApiCreateUserRequest) Execute() (*User, *http.Response, error) {
+	return r.ApiService.CreateUserExecute(r)
+}
+
+/*
+CreateUser Method for CreateUser
+
+Creates a User, optionally Subscriptions owned by the User as well as Aliases.
+Aliases provided in the payload will be used to look up an existing User.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @return ApiCreateUserRequest
+*/
+func (a *DefaultApiService) CreateUser(ctx context.Context, appId string) ApiCreateUserRequest {
+	return ApiCreateUserRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+	}
+}
+
+// Execute executes the request
+//  @return User
+func (a *DefaultApiService) CreateUserExecute(r ApiCreateUserRequest) (*User, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *User
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateUser")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.user == nil {
+		return localVarReturnValue, nil, reportError("user is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.user
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v CreateUserConflictResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteAliasRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+	aliasLabelToDelete string
+}
+
+func (r ApiDeleteAliasRequest) Execute() (*InlineResponse200, *http.Response, error) {
+	return r.ApiService.DeleteAliasExecute(r)
+}
+
+/*
+DeleteAlias Method for DeleteAlias
+
+Deletes an alias by alias label
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @param aliasLabelToDelete
+ @return ApiDeleteAliasRequest
+*/
+func (a *DefaultApiService) DeleteAlias(ctx context.Context, appId string, aliasLabel string, aliasId string, aliasLabelToDelete string) ApiDeleteAliasRequest {
+	return ApiDeleteAliasRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+		aliasLabelToDelete: aliasLabelToDelete,
+	}
+}
+
+// Execute executes the request
+//  @return InlineResponse200
+func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*InlineResponse200, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InlineResponse200
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteAlias")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label_to_delete"+"}", url.PathEscape(parameterToString(r.aliasLabelToDelete, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiDeletePlayerRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
@@ -1028,6 +1389,202 @@ func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteSubscriptionRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+}
+
+func (r ApiDeleteSubscriptionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteSubscriptionExecute(r)
+}
+
+/*
+DeleteSubscription Method for DeleteSubscription
+
+Deletes the Subscription.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiDeleteSubscriptionRequest
+*/
+func (a *DefaultApiService) DeleteSubscription(ctx context.Context, appId string, subscriptionId string) ApiDeleteSubscriptionRequest {
+	return ApiDeleteSubscriptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSubscription")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteUserRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+}
+
+func (r ApiDeleteUserRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteUserExecute(r)
+}
+
+/*
+DeleteUser Method for DeleteUser
+
+Removes the User identified by (:alias_label, :alias_id), and all Subscriptions and Aliases
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @return ApiDeleteUserRequest
+*/
+func (a *DefaultApiService) DeleteUser(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiDeleteUserRequest {
+	return ApiDeleteUserRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteUser")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
 }
 
 type ApiEndLiveActivityRequest struct {
@@ -1304,6 +1861,335 @@ func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*Ex
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiFetchAliasesRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+}
+
+func (r ApiFetchAliasesRequest) Execute() (*UserIdentityResponse, *http.Response, error) {
+	return r.ApiService.FetchAliasesExecute(r)
+}
+
+/*
+FetchAliases Method for FetchAliases
+
+Lists all Aliases for the User identified by :subscription_id.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiFetchAliasesRequest
+*/
+func (a *DefaultApiService) FetchAliases(ctx context.Context, appId string, subscriptionId string) ApiFetchAliasesRequest {
+	return ApiFetchAliasesRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return UserIdentityResponse
+func (a *DefaultApiService) FetchAliasesExecute(r ApiFetchAliasesRequest) (*UserIdentityResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UserIdentityResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.FetchAliases")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/user/identity"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiFetchUserRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+}
+
+func (r ApiFetchUserRequest) Execute() (*User, *http.Response, error) {
+	return r.ApiService.FetchUserExecute(r)
+}
+
+/*
+FetchUser Method for FetchUser
+
+Returns the User’s properties, Aliases, and Subscriptions.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @return ApiFetchUserRequest
+*/
+func (a *DefaultApiService) FetchUser(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiFetchUserRequest {
+	return ApiFetchUserRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+	}
+}
+
+// Execute executes the request
+//  @return User
+func (a *DefaultApiService) FetchUserExecute(r ApiFetchUserRequest) (*User, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *User
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.FetchUser")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiFetchUserIdentityRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+}
+
+func (r ApiFetchUserIdentityRequest) Execute() (*InlineResponse200, *http.Response, error) {
+	return r.ApiService.FetchUserIdentityExecute(r)
+}
+
+/*
+FetchUserIdentity Method for FetchUserIdentity
+
+Lists all Aliases for the User identified by (:alias_label, :alias_id).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @return ApiFetchUserIdentityRequest
+*/
+func (a *DefaultApiService) FetchUserIdentity(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiFetchUserIdentityRequest {
+	return ApiFetchUserIdentityRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+	}
+}
+
+// Execute executes the request
+//  @return InlineResponse200
+func (a *DefaultApiService) FetchUserIdentityExecute(r ApiFetchUserIdentityRequest) (*InlineResponse200, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InlineResponse200
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.FetchUserIdentity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}/identity"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetAppRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
@@ -1508,6 +2394,113 @@ func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) ([]App, *http.Re
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetEligibleIamsRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+}
+
+func (r ApiGetEligibleIamsRequest) Execute() (*InlineResponse2003, *http.Response, error) {
+	return r.ApiService.GetEligibleIamsExecute(r)
+}
+
+/*
+GetEligibleIams Method for GetEligibleIams
+
+Manifest of In-App Messages the Subscription is eligible to display by the SDK.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiGetEligibleIamsRequest
+*/
+func (a *DefaultApiService) GetEligibleIams(ctx context.Context, appId string, subscriptionId string) ApiGetEligibleIamsRequest {
+	return ApiGetEligibleIamsRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return InlineResponse2003
+func (a *DefaultApiService) GetEligibleIamsExecute(r ApiGetEligibleIamsRequest) (*InlineResponse2003, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InlineResponse2003
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetEligibleIams")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/iams"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2365,6 +3358,382 @@ func (a *DefaultApiService) GetPlayersExecute(r ApiGetPlayersRequest) (*PlayerSl
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiIdentifyUserByAliasRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+	userIdentityRequestBody *UserIdentityRequestBody
+}
+
+func (r ApiIdentifyUserByAliasRequest) UserIdentityRequestBody(userIdentityRequestBody UserIdentityRequestBody) ApiIdentifyUserByAliasRequest {
+	r.userIdentityRequestBody = &userIdentityRequestBody
+	return r
+}
+
+func (r ApiIdentifyUserByAliasRequest) Execute() (*InlineResponse200, *http.Response, error) {
+	return r.ApiService.IdentifyUserByAliasExecute(r)
+}
+
+/*
+IdentifyUserByAlias Method for IdentifyUserByAlias
+
+Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @return ApiIdentifyUserByAliasRequest
+*/
+func (a *DefaultApiService) IdentifyUserByAlias(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiIdentifyUserByAliasRequest {
+	return ApiIdentifyUserByAliasRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+	}
+}
+
+// Execute executes the request
+//  @return InlineResponse200
+func (a *DefaultApiService) IdentifyUserByAliasExecute(r ApiIdentifyUserByAliasRequest) (*InlineResponse200, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InlineResponse200
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.IdentifyUserByAlias")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}/identity"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.userIdentityRequestBody == nil {
+		return localVarReturnValue, nil, reportError("userIdentityRequestBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.userIdentityRequestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v IdentifyUserConflictResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiIdentifyUserBySubscriptionIdRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+	userIdentityRequestBody *UserIdentityRequestBody
+}
+
+func (r ApiIdentifyUserBySubscriptionIdRequest) UserIdentityRequestBody(userIdentityRequestBody UserIdentityRequestBody) ApiIdentifyUserBySubscriptionIdRequest {
+	r.userIdentityRequestBody = &userIdentityRequestBody
+	return r
+}
+
+func (r ApiIdentifyUserBySubscriptionIdRequest) Execute() (*UserIdentityResponse, *http.Response, error) {
+	return r.ApiService.IdentifyUserBySubscriptionIdExecute(r)
+}
+
+/*
+IdentifyUserBySubscriptionId Method for IdentifyUserBySubscriptionId
+
+Upserts one or more Aliases for the User identified by :subscription_id.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiIdentifyUserBySubscriptionIdRequest
+*/
+func (a *DefaultApiService) IdentifyUserBySubscriptionId(ctx context.Context, appId string, subscriptionId string) ApiIdentifyUserBySubscriptionIdRequest {
+	return ApiIdentifyUserBySubscriptionIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return UserIdentityResponse
+func (a *DefaultApiService) IdentifyUserBySubscriptionIdExecute(r ApiIdentifyUserBySubscriptionIdRequest) (*UserIdentityResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UserIdentityResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.IdentifyUserBySubscriptionId")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/user/identity"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.userIdentityRequestBody == nil {
+		return localVarReturnValue, nil, reportError("userIdentityRequestBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.userIdentityRequestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v IdentifyUserConflictResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTransferSubscriptionRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+	transferSubscriptionRequestBody *TransferSubscriptionRequestBody
+}
+
+func (r ApiTransferSubscriptionRequest) TransferSubscriptionRequestBody(transferSubscriptionRequestBody TransferSubscriptionRequestBody) ApiTransferSubscriptionRequest {
+	r.transferSubscriptionRequestBody = &transferSubscriptionRequestBody
+	return r
+}
+
+func (r ApiTransferSubscriptionRequest) Execute() (*UserIdentityResponse, *http.Response, error) {
+	return r.ApiService.TransferSubscriptionExecute(r)
+}
+
+/*
+TransferSubscription Method for TransferSubscription
+
+Transfers this Subscription to the User identified by the identity in the payload.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiTransferSubscriptionRequest
+*/
+func (a *DefaultApiService) TransferSubscription(ctx context.Context, appId string, subscriptionId string) ApiTransferSubscriptionRequest {
+	return ApiTransferSubscriptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return UserIdentityResponse
+func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptionRequest) (*UserIdentityResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UserIdentityResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.TransferSubscription")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/owner"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.transferSubscriptionRequestBody == nil {
+		return localVarReturnValue, nil, reportError("transferSubscriptionRequestBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.transferSubscriptionRequestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateAppRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
@@ -2855,14 +4224,234 @@ func (a *DefaultApiService) UpdatePlayerTagsExecute(r ApiUpdatePlayerTagsRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v BadRequestError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateSubscriptionRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+	updateSubscriptionRequestBody *UpdateSubscriptionRequestBody
+}
+
+func (r ApiUpdateSubscriptionRequest) UpdateSubscriptionRequestBody(updateSubscriptionRequestBody UpdateSubscriptionRequestBody) ApiUpdateSubscriptionRequest {
+	r.updateSubscriptionRequestBody = &updateSubscriptionRequestBody
+	return r
+}
+
+func (r ApiUpdateSubscriptionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateSubscriptionExecute(r)
+}
+
+/*
+UpdateSubscription Method for UpdateSubscription
+
+Updates an existing Subscription’s properties.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiUpdateSubscriptionRequest
+*/
+func (a *DefaultApiService) UpdateSubscription(ctx context.Context, appId string, subscriptionId string) ApiUpdateSubscriptionRequest {
+	return ApiUpdateSubscriptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateSubscription")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateSubscriptionRequestBody == nil {
+		return nil, reportError("updateSubscriptionRequestBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateSubscriptionRequestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateUserRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+	updateUserRequest *UpdateUserRequest
+}
+
+func (r ApiUpdateUserRequest) UpdateUserRequest(updateUserRequest UpdateUserRequest) ApiUpdateUserRequest {
+	r.updateUserRequest = &updateUserRequest
+	return r
+}
+
+func (r ApiUpdateUserRequest) Execute() (*InlineResponse202, *http.Response, error) {
+	return r.ApiService.UpdateUserExecute(r)
+}
+
+/*
+UpdateUser Method for UpdateUser
+
+Updates an existing User’s properties.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @return ApiUpdateUserRequest
+*/
+func (a *DefaultApiService) UpdateUser(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiUpdateUserRequest {
+	return ApiUpdateUserRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+	}
+}
+
+// Execute executes the request
+//  @return InlineResponse202
+func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*InlineResponse202, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InlineResponse202
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateUser")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateUserRequest == nil {
+		return localVarReturnValue, nil, reportError("updateUserRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateUserRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

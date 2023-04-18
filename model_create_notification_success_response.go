@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.2.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,9 +17,9 @@ import (
 
 // CreateNotificationSuccessResponse struct for CreateNotificationSuccessResponse
 type CreateNotificationSuccessResponse struct {
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// Estimated number of subscribers targetted by notification.
-	Recipients int32 `json:"recipients"`
+	Recipients *int32 `json:"recipients,omitempty"`
 	ExternalId NullableString `json:"external_id,omitempty"`
 	Errors *Notification200Errors `json:"errors,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -31,10 +31,8 @@ type _CreateNotificationSuccessResponse CreateNotificationSuccessResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateNotificationSuccessResponse(id string, recipients int32) *CreateNotificationSuccessResponse {
+func NewCreateNotificationSuccessResponse() *CreateNotificationSuccessResponse {
 	this := CreateNotificationSuccessResponse{}
-	this.Id = id
-	this.Recipients = recipients
 	return &this
 }
 
@@ -46,52 +44,68 @@ func NewCreateNotificationSuccessResponseWithDefaults() *CreateNotificationSucce
 	return &this
 }
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *CreateNotificationSuccessResponse) GetId() string {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateNotificationSuccessResponse) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *CreateNotificationSuccessResponse) HasId() bool {
+	if o != nil && o.Id != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *CreateNotificationSuccessResponse) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetRecipients returns the Recipients field value
+// GetRecipients returns the Recipients field value if set, zero value otherwise.
 func (o *CreateNotificationSuccessResponse) GetRecipients() int32 {
-	if o == nil {
+	if o == nil || o.Recipients == nil {
 		var ret int32
 		return ret
 	}
-
-	return o.Recipients
+	return *o.Recipients
 }
 
-// GetRecipientsOk returns a tuple with the Recipients field value
+// GetRecipientsOk returns a tuple with the Recipients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateNotificationSuccessResponse) GetRecipientsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || o.Recipients == nil {
 		return nil, false
 	}
-	return &o.Recipients, true
+	return o.Recipients, true
 }
 
-// SetRecipients sets field value
+// HasRecipients returns a boolean if a field has been set.
+func (o *CreateNotificationSuccessResponse) HasRecipients() bool {
+	if o != nil && o.Recipients != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRecipients gets a reference to the given int32 and assigns it to the Recipients field.
 func (o *CreateNotificationSuccessResponse) SetRecipients(v int32) {
-	o.Recipients = v
+	o.Recipients = &v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -170,10 +184,10 @@ func (o *CreateNotificationSuccessResponse) SetErrors(v Notification200Errors) {
 
 func (o CreateNotificationSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
+	if o.Id != nil {
 		toSerialize["id"] = o.Id
 	}
-	if true {
+	if o.Recipients != nil {
 		toSerialize["recipients"] = o.Recipients
 	}
 	if o.ExternalId.IsSet() {

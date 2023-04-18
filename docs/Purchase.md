@@ -5,14 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Sku** | **string** | The unique identifier of the purchased item. | 
-**Amount** | **float32** | The amount, in USD, spent purchasing the item. | 
+**Amount** | **string** | The amount, in USD, spent purchasing the item. | 
 **Iso** | **string** | The 3-letter ISO 4217 currency code. Required for correct storage and conversion of amount. | 
+**Count** | Pointer to **float32** |  | [optional] 
 
 ## Methods
 
 ### NewPurchase
 
-`func NewPurchase(sku string, amount float32, iso string, ) *Purchase`
+`func NewPurchase(sku string, amount string, iso string, ) *Purchase`
 
 NewPurchase instantiates a new Purchase object
 This constructor will assign default values to properties that have it defined,
@@ -49,20 +50,20 @@ SetSku sets Sku field to given value.
 
 ### GetAmount
 
-`func (o *Purchase) GetAmount() float32`
+`func (o *Purchase) GetAmount() string`
 
 GetAmount returns the Amount field if non-nil, zero value otherwise.
 
 ### GetAmountOk
 
-`func (o *Purchase) GetAmountOk() (*float32, bool)`
+`func (o *Purchase) GetAmountOk() (*string, bool)`
 
 GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAmount
 
-`func (o *Purchase) SetAmount(v float32)`
+`func (o *Purchase) SetAmount(v string)`
 
 SetAmount sets Amount field to given value.
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetIso sets Iso field to given value.
 
+
+### GetCount
+
+`func (o *Purchase) GetCount() float32`
+
+GetCount returns the Count field if non-nil, zero value otherwise.
+
+### GetCountOk
+
+`func (o *Purchase) GetCountOk() (*float32, bool)`
+
+GetCountOk returns a tuple with the Count field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCount
+
+`func (o *Purchase) SetCount(v float32)`
+
+SetCount sets Count field to given value.
+
+### HasCount
+
+`func (o *Purchase) HasCount() bool`
+
+HasCount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **IncludeChromeRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeChromeWebRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeAndroidRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAliases** | Pointer to [**NullablePlayerNotificationTargetIncludeAliases**](PlayerNotificationTargetIncludeAliases.md) |  | [optional] 
+**TargetChannel** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -303,6 +305,66 @@ SetIncludeAndroidRegIds sets IncludeAndroidRegIds field to given value.
 `func (o *PlayerNotificationTarget) HasIncludeAndroidRegIds() bool`
 
 HasIncludeAndroidRegIds returns a boolean if a field has been set.
+
+### GetIncludeAliases
+
+`func (o *PlayerNotificationTarget) GetIncludeAliases() PlayerNotificationTargetIncludeAliases`
+
+GetIncludeAliases returns the IncludeAliases field if non-nil, zero value otherwise.
+
+### GetIncludeAliasesOk
+
+`func (o *PlayerNotificationTarget) GetIncludeAliasesOk() (*PlayerNotificationTargetIncludeAliases, bool)`
+
+GetIncludeAliasesOk returns a tuple with the IncludeAliases field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeAliases
+
+`func (o *PlayerNotificationTarget) SetIncludeAliases(v PlayerNotificationTargetIncludeAliases)`
+
+SetIncludeAliases sets IncludeAliases field to given value.
+
+### HasIncludeAliases
+
+`func (o *PlayerNotificationTarget) HasIncludeAliases() bool`
+
+HasIncludeAliases returns a boolean if a field has been set.
+
+### SetIncludeAliasesNil
+
+`func (o *PlayerNotificationTarget) SetIncludeAliasesNil(b bool)`
+
+ SetIncludeAliasesNil sets the value for IncludeAliases to be an explicit nil
+
+### UnsetIncludeAliases
+`func (o *PlayerNotificationTarget) UnsetIncludeAliases()`
+
+UnsetIncludeAliases ensures that no value is present for IncludeAliases, not even an explicit nil
+### GetTargetChannel
+
+`func (o *PlayerNotificationTarget) GetTargetChannel() string`
+
+GetTargetChannel returns the TargetChannel field if non-nil, zero value otherwise.
+
+### GetTargetChannelOk
+
+`func (o *PlayerNotificationTarget) GetTargetChannelOk() (*string, bool)`
+
+GetTargetChannelOk returns a tuple with the TargetChannel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetChannel
+
+`func (o *PlayerNotificationTarget) SetTargetChannel(v string)`
+
+SetTargetChannel sets TargetChannel field to given value.
+
+### HasTargetChannel
+
+`func (o *PlayerNotificationTarget) HasTargetChannel() bool`
+
+HasTargetChannel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

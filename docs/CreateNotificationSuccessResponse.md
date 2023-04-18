@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
-**Recipients** | **int32** | Estimated number of subscribers targetted by notification. | 
+**Id** | Pointer to **string** |  | [optional] 
+**Recipients** | Pointer to **int32** | Estimated number of subscribers targetted by notification. | [optional] 
 **ExternalId** | Pointer to **NullableString** |  | [optional] 
 **Errors** | Pointer to [**Notification200Errors**](Notification200Errors.md) |  | [optional] 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewCreateNotificationSuccessResponse
 
-`func NewCreateNotificationSuccessResponse(id string, recipients int32, ) *CreateNotificationSuccessResponse`
+`func NewCreateNotificationSuccessResponse() *CreateNotificationSuccessResponse`
 
 NewCreateNotificationSuccessResponse instantiates a new CreateNotificationSuccessResponse object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +47,11 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+### HasId
+
+`func (o *CreateNotificationSuccessResponse) HasId() bool`
+
+HasId returns a boolean if a field has been set.
 
 ### GetRecipients
 
@@ -67,6 +72,11 @@ and a boolean to check if the value has been set.
 
 SetRecipients sets Recipients field to given value.
 
+### HasRecipients
+
+`func (o *CreateNotificationSuccessResponse) HasRecipients() bool`
+
+HasRecipients returns a boolean if a field has been set.
 
 ### GetExternalId
 
