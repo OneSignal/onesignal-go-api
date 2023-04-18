@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.2.1
 Contact: devrel@onesignal.com
 */
 
@@ -20,9 +20,10 @@ type Purchase struct {
 	// The unique identifier of the purchased item.
 	Sku string `json:"sku"`
 	// The amount, in USD, spent purchasing the item.
-	Amount float32 `json:"amount"`
+	Amount string `json:"amount"`
 	// The 3-letter ISO 4217 currency code. Required for correct storage and conversion of amount.
 	Iso string `json:"iso"`
+	Count *float32 `json:"count,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -32,7 +33,7 @@ type _Purchase Purchase
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPurchase(sku string, amount float32, iso string) *Purchase {
+func NewPurchase(sku string, amount string, iso string) *Purchase {
 	this := Purchase{}
 	this.Sku = sku
 	this.Amount = amount
@@ -73,9 +74,9 @@ func (o *Purchase) SetSku(v string) {
 }
 
 // GetAmount returns the Amount field value
-func (o *Purchase) GetAmount() float32 {
+func (o *Purchase) GetAmount() string {
 	if o == nil {
-		var ret float32
+		var ret string
 		return ret
 	}
 
@@ -84,7 +85,7 @@ func (o *Purchase) GetAmount() float32 {
 
 // GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
-func (o *Purchase) GetAmountOk() (*float32, bool) {
+func (o *Purchase) GetAmountOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -92,7 +93,7 @@ func (o *Purchase) GetAmountOk() (*float32, bool) {
 }
 
 // SetAmount sets field value
-func (o *Purchase) SetAmount(v float32) {
+func (o *Purchase) SetAmount(v string) {
 	o.Amount = v
 }
 
@@ -120,6 +121,38 @@ func (o *Purchase) SetIso(v string) {
 	o.Iso = v
 }
 
+// GetCount returns the Count field value if set, zero value otherwise.
+func (o *Purchase) GetCount() float32 {
+	if o == nil || o.Count == nil {
+		var ret float32
+		return ret
+	}
+	return *o.Count
+}
+
+// GetCountOk returns a tuple with the Count field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Purchase) GetCountOk() (*float32, bool) {
+	if o == nil || o.Count == nil {
+		return nil, false
+	}
+	return o.Count, true
+}
+
+// HasCount returns a boolean if a field has been set.
+func (o *Purchase) HasCount() bool {
+	if o != nil && o.Count != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCount gets a reference to the given float32 and assigns it to the Count field.
+func (o *Purchase) SetCount(v float32) {
+	o.Count = &v
+}
+
 func (o Purchase) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -130,6 +163,9 @@ func (o Purchase) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["iso"] = o.Iso
+	}
+	if o.Count != nil {
+		toSerialize["count"] = o.Count
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -152,6 +188,7 @@ func (o *Purchase) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "sku")
 		delete(additionalProperties, "amount")
 		delete(additionalProperties, "iso")
+		delete(additionalProperties, "count")
 		o.AdditionalProperties = additionalProperties
 	}
 

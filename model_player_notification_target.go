@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.2.1
 Contact: devrel@onesignal.com
 */
 
@@ -18,8 +18,10 @@ import (
 // PlayerNotificationTarget struct for PlayerNotificationTarget
 type PlayerNotificationTarget struct {
 	// Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
+	// Deprecated
 	IncludePlayerIds []string `json:"include_player_ids,omitempty"`
 	// Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\"custom-id-assigned-by-api\"] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms. 
+	// Deprecated
 	IncludeExternalUserIds []string `json:"include_external_user_ids,omitempty"`
 	// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call 
 	IncludeEmailTokens []string `json:"include_email_tokens,omitempty"`
@@ -37,6 +39,8 @@ type PlayerNotificationTarget struct {
 	IncludeChromeWebRegIds []string `json:"include_chrome_web_reg_ids,omitempty"`
 	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
 	IncludeAndroidRegIds []string `json:"include_android_reg_ids,omitempty"`
+	IncludeAliases NullablePlayerNotificationTargetIncludeAliases `json:"include_aliases,omitempty"`
+	TargetChannel *string `json:"target_channel,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -60,6 +64,7 @@ func NewPlayerNotificationTargetWithDefaults() *PlayerNotificationTarget {
 }
 
 // GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *PlayerNotificationTarget) GetIncludePlayerIds() []string {
 	if o == nil {
 		var ret []string
@@ -71,6 +76,7 @@ func (o *PlayerNotificationTarget) GetIncludePlayerIds() []string {
 // GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *PlayerNotificationTarget) GetIncludePlayerIdsOk() ([]string, bool) {
 	if o == nil || o.IncludePlayerIds == nil {
 		return nil, false
@@ -88,11 +94,13 @@ func (o *PlayerNotificationTarget) HasIncludePlayerIds() bool {
 }
 
 // SetIncludePlayerIds gets a reference to the given []string and assigns it to the IncludePlayerIds field.
+// Deprecated
 func (o *PlayerNotificationTarget) SetIncludePlayerIds(v []string) {
 	o.IncludePlayerIds = v
 }
 
 // GetIncludeExternalUserIds returns the IncludeExternalUserIds field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *PlayerNotificationTarget) GetIncludeExternalUserIds() []string {
 	if o == nil {
 		var ret []string
@@ -104,6 +112,7 @@ func (o *PlayerNotificationTarget) GetIncludeExternalUserIds() []string {
 // GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *PlayerNotificationTarget) GetIncludeExternalUserIdsOk() ([]string, bool) {
 	if o == nil || o.IncludeExternalUserIds == nil {
 		return nil, false
@@ -121,6 +130,7 @@ func (o *PlayerNotificationTarget) HasIncludeExternalUserIds() bool {
 }
 
 // SetIncludeExternalUserIds gets a reference to the given []string and assigns it to the IncludeExternalUserIds field.
+// Deprecated
 func (o *PlayerNotificationTarget) SetIncludeExternalUserIds(v []string) {
 	o.IncludeExternalUserIds = v
 }
@@ -381,6 +391,80 @@ func (o *PlayerNotificationTarget) SetIncludeAndroidRegIds(v []string) {
 	o.IncludeAndroidRegIds = v
 }
 
+// GetIncludeAliases returns the IncludeAliases field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PlayerNotificationTarget) GetIncludeAliases() PlayerNotificationTargetIncludeAliases {
+	if o == nil || o.IncludeAliases.Get() == nil {
+		var ret PlayerNotificationTargetIncludeAliases
+		return ret
+	}
+	return *o.IncludeAliases.Get()
+}
+
+// GetIncludeAliasesOk returns a tuple with the IncludeAliases field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PlayerNotificationTarget) GetIncludeAliasesOk() (*PlayerNotificationTargetIncludeAliases, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IncludeAliases.Get(), o.IncludeAliases.IsSet()
+}
+
+// HasIncludeAliases returns a boolean if a field has been set.
+func (o *PlayerNotificationTarget) HasIncludeAliases() bool {
+	if o != nil && o.IncludeAliases.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeAliases gets a reference to the given NullablePlayerNotificationTargetIncludeAliases and assigns it to the IncludeAliases field.
+func (o *PlayerNotificationTarget) SetIncludeAliases(v PlayerNotificationTargetIncludeAliases) {
+	o.IncludeAliases.Set(&v)
+}
+// SetIncludeAliasesNil sets the value for IncludeAliases to be an explicit nil
+func (o *PlayerNotificationTarget) SetIncludeAliasesNil() {
+	o.IncludeAliases.Set(nil)
+}
+
+// UnsetIncludeAliases ensures that no value is present for IncludeAliases, not even an explicit nil
+func (o *PlayerNotificationTarget) UnsetIncludeAliases() {
+	o.IncludeAliases.Unset()
+}
+
+// GetTargetChannel returns the TargetChannel field value if set, zero value otherwise.
+func (o *PlayerNotificationTarget) GetTargetChannel() string {
+	if o == nil || o.TargetChannel == nil {
+		var ret string
+		return ret
+	}
+	return *o.TargetChannel
+}
+
+// GetTargetChannelOk returns a tuple with the TargetChannel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PlayerNotificationTarget) GetTargetChannelOk() (*string, bool) {
+	if o == nil || o.TargetChannel == nil {
+		return nil, false
+	}
+	return o.TargetChannel, true
+}
+
+// HasTargetChannel returns a boolean if a field has been set.
+func (o *PlayerNotificationTarget) HasTargetChannel() bool {
+	if o != nil && o.TargetChannel != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetChannel gets a reference to the given string and assigns it to the TargetChannel field.
+func (o *PlayerNotificationTarget) SetTargetChannel(v string) {
+	o.TargetChannel = &v
+}
+
 func (o PlayerNotificationTarget) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.IncludePlayerIds != nil {
@@ -413,6 +497,12 @@ func (o PlayerNotificationTarget) MarshalJSON() ([]byte, error) {
 	if o.IncludeAndroidRegIds != nil {
 		toSerialize["include_android_reg_ids"] = o.IncludeAndroidRegIds
 	}
+	if o.IncludeAliases.IsSet() {
+		toSerialize["include_aliases"] = o.IncludeAliases.Get()
+	}
+	if o.TargetChannel != nil {
+		toSerialize["target_channel"] = o.TargetChannel
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -441,6 +531,8 @@ func (o *PlayerNotificationTarget) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "include_chrome_reg_ids")
 		delete(additionalProperties, "include_chrome_web_reg_ids")
 		delete(additionalProperties, "include_android_reg_ids")
+		delete(additionalProperties, "include_aliases")
+		delete(additionalProperties, "target_channel")
 		o.AdditionalProperties = additionalProperties
 	}
 

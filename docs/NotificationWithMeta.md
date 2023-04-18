@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **IncludeChromeRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeChromeWebRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeAndroidRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAliases** | Pointer to [**NullablePlayerNotificationTargetIncludeAliases**](PlayerNotificationTargetIncludeAliases.md) |  | [optional] 
+**TargetChannel** | Pointer to **string** |  | [optional] 
 **Id** | Pointer to **string** |  | [optional] 
 **Value** | Pointer to **int32** |  | [optional] [readonly] 
 **Name** | Pointer to **NullableString** | Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user. | [optional] 
@@ -32,7 +34,7 @@ Name | Type | Description | Notes
 **IsChrome** | Pointer to **NullableBool** | This flag is not used for web push Please see isChromeWeb for sending to web push users. This flag only applies to Google Chrome Apps &amp; Extensions. Indicates whether to send to all devices registered under your app&#39;s Google Chrome Apps &amp; Extension platform.  | [optional] 
 **ChannelForExternalUserIds** | Pointer to **string** | Indicates if the message type when targeting with include_external_user_ids for cases where an email, sms, and/or push subscribers have the same external user id. Example: Use the string \&quot;push\&quot; to indicate you are sending a push notification or the string \&quot;email\&quot;for sending emails or \&quot;sms\&quot;for sending SMS.  | [optional] 
 **AppId** | **string** | Required: Your OneSignal Application ID, which can be found in Keys &amp; IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434.  | 
-**ExternalId** | Pointer to **string** | Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it&#39;s important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true  | [optional] 
+**ExternalId** | Pointer to **NullableString** | Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it&#39;s important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true  | [optional] 
 **Contents** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
 **Headings** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
 **Subtitle** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
@@ -455,6 +457,66 @@ SetIncludeAndroidRegIds sets IncludeAndroidRegIds field to given value.
 `func (o *NotificationWithMeta) HasIncludeAndroidRegIds() bool`
 
 HasIncludeAndroidRegIds returns a boolean if a field has been set.
+
+### GetIncludeAliases
+
+`func (o *NotificationWithMeta) GetIncludeAliases() PlayerNotificationTargetIncludeAliases`
+
+GetIncludeAliases returns the IncludeAliases field if non-nil, zero value otherwise.
+
+### GetIncludeAliasesOk
+
+`func (o *NotificationWithMeta) GetIncludeAliasesOk() (*PlayerNotificationTargetIncludeAliases, bool)`
+
+GetIncludeAliasesOk returns a tuple with the IncludeAliases field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeAliases
+
+`func (o *NotificationWithMeta) SetIncludeAliases(v PlayerNotificationTargetIncludeAliases)`
+
+SetIncludeAliases sets IncludeAliases field to given value.
+
+### HasIncludeAliases
+
+`func (o *NotificationWithMeta) HasIncludeAliases() bool`
+
+HasIncludeAliases returns a boolean if a field has been set.
+
+### SetIncludeAliasesNil
+
+`func (o *NotificationWithMeta) SetIncludeAliasesNil(b bool)`
+
+ SetIncludeAliasesNil sets the value for IncludeAliases to be an explicit nil
+
+### UnsetIncludeAliases
+`func (o *NotificationWithMeta) UnsetIncludeAliases()`
+
+UnsetIncludeAliases ensures that no value is present for IncludeAliases, not even an explicit nil
+### GetTargetChannel
+
+`func (o *NotificationWithMeta) GetTargetChannel() string`
+
+GetTargetChannel returns the TargetChannel field if non-nil, zero value otherwise.
+
+### GetTargetChannelOk
+
+`func (o *NotificationWithMeta) GetTargetChannelOk() (*string, bool)`
+
+GetTargetChannelOk returns a tuple with the TargetChannel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetChannel
+
+`func (o *NotificationWithMeta) SetTargetChannel(v string)`
+
+SetTargetChannel sets TargetChannel field to given value.
+
+### HasTargetChannel
+
+`func (o *NotificationWithMeta) HasTargetChannel() bool`
+
+HasTargetChannel returns a boolean if a field has been set.
 
 ### GetId
 
@@ -986,6 +1048,16 @@ SetExternalId sets ExternalId field to given value.
 
 HasExternalId returns a boolean if a field has been set.
 
+### SetExternalIdNil
+
+`func (o *NotificationWithMeta) SetExternalIdNil(b bool)`
+
+ SetExternalIdNil sets the value for ExternalId to be an explicit nil
+
+### UnsetExternalId
+`func (o *NotificationWithMeta) UnsetExternalId()`
+
+UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
 ### GetContents
 
 `func (o *NotificationWithMeta) GetContents() StringMap`

@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.2.1
 Contact: devrel@onesignal.com
 */
 
@@ -47,7 +47,7 @@ type BasicNotificationAllOf struct {
 	// Required: Your OneSignal Application ID, which can be found in Keys & IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434. 
 	AppId *string `json:"app_id,omitempty"`
 	// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
-	ExternalId *string `json:"external_id,omitempty"`
+	ExternalId NullableString `json:"external_id,omitempty"`
 	Contents NullableStringMap `json:"contents,omitempty"`
 	Headings NullableStringMap `json:"headings,omitempty"`
 	Subtitle NullableStringMap `json:"subtitle,omitempty"`
@@ -831,36 +831,46 @@ func (o *BasicNotificationAllOf) SetAppId(v string) {
 	o.AppId = &v
 }
 
-// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BasicNotificationAllOf) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || o.ExternalId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ExternalId
+	return *o.ExternalId.Get()
 }
 
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *BasicNotificationAllOf) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ExternalId, true
+	return o.ExternalId.Get(), o.ExternalId.IsSet()
 }
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *BasicNotificationAllOf) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && o.ExternalId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
 func (o *BasicNotificationAllOf) SetExternalId(v string) {
-	o.ExternalId = &v
+	o.ExternalId.Set(&v)
+}
+// SetExternalIdNil sets the value for ExternalId to be an explicit nil
+func (o *BasicNotificationAllOf) SetExternalIdNil() {
+	o.ExternalId.Set(nil)
+}
+
+// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+func (o *BasicNotificationAllOf) UnsetExternalId() {
+	o.ExternalId.Unset()
 }
 
 // GetContents returns the Contents field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -3775,8 +3785,8 @@ func (o BasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	if o.AppId != nil {
 		toSerialize["app_id"] = o.AppId
 	}
-	if o.ExternalId != nil {
-		toSerialize["external_id"] = o.ExternalId
+	if o.ExternalId.IsSet() {
+		toSerialize["external_id"] = o.ExternalId.Get()
 	}
 	if o.Contents.IsSet() {
 		toSerialize["contents"] = o.Contents.Get()

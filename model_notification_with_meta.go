@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.0.2
+API version: 1.2.1
 Contact: devrel@onesignal.com
 */
 
@@ -22,8 +22,10 @@ type NotificationWithMeta struct {
 	// Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\"Active Users\", \"Inactive Users\"] 
 	ExcludedSegments []string `json:"excluded_segments,omitempty"`
 	// Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
+	// Deprecated
 	IncludePlayerIds []string `json:"include_player_ids,omitempty"`
 	// Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\"custom-id-assigned-by-api\"] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms. 
+	// Deprecated
 	IncludeExternalUserIds []string `json:"include_external_user_ids,omitempty"`
 	// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call 
 	IncludeEmailTokens []string `json:"include_email_tokens,omitempty"`
@@ -41,6 +43,8 @@ type NotificationWithMeta struct {
 	IncludeChromeWebRegIds []string `json:"include_chrome_web_reg_ids,omitempty"`
 	// Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call 
 	IncludeAndroidRegIds []string `json:"include_android_reg_ids,omitempty"`
+	IncludeAliases NullablePlayerNotificationTargetIncludeAliases `json:"include_aliases,omitempty"`
+	TargetChannel *string `json:"target_channel,omitempty"`
 	Id *string `json:"id,omitempty"`
 	Value *int32 `json:"value,omitempty"`
 	// Required for SMS Messages. An identifier for tracking message within the OneSignal dashboard or export analytics. Not shown to end user.
@@ -71,7 +75,7 @@ type NotificationWithMeta struct {
 	// Required: Your OneSignal Application ID, which can be found in Keys & IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434. 
 	AppId string `json:"app_id"`
 	// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
-	ExternalId *string `json:"external_id,omitempty"`
+	ExternalId NullableString `json:"external_id,omitempty"`
 	Contents NullableStringMap `json:"contents,omitempty"`
 	Headings NullableStringMap `json:"headings,omitempty"`
 	Subtitle NullableStringMap `json:"subtitle,omitempty"`
@@ -319,6 +323,7 @@ func (o *NotificationWithMeta) SetExcludedSegments(v []string) {
 }
 
 // GetIncludePlayerIds returns the IncludePlayerIds field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *NotificationWithMeta) GetIncludePlayerIds() []string {
 	if o == nil {
 		var ret []string
@@ -330,6 +335,7 @@ func (o *NotificationWithMeta) GetIncludePlayerIds() []string {
 // GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *NotificationWithMeta) GetIncludePlayerIdsOk() ([]string, bool) {
 	if o == nil || o.IncludePlayerIds == nil {
 		return nil, false
@@ -347,11 +353,13 @@ func (o *NotificationWithMeta) HasIncludePlayerIds() bool {
 }
 
 // SetIncludePlayerIds gets a reference to the given []string and assigns it to the IncludePlayerIds field.
+// Deprecated
 func (o *NotificationWithMeta) SetIncludePlayerIds(v []string) {
 	o.IncludePlayerIds = v
 }
 
 // GetIncludeExternalUserIds returns the IncludeExternalUserIds field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *NotificationWithMeta) GetIncludeExternalUserIds() []string {
 	if o == nil {
 		var ret []string
@@ -363,6 +371,7 @@ func (o *NotificationWithMeta) GetIncludeExternalUserIds() []string {
 // GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *NotificationWithMeta) GetIncludeExternalUserIdsOk() ([]string, bool) {
 	if o == nil || o.IncludeExternalUserIds == nil {
 		return nil, false
@@ -380,6 +389,7 @@ func (o *NotificationWithMeta) HasIncludeExternalUserIds() bool {
 }
 
 // SetIncludeExternalUserIds gets a reference to the given []string and assigns it to the IncludeExternalUserIds field.
+// Deprecated
 func (o *NotificationWithMeta) SetIncludeExternalUserIds(v []string) {
 	o.IncludeExternalUserIds = v
 }
@@ -638,6 +648,80 @@ func (o *NotificationWithMeta) HasIncludeAndroidRegIds() bool {
 // SetIncludeAndroidRegIds gets a reference to the given []string and assigns it to the IncludeAndroidRegIds field.
 func (o *NotificationWithMeta) SetIncludeAndroidRegIds(v []string) {
 	o.IncludeAndroidRegIds = v
+}
+
+// GetIncludeAliases returns the IncludeAliases field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetIncludeAliases() PlayerNotificationTargetIncludeAliases {
+	if o == nil || o.IncludeAliases.Get() == nil {
+		var ret PlayerNotificationTargetIncludeAliases
+		return ret
+	}
+	return *o.IncludeAliases.Get()
+}
+
+// GetIncludeAliasesOk returns a tuple with the IncludeAliases field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetIncludeAliasesOk() (*PlayerNotificationTargetIncludeAliases, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IncludeAliases.Get(), o.IncludeAliases.IsSet()
+}
+
+// HasIncludeAliases returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasIncludeAliases() bool {
+	if o != nil && o.IncludeAliases.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeAliases gets a reference to the given NullablePlayerNotificationTargetIncludeAliases and assigns it to the IncludeAliases field.
+func (o *NotificationWithMeta) SetIncludeAliases(v PlayerNotificationTargetIncludeAliases) {
+	o.IncludeAliases.Set(&v)
+}
+// SetIncludeAliasesNil sets the value for IncludeAliases to be an explicit nil
+func (o *NotificationWithMeta) SetIncludeAliasesNil() {
+	o.IncludeAliases.Set(nil)
+}
+
+// UnsetIncludeAliases ensures that no value is present for IncludeAliases, not even an explicit nil
+func (o *NotificationWithMeta) UnsetIncludeAliases() {
+	o.IncludeAliases.Unset()
+}
+
+// GetTargetChannel returns the TargetChannel field value if set, zero value otherwise.
+func (o *NotificationWithMeta) GetTargetChannel() string {
+	if o == nil || o.TargetChannel == nil {
+		var ret string
+		return ret
+	}
+	return *o.TargetChannel
+}
+
+// GetTargetChannelOk returns a tuple with the TargetChannel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotificationWithMeta) GetTargetChannelOk() (*string, bool) {
+	if o == nil || o.TargetChannel == nil {
+		return nil, false
+	}
+	return o.TargetChannel, true
+}
+
+// HasTargetChannel returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasTargetChannel() bool {
+	if o != nil && o.TargetChannel != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetChannel gets a reference to the given string and assigns it to the TargetChannel field.
+func (o *NotificationWithMeta) SetTargetChannel(v string) {
+	o.TargetChannel = &v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -1254,36 +1338,46 @@ func (o *NotificationWithMeta) SetAppId(v string) {
 	o.AppId = v
 }
 
-// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+// GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NotificationWithMeta) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || o.ExternalId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ExternalId
+	return *o.ExternalId.Get()
 }
 
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *NotificationWithMeta) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ExternalId, true
+	return o.ExternalId.Get(), o.ExternalId.IsSet()
 }
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *NotificationWithMeta) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && o.ExternalId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+// SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
 func (o *NotificationWithMeta) SetExternalId(v string) {
-	o.ExternalId = &v
+	o.ExternalId.Set(&v)
+}
+// SetExternalIdNil sets the value for ExternalId to be an explicit nil
+func (o *NotificationWithMeta) SetExternalIdNil() {
+	o.ExternalId.Set(nil)
+}
+
+// UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
+func (o *NotificationWithMeta) UnsetExternalId() {
+	o.ExternalId.Unset()
 }
 
 // GetContents returns the Contents field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -4568,6 +4662,12 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.IncludeAndroidRegIds != nil {
 		toSerialize["include_android_reg_ids"] = o.IncludeAndroidRegIds
 	}
+	if o.IncludeAliases.IsSet() {
+		toSerialize["include_aliases"] = o.IncludeAliases.Get()
+	}
+	if o.TargetChannel != nil {
+		toSerialize["target_channel"] = o.TargetChannel
+	}
 	if o.Id != nil {
 		toSerialize["id"] = o.Id
 	}
@@ -4616,8 +4716,8 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["app_id"] = o.AppId
 	}
-	if o.ExternalId != nil {
-		toSerialize["external_id"] = o.ExternalId
+	if o.ExternalId.IsSet() {
+		toSerialize["external_id"] = o.ExternalId.Get()
 	}
 	if o.Contents.IsSet() {
 		toSerialize["contents"] = o.Contents.Get()
@@ -4898,6 +4998,8 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "include_chrome_reg_ids")
 		delete(additionalProperties, "include_chrome_web_reg_ids")
 		delete(additionalProperties, "include_android_reg_ids")
+		delete(additionalProperties, "include_aliases")
+		delete(additionalProperties, "target_channel")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "value")
 		delete(additionalProperties, "name")
