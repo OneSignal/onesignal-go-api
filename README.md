@@ -13,7 +13,7 @@ For more information, please visit [https://onesignal.com](https://onesignal.com
 ## Installation
 
 ```shell
-go get github.com/OneSignal/onesignal-go-api
+go get github.com/OneSignal/onesignal-go-api/v2
 ```
 
 Install the following dependencies:
