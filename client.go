@@ -324,7 +324,7 @@ func (c *APIClient) prepareRequest(
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
 
     // Add the SDK version to OS-Usage header for telemetry
-    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=2.0.0")
+    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=2.0.1")
 
 	if ctx != nil {
 		// add context to the request
