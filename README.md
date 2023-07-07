@@ -25,7 +25,7 @@ go get golang.org/x/oauth2
 Put the package under your project folder and add the following in import:
 
 ```golang
-import "github.com/OneSignal/onesignal-go-api"
+import "github.com/OneSignal/onesignal-go-api/v2"
 ```
 
 To use a proxy, set the environment variable `HTTP_PROXY`:
