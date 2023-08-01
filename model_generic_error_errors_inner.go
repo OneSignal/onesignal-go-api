@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.2.1
+API version: 1.2.2
 Contact: devrel@onesignal.com
 */
 
@@ -15,34 +15,34 @@ import (
 	"encoding/json"
 )
 
-// IdentifyUserConflictResponseErrorsInner struct for IdentifyUserConflictResponseErrorsInner
-type IdentifyUserConflictResponseErrorsInner struct {
+// GenericErrorErrorsInner struct for GenericErrorErrorsInner
+type GenericErrorErrorsInner struct {
 	Code *string `json:"code,omitempty"`
 	Title *string `json:"title,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _IdentifyUserConflictResponseErrorsInner IdentifyUserConflictResponseErrorsInner
+type _GenericErrorErrorsInner GenericErrorErrorsInner
 
-// NewIdentifyUserConflictResponseErrorsInner instantiates a new IdentifyUserConflictResponseErrorsInner object
+// NewGenericErrorErrorsInner instantiates a new GenericErrorErrorsInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIdentifyUserConflictResponseErrorsInner() *IdentifyUserConflictResponseErrorsInner {
-	this := IdentifyUserConflictResponseErrorsInner{}
+func NewGenericErrorErrorsInner() *GenericErrorErrorsInner {
+	this := GenericErrorErrorsInner{}
 	return &this
 }
 
-// NewIdentifyUserConflictResponseErrorsInnerWithDefaults instantiates a new IdentifyUserConflictResponseErrorsInner object
+// NewGenericErrorErrorsInnerWithDefaults instantiates a new GenericErrorErrorsInner object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewIdentifyUserConflictResponseErrorsInnerWithDefaults() *IdentifyUserConflictResponseErrorsInner {
-	this := IdentifyUserConflictResponseErrorsInner{}
+func NewGenericErrorErrorsInnerWithDefaults() *GenericErrorErrorsInner {
+	this := GenericErrorErrorsInner{}
 	return &this
 }
 
 // GetCode returns the Code field value if set, zero value otherwise.
-func (o *IdentifyUserConflictResponseErrorsInner) GetCode() string {
+func (o *GenericErrorErrorsInner) GetCode() string {
 	if o == nil || o.Code == nil {
 		var ret string
 		return ret
@@ -52,7 +52,7 @@ func (o *IdentifyUserConflictResponseErrorsInner) GetCode() string {
 
 // GetCodeOk returns a tuple with the Code field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IdentifyUserConflictResponseErrorsInner) GetCodeOk() (*string, bool) {
+func (o *GenericErrorErrorsInner) GetCodeOk() (*string, bool) {
 	if o == nil || o.Code == nil {
 		return nil, false
 	}
@@ -60,7 +60,7 @@ func (o *IdentifyUserConflictResponseErrorsInner) GetCodeOk() (*string, bool) {
 }
 
 // HasCode returns a boolean if a field has been set.
-func (o *IdentifyUserConflictResponseErrorsInner) HasCode() bool {
+func (o *GenericErrorErrorsInner) HasCode() bool {
 	if o != nil && o.Code != nil {
 		return true
 	}
@@ -69,12 +69,12 @@ func (o *IdentifyUserConflictResponseErrorsInner) HasCode() bool {
 }
 
 // SetCode gets a reference to the given string and assigns it to the Code field.
-func (o *IdentifyUserConflictResponseErrorsInner) SetCode(v string) {
+func (o *GenericErrorErrorsInner) SetCode(v string) {
 	o.Code = &v
 }
 
 // GetTitle returns the Title field value if set, zero value otherwise.
-func (o *IdentifyUserConflictResponseErrorsInner) GetTitle() string {
+func (o *GenericErrorErrorsInner) GetTitle() string {
 	if o == nil || o.Title == nil {
 		var ret string
 		return ret
@@ -84,7 +84,7 @@ func (o *IdentifyUserConflictResponseErrorsInner) GetTitle() string {
 
 // GetTitleOk returns a tuple with the Title field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IdentifyUserConflictResponseErrorsInner) GetTitleOk() (*string, bool) {
+func (o *GenericErrorErrorsInner) GetTitleOk() (*string, bool) {
 	if o == nil || o.Title == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *IdentifyUserConflictResponseErrorsInner) GetTitleOk() (*string, bool) {
 }
 
 // HasTitle returns a boolean if a field has been set.
-func (o *IdentifyUserConflictResponseErrorsInner) HasTitle() bool {
+func (o *GenericErrorErrorsInner) HasTitle() bool {
 	if o != nil && o.Title != nil {
 		return true
 	}
@@ -101,11 +101,11 @@ func (o *IdentifyUserConflictResponseErrorsInner) HasTitle() bool {
 }
 
 // SetTitle gets a reference to the given string and assigns it to the Title field.
-func (o *IdentifyUserConflictResponseErrorsInner) SetTitle(v string) {
+func (o *GenericErrorErrorsInner) SetTitle(v string) {
 	o.Title = &v
 }
 
-func (o IdentifyUserConflictResponseErrorsInner) MarshalJSON() ([]byte, error) {
+func (o GenericErrorErrorsInner) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Code != nil {
 		toSerialize["code"] = o.Code
@@ -121,11 +121,11 @@ func (o IdentifyUserConflictResponseErrorsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *IdentifyUserConflictResponseErrorsInner) UnmarshalJSON(bytes []byte) (err error) {
-	varIdentifyUserConflictResponseErrorsInner := _IdentifyUserConflictResponseErrorsInner{}
+func (o *GenericErrorErrorsInner) UnmarshalJSON(bytes []byte) (err error) {
+	varGenericErrorErrorsInner := _GenericErrorErrorsInner{}
 
-	if err = json.Unmarshal(bytes, &varIdentifyUserConflictResponseErrorsInner); err == nil {
-		*o = IdentifyUserConflictResponseErrorsInner(varIdentifyUserConflictResponseErrorsInner)
+	if err = json.Unmarshal(bytes, &varGenericErrorErrorsInner); err == nil {
+		*o = GenericErrorErrorsInner(varGenericErrorErrorsInner)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -139,38 +139,38 @@ func (o *IdentifyUserConflictResponseErrorsInner) UnmarshalJSON(bytes []byte) (e
 	return err
 }
 
-type NullableIdentifyUserConflictResponseErrorsInner struct {
-	value *IdentifyUserConflictResponseErrorsInner
+type NullableGenericErrorErrorsInner struct {
+	value *GenericErrorErrorsInner
 	isSet bool
 }
 
-func (v NullableIdentifyUserConflictResponseErrorsInner) Get() *IdentifyUserConflictResponseErrorsInner {
+func (v NullableGenericErrorErrorsInner) Get() *GenericErrorErrorsInner {
 	return v.value
 }
 
-func (v *NullableIdentifyUserConflictResponseErrorsInner) Set(val *IdentifyUserConflictResponseErrorsInner) {
+func (v *NullableGenericErrorErrorsInner) Set(val *GenericErrorErrorsInner) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableIdentifyUserConflictResponseErrorsInner) IsSet() bool {
+func (v NullableGenericErrorErrorsInner) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableIdentifyUserConflictResponseErrorsInner) Unset() {
+func (v *NullableGenericErrorErrorsInner) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableIdentifyUserConflictResponseErrorsInner(val *IdentifyUserConflictResponseErrorsInner) *NullableIdentifyUserConflictResponseErrorsInner {
-	return &NullableIdentifyUserConflictResponseErrorsInner{value: val, isSet: true}
+func NewNullableGenericErrorErrorsInner(val *GenericErrorErrorsInner) *NullableGenericErrorErrorsInner {
+	return &NullableGenericErrorErrorsInner{value: val, isSet: true}
 }
 
-func (v NullableIdentifyUserConflictResponseErrorsInner) MarshalJSON() ([]byte, error) {
+func (v NullableGenericErrorErrorsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableIdentifyUserConflictResponseErrorsInner) UnmarshalJSON(src []byte) error {
+func (v *NullableGenericErrorErrorsInner) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

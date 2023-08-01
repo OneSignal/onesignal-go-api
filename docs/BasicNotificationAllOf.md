@@ -90,9 +90,12 @@ Name | Type | Description | Notes
 **EmailBody** | Pointer to **string** | Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an &lt;a&gt; tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid.  | [optional] 
 **EmailFromName** | Pointer to **NullableString** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
+**EmailPreheader** | Pointer to **NullableString** | Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null.  | [optional] 
+**IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
 **Filters** | Pointer to [**[]Filter**](Filter.md) |  | [optional] 
+**CustomData** | Pointer to **map[string]interface{}** | Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\&quot;order_id\&quot;: 123, \&quot;currency\&quot;: \&quot;USD\&quot;, \&quot;amount\&quot;: 25}  | [optional] 
 
 ## Methods
 
@@ -2983,6 +2986,66 @@ HasEmailFromAddress returns a boolean if a field has been set.
 `func (o *BasicNotificationAllOf) UnsetEmailFromAddress()`
 
 UnsetEmailFromAddress ensures that no value is present for EmailFromAddress, not even an explicit nil
+### GetEmailPreheader
+
+`func (o *BasicNotificationAllOf) GetEmailPreheader() string`
+
+GetEmailPreheader returns the EmailPreheader field if non-nil, zero value otherwise.
+
+### GetEmailPreheaderOk
+
+`func (o *BasicNotificationAllOf) GetEmailPreheaderOk() (*string, bool)`
+
+GetEmailPreheaderOk returns a tuple with the EmailPreheader field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailPreheader
+
+`func (o *BasicNotificationAllOf) SetEmailPreheader(v string)`
+
+SetEmailPreheader sets EmailPreheader field to given value.
+
+### HasEmailPreheader
+
+`func (o *BasicNotificationAllOf) HasEmailPreheader() bool`
+
+HasEmailPreheader returns a boolean if a field has been set.
+
+### SetEmailPreheaderNil
+
+`func (o *BasicNotificationAllOf) SetEmailPreheaderNil(b bool)`
+
+ SetEmailPreheaderNil sets the value for EmailPreheader to be an explicit nil
+
+### UnsetEmailPreheader
+`func (o *BasicNotificationAllOf) UnsetEmailPreheader()`
+
+UnsetEmailPreheader ensures that no value is present for EmailPreheader, not even an explicit nil
+### GetIncludeUnsubscribed
+
+`func (o *BasicNotificationAllOf) GetIncludeUnsubscribed() bool`
+
+GetIncludeUnsubscribed returns the IncludeUnsubscribed field if non-nil, zero value otherwise.
+
+### GetIncludeUnsubscribedOk
+
+`func (o *BasicNotificationAllOf) GetIncludeUnsubscribedOk() (*bool, bool)`
+
+GetIncludeUnsubscribedOk returns a tuple with the IncludeUnsubscribed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeUnsubscribed
+
+`func (o *BasicNotificationAllOf) SetIncludeUnsubscribed(v bool)`
+
+SetIncludeUnsubscribed sets IncludeUnsubscribed field to given value.
+
+### HasIncludeUnsubscribed
+
+`func (o *BasicNotificationAllOf) HasIncludeUnsubscribed() bool`
+
+HasIncludeUnsubscribed returns a boolean if a field has been set.
+
 ### GetSmsFrom
 
 `func (o *BasicNotificationAllOf) GetSmsFrom() string`
@@ -3088,6 +3151,41 @@ HasFilters returns a boolean if a field has been set.
 `func (o *BasicNotificationAllOf) UnsetFilters()`
 
 UnsetFilters ensures that no value is present for Filters, not even an explicit nil
+### GetCustomData
+
+`func (o *BasicNotificationAllOf) GetCustomData() map[string]interface{}`
+
+GetCustomData returns the CustomData field if non-nil, zero value otherwise.
+
+### GetCustomDataOk
+
+`func (o *BasicNotificationAllOf) GetCustomDataOk() (*map[string]interface{}, bool)`
+
+GetCustomDataOk returns a tuple with the CustomData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomData
+
+`func (o *BasicNotificationAllOf) SetCustomData(v map[string]interface{})`
+
+SetCustomData sets CustomData field to given value.
+
+### HasCustomData
+
+`func (o *BasicNotificationAllOf) HasCustomData() bool`
+
+HasCustomData returns a boolean if a field has been set.
+
+### SetCustomDataNil
+
+`func (o *BasicNotificationAllOf) SetCustomDataNil(b bool)`
+
+ SetCustomDataNil sets the value for CustomData to be an explicit nil
+
+### UnsetCustomData
+`func (o *BasicNotificationAllOf) UnsetCustomData()`
+
+UnsetCustomData ensures that no value is present for CustomData, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
