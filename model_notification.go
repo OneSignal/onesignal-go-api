@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.2.1
+API version: 1.2.2
 Contact: devrel@onesignal.com
 */
 
@@ -211,11 +211,17 @@ type Notification struct {
 	EmailFromName NullableString `json:"email_from_name,omitempty"`
 	// Channel: Email The email address the email is from. If not specified, will default to \"from email\" set in the OneSignal Dashboard Email Settings. 
 	EmailFromAddress NullableString `json:"email_from_address,omitempty"`
+	// Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null. 
+	EmailPreheader NullableString `json:"email_preheader,omitempty"`
+	// Channel: Email Default is `false`. This field is used to send transactional notifications. If set to `true`, this notification will also be sent to unsubscribed emails. If a `template_id` is provided, the `include_unsubscribed` value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP's list of unsubscribed emails to be cleared.
+	IncludeUnsubscribed *bool `json:"include_unsubscribed,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
 	SmsMediaUrls []string `json:"sms_media_urls,omitempty"`
 	Filters []Filter `json:"filters,omitempty"`
+	// Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\"order_id\": 123, \"currency\": \"USD\", \"amount\": 25} 
+	CustomData map[string]interface{} `json:"custom_data,omitempty"`
 	// Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date & time. \"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\" \"September 24th 2015, 2:00:00 pm UTC-07:00\" \"2015-09-24 14:00:00 GMT-0700\" \"Sept 24 2015 14:00:00 GMT-0700\" \"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\" Note: SMS currently only supports send_after parameter. 
 	SendAfter NullableTime `json:"send_after,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -4117,6 +4123,80 @@ func (o *Notification) UnsetEmailFromAddress() {
 	o.EmailFromAddress.Unset()
 }
 
+// GetEmailPreheader returns the EmailPreheader field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Notification) GetEmailPreheader() string {
+	if o == nil || o.EmailPreheader.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.EmailPreheader.Get()
+}
+
+// GetEmailPreheaderOk returns a tuple with the EmailPreheader field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Notification) GetEmailPreheaderOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EmailPreheader.Get(), o.EmailPreheader.IsSet()
+}
+
+// HasEmailPreheader returns a boolean if a field has been set.
+func (o *Notification) HasEmailPreheader() bool {
+	if o != nil && o.EmailPreheader.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailPreheader gets a reference to the given NullableString and assigns it to the EmailPreheader field.
+func (o *Notification) SetEmailPreheader(v string) {
+	o.EmailPreheader.Set(&v)
+}
+// SetEmailPreheaderNil sets the value for EmailPreheader to be an explicit nil
+func (o *Notification) SetEmailPreheaderNil() {
+	o.EmailPreheader.Set(nil)
+}
+
+// UnsetEmailPreheader ensures that no value is present for EmailPreheader, not even an explicit nil
+func (o *Notification) UnsetEmailPreheader() {
+	o.EmailPreheader.Unset()
+}
+
+// GetIncludeUnsubscribed returns the IncludeUnsubscribed field value if set, zero value otherwise.
+func (o *Notification) GetIncludeUnsubscribed() bool {
+	if o == nil || o.IncludeUnsubscribed == nil {
+		var ret bool
+		return ret
+	}
+	return *o.IncludeUnsubscribed
+}
+
+// GetIncludeUnsubscribedOk returns a tuple with the IncludeUnsubscribed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Notification) GetIncludeUnsubscribedOk() (*bool, bool) {
+	if o == nil || o.IncludeUnsubscribed == nil {
+		return nil, false
+	}
+	return o.IncludeUnsubscribed, true
+}
+
+// HasIncludeUnsubscribed returns a boolean if a field has been set.
+func (o *Notification) HasIncludeUnsubscribed() bool {
+	if o != nil && o.IncludeUnsubscribed != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeUnsubscribed gets a reference to the given bool and assigns it to the IncludeUnsubscribed field.
+func (o *Notification) SetIncludeUnsubscribed(v bool) {
+	o.IncludeUnsubscribed = &v
+}
+
 // GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetSmsFrom() string {
 	if o == nil || o.SmsFrom.Get() == nil {
@@ -4223,6 +4303,39 @@ func (o *Notification) HasFilters() bool {
 // SetFilters gets a reference to the given []Filter and assigns it to the Filters field.
 func (o *Notification) SetFilters(v []Filter) {
 	o.Filters = v
+}
+
+// GetCustomData returns the CustomData field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Notification) GetCustomData() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.CustomData
+}
+
+// GetCustomDataOk returns a tuple with the CustomData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Notification) GetCustomDataOk() (map[string]interface{}, bool) {
+	if o == nil || o.CustomData == nil {
+		return nil, false
+	}
+	return o.CustomData, true
+}
+
+// HasCustomData returns a boolean if a field has been set.
+func (o *Notification) HasCustomData() bool {
+	if o != nil && o.CustomData != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomData gets a reference to the given map[string]interface{} and assigns it to the CustomData field.
+func (o *Notification) SetCustomData(v map[string]interface{}) {
+	o.CustomData = v
 }
 
 // GetSendAfter returns the SendAfter field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -4569,6 +4682,12 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.EmailFromAddress.IsSet() {
 		toSerialize["email_from_address"] = o.EmailFromAddress.Get()
 	}
+	if o.EmailPreheader.IsSet() {
+		toSerialize["email_preheader"] = o.EmailPreheader.Get()
+	}
+	if o.IncludeUnsubscribed != nil {
+		toSerialize["include_unsubscribed"] = o.IncludeUnsubscribed
+	}
 	if o.SmsFrom.IsSet() {
 		toSerialize["sms_from"] = o.SmsFrom.Get()
 	}
@@ -4577,6 +4696,9 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	}
 	if o.Filters != nil {
 		toSerialize["filters"] = o.Filters
+	}
+	if o.CustomData != nil {
+		toSerialize["custom_data"] = o.CustomData
 	}
 	if o.SendAfter.IsSet() {
 		toSerialize["send_after"] = o.SendAfter.Get()
@@ -4699,9 +4821,12 @@ func (o *Notification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_body")
 		delete(additionalProperties, "email_from_name")
 		delete(additionalProperties, "email_from_address")
+		delete(additionalProperties, "email_preheader")
+		delete(additionalProperties, "include_unsubscribed")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
 		delete(additionalProperties, "filters")
+		delete(additionalProperties, "custom_data")
 		delete(additionalProperties, "send_after")
 		o.AdditionalProperties = additionalProperties
 	}

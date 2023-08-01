@@ -15,33 +15,33 @@ import (
 	"encoding/json"
 )
 
-// ExportPlayersSuccessResponse struct for ExportPlayersSuccessResponse
-type ExportPlayersSuccessResponse struct {
+// ExportEventsSuccessResponse struct for ExportEventsSuccessResponse
+type ExportEventsSuccessResponse struct {
 	CsvFileUrl *string `json:"csv_file_url,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _ExportPlayersSuccessResponse ExportPlayersSuccessResponse
+type _ExportEventsSuccessResponse ExportEventsSuccessResponse
 
-// NewExportPlayersSuccessResponse instantiates a new ExportPlayersSuccessResponse object
+// NewExportEventsSuccessResponse instantiates a new ExportEventsSuccessResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewExportPlayersSuccessResponse() *ExportPlayersSuccessResponse {
-	this := ExportPlayersSuccessResponse{}
+func NewExportEventsSuccessResponse() *ExportEventsSuccessResponse {
+	this := ExportEventsSuccessResponse{}
 	return &this
 }
 
-// NewExportPlayersSuccessResponseWithDefaults instantiates a new ExportPlayersSuccessResponse object
+// NewExportEventsSuccessResponseWithDefaults instantiates a new ExportEventsSuccessResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewExportPlayersSuccessResponseWithDefaults() *ExportPlayersSuccessResponse {
-	this := ExportPlayersSuccessResponse{}
+func NewExportEventsSuccessResponseWithDefaults() *ExportEventsSuccessResponse {
+	this := ExportEventsSuccessResponse{}
 	return &this
 }
 
 // GetCsvFileUrl returns the CsvFileUrl field value if set, zero value otherwise.
-func (o *ExportPlayersSuccessResponse) GetCsvFileUrl() string {
+func (o *ExportEventsSuccessResponse) GetCsvFileUrl() string {
 	if o == nil || o.CsvFileUrl == nil {
 		var ret string
 		return ret
@@ -51,7 +51,7 @@ func (o *ExportPlayersSuccessResponse) GetCsvFileUrl() string {
 
 // GetCsvFileUrlOk returns a tuple with the CsvFileUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ExportPlayersSuccessResponse) GetCsvFileUrlOk() (*string, bool) {
+func (o *ExportEventsSuccessResponse) GetCsvFileUrlOk() (*string, bool) {
 	if o == nil || o.CsvFileUrl == nil {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *ExportPlayersSuccessResponse) GetCsvFileUrlOk() (*string, bool) {
 }
 
 // HasCsvFileUrl returns a boolean if a field has been set.
-func (o *ExportPlayersSuccessResponse) HasCsvFileUrl() bool {
+func (o *ExportEventsSuccessResponse) HasCsvFileUrl() bool {
 	if o != nil && o.CsvFileUrl != nil {
 		return true
 	}
@@ -68,11 +68,11 @@ func (o *ExportPlayersSuccessResponse) HasCsvFileUrl() bool {
 }
 
 // SetCsvFileUrl gets a reference to the given string and assigns it to the CsvFileUrl field.
-func (o *ExportPlayersSuccessResponse) SetCsvFileUrl(v string) {
+func (o *ExportEventsSuccessResponse) SetCsvFileUrl(v string) {
 	o.CsvFileUrl = &v
 }
 
-func (o ExportPlayersSuccessResponse) MarshalJSON() ([]byte, error) {
+func (o ExportEventsSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.CsvFileUrl != nil {
 		toSerialize["csv_file_url"] = o.CsvFileUrl
@@ -85,11 +85,11 @@ func (o ExportPlayersSuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *ExportPlayersSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
-	varExportPlayersSuccessResponse := _ExportPlayersSuccessResponse{}
+func (o *ExportEventsSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
+	varExportEventsSuccessResponse := _ExportEventsSuccessResponse{}
 
-	if err = json.Unmarshal(bytes, &varExportPlayersSuccessResponse); err == nil {
-		*o = ExportPlayersSuccessResponse(varExportPlayersSuccessResponse)
+	if err = json.Unmarshal(bytes, &varExportEventsSuccessResponse); err == nil {
+		*o = ExportEventsSuccessResponse(varExportEventsSuccessResponse)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -102,38 +102,38 @@ func (o *ExportPlayersSuccessResponse) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableExportPlayersSuccessResponse struct {
-	value *ExportPlayersSuccessResponse
+type NullableExportEventsSuccessResponse struct {
+	value *ExportEventsSuccessResponse
 	isSet bool
 }
 
-func (v NullableExportPlayersSuccessResponse) Get() *ExportPlayersSuccessResponse {
+func (v NullableExportEventsSuccessResponse) Get() *ExportEventsSuccessResponse {
 	return v.value
 }
 
-func (v *NullableExportPlayersSuccessResponse) Set(val *ExportPlayersSuccessResponse) {
+func (v *NullableExportEventsSuccessResponse) Set(val *ExportEventsSuccessResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableExportPlayersSuccessResponse) IsSet() bool {
+func (v NullableExportEventsSuccessResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableExportPlayersSuccessResponse) Unset() {
+func (v *NullableExportEventsSuccessResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableExportPlayersSuccessResponse(val *ExportPlayersSuccessResponse) *NullableExportPlayersSuccessResponse {
-	return &NullableExportPlayersSuccessResponse{value: val, isSet: true}
+func NewNullableExportEventsSuccessResponse(val *ExportEventsSuccessResponse) *NullableExportEventsSuccessResponse {
+	return &NullableExportEventsSuccessResponse{value: val, isSet: true}
 }
 
-func (v NullableExportPlayersSuccessResponse) MarshalJSON() ([]byte, error) {
+func (v NullableExportEventsSuccessResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableExportPlayersSuccessResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableExportEventsSuccessResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

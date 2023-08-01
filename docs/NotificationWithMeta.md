@@ -104,9 +104,12 @@ Name | Type | Description | Notes
 **EmailBody** | Pointer to **string** | Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an &lt;a&gt; tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid.  | [optional] 
 **EmailFromName** | Pointer to **NullableString** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
+**EmailPreheader** | Pointer to **NullableString** | Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null.  | [optional] 
+**IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
 **Filters** | Pointer to [**[]Filter**](Filter.md) |  | [optional] 
+**CustomData** | Pointer to **map[string]interface{}** | Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\&quot;order_id\&quot;: 123, \&quot;currency\&quot;: \&quot;USD\&quot;, \&quot;amount\&quot;: 25}  | [optional] 
 **Successful** | Pointer to **int32** | Number of notifications that were successfully delivered. | [optional] 
 **Failed** | Pointer to **int32** | Number of notifications that could not be delivered due to those devices being unsubscribed. | [optional] 
 **Errored** | Pointer to **int32** | Number of notifications that could not be delivered due to an error. You can find more information by viewing the notification in the dashboard. | [optional] 
@@ -3383,6 +3386,66 @@ HasEmailFromAddress returns a boolean if a field has been set.
 `func (o *NotificationWithMeta) UnsetEmailFromAddress()`
 
 UnsetEmailFromAddress ensures that no value is present for EmailFromAddress, not even an explicit nil
+### GetEmailPreheader
+
+`func (o *NotificationWithMeta) GetEmailPreheader() string`
+
+GetEmailPreheader returns the EmailPreheader field if non-nil, zero value otherwise.
+
+### GetEmailPreheaderOk
+
+`func (o *NotificationWithMeta) GetEmailPreheaderOk() (*string, bool)`
+
+GetEmailPreheaderOk returns a tuple with the EmailPreheader field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailPreheader
+
+`func (o *NotificationWithMeta) SetEmailPreheader(v string)`
+
+SetEmailPreheader sets EmailPreheader field to given value.
+
+### HasEmailPreheader
+
+`func (o *NotificationWithMeta) HasEmailPreheader() bool`
+
+HasEmailPreheader returns a boolean if a field has been set.
+
+### SetEmailPreheaderNil
+
+`func (o *NotificationWithMeta) SetEmailPreheaderNil(b bool)`
+
+ SetEmailPreheaderNil sets the value for EmailPreheader to be an explicit nil
+
+### UnsetEmailPreheader
+`func (o *NotificationWithMeta) UnsetEmailPreheader()`
+
+UnsetEmailPreheader ensures that no value is present for EmailPreheader, not even an explicit nil
+### GetIncludeUnsubscribed
+
+`func (o *NotificationWithMeta) GetIncludeUnsubscribed() bool`
+
+GetIncludeUnsubscribed returns the IncludeUnsubscribed field if non-nil, zero value otherwise.
+
+### GetIncludeUnsubscribedOk
+
+`func (o *NotificationWithMeta) GetIncludeUnsubscribedOk() (*bool, bool)`
+
+GetIncludeUnsubscribedOk returns a tuple with the IncludeUnsubscribed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncludeUnsubscribed
+
+`func (o *NotificationWithMeta) SetIncludeUnsubscribed(v bool)`
+
+SetIncludeUnsubscribed sets IncludeUnsubscribed field to given value.
+
+### HasIncludeUnsubscribed
+
+`func (o *NotificationWithMeta) HasIncludeUnsubscribed() bool`
+
+HasIncludeUnsubscribed returns a boolean if a field has been set.
+
 ### GetSmsFrom
 
 `func (o *NotificationWithMeta) GetSmsFrom() string`
@@ -3488,6 +3551,41 @@ HasFilters returns a boolean if a field has been set.
 `func (o *NotificationWithMeta) UnsetFilters()`
 
 UnsetFilters ensures that no value is present for Filters, not even an explicit nil
+### GetCustomData
+
+`func (o *NotificationWithMeta) GetCustomData() map[string]interface{}`
+
+GetCustomData returns the CustomData field if non-nil, zero value otherwise.
+
+### GetCustomDataOk
+
+`func (o *NotificationWithMeta) GetCustomDataOk() (*map[string]interface{}, bool)`
+
+GetCustomDataOk returns a tuple with the CustomData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomData
+
+`func (o *NotificationWithMeta) SetCustomData(v map[string]interface{})`
+
+SetCustomData sets CustomData field to given value.
+
+### HasCustomData
+
+`func (o *NotificationWithMeta) HasCustomData() bool`
+
+HasCustomData returns a boolean if a field has been set.
+
+### SetCustomDataNil
+
+`func (o *NotificationWithMeta) SetCustomDataNil(b bool)`
+
+ SetCustomDataNil sets the value for CustomData to be an explicit nil
+
+### UnsetCustomData
+`func (o *NotificationWithMeta) UnsetCustomData()`
+
+UnsetCustomData ensures that no value is present for CustomData, not even an explicit nil
 ### GetSuccessful
 
 `func (o *NotificationWithMeta) GetSuccessful() int32`

@@ -18,7 +18,8 @@ Method | HTTP request | Description
 [**DeleteSubscription**](DefaultApi.md#DeleteSubscription) | **Delete** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**DeleteUser**](DefaultApi.md#DeleteUser) | **Delete** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**EndLiveActivity**](DefaultApi.md#EndLiveActivity) | **Delete** /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id} | Stop Live Activity
-[**ExportPlayers**](DefaultApi.md#ExportPlayers) | **Post** /players/csv_export?app_id&#x3D;{app_id} | CSV export
+[**ExportEvents**](DefaultApi.md#ExportEvents) | **Post** /notifications/{notification_id}/export_events?app_id&#x3D;{app_id} | Export CSV of Events
+[**ExportPlayers**](DefaultApi.md#ExportPlayers) | **Post** /players/csv_export?app_id&#x3D;{app_id} | Export CSV of Players
 [**FetchAliases**](DefaultApi.md#FetchAliases) | **Get** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 
 [**FetchUser**](DefaultApi.md#FetchUser) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**FetchUserIdentity**](DefaultApi.md#FetchUserIdentity) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity | 
@@ -956,7 +957,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1034,7 +1035,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1120,11 +1121,88 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ExportEvents
+
+> ExportEventsSuccessResponse ExportEvents(ctx, notificationId).AppId(appId).Execute()
+
+Export CSV of Events
+
+
+
+### Authorization
+
+[app_key](../README.md#app_key)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    notificationId := "notificationId_example" // string | The ID of the notification to export events from.
+    appId := "appId_example" // string | The ID of the app that the notification belongs to.
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+
+    resp, r, err := apiClient.DefaultApi.ExportEvents(appAuth, notificationId).AppId(appId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportEvents``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ExportEvents`: ExportEventsSuccessResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ExportEvents`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**notificationId** | **string** | The ID of the notification to export events from. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExportEventsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **appId** | **string** | The ID of the app that the notification belongs to. | 
+
+### Return type
+
+[**ExportEventsSuccessResponse**](ExportEventsSuccessResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ExportPlayers
 
 > ExportPlayersSuccessResponse ExportPlayers(ctx, appId).ExportPlayersRequestBody(exportPlayersRequestBody).Execute()
 
-CSV export
+Export CSV of Players
 
 
 
@@ -2754,7 +2832,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

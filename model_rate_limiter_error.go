@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.2.1
+API version: 1.2.2
 Contact: devrel@onesignal.com
 */
 
@@ -15,35 +15,35 @@ import (
 	"encoding/json"
 )
 
-// BadRequestError struct for BadRequestError
-type BadRequestError struct {
-	Errors []string `json:"errors,omitempty"`
+// RateLimiterError struct for RateLimiterError
+type RateLimiterError struct {
+	Errors []GenericErrorErrorsInner `json:"errors,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
-type _BadRequestError BadRequestError
+type _RateLimiterError RateLimiterError
 
-// NewBadRequestError instantiates a new BadRequestError object
+// NewRateLimiterError instantiates a new RateLimiterError object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBadRequestError() *BadRequestError {
-	this := BadRequestError{}
+func NewRateLimiterError() *RateLimiterError {
+	this := RateLimiterError{}
 	return &this
 }
 
-// NewBadRequestErrorWithDefaults instantiates a new BadRequestError object
+// NewRateLimiterErrorWithDefaults instantiates a new RateLimiterError object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewBadRequestErrorWithDefaults() *BadRequestError {
-	this := BadRequestError{}
+func NewRateLimiterErrorWithDefaults() *RateLimiterError {
+	this := RateLimiterError{}
 	return &this
 }
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *BadRequestError) GetErrors() []string {
+func (o *RateLimiterError) GetErrors() []GenericErrorErrorsInner {
 	if o == nil || o.Errors == nil {
-		var ret []string
+		var ret []GenericErrorErrorsInner
 		return ret
 	}
 	return o.Errors
@@ -51,7 +51,7 @@ func (o *BadRequestError) GetErrors() []string {
 
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BadRequestError) GetErrorsOk() ([]string, bool) {
+func (o *RateLimiterError) GetErrorsOk() ([]GenericErrorErrorsInner, bool) {
 	if o == nil || o.Errors == nil {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *BadRequestError) GetErrorsOk() ([]string, bool) {
 }
 
 // HasErrors returns a boolean if a field has been set.
-func (o *BadRequestError) HasErrors() bool {
+func (o *RateLimiterError) HasErrors() bool {
 	if o != nil && o.Errors != nil {
 		return true
 	}
@@ -67,12 +67,12 @@ func (o *BadRequestError) HasErrors() bool {
 	return false
 }
 
-// SetErrors gets a reference to the given []string and assigns it to the Errors field.
-func (o *BadRequestError) SetErrors(v []string) {
+// SetErrors gets a reference to the given []GenericErrorErrorsInner and assigns it to the Errors field.
+func (o *RateLimiterError) SetErrors(v []GenericErrorErrorsInner) {
 	o.Errors = v
 }
 
-func (o BadRequestError) MarshalJSON() ([]byte, error) {
+func (o RateLimiterError) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Errors != nil {
 		toSerialize["errors"] = o.Errors
@@ -85,11 +85,11 @@ func (o BadRequestError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o *BadRequestError) UnmarshalJSON(bytes []byte) (err error) {
-	varBadRequestError := _BadRequestError{}
+func (o *RateLimiterError) UnmarshalJSON(bytes []byte) (err error) {
+	varRateLimiterError := _RateLimiterError{}
 
-	if err = json.Unmarshal(bytes, &varBadRequestError); err == nil {
-		*o = BadRequestError(varBadRequestError)
+	if err = json.Unmarshal(bytes, &varRateLimiterError); err == nil {
+		*o = RateLimiterError(varRateLimiterError)
 	}
 
 	additionalProperties := make(map[string]interface{})
@@ -102,38 +102,38 @@ func (o *BadRequestError) UnmarshalJSON(bytes []byte) (err error) {
 	return err
 }
 
-type NullableBadRequestError struct {
-	value *BadRequestError
+type NullableRateLimiterError struct {
+	value *RateLimiterError
 	isSet bool
 }
 
-func (v NullableBadRequestError) Get() *BadRequestError {
+func (v NullableRateLimiterError) Get() *RateLimiterError {
 	return v.value
 }
 
-func (v *NullableBadRequestError) Set(val *BadRequestError) {
+func (v *NullableRateLimiterError) Set(val *RateLimiterError) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableBadRequestError) IsSet() bool {
+func (v NullableRateLimiterError) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableBadRequestError) Unset() {
+func (v *NullableRateLimiterError) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableBadRequestError(val *BadRequestError) *NullableBadRequestError {
-	return &NullableBadRequestError{value: val, isSet: true}
+func NewNullableRateLimiterError(val *RateLimiterError) *NullableRateLimiterError {
+	return &NullableRateLimiterError{value: val, isSet: true}
 }
 
-func (v NullableBadRequestError) MarshalJSON() ([]byte, error) {
+func (v NullableRateLimiterError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableBadRequestError) UnmarshalJSON(src []byte) error {
+func (v *NullableRateLimiterError) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
