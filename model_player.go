@@ -79,7 +79,7 @@ type _Player Player
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPlayer(deviceType int32) *Player {
+func NewPlayer(id string, deviceType int32, appId *string) *Player {
 	this := Player{}
 	this.DeviceType = deviceType
 	return &this
