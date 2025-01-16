@@ -1,6 +1,6 @@
 # \DefaultApi
 
-All URIs are relative to *https://onesignal.com/api/v1*
+All URIs are relative to *https://api.onesignal.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -974,7 +974,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[app_key](../README.md#app_key)
 
 ### Example
 
@@ -997,8 +997,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
 
-    resp, r, err := apiClient.DefaultApi.DeleteUser(, appId, aliasLabel, aliasId).Execute()
+    resp, r, err := apiClient.DefaultApi.DeleteUser(appAuth, appId, aliasLabel, aliasId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteUser``: %v\n", err)
