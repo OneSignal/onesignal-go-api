@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.3.0
+API version: 1.4.0
 Contact: devrel@onesignal.com
 */
 
@@ -74,8 +74,11 @@ type BasicNotification struct {
 	ChannelForExternalUserIds *string `json:"channel_for_external_user_ids,omitempty"`
 	// Required: Your OneSignal Application ID, which can be found in Keys & IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434. 
 	AppId string `json:"app_id"`
-	// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
+	// [DEPRECATED] Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
+	// Deprecated
 	ExternalId NullableString `json:"external_id,omitempty"`
+	// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same idempotency key. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same idempotency key will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
+	IdempotencyKey NullableString `json:"idempotency_key,omitempty"`
 	Contents NullableStringMap `json:"contents,omitempty"`
 	Headings NullableStringMap `json:"headings,omitempty"`
 	Subtitle NullableStringMap `json:"subtitle,omitempty"`
@@ -1325,6 +1328,7 @@ func (o *BasicNotification) SetAppId(v string) {
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *BasicNotification) GetExternalId() string {
 	if o == nil || o.ExternalId.Get() == nil {
 		var ret string
@@ -1336,6 +1340,7 @@ func (o *BasicNotification) GetExternalId() string {
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *BasicNotification) GetExternalIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
@@ -1353,6 +1358,7 @@ func (o *BasicNotification) HasExternalId() bool {
 }
 
 // SetExternalId gets a reference to the given NullableString and assigns it to the ExternalId field.
+// Deprecated
 func (o *BasicNotification) SetExternalId(v string) {
 	o.ExternalId.Set(&v)
 }
@@ -1364,6 +1370,48 @@ func (o *BasicNotification) SetExternalIdNil() {
 // UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
 func (o *BasicNotification) UnsetExternalId() {
 	o.ExternalId.Unset()
+}
+
+// GetIdempotencyKey returns the IdempotencyKey field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotification) GetIdempotencyKey() string {
+	if o == nil || o.IdempotencyKey.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.IdempotencyKey.Get()
+}
+
+// GetIdempotencyKeyOk returns a tuple with the IdempotencyKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotification) GetIdempotencyKeyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IdempotencyKey.Get(), o.IdempotencyKey.IsSet()
+}
+
+// HasIdempotencyKey returns a boolean if a field has been set.
+func (o *BasicNotification) HasIdempotencyKey() bool {
+	if o != nil && o.IdempotencyKey.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIdempotencyKey gets a reference to the given NullableString and assigns it to the IdempotencyKey field.
+func (o *BasicNotification) SetIdempotencyKey(v string) {
+	o.IdempotencyKey.Set(&v)
+}
+// SetIdempotencyKeyNil sets the value for IdempotencyKey to be an explicit nil
+func (o *BasicNotification) SetIdempotencyKeyNil() {
+	o.IdempotencyKey.Set(nil)
+}
+
+// UnsetIdempotencyKey ensures that no value is present for IdempotencyKey, not even an explicit nil
+func (o *BasicNotification) UnsetIdempotencyKey() {
+	o.IdempotencyKey.Unset()
 }
 
 // GetContents returns the Contents field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -4430,6 +4478,9 @@ func (o BasicNotification) MarshalJSON() ([]byte, error) {
 	if o.ExternalId.IsSet() {
 		toSerialize["external_id"] = o.ExternalId.Get()
 	}
+	if o.IdempotencyKey.IsSet() {
+		toSerialize["idempotency_key"] = o.IdempotencyKey.Get()
+	}
 	if o.Contents.IsSet() {
 		toSerialize["contents"] = o.Contents.Get()
 	}
@@ -4704,6 +4755,7 @@ func (o *BasicNotification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "channel_for_external_user_ids")
 		delete(additionalProperties, "app_id")
 		delete(additionalProperties, "external_id")
+		delete(additionalProperties, "idempotency_key")
 		delete(additionalProperties, "contents")
 		delete(additionalProperties, "headings")
 		delete(additionalProperties, "subtitle")
