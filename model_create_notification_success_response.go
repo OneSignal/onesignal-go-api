@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -18,10 +18,9 @@ import (
 // CreateNotificationSuccessResponse struct for CreateNotificationSuccessResponse
 type CreateNotificationSuccessResponse struct {
 	Id *string `json:"id,omitempty"`
-	// Estimated number of subscribers targetted by notification.
-	Recipients *int32 `json:"recipients,omitempty"`
 	ExternalId NullableString `json:"external_id,omitempty"`
-	Errors *Notification200Errors `json:"errors,omitempty"`
+	// Errors include the identifiers that are invalid, or that there are no subscribers.
+	Errors interface{} `json:"errors,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -76,38 +75,6 @@ func (o *CreateNotificationSuccessResponse) SetId(v string) {
 	o.Id = &v
 }
 
-// GetRecipients returns the Recipients field value if set, zero value otherwise.
-func (o *CreateNotificationSuccessResponse) GetRecipients() int32 {
-	if o == nil || o.Recipients == nil {
-		var ret int32
-		return ret
-	}
-	return *o.Recipients
-}
-
-// GetRecipientsOk returns a tuple with the Recipients field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateNotificationSuccessResponse) GetRecipientsOk() (*int32, bool) {
-	if o == nil || o.Recipients == nil {
-		return nil, false
-	}
-	return o.Recipients, true
-}
-
-// HasRecipients returns a boolean if a field has been set.
-func (o *CreateNotificationSuccessResponse) HasRecipients() bool {
-	if o != nil && o.Recipients != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetRecipients gets a reference to the given int32 and assigns it to the Recipients field.
-func (o *CreateNotificationSuccessResponse) SetRecipients(v int32) {
-	o.Recipients = &v
-}
-
 // GetExternalId returns the ExternalId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CreateNotificationSuccessResponse) GetExternalId() string {
 	if o == nil || o.ExternalId.Get() == nil {
@@ -150,22 +117,23 @@ func (o *CreateNotificationSuccessResponse) UnsetExternalId() {
 	o.ExternalId.Unset()
 }
 
-// GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *CreateNotificationSuccessResponse) GetErrors() Notification200Errors {
-	if o == nil || o.Errors == nil {
-		var ret Notification200Errors
+// GetErrors returns the Errors field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateNotificationSuccessResponse) GetErrors() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.Errors
+	return o.Errors
 }
 
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateNotificationSuccessResponse) GetErrorsOk() (*Notification200Errors, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateNotificationSuccessResponse) GetErrorsOk() (*interface{}, bool) {
 	if o == nil || o.Errors == nil {
 		return nil, false
 	}
-	return o.Errors, true
+	return &o.Errors, true
 }
 
 // HasErrors returns a boolean if a field has been set.
@@ -177,18 +145,15 @@ func (o *CreateNotificationSuccessResponse) HasErrors() bool {
 	return false
 }
 
-// SetErrors gets a reference to the given Notification200Errors and assigns it to the Errors field.
-func (o *CreateNotificationSuccessResponse) SetErrors(v Notification200Errors) {
-	o.Errors = &v
+// SetErrors gets a reference to the given interface{} and assigns it to the Errors field.
+func (o *CreateNotificationSuccessResponse) SetErrors(v interface{}) {
+	o.Errors = v
 }
 
 func (o CreateNotificationSuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
 		toSerialize["id"] = o.Id
-	}
-	if o.Recipients != nil {
-		toSerialize["recipients"] = o.Recipients
 	}
 	if o.ExternalId.IsSet() {
 		toSerialize["external_id"] = o.ExternalId.Get()
@@ -215,7 +180,6 @@ func (o *CreateNotificationSuccessResponse) UnmarshalJSON(bytes []byte) (err err
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		delete(additionalProperties, "id")
-		delete(additionalProperties, "recipients")
 		delete(additionalProperties, "external_id")
 		delete(additionalProperties, "errors")
 		o.AdditionalProperties = additionalProperties

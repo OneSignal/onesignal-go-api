@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionTime** | Pointer to **float32** |  | [optional] 
-**SessionCount** | Pointer to **float32** |  | [optional] 
+**SessionTime** | Pointer to **int32** |  | [optional] 
+**SessionCount** | Pointer to **int32** |  | [optional] 
 **Purchases** | Pointer to [**[]Purchase**](Purchase.md) |  | [optional] 
 
 ## Methods
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetSessionTime
 
-`func (o *PropertiesDeltas) GetSessionTime() float32`
+`func (o *PropertiesDeltas) GetSessionTime() int32`
 
 GetSessionTime returns the SessionTime field if non-nil, zero value otherwise.
 
 ### GetSessionTimeOk
 
-`func (o *PropertiesDeltas) GetSessionTimeOk() (*float32, bool)`
+`func (o *PropertiesDeltas) GetSessionTimeOk() (*int32, bool)`
 
 GetSessionTimeOk returns a tuple with the SessionTime field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSessionTime
 
-`func (o *PropertiesDeltas) SetSessionTime(v float32)`
+`func (o *PropertiesDeltas) SetSessionTime(v int32)`
 
 SetSessionTime sets SessionTime field to given value.
 
@@ -54,20 +54,20 @@ HasSessionTime returns a boolean if a field has been set.
 
 ### GetSessionCount
 
-`func (o *PropertiesDeltas) GetSessionCount() float32`
+`func (o *PropertiesDeltas) GetSessionCount() int32`
 
 GetSessionCount returns the SessionCount field if non-nil, zero value otherwise.
 
 ### GetSessionCountOk
 
-`func (o *PropertiesDeltas) GetSessionCountOk() (*float32, bool)`
+`func (o *PropertiesDeltas) GetSessionCountOk() (*int32, bool)`
 
 GetSessionCountOk returns a tuple with the SessionCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSessionCount
 
-`func (o *PropertiesDeltas) SetSessionCount(v float32)`
+`func (o *PropertiesDeltas) SetSessionCount(v int32)`
 
 SetSessionCount sets SessionCount field to given value.
 

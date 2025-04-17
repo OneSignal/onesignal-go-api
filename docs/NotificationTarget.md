@@ -6,17 +6,16 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **IncludedSegments** | Pointer to **[]string** | The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
 **ExcludedSegments** | Pointer to **[]string** | Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
-**IncludePlayerIds** | Pointer to **[]string** | Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\&quot;1dd608f2-c6a1-11e3-851d-000c2940e62c\&quot;] Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeExternalUserIds** | Pointer to **[]string** | Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\&quot;custom-id-assigned-by-api\&quot;] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms.  | [optional] 
+**IncludeSubscriptionIds** | Pointer to **[]string** | Specific subscription ids to send your notification to. _Does not require API Auth Key._ Not compatible with any other targeting parameters. Example: [\&quot;1dd608f2-c6a1-11e3-851d-000c2940e62c\&quot;] Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeEmailTokens** | Pointer to **[]string** | Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call  | [optional] 
 **IncludePhoneNumbers** | Pointer to **[]string** | Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeIosTokens** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeWpWnsUris** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeAmazonRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Amazon ADM registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeChromeRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeChromeWebRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeAndroidRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeAliases** | Pointer to [**NullablePlayerNotificationTargetIncludeAliases**](PlayerNotificationTargetIncludeAliases.md) |  | [optional] 
+**IncludeIosTokens** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeWpWnsUris** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAmazonRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Amazon ADM registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeChromeRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeChromeWebRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAndroidRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAliases** | Pointer to **map[string][]string** | Target specific users by aliases assigned via API. An alias can be an external_id, onesignal_id, or a custom alias. Accepts an object where keys are alias labels and values are arrays of alias IDs to include Example usage: { \&quot;external_id\&quot;: [\&quot;exId1\&quot;, \&quot;extId2\&quot;], \&quot;internal_label\&quot;: [\&quot;id1\&quot;, \&quot;id2\&quot;] } Not compatible with any other targeting parameters. REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call Note: If targeting push, email, or sms subscribers with same ids, use with target_channel to indicate you are sending a push or email or sms. | [optional] 
 **TargetChannel** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -88,76 +87,41 @@ SetExcludedSegments sets ExcludedSegments field to given value.
 
 HasExcludedSegments returns a boolean if a field has been set.
 
-### GetIncludePlayerIds
+### GetIncludeSubscriptionIds
 
-`func (o *NotificationTarget) GetIncludePlayerIds() []string`
+`func (o *NotificationTarget) GetIncludeSubscriptionIds() []string`
 
-GetIncludePlayerIds returns the IncludePlayerIds field if non-nil, zero value otherwise.
+GetIncludeSubscriptionIds returns the IncludeSubscriptionIds field if non-nil, zero value otherwise.
 
-### GetIncludePlayerIdsOk
+### GetIncludeSubscriptionIdsOk
 
-`func (o *NotificationTarget) GetIncludePlayerIdsOk() (*[]string, bool)`
+`func (o *NotificationTarget) GetIncludeSubscriptionIdsOk() (*[]string, bool)`
 
-GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field if it's non-nil, zero value otherwise
+GetIncludeSubscriptionIdsOk returns a tuple with the IncludeSubscriptionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIncludePlayerIds
+### SetIncludeSubscriptionIds
 
-`func (o *NotificationTarget) SetIncludePlayerIds(v []string)`
+`func (o *NotificationTarget) SetIncludeSubscriptionIds(v []string)`
 
-SetIncludePlayerIds sets IncludePlayerIds field to given value.
+SetIncludeSubscriptionIds sets IncludeSubscriptionIds field to given value.
 
-### HasIncludePlayerIds
+### HasIncludeSubscriptionIds
 
-`func (o *NotificationTarget) HasIncludePlayerIds() bool`
+`func (o *NotificationTarget) HasIncludeSubscriptionIds() bool`
 
-HasIncludePlayerIds returns a boolean if a field has been set.
+HasIncludeSubscriptionIds returns a boolean if a field has been set.
 
-### SetIncludePlayerIdsNil
+### SetIncludeSubscriptionIdsNil
 
-`func (o *NotificationTarget) SetIncludePlayerIdsNil(b bool)`
+`func (o *NotificationTarget) SetIncludeSubscriptionIdsNil(b bool)`
 
- SetIncludePlayerIdsNil sets the value for IncludePlayerIds to be an explicit nil
+ SetIncludeSubscriptionIdsNil sets the value for IncludeSubscriptionIds to be an explicit nil
 
-### UnsetIncludePlayerIds
-`func (o *NotificationTarget) UnsetIncludePlayerIds()`
+### UnsetIncludeSubscriptionIds
+`func (o *NotificationTarget) UnsetIncludeSubscriptionIds()`
 
-UnsetIncludePlayerIds ensures that no value is present for IncludePlayerIds, not even an explicit nil
-### GetIncludeExternalUserIds
-
-`func (o *NotificationTarget) GetIncludeExternalUserIds() []string`
-
-GetIncludeExternalUserIds returns the IncludeExternalUserIds field if non-nil, zero value otherwise.
-
-### GetIncludeExternalUserIdsOk
-
-`func (o *NotificationTarget) GetIncludeExternalUserIdsOk() (*[]string, bool)`
-
-GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIncludeExternalUserIds
-
-`func (o *NotificationTarget) SetIncludeExternalUserIds(v []string)`
-
-SetIncludeExternalUserIds sets IncludeExternalUserIds field to given value.
-
-### HasIncludeExternalUserIds
-
-`func (o *NotificationTarget) HasIncludeExternalUserIds() bool`
-
-HasIncludeExternalUserIds returns a boolean if a field has been set.
-
-### SetIncludeExternalUserIdsNil
-
-`func (o *NotificationTarget) SetIncludeExternalUserIdsNil(b bool)`
-
- SetIncludeExternalUserIdsNil sets the value for IncludeExternalUserIds to be an explicit nil
-
-### UnsetIncludeExternalUserIds
-`func (o *NotificationTarget) UnsetIncludeExternalUserIds()`
-
-UnsetIncludeExternalUserIds ensures that no value is present for IncludeExternalUserIds, not even an explicit nil
+UnsetIncludeSubscriptionIds ensures that no value is present for IncludeSubscriptionIds, not even an explicit nil
 ### GetIncludeEmailTokens
 
 `func (o *NotificationTarget) GetIncludeEmailTokens() []string`
@@ -360,20 +324,20 @@ HasIncludeAndroidRegIds returns a boolean if a field has been set.
 
 ### GetIncludeAliases
 
-`func (o *NotificationTarget) GetIncludeAliases() PlayerNotificationTargetIncludeAliases`
+`func (o *NotificationTarget) GetIncludeAliases() map[string][]string`
 
 GetIncludeAliases returns the IncludeAliases field if non-nil, zero value otherwise.
 
 ### GetIncludeAliasesOk
 
-`func (o *NotificationTarget) GetIncludeAliasesOk() (*PlayerNotificationTargetIncludeAliases, bool)`
+`func (o *NotificationTarget) GetIncludeAliasesOk() (*map[string][]string, bool)`
 
 GetIncludeAliasesOk returns a tuple with the IncludeAliases field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeAliases
 
-`func (o *NotificationTarget) SetIncludeAliases(v PlayerNotificationTargetIncludeAliases)`
+`func (o *NotificationTarget) SetIncludeAliases(v map[string][]string)`
 
 SetIncludeAliases sets IncludeAliases field to given value.
 
