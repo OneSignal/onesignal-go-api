@@ -77,7 +77,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.BeginLiveActivity(appAuth, appId, activityId).BeginLiveActivityRequest(beginLiveActivityRequest).Execute()
 
@@ -154,7 +154,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.CancelNotification(appAuth, notificationId).AppId(appId).Execute()
 
@@ -230,7 +230,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "USER_KEY_STRING")
+    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "ORGANIZATION_API_KEY") // Organization key is only required for creating new apps and other top-level endpoints
 
     resp, r, err := apiClient.DefaultApi.CreateApp(userAuth).App(app).Execute()
 
@@ -301,7 +301,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.CreateNotification(appAuth).Notification(notification).Execute()
 
@@ -372,7 +372,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.CreatePlayer(appAuth).Player(player).Execute()
 
@@ -444,7 +444,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.CreateSegments(appAuth, appId).Segment(segment).Execute()
 
@@ -523,7 +523,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.CreateSubscription(appAuth, appId, aliasLabel, aliasId).CreateSubscriptionRequestBody(createSubscriptionRequestBody).Execute()
 
@@ -604,7 +604,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.CreateUser(appAuth, appId).User(user).Execute()
 
@@ -683,7 +683,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.DeleteAlias(appAuth, appId, aliasLabel, aliasId, aliasLabelToDelete).Execute()
 
@@ -765,7 +765,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.DeletePlayer(appAuth, playerId).AppId(appId).Execute()
 
@@ -842,7 +842,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.DeleteSegments(appAuth, appId, segmentId).Execute()
 
@@ -920,7 +920,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.DeleteSubscription(appAuth, appId, subscriptionId).Execute()
 
@@ -997,7 +997,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.DeleteUser(appAuth, appId, aliasLabel, aliasId).Execute()
 
@@ -1076,7 +1076,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.EndLiveActivity(appAuth, appId, activityId, subscriptionId).Execute()
 
@@ -1154,7 +1154,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.ExportEvents(appAuth, notificationId).AppId(appId).Execute()
 
@@ -1231,7 +1231,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.ExportPlayers(appAuth, appId).ExportPlayersRequestBody(exportPlayersRequestBody).Execute()
 
@@ -1308,7 +1308,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.FetchAliases(appAuth, appId, subscriptionId).Execute()
 
@@ -1387,7 +1387,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.FetchUser(appAuth, appId, aliasLabel, aliasId).Execute()
 
@@ -1468,7 +1468,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.FetchUserIdentity(appAuth, appId, aliasLabel, aliasId).Execute()
 
@@ -1547,7 +1547,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "USER_KEY_STRING")
+    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "ORGANIZATION_API_KEY") // Organization key is only required for creating new apps and other top-level endpoints
 
     resp, r, err := apiClient.DefaultApi.GetApp(userAuth, appId).Execute()
 
@@ -1621,7 +1621,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "USER_KEY_STRING")
+    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "ORGANIZATION_API_KEY") // Organization key is only required for creating new apps and other top-level endpoints
 
     resp, r, err := apiClient.DefaultApi.GetApps(userAuth).Execute()
 
@@ -1689,7 +1689,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.GetEligibleIams(appAuth, appId, subscriptionId).Execute()
 
@@ -1767,7 +1767,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.GetNotification(appAuth, notificationId).AppId(appId).Execute()
 
@@ -1844,7 +1844,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.GetNotificationHistory(appAuth, notificationId).GetNotificationRequestBody(getNotificationRequestBody).Execute()
 
@@ -1923,7 +1923,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.GetNotifications(appAuth).AppId(appId).Limit(limit).Offset(offset).Kind(kind).Execute()
 
@@ -2002,7 +2002,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.GetOutcomes(appAuth, appId).OutcomeNames(outcomeNames).OutcomeNames2(outcomeNames2).OutcomeTimeRange(outcomeTimeRange).OutcomePlatforms(outcomePlatforms).OutcomeAttribution(outcomeAttribution).Execute()
 
@@ -2084,7 +2084,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.GetPlayer(appAuth, playerId).AppId(appId).EmailAuthHash(emailAuthHash).Execute()
 
@@ -2163,7 +2163,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.GetPlayers(appAuth).AppId(appId).Limit(limit).Offset(offset).Execute()
 
@@ -2239,7 +2239,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.IdentifyUserByAlias(appAuth, appId, aliasLabel, aliasId).UserIdentityRequestBody(userIdentityRequestBody).Execute()
 
@@ -2321,7 +2321,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.IdentifyUserBySubscriptionId(appAuth, appId, subscriptionId).UserIdentityRequestBody(userIdentityRequestBody).Execute()
 
@@ -2401,7 +2401,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.TransferSubscription(appAuth, appId, subscriptionId).TransferSubscriptionRequestBody(transferSubscriptionRequestBody).Execute()
 
@@ -2480,7 +2480,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "USER_KEY_STRING")
+    userAuth := context.WithValue(context.Background(), onesignal.UserAuth, "ORGANIZATION_API_KEY") // Organization key is only required for creating new apps and other top-level endpoints
 
     resp, r, err := apiClient.DefaultApi.UpdateApp(userAuth, appId).App(app).Execute()
 
@@ -2558,7 +2558,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.UpdateLiveActivity(appAuth, appId, activityId).UpdateLiveActivityRequest(updateLiveActivityRequest).Execute()
 
@@ -2637,7 +2637,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.UpdatePlayer(appAuth, playerId).Player(player).Execute()
 
@@ -2715,7 +2715,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.UpdatePlayerTags(appAuth, appId, externalUserId).UpdatePlayerTagsRequestBody(updatePlayerTagsRequestBody).Execute()
 
@@ -2795,7 +2795,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.UpdateSubscription(appAuth, appId, subscriptionId).UpdateSubscriptionRequestBody(updateSubscriptionRequestBody).Execute()
 
@@ -2874,7 +2874,7 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "APP_KEY_STRING")
+    appAuth := context.WithValue(context.Background(), onesignal.AppAuth, "REST_API_KEY") // App REST API key required for most endpoints
 
     resp, r, err := apiClient.DefaultApi.UpdateUser(appAuth, appId, aliasLabel, aliasId).UpdateUserRequest(updateUserRequest).Execute()
 
