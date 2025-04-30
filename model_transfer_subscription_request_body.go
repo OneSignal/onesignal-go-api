@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,7 +17,7 @@ import (
 
 // TransferSubscriptionRequestBody struct for TransferSubscriptionRequestBody
 type TransferSubscriptionRequestBody struct {
-	Identity map[string]interface{} `json:"identity,omitempty"`
+	Identity *map[string]string `json:"identity,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -41,17 +41,17 @@ func NewTransferSubscriptionRequestBodyWithDefaults() *TransferSubscriptionReque
 }
 
 // GetIdentity returns the Identity field value if set, zero value otherwise.
-func (o *TransferSubscriptionRequestBody) GetIdentity() map[string]interface{} {
+func (o *TransferSubscriptionRequestBody) GetIdentity() map[string]string {
 	if o == nil || o.Identity == nil {
-		var ret map[string]interface{}
+		var ret map[string]string
 		return ret
 	}
-	return o.Identity
+	return *o.Identity
 }
 
 // GetIdentityOk returns a tuple with the Identity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransferSubscriptionRequestBody) GetIdentityOk() (map[string]interface{}, bool) {
+func (o *TransferSubscriptionRequestBody) GetIdentityOk() (*map[string]string, bool) {
 	if o == nil || o.Identity == nil {
 		return nil, false
 	}
@@ -67,9 +67,9 @@ func (o *TransferSubscriptionRequestBody) HasIdentity() bool {
 	return false
 }
 
-// SetIdentity gets a reference to the given map[string]interface{} and assigns it to the Identity field.
-func (o *TransferSubscriptionRequestBody) SetIdentity(v map[string]interface{}) {
-	o.Identity = v
+// SetIdentity gets a reference to the given map[string]string and assigns it to the Identity field.
+func (o *TransferSubscriptionRequestBody) SetIdentity(v map[string]string) {
+	o.Identity = &v
 }
 
 func (o TransferSubscriptionRequestBody) MarshalJSON() ([]byte, error) {

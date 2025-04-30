@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -18,9 +18,8 @@ import (
 // User struct for User
 type User struct {
 	Properties *PropertiesObject `json:"properties,omitempty"`
-	Identity map[string]interface{} `json:"identity,omitempty"`
-	Subscriptions []SubscriptionObject `json:"subscriptions,omitempty"`
-	SubscriptionOptions *UserSubscriptionOptions `json:"subscription_options,omitempty"`
+	Identity *map[string]string `json:"identity,omitempty"`
+	Subscriptions []Subscription `json:"subscriptions,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -76,17 +75,17 @@ func (o *User) SetProperties(v PropertiesObject) {
 }
 
 // GetIdentity returns the Identity field value if set, zero value otherwise.
-func (o *User) GetIdentity() map[string]interface{} {
+func (o *User) GetIdentity() map[string]string {
 	if o == nil || o.Identity == nil {
-		var ret map[string]interface{}
+		var ret map[string]string
 		return ret
 	}
-	return o.Identity
+	return *o.Identity
 }
 
 // GetIdentityOk returns a tuple with the Identity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *User) GetIdentityOk() (map[string]interface{}, bool) {
+func (o *User) GetIdentityOk() (*map[string]string, bool) {
 	if o == nil || o.Identity == nil {
 		return nil, false
 	}
@@ -102,15 +101,15 @@ func (o *User) HasIdentity() bool {
 	return false
 }
 
-// SetIdentity gets a reference to the given map[string]interface{} and assigns it to the Identity field.
-func (o *User) SetIdentity(v map[string]interface{}) {
-	o.Identity = v
+// SetIdentity gets a reference to the given map[string]string and assigns it to the Identity field.
+func (o *User) SetIdentity(v map[string]string) {
+	o.Identity = &v
 }
 
 // GetSubscriptions returns the Subscriptions field value if set, zero value otherwise.
-func (o *User) GetSubscriptions() []SubscriptionObject {
+func (o *User) GetSubscriptions() []Subscription {
 	if o == nil || o.Subscriptions == nil {
-		var ret []SubscriptionObject
+		var ret []Subscription
 		return ret
 	}
 	return o.Subscriptions
@@ -118,7 +117,7 @@ func (o *User) GetSubscriptions() []SubscriptionObject {
 
 // GetSubscriptionsOk returns a tuple with the Subscriptions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *User) GetSubscriptionsOk() ([]SubscriptionObject, bool) {
+func (o *User) GetSubscriptionsOk() ([]Subscription, bool) {
 	if o == nil || o.Subscriptions == nil {
 		return nil, false
 	}
@@ -134,41 +133,9 @@ func (o *User) HasSubscriptions() bool {
 	return false
 }
 
-// SetSubscriptions gets a reference to the given []SubscriptionObject and assigns it to the Subscriptions field.
-func (o *User) SetSubscriptions(v []SubscriptionObject) {
+// SetSubscriptions gets a reference to the given []Subscription and assigns it to the Subscriptions field.
+func (o *User) SetSubscriptions(v []Subscription) {
 	o.Subscriptions = v
-}
-
-// GetSubscriptionOptions returns the SubscriptionOptions field value if set, zero value otherwise.
-func (o *User) GetSubscriptionOptions() UserSubscriptionOptions {
-	if o == nil || o.SubscriptionOptions == nil {
-		var ret UserSubscriptionOptions
-		return ret
-	}
-	return *o.SubscriptionOptions
-}
-
-// GetSubscriptionOptionsOk returns a tuple with the SubscriptionOptions field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *User) GetSubscriptionOptionsOk() (*UserSubscriptionOptions, bool) {
-	if o == nil || o.SubscriptionOptions == nil {
-		return nil, false
-	}
-	return o.SubscriptionOptions, true
-}
-
-// HasSubscriptionOptions returns a boolean if a field has been set.
-func (o *User) HasSubscriptionOptions() bool {
-	if o != nil && o.SubscriptionOptions != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSubscriptionOptions gets a reference to the given UserSubscriptionOptions and assigns it to the SubscriptionOptions field.
-func (o *User) SetSubscriptionOptions(v UserSubscriptionOptions) {
-	o.SubscriptionOptions = &v
 }
 
 func (o User) MarshalJSON() ([]byte, error) {
@@ -181,9 +148,6 @@ func (o User) MarshalJSON() ([]byte, error) {
 	}
 	if o.Subscriptions != nil {
 		toSerialize["subscriptions"] = o.Subscriptions
-	}
-	if o.SubscriptionOptions != nil {
-		toSerialize["subscription_options"] = o.SubscriptionOptions
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -206,7 +170,6 @@ func (o *User) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "properties")
 		delete(additionalProperties, "identity")
 		delete(additionalProperties, "subscriptions")
-		delete(additionalProperties, "subscription_options")
 		o.AdditionalProperties = additionalProperties
 	}
 

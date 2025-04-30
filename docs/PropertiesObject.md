@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **Lat** | Pointer to **float32** |  | [optional] 
 **Long** | Pointer to **float32** |  | [optional] 
 **Country** | Pointer to **string** |  | [optional] 
-**FirstActive** | Pointer to **float32** |  | [optional] 
-**LastActive** | Pointer to **float32** |  | [optional] 
+**FirstActive** | Pointer to **int32** |  | [optional] 
+**LastActive** | Pointer to **int32** |  | [optional] 
 **AmountSpent** | Pointer to **float32** |  | [optional] 
 **Purchases** | Pointer to [**[]Purchase**](Purchase.md) |  | [optional] 
 **Ip** | Pointer to **string** |  | [optional] 
@@ -187,20 +187,20 @@ HasCountry returns a boolean if a field has been set.
 
 ### GetFirstActive
 
-`func (o *PropertiesObject) GetFirstActive() float32`
+`func (o *PropertiesObject) GetFirstActive() int32`
 
 GetFirstActive returns the FirstActive field if non-nil, zero value otherwise.
 
 ### GetFirstActiveOk
 
-`func (o *PropertiesObject) GetFirstActiveOk() (*float32, bool)`
+`func (o *PropertiesObject) GetFirstActiveOk() (*int32, bool)`
 
 GetFirstActiveOk returns a tuple with the FirstActive field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFirstActive
 
-`func (o *PropertiesObject) SetFirstActive(v float32)`
+`func (o *PropertiesObject) SetFirstActive(v int32)`
 
 SetFirstActive sets FirstActive field to given value.
 
@@ -212,20 +212,20 @@ HasFirstActive returns a boolean if a field has been set.
 
 ### GetLastActive
 
-`func (o *PropertiesObject) GetLastActive() float32`
+`func (o *PropertiesObject) GetLastActive() int32`
 
 GetLastActive returns the LastActive field if non-nil, zero value otherwise.
 
 ### GetLastActiveOk
 
-`func (o *PropertiesObject) GetLastActiveOk() (*float32, bool)`
+`func (o *PropertiesObject) GetLastActiveOk() (*int32, bool)`
 
 GetLastActiveOk returns a tuple with the LastActive field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLastActive
 
-`func (o *PropertiesObject) SetLastActive(v float32)`
+`func (o *PropertiesObject) SetLastActive(v int32)`
 
 SetLastActive sets LastActive field to given value.
 

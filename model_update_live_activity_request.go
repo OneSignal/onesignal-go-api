@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,12 +17,21 @@ import (
 
 // UpdateLiveActivityRequest struct for UpdateLiveActivityRequest
 type UpdateLiveActivityRequest struct {
-	// Type of live activity
+	// An internal name to assist with your campaign organization. This does not get displayed in the message itself.
 	Name string `json:"name"`
 	Event string `json:"event"`
+	// This must match the ContentState interface you have defined within your Live Activity in your app.
 	EventUpdates map[string]interface{} `json:"event_updates"`
-	// Timestamp; only allowed if event is \"end\"
-	DismissAt *float32 `json:"dismiss_at,omitempty"`
+	Contents *LanguageStringMap `json:"contents,omitempty"`
+	Headings *LanguageStringMap `json:"headings,omitempty"`
+	// Sound file that is included in your app to play instead of the default device notification sound. Omit to disable vibration and sound for the notification.
+	Sound *string `json:"sound,omitempty"`
+	// Accepts Unix timestamp in seconds. When time reaches the configured stale date, the system considers the Live Activity out of date, and the ActivityState of the Live Activity changes to ActivityState.stale.
+	StaleDate *int32 `json:"stale_date,omitempty"`
+	// Accepts Unix timestamp in seconds; only allowed if event is \"end\"
+	DismissalDate *int32 `json:"dismissal_date,omitempty"`
+	// Delivery priority through the the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user's device. If not set, defaults to 10. Some providers (APNs) allow for a limited budget of high priority notifications per hour, and if that budget is exceeded, the provider may throttle notification delivery.
+	Priority *int32 `json:"priority,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -120,36 +129,196 @@ func (o *UpdateLiveActivityRequest) SetEventUpdates(v map[string]interface{}) {
 	o.EventUpdates = v
 }
 
-// GetDismissAt returns the DismissAt field value if set, zero value otherwise.
-func (o *UpdateLiveActivityRequest) GetDismissAt() float32 {
-	if o == nil || o.DismissAt == nil {
-		var ret float32
+// GetContents returns the Contents field value if set, zero value otherwise.
+func (o *UpdateLiveActivityRequest) GetContents() LanguageStringMap {
+	if o == nil || o.Contents == nil {
+		var ret LanguageStringMap
 		return ret
 	}
-	return *o.DismissAt
+	return *o.Contents
 }
 
-// GetDismissAtOk returns a tuple with the DismissAt field value if set, nil otherwise
+// GetContentsOk returns a tuple with the Contents field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateLiveActivityRequest) GetDismissAtOk() (*float32, bool) {
-	if o == nil || o.DismissAt == nil {
+func (o *UpdateLiveActivityRequest) GetContentsOk() (*LanguageStringMap, bool) {
+	if o == nil || o.Contents == nil {
 		return nil, false
 	}
-	return o.DismissAt, true
+	return o.Contents, true
 }
 
-// HasDismissAt returns a boolean if a field has been set.
-func (o *UpdateLiveActivityRequest) HasDismissAt() bool {
-	if o != nil && o.DismissAt != nil {
+// HasContents returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasContents() bool {
+	if o != nil && o.Contents != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetDismissAt gets a reference to the given float32 and assigns it to the DismissAt field.
-func (o *UpdateLiveActivityRequest) SetDismissAt(v float32) {
-	o.DismissAt = &v
+// SetContents gets a reference to the given LanguageStringMap and assigns it to the Contents field.
+func (o *UpdateLiveActivityRequest) SetContents(v LanguageStringMap) {
+	o.Contents = &v
+}
+
+// GetHeadings returns the Headings field value if set, zero value otherwise.
+func (o *UpdateLiveActivityRequest) GetHeadings() LanguageStringMap {
+	if o == nil || o.Headings == nil {
+		var ret LanguageStringMap
+		return ret
+	}
+	return *o.Headings
+}
+
+// GetHeadingsOk returns a tuple with the Headings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateLiveActivityRequest) GetHeadingsOk() (*LanguageStringMap, bool) {
+	if o == nil || o.Headings == nil {
+		return nil, false
+	}
+	return o.Headings, true
+}
+
+// HasHeadings returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasHeadings() bool {
+	if o != nil && o.Headings != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHeadings gets a reference to the given LanguageStringMap and assigns it to the Headings field.
+func (o *UpdateLiveActivityRequest) SetHeadings(v LanguageStringMap) {
+	o.Headings = &v
+}
+
+// GetSound returns the Sound field value if set, zero value otherwise.
+func (o *UpdateLiveActivityRequest) GetSound() string {
+	if o == nil || o.Sound == nil {
+		var ret string
+		return ret
+	}
+	return *o.Sound
+}
+
+// GetSoundOk returns a tuple with the Sound field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateLiveActivityRequest) GetSoundOk() (*string, bool) {
+	if o == nil || o.Sound == nil {
+		return nil, false
+	}
+	return o.Sound, true
+}
+
+// HasSound returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasSound() bool {
+	if o != nil && o.Sound != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSound gets a reference to the given string and assigns it to the Sound field.
+func (o *UpdateLiveActivityRequest) SetSound(v string) {
+	o.Sound = &v
+}
+
+// GetStaleDate returns the StaleDate field value if set, zero value otherwise.
+func (o *UpdateLiveActivityRequest) GetStaleDate() int32 {
+	if o == nil || o.StaleDate == nil {
+		var ret int32
+		return ret
+	}
+	return *o.StaleDate
+}
+
+// GetStaleDateOk returns a tuple with the StaleDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateLiveActivityRequest) GetStaleDateOk() (*int32, bool) {
+	if o == nil || o.StaleDate == nil {
+		return nil, false
+	}
+	return o.StaleDate, true
+}
+
+// HasStaleDate returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasStaleDate() bool {
+	if o != nil && o.StaleDate != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetStaleDate gets a reference to the given int32 and assigns it to the StaleDate field.
+func (o *UpdateLiveActivityRequest) SetStaleDate(v int32) {
+	o.StaleDate = &v
+}
+
+// GetDismissalDate returns the DismissalDate field value if set, zero value otherwise.
+func (o *UpdateLiveActivityRequest) GetDismissalDate() int32 {
+	if o == nil || o.DismissalDate == nil {
+		var ret int32
+		return ret
+	}
+	return *o.DismissalDate
+}
+
+// GetDismissalDateOk returns a tuple with the DismissalDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateLiveActivityRequest) GetDismissalDateOk() (*int32, bool) {
+	if o == nil || o.DismissalDate == nil {
+		return nil, false
+	}
+	return o.DismissalDate, true
+}
+
+// HasDismissalDate returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasDismissalDate() bool {
+	if o != nil && o.DismissalDate != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDismissalDate gets a reference to the given int32 and assigns it to the DismissalDate field.
+func (o *UpdateLiveActivityRequest) SetDismissalDate(v int32) {
+	o.DismissalDate = &v
+}
+
+// GetPriority returns the Priority field value if set, zero value otherwise.
+func (o *UpdateLiveActivityRequest) GetPriority() int32 {
+	if o == nil || o.Priority == nil {
+		var ret int32
+		return ret
+	}
+	return *o.Priority
+}
+
+// GetPriorityOk returns a tuple with the Priority field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateLiveActivityRequest) GetPriorityOk() (*int32, bool) {
+	if o == nil || o.Priority == nil {
+		return nil, false
+	}
+	return o.Priority, true
+}
+
+// HasPriority returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasPriority() bool {
+	if o != nil && o.Priority != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPriority gets a reference to the given int32 and assigns it to the Priority field.
+func (o *UpdateLiveActivityRequest) SetPriority(v int32) {
+	o.Priority = &v
 }
 
 func (o UpdateLiveActivityRequest) MarshalJSON() ([]byte, error) {
@@ -163,8 +332,23 @@ func (o UpdateLiveActivityRequest) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["event_updates"] = o.EventUpdates
 	}
-	if o.DismissAt != nil {
-		toSerialize["dismiss_at"] = o.DismissAt
+	if o.Contents != nil {
+		toSerialize["contents"] = o.Contents
+	}
+	if o.Headings != nil {
+		toSerialize["headings"] = o.Headings
+	}
+	if o.Sound != nil {
+		toSerialize["sound"] = o.Sound
+	}
+	if o.StaleDate != nil {
+		toSerialize["stale_date"] = o.StaleDate
+	}
+	if o.DismissalDate != nil {
+		toSerialize["dismissal_date"] = o.DismissalDate
+	}
+	if o.Priority != nil {
+		toSerialize["priority"] = o.Priority
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -187,7 +371,12 @@ func (o *UpdateLiveActivityRequest) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "event")
 		delete(additionalProperties, "event_updates")
-		delete(additionalProperties, "dismiss_at")
+		delete(additionalProperties, "contents")
+		delete(additionalProperties, "headings")
+		delete(additionalProperties, "sound")
+		delete(additionalProperties, "stale_date")
+		delete(additionalProperties, "dismissal_date")
+		delete(additionalProperties, "priority")
 		o.AdditionalProperties = additionalProperties
 	}
 

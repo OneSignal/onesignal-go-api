@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -23,7 +23,7 @@ type Purchase struct {
 	Amount string `json:"amount"`
 	// The 3-letter ISO 4217 currency code. Required for correct storage and conversion of amount.
 	Iso string `json:"iso"`
-	Count *float32 `json:"count,omitempty"`
+	Count *int32 `json:"count,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -122,9 +122,9 @@ func (o *Purchase) SetIso(v string) {
 }
 
 // GetCount returns the Count field value if set, zero value otherwise.
-func (o *Purchase) GetCount() float32 {
+func (o *Purchase) GetCount() int32 {
 	if o == nil || o.Count == nil {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Count
@@ -132,7 +132,7 @@ func (o *Purchase) GetCount() float32 {
 
 // GetCountOk returns a tuple with the Count field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Purchase) GetCountOk() (*float32, bool) {
+func (o *Purchase) GetCountOk() (*int32, bool) {
 	if o == nil || o.Count == nil {
 		return nil, false
 	}
@@ -148,8 +148,8 @@ func (o *Purchase) HasCount() bool {
 	return false
 }
 
-// SetCount gets a reference to the given float32 and assigns it to the Count field.
-func (o *Purchase) SetCount(v float32) {
+// SetCount gets a reference to the given int32 and assigns it to the Count field.
+func (o *Purchase) SetCount(v int32) {
 	o.Count = &v
 }
 

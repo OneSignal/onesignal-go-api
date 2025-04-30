@@ -4,16 +4,20 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Field** | **string** | Name of the field to use as the first operand in the filter expression. | 
+**Field** | Pointer to **string** | Required. Name of the field to use as the first operand in the filter expression. | [optional] 
 **Key** | Pointer to **string** | If &#x60;field&#x60; is &#x60;tag&#x60;, this field is *required* to specify &#x60;key&#x60; inside the tags. | [optional] 
 **Value** | Pointer to **string** | Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator. | [optional] 
-**Relation** | **string** | Operator of a filter expression. | 
+**HoursAgo** | Pointer to **string** | If &#x60;field&#x60; is session-related, this is *required* to specify the number of hours before or after the user&#39;s session. | [optional] 
+**Radius** | Pointer to **float32** | If &#x60;field&#x60; is &#x60;location&#x60;, this will specify the radius in meters from a provided location point. Use with &#x60;lat&#x60; and &#x60;long&#x60;. | [optional] 
+**Lat** | Pointer to **float32** | If &#x60;field&#x60; is &#x60;location&#x60;, this is *required* to specify the user&#39;s latitude. | [optional] 
+**Long** | Pointer to **float32** | If &#x60;field&#x60; is &#x60;location&#x60;, this is *required* to specify the user&#39;s longitude. | [optional] 
+**Relation** | Pointer to **string** | Required. Operator of a filter expression. | [optional] 
 
 ## Methods
 
 ### NewFilter
 
-`func NewFilter(field string, relation string, ) *Filter`
+`func NewFilter() *Filter`
 
 NewFilter instantiates a new Filter object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +51,11 @@ and a boolean to check if the value has been set.
 
 SetField sets Field field to given value.
 
+### HasField
+
+`func (o *Filter) HasField() bool`
+
+HasField returns a boolean if a field has been set.
 
 ### GetKey
 
@@ -98,6 +107,106 @@ SetValue sets Value field to given value.
 
 HasValue returns a boolean if a field has been set.
 
+### GetHoursAgo
+
+`func (o *Filter) GetHoursAgo() string`
+
+GetHoursAgo returns the HoursAgo field if non-nil, zero value otherwise.
+
+### GetHoursAgoOk
+
+`func (o *Filter) GetHoursAgoOk() (*string, bool)`
+
+GetHoursAgoOk returns a tuple with the HoursAgo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHoursAgo
+
+`func (o *Filter) SetHoursAgo(v string)`
+
+SetHoursAgo sets HoursAgo field to given value.
+
+### HasHoursAgo
+
+`func (o *Filter) HasHoursAgo() bool`
+
+HasHoursAgo returns a boolean if a field has been set.
+
+### GetRadius
+
+`func (o *Filter) GetRadius() float32`
+
+GetRadius returns the Radius field if non-nil, zero value otherwise.
+
+### GetRadiusOk
+
+`func (o *Filter) GetRadiusOk() (*float32, bool)`
+
+GetRadiusOk returns a tuple with the Radius field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRadius
+
+`func (o *Filter) SetRadius(v float32)`
+
+SetRadius sets Radius field to given value.
+
+### HasRadius
+
+`func (o *Filter) HasRadius() bool`
+
+HasRadius returns a boolean if a field has been set.
+
+### GetLat
+
+`func (o *Filter) GetLat() float32`
+
+GetLat returns the Lat field if non-nil, zero value otherwise.
+
+### GetLatOk
+
+`func (o *Filter) GetLatOk() (*float32, bool)`
+
+GetLatOk returns a tuple with the Lat field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLat
+
+`func (o *Filter) SetLat(v float32)`
+
+SetLat sets Lat field to given value.
+
+### HasLat
+
+`func (o *Filter) HasLat() bool`
+
+HasLat returns a boolean if a field has been set.
+
+### GetLong
+
+`func (o *Filter) GetLong() float32`
+
+GetLong returns the Long field if non-nil, zero value otherwise.
+
+### GetLongOk
+
+`func (o *Filter) GetLongOk() (*float32, bool)`
+
+GetLongOk returns a tuple with the Long field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLong
+
+`func (o *Filter) SetLong(v float32)`
+
+SetLong sets Long field to given value.
+
+### HasLong
+
+`func (o *Filter) HasLong() bool`
+
+HasLong returns a boolean if a field has been set.
+
 ### GetRelation
 
 `func (o *Filter) GetRelation() string`
@@ -117,6 +226,11 @@ and a boolean to check if the value has been set.
 
 SetRelation sets Relation field to given value.
 
+### HasRelation
+
+`func (o *Filter) HasRelation() bool`
+
+HasRelation returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
