@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | UUID of the segment.  If left empty, it will be assigned automaticaly. | [optional] 
 **Name** | **string** | Name of the segment.  You&#39;ll see this name on the Web UI. | 
-**Filters** | [**[]FilterExpressions**](FilterExpressions.md) | Filter or operators the segment will have.  For a list of available filters with details, please see Send to Users Based on Filters. | 
+**Filters** | [**[]FilterExpression**](FilterExpression.md) | Filter or operators the segment will have.  For a list of available filters with details, please see Send to Users Based on Filters. | 
 
 ## Methods
 
 ### NewSegment
 
-`func NewSegment(name string, filters []FilterExpressions, ) *Segment`
+`func NewSegment(name string, filters []FilterExpression, ) *Segment`
 
 NewSegment instantiates a new Segment object
 This constructor will assign default values to properties that have it defined,
@@ -74,20 +74,20 @@ SetName sets Name field to given value.
 
 ### GetFilters
 
-`func (o *Segment) GetFilters() []FilterExpressions`
+`func (o *Segment) GetFilters() []FilterExpression`
 
 GetFilters returns the Filters field if non-nil, zero value otherwise.
 
 ### GetFiltersOk
 
-`func (o *Segment) GetFiltersOk() (*[]FilterExpressions, bool)`
+`func (o *Segment) GetFiltersOk() (*[]FilterExpression, bool)`
 
 GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFilters
 
-`func (o *Segment) SetFilters(v []FilterExpressions)`
+`func (o *Segment) SetFilters(v []FilterExpression)`
 
 SetFilters sets Filters field to given value.
 
