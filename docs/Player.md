@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | The device&#39;s OneSignal ID | [optional] [readonly] 
+**Id** | Pointer to **string** | The device&#39;s OneSignal ID | [readonly] 
 **InvalidIdentifier** | Pointer to **bool** | If true, this is the equivalent of a user being Unsubscribed | [optional] [readonly] 
-**AppId** | Pointer to **string** |  | [optional] 
+**AppId** | Pointer to **string** |  |  
 **DeviceType** | **int32** | Required The device&#39;s platform:   0 &#x3D; iOS   1 &#x3D; Android   2 &#x3D; Amazon   3 &#x3D; WindowsPhone (MPNS)   4 &#x3D; Chrome Apps / Extensions   5 &#x3D; Chrome Web Push   6 &#x3D; Windows (WNS)   7 &#x3D; Safari   8 &#x3D; Firefox   9 &#x3D; MacOS   10 &#x3D; Alexa   11 &#x3D; Email   13 &#x3D; For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM   14 &#x3D; SMS  | 
 **ExternalUserId** | Pointer to **NullableString** | a custom user ID | [optional] 
 **ExternalUserIdAuthHash** | Pointer to **string** | Only required if you have enabled Identity Verification and device_type is NOT 11 email. | [optional] 
@@ -36,7 +36,7 @@ Name | Type | Description | Notes
 
 ### NewPlayer
 
-`func NewPlayer(deviceType int32, ) *Player`
+`func NewPlayer(id string, deviceType int32, appId *string) *Player`
 
 NewPlayer instantiates a new Player object
 This constructor will assign default values to properties that have it defined,
