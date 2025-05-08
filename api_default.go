@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -24,132 +24,6 @@ import (
 // DefaultApiService DefaultApi service
 type DefaultApiService service
 
-type ApiBeginLiveActivityRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	activityId string
-	beginLiveActivityRequest *BeginLiveActivityRequest
-}
-
-func (r ApiBeginLiveActivityRequest) BeginLiveActivityRequest(beginLiveActivityRequest BeginLiveActivityRequest) ApiBeginLiveActivityRequest {
-	r.beginLiveActivityRequest = &beginLiveActivityRequest
-	return r
-}
-
-func (r ApiBeginLiveActivityRequest) Execute() (*http.Response, error) {
-	return r.ApiService.BeginLiveActivityExecute(r)
-}
-
-/*
-BeginLiveActivity Start Live Activity
-
-Starts a Live Activity
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
- @param activityId Live Activity record ID
- @return ApiBeginLiveActivityRequest
-*/
-func (a *DefaultApiService) BeginLiveActivity(ctx context.Context, appId string, activityId string) ApiBeginLiveActivityRequest {
-	return ApiBeginLiveActivityRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		activityId: activityId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultApiService) BeginLiveActivityExecute(r ApiBeginLiveActivityRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.BeginLiveActivity")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/live_activities/{activity_id}/token"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"activity_id"+"}", url.PathEscape(parameterToString(r.activityId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.beginLiveActivityRequest == nil {
-		return nil, reportError("beginLiveActivityRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.beginLiveActivityRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
 type ApiCancelNotificationRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
@@ -162,7 +36,7 @@ func (r ApiCancelNotificationRequest) AppId(appId string) ApiCancelNotificationR
 	return r
 }
 
-func (r ApiCancelNotificationRequest) Execute() (*CancelNotificationSuccessResponse, *http.Response, error) {
+func (r ApiCancelNotificationRequest) Execute() (*GenericSuccessBoolResponse, *http.Response, error) {
 	return r.ApiService.CancelNotificationExecute(r)
 }
 
@@ -184,13 +58,13 @@ func (a *DefaultApiService) CancelNotification(ctx context.Context, notification
 }
 
 // Execute executes the request
-//  @return CancelNotificationSuccessResponse
-func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationRequest) (*CancelNotificationSuccessResponse, *http.Response, error) {
+//  @return GenericSuccessBoolResponse
+func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationRequest) (*GenericSuccessBoolResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CancelNotificationSuccessResponse
+		localVarReturnValue  *GenericSuccessBoolResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CancelNotification")
@@ -258,8 +132,336 @@ func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationReq
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateAliasRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	aliasLabel string
+	aliasId string
+	userIdentityBody *UserIdentityBody
+}
+
+func (r ApiCreateAliasRequest) UserIdentityBody(userIdentityBody UserIdentityBody) ApiCreateAliasRequest {
+	r.userIdentityBody = &userIdentityBody
+	return r
+}
+
+func (r ApiCreateAliasRequest) Execute() (*UserIdentityBody, *http.Response, error) {
+	return r.ApiService.CreateAliasExecute(r)
+}
+
+/*
+CreateAlias Method for CreateAlias
+
+Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param aliasLabel
+ @param aliasId
+ @return ApiCreateAliasRequest
+*/
+func (a *DefaultApiService) CreateAlias(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiCreateAliasRequest {
+	return ApiCreateAliasRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		aliasLabel: aliasLabel,
+		aliasId: aliasId,
+	}
+}
+
+// Execute executes the request
+//  @return UserIdentityBody
+func (a *DefaultApiService) CreateAliasExecute(r ApiCreateAliasRequest) (*UserIdentityBody, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UserIdentityBody
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateAlias")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}/identity"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.userIdentityBody == nil {
+		return localVarReturnValue, nil, reportError("userIdentityBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.userIdentityBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateAliasBySubscriptionRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+	userIdentityBody *UserIdentityBody
+}
+
+func (r ApiCreateAliasBySubscriptionRequest) UserIdentityBody(userIdentityBody UserIdentityBody) ApiCreateAliasBySubscriptionRequest {
+	r.userIdentityBody = &userIdentityBody
+	return r
+}
+
+func (r ApiCreateAliasBySubscriptionRequest) Execute() (*UserIdentityBody, *http.Response, error) {
+	return r.ApiService.CreateAliasBySubscriptionExecute(r)
+}
+
+/*
+CreateAliasBySubscription Method for CreateAliasBySubscription
+
+Upserts one or more Aliases for the User identified by :subscription_id.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiCreateAliasBySubscriptionRequest
+*/
+func (a *DefaultApiService) CreateAliasBySubscription(ctx context.Context, appId string, subscriptionId string) ApiCreateAliasBySubscriptionRequest {
+	return ApiCreateAliasBySubscriptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return UserIdentityBody
+func (a *DefaultApiService) CreateAliasBySubscriptionExecute(r ApiCreateAliasBySubscriptionRequest) (*UserIdentityBody, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UserIdentityBody
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateAliasBySubscription")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/user/identity"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.userIdentityBody == nil {
+		return localVarReturnValue, nil, reportError("userIdentityBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.userIdentityBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -388,7 +590,7 @@ func (a *DefaultApiService) CreateAppExecute(r ApiCreateAppRequest) (*App, *http
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -518,7 +720,7 @@ func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationReq
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -541,188 +743,38 @@ func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiCreatePlayerRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	player *Player
-}
-
-func (r ApiCreatePlayerRequest) Player(player Player) ApiCreatePlayerRequest {
-	r.player = &player
-	return r
-}
-
-func (r ApiCreatePlayerRequest) Execute() (*CreatePlayerSuccessResponse, *http.Response, error) {
-	return r.ApiService.CreatePlayerExecute(r)
-}
-
-/*
-CreatePlayer Add a device
-
-Register a new device to one of your OneSignal apps
-&#x1F6A7;
-Don't use this
-This API endpoint is designed to be used from our open source Mobile and Web Push SDKs. It is not designed for developers to use it directly, unless instructed to do so by OneSignal support.
-If you use this method instead of our SDKs, many OneSignal features such as conversion tracking, timezone tracking, language detection, and rich-push won't work out of the box. It will also make it harder to identify possible setup issues.
-This method is used to register a new device with OneSignal.
-If a device is already registered with the specified identifier, then this will update the existing device record instead of creating a new one.
-The returned player is a player / user ID. Use the returned ID to send push notifications to this specific user later, or to include this player when sending to a set of users.
-&#x1F6A7;
-iOS
-Must set test_type to 1 when building your iOS app as development. Omit this field in your production app builds.
-
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreatePlayerRequest
-*/
-func (a *DefaultApiService) CreatePlayer(ctx context.Context) ApiCreatePlayerRequest {
-	return ApiCreatePlayerRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return CreatePlayerSuccessResponse
-func (a *DefaultApiService) CreatePlayerExecute(r ApiCreatePlayerRequest) (*CreatePlayerSuccessResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CreatePlayerSuccessResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreatePlayer")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/players"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.player == nil {
-		return localVarReturnValue, nil, reportError("player is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.player
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCreateSegmentsRequest struct {
+type ApiCreateSegmentRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	appId string
 	segment *Segment
 }
 
-func (r ApiCreateSegmentsRequest) Segment(segment Segment) ApiCreateSegmentsRequest {
+func (r ApiCreateSegmentRequest) Segment(segment Segment) ApiCreateSegmentRequest {
 	r.segment = &segment
 	return r
 }
 
-func (r ApiCreateSegmentsRequest) Execute() (*CreateSegmentSuccessResponse, *http.Response, error) {
-	return r.ApiService.CreateSegmentsExecute(r)
+func (r ApiCreateSegmentRequest) Execute() (*CreateSegmentSuccessResponse, *http.Response, error) {
+	return r.ApiService.CreateSegmentExecute(r)
 }
 
 /*
-CreateSegments Create Segments
+CreateSegment Create Segment
 
-Create segments visible and usable in the dashboard and API - Required: OneSignal Paid Plan
+Create a segment visible and usable in the dashboard and API - Required: OneSignal Paid Plan
 The Create Segment method is used when you want your server to programmatically create a segment instead of using the OneSignal Dashboard UI. Just like creating Segments from the dashboard you can pass in filters with multiple "AND" or "OR" operator's.
 &#x1F6A7;
 Does Not Update Segments
-This endpoint will only create segments, it does not edit or update currently created Segments. You will need to use the Delete Segments endpoint and re-create it with this endpoint to edit.
+This endpoint will only create segments, it does not edit or update currently created Segments. You will need to use the Delete Segment endpoint and re-create it with this endpoint to edit.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
- @return ApiCreateSegmentsRequest
+ @return ApiCreateSegmentRequest
 */
-func (a *DefaultApiService) CreateSegments(ctx context.Context, appId string) ApiCreateSegmentsRequest {
-	return ApiCreateSegmentsRequest{
+func (a *DefaultApiService) CreateSegment(ctx context.Context, appId string) ApiCreateSegmentRequest {
+	return ApiCreateSegmentRequest{
 		ApiService: a,
 		ctx: ctx,
 		appId: appId,
@@ -731,7 +783,7 @@ func (a *DefaultApiService) CreateSegments(ctx context.Context, appId string) Ap
 
 // Execute executes the request
 //  @return CreateSegmentSuccessResponse
-func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*CreateSegmentSuccessResponse, *http.Response, error) {
+func (a *DefaultApiService) CreateSegmentExecute(r ApiCreateSegmentRequest) (*CreateSegmentSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -739,7 +791,7 @@ func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*
 		localVarReturnValue  *CreateSegmentSuccessResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateSegments")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateSegment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -813,7 +865,7 @@ func (a *DefaultApiService) CreateSegmentsExecute(r ApiCreateSegmentsRequest) (*
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -842,15 +894,15 @@ type ApiCreateSubscriptionRequest struct {
 	appId string
 	aliasLabel string
 	aliasId string
-	createSubscriptionRequestBody *CreateSubscriptionRequestBody
+	subscriptionBody *SubscriptionBody
 }
 
-func (r ApiCreateSubscriptionRequest) CreateSubscriptionRequestBody(createSubscriptionRequestBody CreateSubscriptionRequestBody) ApiCreateSubscriptionRequest {
-	r.createSubscriptionRequestBody = &createSubscriptionRequestBody
+func (r ApiCreateSubscriptionRequest) SubscriptionBody(subscriptionBody SubscriptionBody) ApiCreateSubscriptionRequest {
+	r.subscriptionBody = &subscriptionBody
 	return r
 }
 
-func (r ApiCreateSubscriptionRequest) Execute() (*InlineResponse201, *http.Response, error) {
+func (r ApiCreateSubscriptionRequest) Execute() (*SubscriptionBody, *http.Response, error) {
 	return r.ApiService.CreateSubscriptionExecute(r)
 }
 
@@ -876,13 +928,13 @@ func (a *DefaultApiService) CreateSubscription(ctx context.Context, appId string
 }
 
 // Execute executes the request
-//  @return InlineResponse201
-func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionRequest) (*InlineResponse201, *http.Response, error) {
+//  @return SubscriptionBody
+func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionRequest) (*SubscriptionBody, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse201
+		localVarReturnValue  *SubscriptionBody
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateSubscription")
@@ -898,8 +950,8 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createSubscriptionRequestBody == nil {
-		return localVarReturnValue, nil, reportError("createSubscriptionRequestBody is required and must be specified")
+	if r.subscriptionBody == nil {
+		return localVarReturnValue, nil, reportError("subscriptionBody is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -920,7 +972,7 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createSubscriptionRequestBody
+	localVarPostBody = r.subscriptionBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -953,6 +1005,16 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 409 {
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -964,7 +1026,7 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1108,7 +1170,7 @@ func (a *DefaultApiService) CreateUserExecute(r ApiCreateUserRequest) (*User, *h
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1140,7 +1202,7 @@ type ApiDeleteAliasRequest struct {
 	aliasLabelToDelete string
 }
 
-func (r ApiDeleteAliasRequest) Execute() (*InlineResponse200, *http.Response, error) {
+func (r ApiDeleteAliasRequest) Execute() (*UserIdentityBody, *http.Response, error) {
 	return r.ApiService.DeleteAliasExecute(r)
 }
 
@@ -1168,13 +1230,13 @@ func (a *DefaultApiService) DeleteAlias(ctx context.Context, appId string, alias
 }
 
 // Execute executes the request
-//  @return InlineResponse200
-func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*InlineResponse200, *http.Response, error) {
+//  @return UserIdentityBody
+func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*UserIdentityBody, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse200
+		localVarReturnValue  *UserIdentityBody
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteAlias")
@@ -1241,6 +1303,16 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*Inline
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 409 {
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1252,7 +1324,7 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*Inline
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1275,166 +1347,21 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*Inline
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDeletePlayerRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId *string
-	playerId string
-}
-
-// The OneSignal App ID for your app.  Available in Keys &amp; IDs.
-func (r ApiDeletePlayerRequest) AppId(appId string) ApiDeletePlayerRequest {
-	r.appId = &appId
-	return r
-}
-
-func (r ApiDeletePlayerRequest) Execute() (*DeletePlayerSuccessResponse, *http.Response, error) {
-	return r.ApiService.DeletePlayerExecute(r)
-}
-
-/*
-DeletePlayer Delete a user record
-
-Delete player - Required:
-Used to delete a single, specific Player ID record from a specific OneSignal app.
-
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param playerId The OneSignal player_id
- @return ApiDeletePlayerRequest
-*/
-func (a *DefaultApiService) DeletePlayer(ctx context.Context, playerId string) ApiDeletePlayerRequest {
-	return ApiDeletePlayerRequest{
-		ApiService: a,
-		ctx: ctx,
-		playerId: playerId,
-	}
-}
-
-// Execute executes the request
-//  @return DeletePlayerSuccessResponse
-func (a *DefaultApiService) DeletePlayerExecute(r ApiDeletePlayerRequest) (*DeletePlayerSuccessResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DeletePlayerSuccessResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeletePlayer")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/players/{player_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"player_id"+"}", url.PathEscape(parameterToString(r.playerId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.appId == nil {
-		return localVarReturnValue, nil, reportError("appId is required and must be specified")
-	}
-
-	localVarQueryParams.Add("app_id", parameterToString(*r.appId, ""))
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v DeletePlayerNotFoundResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiDeleteSegmentsRequest struct {
+type ApiDeleteSegmentRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	appId string
 	segmentId string
 }
 
-func (r ApiDeleteSegmentsRequest) Execute() (*DeleteSegmentSuccessResponse, *http.Response, error) {
-	return r.ApiService.DeleteSegmentsExecute(r)
+func (r ApiDeleteSegmentRequest) Execute() (*GenericSuccessBoolResponse, *http.Response, error) {
+	return r.ApiService.DeleteSegmentExecute(r)
 }
 
 /*
-DeleteSegments Delete Segments
+DeleteSegment Delete Segment
 
-Delete segments (not user devices) - Required: OneSignal Paid Plan
+Delete a segment (not user devices) - Required: OneSignal Paid Plan
 You can delete a segment under your app by calling this API. You must provide an API key in the Authorization header that has admin access on the app.
 The segment_id can be found in the URL of the segment when viewing it in the dashboard.
 
@@ -1442,10 +1369,10 @@ The segment_id can be found in the URL of the segment when viewing it in the das
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
  @param segmentId The segment_id can be found in the URL of the segment when viewing it in the dashboard.
- @return ApiDeleteSegmentsRequest
+ @return ApiDeleteSegmentRequest
 */
-func (a *DefaultApiService) DeleteSegments(ctx context.Context, appId string, segmentId string) ApiDeleteSegmentsRequest {
-	return ApiDeleteSegmentsRequest{
+func (a *DefaultApiService) DeleteSegment(ctx context.Context, appId string, segmentId string) ApiDeleteSegmentRequest {
+	return ApiDeleteSegmentRequest{
 		ApiService: a,
 		ctx: ctx,
 		appId: appId,
@@ -1454,16 +1381,16 @@ func (a *DefaultApiService) DeleteSegments(ctx context.Context, appId string, se
 }
 
 // Execute executes the request
-//  @return DeleteSegmentSuccessResponse
-func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*DeleteSegmentSuccessResponse, *http.Response, error) {
+//  @return GenericSuccessBoolResponse
+func (a *DefaultApiService) DeleteSegmentExecute(r ApiDeleteSegmentRequest) (*GenericSuccessBoolResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *DeleteSegmentSuccessResponse
+		localVarReturnValue  *GenericSuccessBoolResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSegments")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSegment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1526,7 +1453,7 @@ func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v DeleteSegmentNotFoundResponse
+			var v GenericSuccessBoolResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1536,7 +1463,7 @@ func (a *DefaultApiService) DeleteSegmentsExecute(r ApiDeleteSegmentsRequest) (*
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1659,6 +1586,16 @@ func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionReq
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 409 {
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1670,7 +1607,7 @@ func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionReq
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1799,126 +1736,7 @@ func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Res
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiEndLiveActivityRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	activityId string
-	subscriptionId string
-}
-
-func (r ApiEndLiveActivityRequest) Execute() (*http.Response, error) {
-	return r.ApiService.EndLiveActivityExecute(r)
-}
-
-/*
-EndLiveActivity Stop Live Activity
-
-Stops a Live Activity
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
- @param activityId Live Activity record ID
- @param subscriptionId Subscription ID
- @return ApiEndLiveActivityRequest
-*/
-func (a *DefaultApiService) EndLiveActivity(ctx context.Context, appId string, activityId string, subscriptionId string) ApiEndLiveActivityRequest {
-	return ApiEndLiveActivityRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		activityId: activityId,
-		subscriptionId: subscriptionId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultApiService) EndLiveActivityExecute(r ApiEndLiveActivityRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.EndLiveActivity")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/live_activities/{activity_id}/token/{subscription_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"activity_id"+"}", url.PathEscape(parameterToString(r.activityId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2053,7 +1871,7 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2076,24 +1894,24 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiExportPlayersRequest struct {
+type ApiExportSubscriptionsRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	appId string
-	exportPlayersRequestBody *ExportPlayersRequestBody
+	exportSubscriptionsRequestBody *ExportSubscriptionsRequestBody
 }
 
-func (r ApiExportPlayersRequest) ExportPlayersRequestBody(exportPlayersRequestBody ExportPlayersRequestBody) ApiExportPlayersRequest {
-	r.exportPlayersRequestBody = &exportPlayersRequestBody
+func (r ApiExportSubscriptionsRequest) ExportSubscriptionsRequestBody(exportSubscriptionsRequestBody ExportSubscriptionsRequestBody) ApiExportSubscriptionsRequest {
+	r.exportSubscriptionsRequestBody = &exportSubscriptionsRequestBody
 	return r
 }
 
-func (r ApiExportPlayersRequest) Execute() (*ExportPlayersSuccessResponse, *http.Response, error) {
-	return r.ApiService.ExportPlayersExecute(r)
+func (r ApiExportSubscriptionsRequest) Execute() (*ExportSubscriptionsSuccessResponse, *http.Response, error) {
+	return r.ApiService.ExportSubscriptionsExecute(r)
 }
 
 /*
-ExportPlayers Export CSV of Players
+ExportSubscriptions Export CSV of Subscriptions
 
 Generate a compressed CSV export of all of your current user data
 This method can be used to generate a compressed CSV export of all of your current user data. It is a much faster alternative than retrieving this data using the /players API endpoint.
@@ -2144,10 +1962,10 @@ CSV File Format:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId The app ID that you want to export devices from
- @return ApiExportPlayersRequest
+ @return ApiExportSubscriptionsRequest
 */
-func (a *DefaultApiService) ExportPlayers(ctx context.Context, appId string) ApiExportPlayersRequest {
-	return ApiExportPlayersRequest{
+func (a *DefaultApiService) ExportSubscriptions(ctx context.Context, appId string) ApiExportSubscriptionsRequest {
+	return ApiExportSubscriptionsRequest{
 		ApiService: a,
 		ctx: ctx,
 		appId: appId,
@@ -2155,16 +1973,16 @@ func (a *DefaultApiService) ExportPlayers(ctx context.Context, appId string) Api
 }
 
 // Execute executes the request
-//  @return ExportPlayersSuccessResponse
-func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*ExportPlayersSuccessResponse, *http.Response, error) {
+//  @return ExportSubscriptionsSuccessResponse
+func (a *DefaultApiService) ExportSubscriptionsExecute(r ApiExportSubscriptionsRequest) (*ExportSubscriptionsSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ExportPlayersSuccessResponse
+		localVarReturnValue  *ExportSubscriptionsSuccessResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ExportPlayers")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ExportSubscriptions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2194,7 +2012,7 @@ func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*Ex
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.exportPlayersRequestBody
+	localVarPostBody = r.exportSubscriptionsRequestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2228,7 +2046,7 @@ func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*Ex
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2251,123 +2069,7 @@ func (a *DefaultApiService) ExportPlayersExecute(r ApiExportPlayersRequest) (*Ex
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiFetchAliasesRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	subscriptionId string
-}
-
-func (r ApiFetchAliasesRequest) Execute() (*UserIdentityResponse, *http.Response, error) {
-	return r.ApiService.FetchAliasesExecute(r)
-}
-
-/*
-FetchAliases Method for FetchAliases
-
-Lists all Aliases for the User identified by :subscription_id.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId
- @param subscriptionId
- @return ApiFetchAliasesRequest
-*/
-func (a *DefaultApiService) FetchAliases(ctx context.Context, appId string, subscriptionId string) ApiFetchAliasesRequest {
-	return ApiFetchAliasesRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		subscriptionId: subscriptionId,
-	}
-}
-
-// Execute executes the request
-//  @return UserIdentityResponse
-func (a *DefaultApiService) FetchAliasesExecute(r ApiFetchAliasesRequest) (*UserIdentityResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserIdentityResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.FetchAliases")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/user/identity"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiFetchUserRequest struct {
+type ApiGetAliasesRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	appId string
@@ -2375,142 +2077,12 @@ type ApiFetchUserRequest struct {
 	aliasId string
 }
 
-func (r ApiFetchUserRequest) Execute() (*User, *http.Response, error) {
-	return r.ApiService.FetchUserExecute(r)
+func (r ApiGetAliasesRequest) Execute() (*UserIdentityBody, *http.Response, error) {
+	return r.ApiService.GetAliasesExecute(r)
 }
 
 /*
-FetchUser Method for FetchUser
-
-Returns the User’s properties, Aliases, and Subscriptions.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId
- @param aliasLabel
- @param aliasId
- @return ApiFetchUserRequest
-*/
-func (a *DefaultApiService) FetchUser(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiFetchUserRequest {
-	return ApiFetchUserRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		aliasLabel: aliasLabel,
-		aliasId: aliasId,
-	}
-}
-
-// Execute executes the request
-//  @return User
-func (a *DefaultApiService) FetchUserExecute(r ApiFetchUserRequest) (*User, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *User
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.FetchUser")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiFetchUserIdentityRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	aliasLabel string
-	aliasId string
-}
-
-func (r ApiFetchUserIdentityRequest) Execute() (*InlineResponse200, *http.Response, error) {
-	return r.ApiService.FetchUserIdentityExecute(r)
-}
-
-/*
-FetchUserIdentity Method for FetchUserIdentity
+GetAliases Method for GetAliases
 
 Lists all Aliases for the User identified by (:alias_label, :alias_id).
 
@@ -2518,10 +2090,10 @@ Lists all Aliases for the User identified by (:alias_label, :alias_id).
  @param appId
  @param aliasLabel
  @param aliasId
- @return ApiFetchUserIdentityRequest
+ @return ApiGetAliasesRequest
 */
-func (a *DefaultApiService) FetchUserIdentity(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiFetchUserIdentityRequest {
-	return ApiFetchUserIdentityRequest{
+func (a *DefaultApiService) GetAliases(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiGetAliasesRequest {
+	return ApiGetAliasesRequest{
 		ApiService: a,
 		ctx: ctx,
 		appId: appId,
@@ -2531,16 +2103,16 @@ func (a *DefaultApiService) FetchUserIdentity(ctx context.Context, appId string,
 }
 
 // Execute executes the request
-//  @return InlineResponse200
-func (a *DefaultApiService) FetchUserIdentityExecute(r ApiFetchUserIdentityRequest) (*InlineResponse200, *http.Response, error) {
+//  @return UserIdentityBody
+func (a *DefaultApiService) GetAliasesExecute(r ApiGetAliasesRequest) (*UserIdentityBody, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse200
+		localVarReturnValue  *UserIdentityBody
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.FetchUserIdentity")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetAliases")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2603,8 +2175,144 @@ func (a *DefaultApiService) FetchUserIdentityExecute(r ApiFetchUserIdentityReque
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAliasesBySubscriptionRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	subscriptionId string
+}
+
+func (r ApiGetAliasesBySubscriptionRequest) Execute() (*UserIdentityBody, *http.Response, error) {
+	return r.ApiService.GetAliasesBySubscriptionExecute(r)
+}
+
+/*
+GetAliasesBySubscription Method for GetAliasesBySubscription
+
+Lists all Aliases for the User identified by :subscription_id.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param subscriptionId
+ @return ApiGetAliasesBySubscriptionRequest
+*/
+func (a *DefaultApiService) GetAliasesBySubscription(ctx context.Context, appId string, subscriptionId string) ApiGetAliasesBySubscriptionRequest {
+	return ApiGetAliasesBySubscriptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return UserIdentityBody
+func (a *DefaultApiService) GetAliasesBySubscriptionExecute(r ApiGetAliasesBySubscriptionRequest) (*UserIdentityBody, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UserIdentityBody
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetAliasesBySubscription")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/user/identity"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2726,7 +2434,7 @@ func (a *DefaultApiService) GetAppExecute(r ApiGetAppRequest) (*App, *http.Respo
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2844,133 +2552,7 @@ func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) ([]App, *http.Re
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetEligibleIamsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	subscriptionId string
-}
-
-func (r ApiGetEligibleIamsRequest) Execute() (*InlineResponse2003, *http.Response, error) {
-	return r.ApiService.GetEligibleIamsExecute(r)
-}
-
-/*
-GetEligibleIams Method for GetEligibleIams
-
-Manifest of In-App Messages the Subscription is eligible to display by the SDK.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId
- @param subscriptionId
- @return ApiGetEligibleIamsRequest
-*/
-func (a *DefaultApiService) GetEligibleIams(ctx context.Context, appId string, subscriptionId string) ApiGetEligibleIamsRequest {
-	return ApiGetEligibleIamsRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		subscriptionId: subscriptionId,
-	}
-}
-
-// Execute executes the request
-//  @return InlineResponse2003
-func (a *DefaultApiService) GetEligibleIamsExecute(r ApiGetEligibleIamsRequest) (*InlineResponse2003, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *InlineResponse2003
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetEligibleIams")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/iams"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3101,8 +2683,18 @@ func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) 
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3129,11 +2721,11 @@ type ApiGetNotificationHistoryRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	notificationId string
-	getNotificationRequestBody *GetNotificationRequestBody
+	getNotificationHistoryRequestBody *GetNotificationHistoryRequestBody
 }
 
-func (r ApiGetNotificationHistoryRequest) GetNotificationRequestBody(getNotificationRequestBody GetNotificationRequestBody) ApiGetNotificationHistoryRequest {
-	r.getNotificationRequestBody = &getNotificationRequestBody
+func (r ApiGetNotificationHistoryRequest) GetNotificationHistoryRequestBody(getNotificationHistoryRequestBody GetNotificationHistoryRequestBody) ApiGetNotificationHistoryRequest {
+	r.getNotificationHistoryRequestBody = &getNotificationHistoryRequestBody
 	return r
 }
 
@@ -3179,8 +2771,8 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.getNotificationRequestBody == nil {
-		return localVarReturnValue, nil, reportError("getNotificationRequestBody is required and must be specified")
+	if r.getNotificationHistoryRequestBody == nil {
+		return localVarReturnValue, nil, reportError("getNotificationHistoryRequestBody is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -3201,7 +2793,7 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.getNotificationRequestBody
+	localVarPostBody = r.getNotificationHistoryRequestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -3234,8 +2826,18 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3394,7 +2996,7 @@ func (a *DefaultApiService) GetNotificationsExecute(r ApiGetNotificationsRequest
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3576,7 +3178,7 @@ func (a *DefaultApiService) GetOutcomesExecute(r ApiGetOutcomesRequest) (*Outcom
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3599,227 +3201,74 @@ func (a *DefaultApiService) GetOutcomesExecute(r ApiGetOutcomesRequest) (*Outcom
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetPlayerRequest struct {
+type ApiGetSegmentsRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
-	appId *string
-	playerId string
-	emailAuthHash *string
-}
-
-// Your app_id for this device
-func (r ApiGetPlayerRequest) AppId(appId string) ApiGetPlayerRequest {
-	r.appId = &appId
-	return r
-}
-
-// Email - Only required if you have enabled Identity Verification and device_type is email (11).
-func (r ApiGetPlayerRequest) EmailAuthHash(emailAuthHash string) ApiGetPlayerRequest {
-	r.emailAuthHash = &emailAuthHash
-	return r
-}
-
-func (r ApiGetPlayerRequest) Execute() (*Player, *http.Response, error) {
-	return r.ApiService.GetPlayerExecute(r)
-}
-
-/*
-GetPlayer View device
-
-View the details of an existing device in one of your OneSignal apps
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param playerId Player's OneSignal ID
- @return ApiGetPlayerRequest
-*/
-func (a *DefaultApiService) GetPlayer(ctx context.Context, playerId string) ApiGetPlayerRequest {
-	return ApiGetPlayerRequest{
-		ApiService: a,
-		ctx: ctx,
-		playerId: playerId,
-	}
-}
-
-// Execute executes the request
-//  @return Player
-func (a *DefaultApiService) GetPlayerExecute(r ApiGetPlayerRequest) (*Player, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Player
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetPlayer")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/players/{player_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"player_id"+"}", url.PathEscape(parameterToString(r.playerId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.appId == nil {
-		return localVarReturnValue, nil, reportError("appId is required and must be specified")
-	}
-
-	localVarQueryParams.Add("app_id", parameterToString(*r.appId, ""))
-	if r.emailAuthHash != nil {
-		localVarQueryParams.Add("email_auth_hash", parameterToString(*r.emailAuthHash, ""))
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetPlayersRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId *string
-	limit *int32
+	appId string
 	offset *int32
+	limit *int32
 }
 
-// The app ID that you want to view players from
-func (r ApiGetPlayersRequest) AppId(appId string) ApiGetPlayersRequest {
-	r.appId = &appId
-	return r
-}
-
-// How many devices to return. Max is 300. Default is 300
-func (r ApiGetPlayersRequest) Limit(limit int32) ApiGetPlayersRequest {
-	r.limit = &limit
-	return r
-}
-
-// Result offset. Default is 0. Results are sorted by id;
-func (r ApiGetPlayersRequest) Offset(offset int32) ApiGetPlayersRequest {
+// Segments are listed in ascending order of created_at date. offset will omit that number of segments from the beginning of the list. Eg offset 5, will remove the 5 earliest created Segments.
+func (r ApiGetSegmentsRequest) Offset(offset int32) ApiGetSegmentsRequest {
 	r.offset = &offset
 	return r
 }
 
-func (r ApiGetPlayersRequest) Execute() (*PlayerSlice, *http.Response, error) {
-	return r.ApiService.GetPlayersExecute(r)
+// The amount of Segments in the response. Maximum 300.
+func (r ApiGetSegmentsRequest) Limit(limit int32) ApiGetSegmentsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiGetSegmentsRequest) Execute() (*GetSegmentsSuccessResponse, *http.Response, error) {
+	return r.ApiService.GetSegmentsExecute(r)
 }
 
 /*
-GetPlayers View devices
+GetSegments Get Segments
 
-View the details of multiple devices in one of your OneSignal apps
-Unavailable for Apps Over 80,000 Users
-For performance reasons, this method is not available for larger apps. Larger apps should use the CSV export API endpoint, which is much more performant.
-
+Returns an array of segments from an app.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetPlayersRequest
+ @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
+ @return ApiGetSegmentsRequest
 */
-func (a *DefaultApiService) GetPlayers(ctx context.Context) ApiGetPlayersRequest {
-	return ApiGetPlayersRequest{
+func (a *DefaultApiService) GetSegments(ctx context.Context, appId string) ApiGetSegmentsRequest {
+	return ApiGetSegmentsRequest{
 		ApiService: a,
 		ctx: ctx,
+		appId: appId,
 	}
 }
 
 // Execute executes the request
-//  @return PlayerSlice
-func (a *DefaultApiService) GetPlayersExecute(r ApiGetPlayersRequest) (*PlayerSlice, *http.Response, error) {
+//  @return GetSegmentsSuccessResponse
+func (a *DefaultApiService) GetSegmentsExecute(r ApiGetSegmentsRequest) (*GetSegmentsSuccessResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *PlayerSlice
+		localVarReturnValue  *GetSegmentsSuccessResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetPlayers")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSegments")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/players"
+	localVarPath := localBasePath + "/apps/{app_id}/segments"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.appId == nil {
-		return localVarReturnValue, nil, reportError("appId is required and must be specified")
-	}
 
-	localVarQueryParams.Add("app_id", parameterToString(*r.appId, ""))
-	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
-	}
 	if r.offset != nil {
 		localVarQueryParams.Add("offset", parameterToString(*r.offset, ""))
+	}
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3871,7 +3320,7 @@ func (a *DefaultApiService) GetPlayersExecute(r ApiGetPlayersRequest) (*PlayerSl
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3894,37 +3343,31 @@ func (a *DefaultApiService) GetPlayersExecute(r ApiGetPlayersRequest) (*PlayerSl
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiIdentifyUserByAliasRequest struct {
+type ApiGetUserRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
 	appId string
 	aliasLabel string
 	aliasId string
-	userIdentityRequestBody *UserIdentityRequestBody
 }
 
-func (r ApiIdentifyUserByAliasRequest) UserIdentityRequestBody(userIdentityRequestBody UserIdentityRequestBody) ApiIdentifyUserByAliasRequest {
-	r.userIdentityRequestBody = &userIdentityRequestBody
-	return r
-}
-
-func (r ApiIdentifyUserByAliasRequest) Execute() (*InlineResponse200, *http.Response, error) {
-	return r.ApiService.IdentifyUserByAliasExecute(r)
+func (r ApiGetUserRequest) Execute() (*User, *http.Response, error) {
+	return r.ApiService.GetUserExecute(r)
 }
 
 /*
-IdentifyUserByAlias Method for IdentifyUserByAlias
+GetUser Method for GetUser
 
-Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).
+Returns the User’s properties, Aliases, and Subscriptions.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId
  @param aliasLabel
  @param aliasId
- @return ApiIdentifyUserByAliasRequest
+ @return ApiGetUserRequest
 */
-func (a *DefaultApiService) IdentifyUserByAlias(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiIdentifyUserByAliasRequest {
-	return ApiIdentifyUserByAliasRequest{
+func (a *DefaultApiService) GetUser(ctx context.Context, appId string, aliasLabel string, aliasId string) ApiGetUserRequest {
+	return ApiGetUserRequest{
 		ApiService: a,
 		ctx: ctx,
 		appId: appId,
@@ -3934,21 +3377,21 @@ func (a *DefaultApiService) IdentifyUserByAlias(ctx context.Context, appId strin
 }
 
 // Execute executes the request
-//  @return InlineResponse200
-func (a *DefaultApiService) IdentifyUserByAliasExecute(r ApiIdentifyUserByAliasRequest) (*InlineResponse200, *http.Response, error) {
+//  @return User
+func (a *DefaultApiService) GetUserExecute(r ApiGetUserRequest) (*User, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
+		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse200
+		localVarReturnValue  *User
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.IdentifyUserByAlias")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetUser")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}/identity"
+	localVarPath := localBasePath + "/apps/{app_id}/users/by/{alias_label}/{alias_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"alias_label"+"}", url.PathEscape(parameterToString(r.aliasLabel, "")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"alias_id"+"}", url.PathEscape(parameterToString(r.aliasId, "")), -1)
@@ -3956,12 +3399,9 @@ func (a *DefaultApiService) IdentifyUserByAliasExecute(r ApiIdentifyUserByAliasR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.userIdentityRequestBody == nil {
-		return localVarReturnValue, nil, reportError("userIdentityRequestBody is required and must be specified")
-	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3977,8 +3417,6 @@ func (a *DefaultApiService) IdentifyUserByAliasExecute(r ApiIdentifyUserByAliasR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	// body params
-	localVarPostBody = r.userIdentityRequestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -4011,7 +3449,7 @@ func (a *DefaultApiService) IdentifyUserByAliasExecute(r ApiIdentifyUserByAliasR
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 409 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -4022,154 +3460,7 @@ func (a *DefaultApiService) IdentifyUserByAliasExecute(r ApiIdentifyUserByAliasR
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiIdentifyUserBySubscriptionIdRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	subscriptionId string
-	userIdentityRequestBody *UserIdentityRequestBody
-}
-
-func (r ApiIdentifyUserBySubscriptionIdRequest) UserIdentityRequestBody(userIdentityRequestBody UserIdentityRequestBody) ApiIdentifyUserBySubscriptionIdRequest {
-	r.userIdentityRequestBody = &userIdentityRequestBody
-	return r
-}
-
-func (r ApiIdentifyUserBySubscriptionIdRequest) Execute() (*UserIdentityResponse, *http.Response, error) {
-	return r.ApiService.IdentifyUserBySubscriptionIdExecute(r)
-}
-
-/*
-IdentifyUserBySubscriptionId Method for IdentifyUserBySubscriptionId
-
-Upserts one or more Aliases for the User identified by :subscription_id.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId
- @param subscriptionId
- @return ApiIdentifyUserBySubscriptionIdRequest
-*/
-func (a *DefaultApiService) IdentifyUserBySubscriptionId(ctx context.Context, appId string, subscriptionId string) ApiIdentifyUserBySubscriptionIdRequest {
-	return ApiIdentifyUserBySubscriptionIdRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		subscriptionId: subscriptionId,
-	}
-}
-
-// Execute executes the request
-//  @return UserIdentityResponse
-func (a *DefaultApiService) IdentifyUserBySubscriptionIdExecute(r ApiIdentifyUserBySubscriptionIdRequest) (*UserIdentityResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserIdentityResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.IdentifyUserBySubscriptionId")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/subscriptions/{subscription_id}/user/identity"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterToString(r.subscriptionId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.userIdentityRequestBody == nil {
-		return localVarReturnValue, nil, reportError("userIdentityRequestBody is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.userIdentityRequestBody
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4205,7 +3496,7 @@ func (r ApiTransferSubscriptionRequest) TransferSubscriptionRequestBody(transfer
 	return r
 }
 
-func (r ApiTransferSubscriptionRequest) Execute() (*UserIdentityResponse, *http.Response, error) {
+func (r ApiTransferSubscriptionRequest) Execute() (*UserIdentityBody, *http.Response, error) {
 	return r.ApiService.TransferSubscriptionExecute(r)
 }
 
@@ -4229,13 +3520,13 @@ func (a *DefaultApiService) TransferSubscription(ctx context.Context, appId stri
 }
 
 // Execute executes the request
-//  @return UserIdentityResponse
-func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptionRequest) (*UserIdentityResponse, *http.Response, error) {
+//  @return UserIdentityBody
+func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptionRequest) (*UserIdentityBody, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *UserIdentityResponse
+		localVarReturnValue  *UserIdentityBody
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.TransferSubscription")
@@ -4305,6 +3596,16 @@ func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptio
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 409 {
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -4316,7 +3617,144 @@ func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptio
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUnsubscribeEmailWithTokenRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	notificationId string
+	token *string
+}
+
+// The unsubscribe token that is generated via liquid syntax in {{subscription.unsubscribe_token}} when personalizing an email.
+func (r ApiUnsubscribeEmailWithTokenRequest) Token(token string) ApiUnsubscribeEmailWithTokenRequest {
+	r.token = &token
+	return r
+}
+
+func (r ApiUnsubscribeEmailWithTokenRequest) Execute() (*GenericSuccessBoolResponse, *http.Response, error) {
+	return r.ApiService.UnsubscribeEmailWithTokenExecute(r)
+}
+
+/*
+UnsubscribeEmailWithToken Unsubscribe with token
+
+Unsubscribe an email with a token when using your own custom email unsubscribe landing page
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
+ @param notificationId The id of the message found in the creation notification POST response, View Notifications GET response, or URL within the Message Report.
+ @return ApiUnsubscribeEmailWithTokenRequest
+*/
+func (a *DefaultApiService) UnsubscribeEmailWithToken(ctx context.Context, appId string, notificationId string) ApiUnsubscribeEmailWithTokenRequest {
+	return ApiUnsubscribeEmailWithTokenRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		notificationId: notificationId,
+	}
+}
+
+// Execute executes the request
+//  @return GenericSuccessBoolResponse
+func (a *DefaultApiService) UnsubscribeEmailWithTokenExecute(r ApiUnsubscribeEmailWithTokenRequest) (*GenericSuccessBoolResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GenericSuccessBoolResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UnsubscribeEmailWithToken")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/notifications/{notification_id}/unsubscribe"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"notification_id"+"}", url.PathEscape(parameterToString(r.notificationId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.token == nil {
+		return localVarReturnValue, nil, reportError("token is required and must be specified")
+	}
+
+	localVarQueryParams.Add("token", parameterToString(*r.token, ""))
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4449,7 +3887,7 @@ func (a *DefaultApiService) UpdateAppExecute(r ApiUpdateAppRequest) (*App, *http
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4586,311 +4024,7 @@ func (a *DefaultApiService) UpdateLiveActivityExecute(r ApiUpdateLiveActivityReq
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiUpdatePlayerRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	playerId string
-	player *Player
-}
-
-func (r ApiUpdatePlayerRequest) Player(player Player) ApiUpdatePlayerRequest {
-	r.player = &player
-	return r
-}
-
-func (r ApiUpdatePlayerRequest) Execute() (*UpdatePlayerSuccessResponse, *http.Response, error) {
-	return r.ApiService.UpdatePlayerExecute(r)
-}
-
-/*
-UpdatePlayer Edit device
-
-Update an existing device in one of your OneSignal apps
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param playerId Player's OneSignal ID
- @return ApiUpdatePlayerRequest
-*/
-func (a *DefaultApiService) UpdatePlayer(ctx context.Context, playerId string) ApiUpdatePlayerRequest {
-	return ApiUpdatePlayerRequest{
-		ApiService: a,
-		ctx: ctx,
-		playerId: playerId,
-	}
-}
-
-// Execute executes the request
-//  @return UpdatePlayerSuccessResponse
-func (a *DefaultApiService) UpdatePlayerExecute(r ApiUpdatePlayerRequest) (*UpdatePlayerSuccessResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UpdatePlayerSuccessResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdatePlayer")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/players/{player_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"player_id"+"}", url.PathEscape(parameterToString(r.playerId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.player == nil {
-		return localVarReturnValue, nil, reportError("player is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.player
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiUpdatePlayerTagsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
-	appId string
-	externalUserId string
-	updatePlayerTagsRequestBody *UpdatePlayerTagsRequestBody
-}
-
-func (r ApiUpdatePlayerTagsRequest) UpdatePlayerTagsRequestBody(updatePlayerTagsRequestBody UpdatePlayerTagsRequestBody) ApiUpdatePlayerTagsRequest {
-	r.updatePlayerTagsRequestBody = &updatePlayerTagsRequestBody
-	return r
-}
-
-func (r ApiUpdatePlayerTagsRequest) Execute() (*UpdatePlayerTagsSuccessResponse, *http.Response, error) {
-	return r.ApiService.UpdatePlayerTagsExecute(r)
-}
-
-/*
-UpdatePlayerTags Edit tags with external user id
-
-Update an existing device's tags in one of your OneSignal apps using the External User ID.
-Warning - Android SDK Data Synchronization
-Tags added through the Android SDK tagging methods may not update if using the API to change or update the same tag.
-For example, if you use SDK method sendTag("key", "value1") then update the tag value to "value2" with this API endpoint. You will not be able to set the value back to "value1" through the SDK, you will need to change it to something different through the SDK to be reset.
-Recommendations if using this Endpoint on Android Mobile Apps:
-1 - Do not use the same tag keys for SDK and API updates
-2 - If you want to use the same key for both SDK and API updates, call the SDK getTags method first to update the device's tags.
-This is only applicable on the Android Mobile App SDKs.
-&#128216;
-Deleting Tags
-To delete a tag, include its key and set its value to blank. Omitting a key/value will not delete it.
-For example, if I wanted to delete two existing tags rank and category while simultaneously adding a new tag class, the tags JSON would look like the following:
-"tags": {
-   "rank": "",
-   "category": "",
-   "class": "my_new_value"
-}
-
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param appId The OneSignal App ID the user record is found under.
- @param externalUserId The External User ID mapped to teh device record in OneSignal.  Must be actively set on the device to be updated.
- @return ApiUpdatePlayerTagsRequest
-*/
-func (a *DefaultApiService) UpdatePlayerTags(ctx context.Context, appId string, externalUserId string) ApiUpdatePlayerTagsRequest {
-	return ApiUpdatePlayerTagsRequest{
-		ApiService: a,
-		ctx: ctx,
-		appId: appId,
-		externalUserId: externalUserId,
-	}
-}
-
-// Execute executes the request
-//  @return UpdatePlayerTagsSuccessResponse
-func (a *DefaultApiService) UpdatePlayerTagsExecute(r ApiUpdatePlayerTagsRequest) (*UpdatePlayerTagsSuccessResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UpdatePlayerTagsSuccessResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdatePlayerTags")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/apps/{app_id}/users/{external_user_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"external_user_id"+"}", url.PathEscape(parameterToString(r.externalUserId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.updatePlayerTagsRequestBody
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v GenericError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4918,11 +4052,11 @@ type ApiUpdateSubscriptionRequest struct {
 	ApiService *DefaultApiService
 	appId string
 	subscriptionId string
-	updateSubscriptionRequestBody *UpdateSubscriptionRequestBody
+	subscriptionBody *SubscriptionBody
 }
 
-func (r ApiUpdateSubscriptionRequest) UpdateSubscriptionRequestBody(updateSubscriptionRequestBody UpdateSubscriptionRequestBody) ApiUpdateSubscriptionRequest {
-	r.updateSubscriptionRequestBody = &updateSubscriptionRequestBody
+func (r ApiUpdateSubscriptionRequest) SubscriptionBody(subscriptionBody SubscriptionBody) ApiUpdateSubscriptionRequest {
+	r.subscriptionBody = &subscriptionBody
 	return r
 }
 
@@ -4969,8 +4103,8 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.updateSubscriptionRequestBody == nil {
-		return nil, reportError("updateSubscriptionRequestBody is required and must be specified")
+	if r.subscriptionBody == nil {
+		return nil, reportError("subscriptionBody is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -4991,7 +4125,7 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateSubscriptionRequestBody
+	localVarPostBody = r.subscriptionBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -5024,6 +4158,16 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 409 {
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -5035,7 +4179,7 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5063,7 +4207,7 @@ func (r ApiUpdateUserRequest) UpdateUserRequest(updateUserRequest UpdateUserRequ
 	return r
 }
 
-func (r ApiUpdateUserRequest) Execute() (*InlineResponse202, *http.Response, error) {
+func (r ApiUpdateUserRequest) Execute() (*PropertiesBody, *http.Response, error) {
 	return r.ApiService.UpdateUserExecute(r)
 }
 
@@ -5089,13 +4233,13 @@ func (a *DefaultApiService) UpdateUser(ctx context.Context, appId string, aliasL
 }
 
 // Execute executes the request
-//  @return InlineResponse202
-func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*InlineResponse202, *http.Response, error) {
+//  @return PropertiesBody
+func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*PropertiesBody, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *InlineResponse202
+		localVarReturnValue  *PropertiesBody
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateUser")
@@ -5177,7 +4321,7 @@ func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*InlineRe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
-			var v RateLimiterError
+			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

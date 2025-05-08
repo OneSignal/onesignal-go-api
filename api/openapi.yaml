@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 1.4.0
+  version: 5.0.1
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -77,10 +77,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: View notifications
     post:
       description: |
@@ -98,14 +98,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateNotificationSuccessResponse'
-          description: "OK, invalid_player_ids, invalid_external_user_ids or No Subscribed\
-            \ Players\nIf a message was successfully created, you will get a 200 response\
-            \ and an id for the notification.\nIf the 200 response contains \"invalid_player_ids\"\
-            \ or \"invalid_external_user_ids\" this will mark devices that exist in\
-            \ the provided app_id but are no longer subscribed.\nIf no id is returned,\
-            \ then a message was not created and the targeted User IDs do not exist\
-            \ under the provided app_id.\nAny User IDs sent in the request that do\
-            \ not exist under the specified app_id will be ignored.\n"
+          description: "OK, invalid_aliases, or No Subscribed Players\nIf a message\
+            \ was successfully created, you will get a 200 response and an id for\
+            \ the notification.\nIf the 200 response contains \"invalid_aliases\"\
+            \ this will mark devices that exist in the provided app_id but are no\
+            \ longer subscribed.\nIf no id is returned, then a message was not created\
+            \ and the targeted User IDs do not exist under the provided app_id.\n\
+            Any User IDs sent in the request that do not exist under the specified\
+            \ app_id will be ignored.\n"
         "400":
           content:
             application/json:
@@ -116,10 +116,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: Create notification
   /notifications/{notification_id}:
     delete:
@@ -145,7 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CancelNotificationSuccessResponse'
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
           description: OK
         "400":
           content:
@@ -153,14 +153,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "429":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: Stop a scheduled or currently outgoing notification
     get:
       description: View the details of a single notification and outcomes associated
@@ -194,14 +200,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "429":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: View notification
   /notifications/{notification_id}/history:
     post:
@@ -230,7 +242,7 @@ paths:
           type: string
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/get_notification_request_body'
+        $ref: '#/components/requestBodies/get_notification_history_request_body'
         content:
           application/json:
             schema:
@@ -252,7 +264,7 @@ paths:
                   type: string
               required:
               - id
-              title: get_notification_request_body
+              title: get_notification_history_request_body
               type: object
         required: true
       responses:
@@ -268,14 +280,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "429":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: Notification History
   /apps:
     get:
@@ -298,10 +316,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_key: []
+      - user_auth_key: []
       summary: View apps
     post:
       description: Creates a new OneSignal app
@@ -329,10 +347,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_key: []
+      - user_auth_key: []
       summary: Create an app
   /apps/{app_id}:
     get:
@@ -364,10 +382,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_key: []
+      - user_auth_key: []
       summary: View an app
     put:
       description: Updates the name or configuration settings of an existing OneSignal
@@ -405,22 +423,74 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_key: []
+      - user_auth_key: []
       summary: Update an app
   /apps/{app_id}/segments:
+    get:
+      description: Returns an array of segments from an app.
+      operationId: get_segments
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "Segments are listed in ascending order of created_at date. offset\
+          \ will omit that number of segments from the beginning of the list. Eg offset\
+          \ 5, will remove the 5 earliest created Segments."
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: The amount of Segments in the response. Maximum 300.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentsSuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Get Segments
     post:
-      description: "Create segments visible and usable in the dashboard and API -\
+      description: "Create a segment visible and usable in the dashboard and API -\
         \ Required: OneSignal Paid Plan\nThe Create Segment method is used when you\
         \ want your server to programmatically create a segment instead of using the\
         \ OneSignal Dashboard UI. Just like creating Segments from the dashboard you\
         \ can pass in filters with multiple \"AND\" or \"OR\" operator's.\n&#x1F6A7;\n\
         Does Not Update Segments\nThis endpoint will only create segments, it does\
         \ not edit or update currently created Segments. You will need to use the\
-        \ Delete Segments endpoint and re-create it with this endpoint to edit.\n"
-      operationId: create_segments
+        \ Delete Segment endpoint and re-create it with this endpoint to edit.\n"
+      operationId: create_segment
       parameters:
       - description: The OneSignal App ID for your app.  Available in Keys & IDs.
         explode: false
@@ -459,19 +529,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
-      summary: Create Segments
+      - rest_api_key: []
+      summary: Create Segment
   /apps/{app_id}/segments/{segment_id}:
     delete:
-      description: "Delete segments (not user devices) - Required: OneSignal Paid\
+      description: "Delete a segment (not user devices) - Required: OneSignal Paid\
         \ Plan\nYou can delete a segment under your app by calling this API. You must\
         \ provide an API key in the Authorization header that has admin access on\
         \ the app.\nThe segment_id can be found in the URL of the segment when viewing\
         \ it in the dashboard.\n"
-      operationId: delete_segments
+      operationId: delete_segment
       parameters:
       - description: The OneSignal App ID for your app.  Available in Keys & IDs.
         explode: false
@@ -495,7 +565,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteSegmentSuccessResponse'
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
           description: OK
         "400":
           content:
@@ -507,17 +577,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteSegmentNotFoundResponse'
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
           description: Not Found
         "429":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
-      summary: Delete Segments
+      - rest_api_key: []
+      summary: Delete Segment
   /apps/{app_id}/outcomes:
     get:
       description: "View the details of all the outcomes associated with your app\n\
@@ -606,10 +676,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: View Outcomes
   /apps/{app_id}/live_activities/{activity_id}/notifications:
     post:
@@ -655,103 +725,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: Update a Live Activity via Push
-  /apps/{app_id}/live_activities/{activity_id}/token:
-    post:
-      description: Starts a Live Activity
-      operationId: begin_live_activity
-      parameters:
-      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
-        explode: false
-        in: path
-        name: app_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: Live Activity record ID
-        explode: false
-        in: path
-        name: activity_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BeginLiveActivityRequest'
-        required: true
-      responses:
-        "204":
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-      summary: Start Live Activity
-  /apps/{app_id}/live_activities/{activity_id}/token/{subscription_id}:
-    delete:
-      description: Stops a Live Activity
-      operationId: end_live_activity
-      parameters:
-      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
-        explode: false
-        in: path
-        name: app_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: Live Activity record ID
-        explode: false
-        in: path
-        name: activity_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: Subscription ID
-        explode: false
-        in: path
-        name: subscription_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "204":
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-      summary: Stop Live Activity
   /apps/{app_id}/users:
     post:
       description: "Creates a User, optionally Subscriptions owned by the User as\
@@ -807,95 +785,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
-  /apps/{app_id}/users/{external_user_id}:
-    put:
-      description: "Update an existing device's tags in one of your OneSignal apps\
-        \ using the External User ID.\nWarning - Android SDK Data Synchronization\n\
-        Tags added through the Android SDK tagging methods may not update if using\
-        \ the API to change or update the same tag.\nFor example, if you use SDK method\
-        \ sendTag(\"key\", \"value1\") then update the tag value to \"value2\" with\
-        \ this API endpoint. You will not be able to set the value back to \"value1\"\
-        \ through the SDK, you will need to change it to something different through\
-        \ the SDK to be reset.\nRecommendations if using this Endpoint on Android\
-        \ Mobile Apps:\n1 - Do not use the same tag keys for SDK and API updates\n\
-        2 - If you want to use the same key for both SDK and API updates, call the\
-        \ SDK getTags method first to update the device's tags.\nThis is only applicable\
-        \ on the Android Mobile App SDKs.\n&#128216;\nDeleting Tags\nTo delete a tag,\
-        \ include its key and set its value to blank. Omitting a key/value will not\
-        \ delete it.\nFor example, if I wanted to delete two existing tags rank and\
-        \ category while simultaneously adding a new tag class, the tags JSON would\
-        \ look like the following:\n\"tags\": {\n   \"rank\": \"\",\n   \"category\"\
-        : \"\",\n   \"class\": \"my_new_value\"\n}\n"
-      operationId: update_player_tags
-      parameters:
-      - description: The OneSignal App ID the user record is found under.
-        explode: false
-        in: path
-        name: app_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: The External User ID mapped to teh device record in OneSignal.  Must
-          be actively set on the device to be updated.
-        explode: false
-        in: path
-        name: external_user_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/update_player_tags_request_body'
-        content:
-          application/json:
-            schema:
-              properties:
-                tags:
-                  description: "Custom tags for the device record.  Only support string\
-                    \ key value pairs.  Does not support arrays or other nested objects.\
-                    \  Example `{\"foo\":\"bar\",\"this\":\"that\"}`.\nLimitations:\n\
-                    - 100 tags per call\n- Android SDK users: tags cannot be removed\
-                    \ or changed via API if set through SDK sendTag methods.\nRecommended\
-                    \ to only tag devices with 1 kilobyte of ata\nPlease consider\
-                    \ using your own Database to save more than 1 kilobyte of data.\
-                    \  See: Internal Database & CRM\n"
-                  type: object
-              title: update_player_tags_request_body
-              type: object
-        required: false
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdatePlayerTagsSuccessResponse'
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "409":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Conflict
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-      summary: Edit tags with external user id
+      - rest_api_key: []
   /apps/{app_id}/users/by/{alias_label}/{alias_id}:
     delete:
       description: "Removes the User identified by (:alias_label, :alias_id), and\
@@ -942,13 +835,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
     get:
       description: "Returns the User’s properties, Aliases, and Subscriptions."
-      operationId: fetch_user
+      operationId: get_user
       parameters:
       - explode: false
         in: path
@@ -984,14 +877,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "429":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
     patch:
       description: Updates an existing User’s properties.
       operationId: update_user
@@ -1028,7 +927,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_202'
+                $ref: '#/components/schemas/PropertiesBody'
           description: ACCEPTED
         "400":
           content:
@@ -1046,14 +945,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
   /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity:
     get:
       description: "Lists all Aliases for the User identified by (:alias_label, :alias_id)."
-      operationId: fetch_user_identity
+      operationId: get_aliases
       parameters:
       - explode: false
         in: path
@@ -1081,7 +980,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/UserIdentityBody'
           description: OK
         "400":
           content:
@@ -1089,18 +988,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "429":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
     patch:
       description: "Upserts one or more Aliases to an existing User identified by\
         \ (:alias_label, :alias_id)."
-      operationId: identify_user_by_alias
+      operationId: create_alias
       parameters:
       - explode: false
         in: path
@@ -1127,14 +1032,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserIdentityRequestBody'
+              $ref: '#/components/schemas/UserIdentityBody'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/UserIdentityBody'
           description: OK
         "400":
           content:
@@ -1142,6 +1047,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "409":
           content:
             application/json:
@@ -1152,10 +1063,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
   /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete}:
     delete:
       description: Deletes an alias by alias label
@@ -1194,7 +1105,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/UserIdentityBody'
           description: OK
         "400":
           content:
@@ -1202,6 +1113,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "409":
           content:
             application/json:
@@ -1212,10 +1129,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
   /apps/{app_id}/users/by/{alias_label}/{alias_id}/subscriptions:
     post:
       description: Creates a new Subscription under the User provided. Useful to add
@@ -1247,20 +1164,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateSubscriptionRequestBody'
+              $ref: '#/components/schemas/SubscriptionBody'
         required: true
       responses:
         "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
+                $ref: '#/components/schemas/SubscriptionBody'
           description: CREATED
         "202":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
+                $ref: '#/components/schemas/SubscriptionBody'
           description: ACCEPTED
         "400":
           content:
@@ -1268,6 +1185,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "409":
           content:
             application/json:
@@ -1279,10 +1202,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
   /apps/{app_id}/subscriptions/{subscription_id}:
     delete:
       description: Deletes the Subscription.
@@ -1311,6 +1234,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "409":
           content:
             application/json:
@@ -1321,10 +1250,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
     patch:
       description: Updates an existing Subscription’s properties.
       operationId: update_subscription
@@ -1347,17 +1276,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateSubscriptionRequestBody'
+              $ref: '#/components/schemas/SubscriptionBody'
         required: true
       responses:
-        "202":
-          description: ACCEPTED
+        "200":
+          description: OK
         "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "409":
           content:
             application/json:
@@ -1368,14 +1303,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
   /apps/{app_id}/subscriptions/{subscription_id}/user/identity:
     get:
       description: Lists all Aliases for the User identified by :subscription_id.
-      operationId: fetch_aliases
+      operationId: get_aliases_by_subscription
       parameters:
       - explode: false
         in: path
@@ -1396,7 +1331,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserIdentityResponse'
+                $ref: '#/components/schemas/UserIdentityBody'
           description: OK
         "400":
           content:
@@ -1404,11 +1339,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
       security:
-      - app_key: []
+      - rest_api_key: []
     patch:
       description: Upserts one or more Aliases for the User identified by :subscription_id.
-      operationId: identify_user_by_subscription_id
+      operationId: create_alias_by_subscription
       parameters:
       - explode: false
         in: path
@@ -1428,14 +1369,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserIdentityRequestBody'
+              $ref: '#/components/schemas/UserIdentityBody'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserIdentityResponse'
+                $ref: '#/components/schemas/UserIdentityBody'
           description: OK
         "400":
           content:
@@ -1443,6 +1384,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericError'
           description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
         "409":
           content:
             application/json:
@@ -1453,10 +1400,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
   /apps/{app_id}/subscriptions/{subscription_id}/owner:
     patch:
       description: Transfers this Subscription to the User identified by the identity
@@ -1488,201 +1435,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserIdentityResponse'
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "409":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Conflict
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-  /apps/{app_id}/subscriptions/{subscription_id}/iams:
-    get:
-      description: Manifest of In-App Messages the Subscription is eligible to display
-        by the SDK.
-      operationId: get_eligible_iams
-      parameters:
-      - explode: false
-        in: path
-        name: app_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: path
-        name: subscription_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_3'
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-  /players:
-    get:
-      description: "View the details of multiple devices in one of your OneSignal\
-        \ apps\nUnavailable for Apps Over 80,000 Users\nFor performance reasons, this\
-        \ method is not available for larger apps. Larger apps should use the CSV\
-        \ export API endpoint, which is much more performant.\n"
-      operationId: get_players
-      parameters:
-      - description: The app ID that you want to view players from
-        explode: true
-        in: query
-        name: app_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: How many devices to return. Max is 300. Default is 300
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          type: integer
-        style: form
-      - description: Result offset. Default is 0. Results are sorted by id;
-        explode: true
-        in: query
-        name: offset
-        required: false
-        schema:
-          type: integer
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlayerSlice'
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-      summary: View devices
-    post:
-      description: "Register a new device to one of your OneSignal apps\n&#x1F6A7;\n\
-        Don't use this\nThis API endpoint is designed to be used from our open source\
-        \ Mobile and Web Push SDKs. It is not designed for developers to use it directly,\
-        \ unless instructed to do so by OneSignal support.\nIf you use this method\
-        \ instead of our SDKs, many OneSignal features such as conversion tracking,\
-        \ timezone tracking, language detection, and rich-push won't work out of the\
-        \ box. It will also make it harder to identify possible setup issues.\nThis\
-        \ method is used to register a new device with OneSignal.\nIf a device is\
-        \ already registered with the specified identifier, then this will update\
-        \ the existing device record instead of creating a new one.\nThe returned\
-        \ player is a player / user ID. Use the returned ID to send push notifications\
-        \ to this specific user later, or to include this player when sending to a\
-        \ set of users.\n&#x1F6A7;\niOS\nMust set test_type to 1 when building your\
-        \ iOS app as development. Omit this field in your production app builds.\n"
-      operationId: create_player
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Player'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreatePlayerSuccessResponse'
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "409":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Conflict
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-      summary: Add a device
-  /players/{player_id}:
-    delete:
-      description: "Delete player - Required:\nUsed to delete a single, specific Player\
-        \ ID record from a specific OneSignal app.\n"
-      operationId: delete_player
-      parameters:
-      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
-        explode: true
-        in: query
-        name: app_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: The OneSignal player_id
-        explode: false
-        in: path
-        name: player_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeletePlayerSuccessResponse'
+                $ref: '#/components/schemas/UserIdentityBody'
           description: OK
         "400":
           content:
@@ -1694,100 +1447,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeletePlayerNotFoundResponse'
+                $ref: '#/components/schemas/GenericError'
           description: Not Found
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-      summary: Delete a user record
-    get:
-      description: View the details of an existing device in one of your OneSignal
-        apps
-      operationId: get_player
-      parameters:
-      - description: Your app_id for this device
-        explode: true
-        in: query
-        name: app_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: Player's OneSignal ID
-        explode: false
-        in: path
-        name: player_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: Email - Only required if you have enabled Identity Verification
-          and device_type is email (11).
-        explode: true
-        in: query
-        name: email_auth_hash
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Player'
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RateLimiterError'
-          description: Rate Limit Exceeded
-      security:
-      - app_key: []
-      summary: View device
-    put:
-      description: Update an existing device in one of your OneSignal apps
-      operationId: update_player
-      parameters:
-      - description: Player's OneSignal ID
-        explode: false
-        in: path
-        name: player_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Player'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdatePlayerSuccessResponse'
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericError'
-          description: Bad Request
         "409":
           content:
             application/json:
@@ -1798,11 +1459,64 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
-      summary: Edit device
+      - rest_api_key: []
+  /apps/{app_id}/notifications/{notification_id}/unsubscribe:
+    post:
+      description: Unsubscribe an email with a token when using your own custom email
+        unsubscribe landing page
+      operationId: unsubscribe_email_with_token
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The id of the message found in the creation notification POST\
+          \ response, View Notifications GET response, or URL within the Message Report."
+        explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The unsubscribe token that is generated via liquid syntax in\
+          \ {{subscription.unsubscribe_token}} when personalizing an email."
+        explode: true
+        in: query
+        name: token
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Unsubscribe with token
   /players/csv_export?app_id={app_id}:
     post:
       description: "Generate a compressed CSV export of all of your current user data\n\
@@ -1847,7 +1561,7 @@ paths:
         \ rooted or not |\n  | ip | IP Address of the device if being tracked. See\
         \ Handling Personal Data. |\n  | web_auth | Web Only authorization key. |\n\
         \  | web_p256 | Web Only p256 key. |\n"
-      operationId: export_players
+      operationId: export_subscriptions
       parameters:
       - description: The app ID that you want to export devices from
         explode: false
@@ -1858,7 +1572,7 @@ paths:
           type: string
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/export_players_request_body'
+        $ref: '#/components/requestBodies/export_subscriptions_request_body'
         content:
           application/json:
             schema:
@@ -1877,14 +1591,14 @@ paths:
                 segment_name:
                   description: Export all devices belonging to the segment.
                   type: string
-              title: export_players_request_body
+              title: export_subscriptions_request_body
               type: object
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExportPlayersSuccessResponse'
+                $ref: '#/components/schemas/ExportSubscriptionsSuccessResponse'
           description: OK
         "400":
           content:
@@ -1896,11 +1610,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
-      summary: Export CSV of Players
+      - rest_api_key: []
+      summary: Export CSV of Subscriptions
   /notifications/{notification_id}/export_events?app_id={app_id}:
     post:
       description: |-
@@ -1947,30 +1661,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimiterError'
+                $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - app_key: []
+      - rest_api_key: []
       summary: Export CSV of Events
 components:
   requestBodies:
-    get_notification_request_body:
+    get_notification_history_request_body:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/get_notification_request_body'
+            $ref: '#/components/schemas/get_notification_history_request_body'
       required: true
-    update_player_tags_request_body:
+    export_subscriptions_request_body:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/update_player_tags_request_body'
-      required: false
-    export_players_request_body:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/export_players_request_body'
+            $ref: '#/components/schemas/export_subscriptions_request_body'
   schemas:
     App:
       example:
@@ -2182,26 +1890,13 @@ components:
             type: string
           type: array
       type: object
-    PlayerNotificationTarget:
+    SubscriptionNotificationTarget:
       properties:
-        include_player_ids:
-          deprecated: true
-          description: "Specific playerids to send your notification to. _Does not\
-            \ require API Auth Key.\nDo not combine with other targeting parameters.\
-            \ Not compatible with any other targeting parameters.\nExample: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"\
-            ]\nLimit of 2,000 entries per REST API call\n"
-          items:
-            type: string
-          nullable: true
-          type: array
-        include_external_user_ids:
-          deprecated: true
-          description: "Target specific devices by custom user IDs assigned via API.\n\
-            Not compatible with any other targeting parameters\nExample: [\"custom-id-assigned-by-api\"\
-            ]\nREQUIRED: REST API Key Authentication\nLimit of 2,000 entries per REST\
-            \ API call.\nNote: If targeting push, email, or sms subscribers with same\
-            \ ids, use with channel_for_external_user_ids to indicate you are sending\
-            \ a push or email or sms.\n"
+        include_subscription_ids:
+          description: "Specific subscription ids to send your notification to. _Does\
+            \ not require API Auth Key._\nNot compatible with any other targeting\
+            \ parameters.\nExample: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"]\nLimit\
+            \ of 2,000 entries per REST API call\n"
           items:
             type: string
           nullable: true
@@ -2224,9 +1919,9 @@ components:
             type: string
           type: array
         include_ios_tokens:
-          description: "Not Recommended: Please consider using include_player_ids\
-            \ or include_external_user_ids instead.\nTarget using iOS device tokens.\n\
-            Warning: Only works with Production tokens.\nAll non-alphanumeric characters\
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using iOS device tokens.\nWarning:\
+            \ Only works with Production tokens.\nAll non-alphanumeric characters\
             \ must be removed from each token. If a token does not correspond to an\
             \ existing user, a new user will be created.\nExample: ce777617da7f548fe7a9ab6febb56cf39fba6d38203...\n\
             Limit of 2,000 entries per REST API call\n"
@@ -2234,44 +1929,44 @@ components:
             type: string
           type: array
         include_wp_wns_uris:
-          description: "Not Recommended: Please consider using include_player_ids\
-            \ or include_external_user_ids instead.\nTarget using Windows URIs. If\
-            \ a token does not correspond to an existing user, a new user will be\
-            \ created.\nExample: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-...\n\
-            Limit of 2,000 entries per REST API call\n"
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Windows URIs. If a token does\
+            \ not correspond to an existing user, a new user will be created.\nExample:\
+            \ http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-...\nLimit of 2,000 entries\
+            \ per REST API call\n"
           items:
             type: string
           type: array
         include_amazon_reg_ids:
-          description: "Not Recommended: Please consider using include_player_ids\
-            \ or include_external_user_ids instead.\nTarget using Amazon ADM registration\
-            \ IDs. If a token does not correspond to an existing user, a new user\
-            \ will be created.\nExample: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV...\n\
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Amazon ADM registration IDs.\
+            \ If a token does not correspond to an existing user, a new user will\
+            \ be created.\nExample: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV...\n\
             Limit of 2,000 entries per REST API call\n"
           items:
             type: string
           type: array
         include_chrome_reg_ids:
-          description: "Not Recommended: Please consider using include_player_ids\
-            \ or include_external_user_ids instead.\nTarget using Chrome App registration\
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Chrome App registration IDs.\
+            \ If a token does not correspond to an existing user, a new user will\
+            \ be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\nLimit\
+            \ of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_chrome_web_reg_ids:
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Chrome Web Push registration\
             \ IDs. If a token does not correspond to an existing user, a new user\
             \ will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
             Limit of 2,000 entries per REST API call\n"
           items:
             type: string
           type: array
-        include_chrome_web_reg_ids:
-          description: "Not Recommended: Please consider using include_player_ids\
-            \ or include_external_user_ids instead.\nTarget using Chrome Web Push\
-            \ registration IDs. If a token does not correspond to an existing user,\
-            \ a new user will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
-            Limit of 2,000 entries per REST API call\n"
-          items:
-            type: string
-          type: array
         include_android_reg_ids:
-          description: "Not Recommended: Please consider using include_player_ids\
-            \ or include_external_user_ids instead.\nTarget using Android device registration\
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Android device registration\
             \ IDs. If a token does not correspond to an existing user, a new user\
             \ will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
             Limit of 2,000 entries per REST API call\n"
@@ -2279,7 +1974,21 @@ components:
             type: string
           type: array
         include_aliases:
-          $ref: '#/components/schemas/PlayerNotificationTarget_include_aliases'
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: "Target specific users by aliases assigned via API. An alias\
+            \ can be an external_id, onesignal_id, or a custom alias.\nAccepts an\
+            \ object where keys are alias labels and values are arrays of alias IDs\
+            \ to include\nExample usage: { \"external_id\": [\"exId1\", \"extId2\"\
+            ], \"internal_label\": [\"id1\", \"id2\"] }\nNot compatible with any other\
+            \ targeting parameters.\nREQUIRED: REST API Key Authentication\nLimit\
+            \ of 2,000 entries per REST API call\nNote: If targeting push, email,\
+            \ or sms subscribers with same ids, use with target_channel to indicate\
+            \ you are sending a push or email or sms."
+          nullable: true
+          type: object
         target_channel:
           enum:
           - push
@@ -2290,7 +1999,7 @@ components:
     NotificationTarget:
       anyOf:
       - $ref: '#/components/schemas/SegmentNotificationTarget'
-      - $ref: '#/components/schemas/PlayerNotificationTarget'
+      - $ref: '#/components/schemas/SubscriptionNotificationTarget'
     BasicNotification:
       allOf:
       - $ref: '#/components/schemas/NotificationTarget'
@@ -2318,11 +2027,64 @@ components:
       required:
       - id
       type: object
-    Buttons:
-      items:
-        $ref: '#/components/schemas/Button'
-      type: array
-    StringMap:
+    WebButton:
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        icon:
+          type: string
+        url:
+          type: string
+      required:
+      - id
+      type: object
+    LanguageStringMap:
+      example:
+        de: de
+        hi: hi
+        fi: fi
+        ru: ru
+        pt: pt
+        bg: bg
+        lt: lt
+        hr: hr
+        lv: lv
+        fr: fr
+        hu: hu
+        bs: bs
+        zh-Hans: zh-Hans
+        zh-Hant: zh-Hant
+        ka: ka
+        uk: uk
+        sk: sk
+        id: id
+        ca: ca
+        sr: sr
+        sv: sv
+        ko: ko
+        ms: ms
+        el: el
+        en: en
+        it: it
+        zh: zh
+        es: es
+        et: et
+        cs: cs
+        ar: ar
+        pa: pa
+        vi: vi
+        nb: nb
+        th: th
+        ja: ja
+        fa: fa
+        pl: pl
+        da: da
+        he: he
+        ro: ro
+        nl: nl
+        tr: tr
       properties:
         en:
           description: Text in English.  Will be used as a fallback
@@ -2526,7 +2288,7 @@ components:
       example:
         amount: amount
         iso: iso
-        count: 2.3021358869347655
+        count: 2
         sku: sku
       properties:
         sku:
@@ -2540,7 +2302,7 @@ components:
             and conversion of amount.
           type: string
         count:
-          type: number
+          type: integer
       required:
       - amount
       - iso
@@ -2584,8 +2346,8 @@ components:
     Filter:
       properties:
         field:
-          description: Name of the field to use as the first operand in the filter
-            expression.
+          description: Required. Name of the field to use as the first operand in
+            the filter expression.
           type: string
         key:
           description: "If `field` is `tag`, this field is *required* to specify `key`\
@@ -2595,8 +2357,24 @@ components:
           description: Constant value to use as the second operand in the filter expression.
             This value is *required* when the relation operator is a binary operator.
           type: string
+        hours_ago:
+          description: "If `field` is session-related, this is *required* to specify\
+            \ the number of hours before or after the user's session."
+          type: string
+        radius:
+          description: "If `field` is `location`, this will specify the radius in\
+            \ meters from a provided location point. Use with `lat` and `long`."
+          type: number
+        lat:
+          description: "If `field` is `location`, this is *required* to specify the\
+            \ user's latitude."
+          type: number
+        long:
+          description: "If `field` is `location`, this is *required* to specify the\
+            \ user's longitude."
+          type: number
         relation:
-          description: Operator of a filter expression.
+          description: Required. Operator of a filter expression.
           enum:
           - '>'
           - <
@@ -2607,9 +2385,6 @@ components:
           - time_elapsed_gt
           - time_elapsed_lt
           type: string
-      required:
-      - field
-      - relation
       type: object
     Operator:
       properties:
@@ -2621,8 +2396,8 @@ components:
           - AND
           type: string
       type: object
-    FilterExpressions:
-      anyOf:
+    FilterExpression:
+      oneOf:
       - $ref: '#/components/schemas/Filter'
       - $ref: '#/components/schemas/Operator'
     Segment:
@@ -2643,302 +2418,181 @@ components:
           description: "Filter or operators the segment will have.  For a list of\
             \ available filters with details, please see Send to Users Based on Filters."
           items:
-            $ref: '#/components/schemas/FilterExpressions'
+            $ref: '#/components/schemas/FilterExpression'
           type: array
       required:
       - filters
       - name
       type: object
-    Player:
+    SegmentData:
       example:
-        country: country
-        external_user_id_auth_hash: external_user_id_auth_hash
-        device_model: device_model
-        timezone: 5
-        created_at: 9
-        device_type: 5
-        language: language
-        playtime: 3
-        long: 1.0246457001441578
-        amount_spent: 7.061401241503109
+        is_active: true
+        updated_at: updated_at
+        read_only: true
+        name: name
+        created_at: created_at
         id: id
         app_id: app_id
-        lat: 1.4894159098541704
-        identifier: identifier
-        game_version: game_version
-        notification_types: 7
-        device_os: device_os
-        email_auth_hash: email_auth_hash
-        test_type: 1
-        external_user_id: external_user_id
-        tags: "{}"
-        ad_id: ad_id
-        session_count: 2
-        sdk: sdk
-        last_active: 4
-        invalid_identifier: true
-        badge_count: 2
       properties:
         id:
-          description: The device's OneSignal ID
-          readOnly: true
+          description: The segment ID
           type: string
-        invalid_identifier:
-          description: "If true, this is the equivalent of a user being Unsubscribed"
-          readOnly: true
-          type: boolean
-        app_id:
+        name:
+          description: The segment name
           type: string
-        device_type:
-          description: |
-            Required
-            The device's platform:
-              0 = iOS
-              1 = Android
-              2 = Amazon
-              3 = WindowsPhone (MPNS)
-              4 = Chrome Apps / Extensions
-              5 = Chrome Web Push
-              6 = Windows (WNS)
-              7 = Safari
-              8 = Firefox
-              9 = MacOS
-              10 = Alexa
-              11 = Email
-              13 = For Huawei App Gallery Builds SDK Setup. Not for Huawei Devices using FCM
-              14 = SMS
-          type: integer
-        external_user_id:
-          description: a custom user ID
-          nullable: true
-          type: string
-        external_user_id_auth_hash:
-          description: Only required if you have enabled Identity Verification and
-            device_type is NOT 11 email.
-          type: string
-        email_auth_hash:
-          description: Email - Only required if you have enabled Identity Verification
-            and device_type is email (11).
-          type: string
-        identifier:
-          description: "Recommended: For Push Notifications, this is the Push Token\
-            \ Identifier from Google or Apple. For Apple Push identifiers, you must\
-            \ strip all non alphanumeric characters.\nExamples:\niOS: 7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0\n\
-            Android: APA91bHbYHk7aq-Uam_2pyJ2qbZvqllyyh2wjfPRaw5gLEX2SUlQBRvOc6sck1sa7H7nGeLNlDco8lXj83HWWwzV...\n\
-            For Email Addresses, set the full email address email@email.com and make\
-            \ sure to set device_type to 11.\n"
-          nullable: true
-          type: string
-        language:
-          description: "Language code. Typically lower case two letters, except for\
-            \ Chinese where it must be one of zh-Hans or zh-Hant. Example: en\n"
-          type: string
-        timezone:
-          description: "Number of seconds away from UTC. Example: -28800\n"
-          nullable: true
-          type: integer
-        game_version:
-          description: "Version of your app. Example: 1.1\n"
-          nullable: true
-          type: string
-        device_model:
-          description: "Device make and model. Example: iPhone5,1\n"
-          nullable: true
-          type: string
-        device_os:
-          description: "Device operating system version. Example: 7.0.4\n"
-          nullable: true
-          type: string
-        ad_id:
-          description: |
-            The ad id for the device's platform:
-            Android = Advertising Id
-            iOS = identifierForVendor
-            WP8.0 = DeviceUniqueId
-            WP8.1 = AdvertisingId
-          nullable: true
-          type: string
-        sdk:
-          description: Name and version of the sdk/plugin that's calling this API
-            method (if any)
-          nullable: true
-          type: string
-        session_count:
-          description: "Number of times the user has played the game, defaults to\
-            \ 1"
-          type: integer
-        tags:
-          description: "Custom tags for the player. Only support string and integer\
-            \ key value pairs. Does not support arrays or other nested objects. Setting\
-            \ a tag value to null or an empty string will remove the tag. Example:\
-            \ {\"foo\":\"bar\",\"this\":\"that\"}\nLimitations:\n- 100 tags per call\n\
-            - Android SDK users: tags cannot be removed or changed via API if set\
-            \ through SDK sendTag methods.\nRecommended to only tag devices with 1\
-            \ kilobyte of data\nPlease consider using your own Database to save more\
-            \ than 1 kilobyte of data. See: Internal Database & CRM\n"
-          nullable: true
-          type: object
-        amount_spent:
-          description: "Amount the user has spent in USD, up to two decimal places"
-          type: number
         created_at:
-          description: Unixtime when the player joined the game
-          format: int64
-          type: integer
-        playtime:
-          description: Seconds player was running your app.
-          format: int64
-          type: integer
-        badge_count:
-          description: "Current iOS badge count displayed on the app icon\nNOTE: Not\
-            \ supported for apps created after June 2018, since badge count for apps\
-            \ created after this date are handled on the client.\n"
-          type: integer
-        last_active:
-          description: Unixtime when the player was last active
-          type: integer
-        notification_types:
-          description: |
-            1 = subscribed
-            -2 = unsubscribed
-            iOS - These values are set each time the user opens the app from the SDK. Use the SDK function set Subscription instead.
-            Android - You may set this but you can no longer use the SDK method setSubscription later in your app as it will create synchronization issues.
-          type: integer
-        test_type:
-          description: |
-            This is used in deciding whether to use your iOS Sandbox or Production push certificate when sending a push when both have been uploaded. Set to the iOS provisioning profile that was used to build your app.
-            1 = Development
-            2 = Ad-Hoc
-            Omit this field for App Store builds.
-          nullable: true
-          type: integer
-        long:
-          description: "Longitude of the device, used for geotagging to segment on."
-          type: number
-        lat:
-          description: "Latitude of the device, used for geotagging to segment on."
-          type: number
-        country:
-          description: Country code in the ISO 3166-1 Alpha 2 format
+          description: Date segment created
           type: string
-      required:
-      - device_type
+        updated_at:
+          description: Date segment last updated
+          type: string
+        app_id:
+          description: The app id
+          type: string
+        read_only:
+          description: Is the segment read only?
+          type: boolean
+        is_active:
+          description: Is the segment active?
+          type: boolean
       type: object
-    Players:
-      items:
-        $ref: '#/components/schemas/Player'
-      type: array
-    PlayerSlice:
+    GetSegmentsSuccessResponse:
       example:
         offset: 6
         total_count: 0
-        players:
-        - country: country
-          external_user_id_auth_hash: external_user_id_auth_hash
-          device_model: device_model
-          timezone: 5
-          created_at: 9
-          device_type: 5
-          language: language
-          playtime: 3
-          long: 1.0246457001441578
-          amount_spent: 7.061401241503109
-          id: id
-          app_id: app_id
-          lat: 1.4894159098541704
-          identifier: identifier
-          game_version: game_version
-          notification_types: 7
-          device_os: device_os
-          email_auth_hash: email_auth_hash
-          test_type: 1
-          external_user_id: external_user_id
-          tags: "{}"
-          ad_id: ad_id
-          session_count: 2
-          sdk: sdk
-          last_active: 4
-          invalid_identifier: true
-          badge_count: 2
-        - country: country
-          external_user_id_auth_hash: external_user_id_auth_hash
-          device_model: device_model
-          timezone: 5
-          created_at: 9
-          device_type: 5
-          language: language
-          playtime: 3
-          long: 1.0246457001441578
-          amount_spent: 7.061401241503109
-          id: id
-          app_id: app_id
-          lat: 1.4894159098541704
-          identifier: identifier
-          game_version: game_version
-          notification_types: 7
-          device_os: device_os
-          email_auth_hash: email_auth_hash
-          test_type: 1
-          external_user_id: external_user_id
-          tags: "{}"
-          ad_id: ad_id
-          session_count: 2
-          sdk: sdk
-          last_active: 4
-          invalid_identifier: true
-          badge_count: 2
         limit: 1
+        segments:
+        - is_active: true
+          updated_at: updated_at
+          read_only: true
+          name: name
+          created_at: created_at
+          id: id
+          app_id: app_id
+        - is_active: true
+          updated_at: updated_at
+          read_only: true
+          name: name
+          created_at: created_at
+          id: id
+          app_id: app_id
       properties:
         total_count:
+          description: The number of Segments in the response.
           type: integer
         offset:
+          description: Set with the offset query parameter. Default 0.
           type: integer
         limit:
+          description: Maximum number of Segments returned. Default 300.
           type: integer
-        players:
+        segments:
+          description: An array containing the Segment information.
           items:
-            $ref: '#/components/schemas/Player'
+            $ref: '#/components/schemas/SegmentData'
           type: array
       type: object
-    InvalidIdentifierError:
-      properties:
-        invalid_external_user_ids:
-          description: Returned if using include_external_user_ids
-          items:
-            type: string
-          type: array
-        invalid_player_ids:
-          description: Returned if using include_player_ids and some were valid and
-            others were not.
-          items:
-            type: string
-          type: array
-      type: object
-    NoSubscribersError:
-      description: |
-        Returned if no subscribed players.
-      items:
-        format: string
-        type: string
-      type: array
-    Notification200Errors:
-      oneOf:
-      - $ref: '#/components/schemas/InvalidIdentifierError'
-      - $ref: '#/components/schemas/NoSubscribersError'
     UpdateLiveActivityRequest:
       example:
         event_updates: "{}"
-        name: headings
+        stale_date: 0
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        sound: sound
+        name: name
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        dismissal_date: 6
         event: update
-        dismiss_at: 0.8008281904610115
+        priority: 1
       properties:
         name:
-          description: Type of live activity
-          enum:
-          - headings
-          - contents
-          - ios_sound
-          - priority_level
+          description: An internal name to assist with your campaign organization.
+            This does not get displayed in the message itself.
           type: string
         event:
           enum:
@@ -2946,30 +2600,44 @@ components:
           - end
           type: string
         event_updates:
+          description: This must match the ContentState interface you have defined
+            within your Live Activity in your app.
           type: object
-        dismiss_at:
-          description: Timestamp; only allowed if event is "end"
-          type: number
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        sound:
+          description: Sound file that is included in your app to play instead of
+            the default device notification sound. Omit to disable vibration and sound
+            for the notification.
+          type: string
+        stale_date:
+          description: "Accepts Unix timestamp in seconds. When time reaches the configured\
+            \ stale date, the system considers the Live Activity out of date, and\
+            \ the ActivityState of the Live Activity changes to ActivityState.stale."
+          type: integer
+        dismissal_date:
+          description: Accepts Unix timestamp in seconds; only allowed if event is
+            "end"
+          type: integer
+        priority:
+          description: "Delivery priority through the the push provider (APNs). Pass\
+            \ 10 for higher priority notifications, or 5 for lower priority notifications.\
+            \ Lower priority notifications are sent based on the power considerations\
+            \ of the end user's device. If not set, defaults to 10. Some providers\
+            \ (APNs) allow for a limited budget of high priority notifications per\
+            \ hour, and if that budget is exceeded, the provider may throttle notification\
+            \ delivery."
+          type: integer
       required:
       - event
       - event_updates
       - name
       type: object
-    BeginLiveActivityRequest:
-      example:
-        subscription_id: subscription_id
-        push_token: push_token
-      properties:
-        push_token:
-          type: string
-        subscription_id:
-          type: string
-      required:
-      - push_token
-      - subscription_id
-      type: object
     IdentityObject:
-      additionalProperties: true
+      additionalProperties:
+        type: string
       type: object
     PropertiesObject:
       example:
@@ -2977,17 +2645,17 @@ components:
         purchases:
         - amount: amount
           iso: iso
-          count: 2.3021358869347655
+          count: 2
           sku: sku
         - amount: amount
           iso: iso
-          count: 2.3021358869347655
+          count: 2
           sku: sku
         ip: ip
         timezone_id: timezone_id
         language: language
-        first_active: 1.4658129805029452
-        last_active: 5.962133916683182
+        first_active: 1
+        last_active: 5
         lat: 0.8008281904610115
         long: 6.027456183070403
         tags:
@@ -3008,9 +2676,9 @@ components:
         country:
           type: string
         first_active:
-          type: number
+          type: integer
         last_active:
-          type: number
+          type: integer
         amount_spent:
           type: number
         purchases:
@@ -3025,39 +2693,39 @@ components:
         purchases:
         - amount: amount
           iso: iso
-          count: 2.3021358869347655
+          count: 2
           sku: sku
         - amount: amount
           iso: iso
-          count: 2.3021358869347655
+          count: 2
           sku: sku
-        session_count: 6.027456183070403
-        session_time: 0.8008281904610115
+        session_count: 6
+        session_time: 0
       properties:
         session_time:
-          type: number
+          type: integer
         session_count:
-          type: number
+          type: integer
         purchases:
           items:
             $ref: '#/components/schemas/Purchase'
           type: array
       type: object
-    SubscriptionObject:
+    Subscription:
       example:
-        notification_types: 7.061401241503109
+        notification_types: 7
         device_model: device_model
         app_version: app_version
         web_p256: web_p256
-        net_type: 4.145608029883936
+        net_type: 4
         type: iOSPush
         device_os: device_os
         enabled: true
-        session_time: 9.301444243932576
-        test_type: 2.027123023002322
+        session_time: 9
+        test_type: 2
         token: token
         carrier: carrier
-        session_count: 3.616076749251911
+        session_count: 3
         web_auth: web_auth
         rooted: true
         id: id
@@ -3086,11 +2754,11 @@ components:
         enabled:
           type: boolean
         notification_types:
-          type: number
+          type: integer
         session_time:
-          type: number
+          type: integer
         session_count:
-          type: number
+          type: integer
         sdk:
           type: string
         device_model:
@@ -3100,11 +2768,11 @@ components:
         rooted:
           type: boolean
         test_type:
-          type: number
+          type: integer
         app_version:
           type: string
         net_type:
-          type: number
+          type: integer
         carrier:
           type: string
         web_auth:
@@ -3115,60 +2783,58 @@ components:
     User:
       example:
         subscriptions:
-        - notification_types: 7.061401241503109
+        - notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
-          net_type: 4.145608029883936
+          net_type: 4
           type: iOSPush
           device_os: device_os
           enabled: true
-          session_time: 9.301444243932576
-          test_type: 2.027123023002322
+          session_time: 9
+          test_type: 2
           token: token
           carrier: carrier
-          session_count: 3.616076749251911
+          session_count: 3
           web_auth: web_auth
           rooted: true
           id: id
           sdk: sdk
-        - notification_types: 7.061401241503109
+        - notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
-          net_type: 4.145608029883936
+          net_type: 4
           type: iOSPush
           device_os: device_os
           enabled: true
-          session_time: 9.301444243932576
-          test_type: 2.027123023002322
+          session_time: 9
+          test_type: 2
           token: token
           carrier: carrier
-          session_count: 3.616076749251911
+          session_count: 3
           web_auth: web_auth
           rooted: true
           id: id
           sdk: sdk
         identity:
-          key: ""
-        subscription_options:
-          retain_previous_owner: true
+          key: identity
         properties:
           country: country
           purchases:
           - amount: amount
             iso: iso
-            count: 2.3021358869347655
+            count: 2
             sku: sku
           - amount: amount
             iso: iso
-            count: 2.3021358869347655
+            count: 2
             sku: sku
           ip: ip
           timezone_id: timezone_id
           language: language
-          first_active: 1.4658129805029452
-          last_active: 5.962133916683182
+          first_active: 1
+          last_active: 5
           lat: 0.8008281904610115
           long: 6.027456183070403
           tags:
@@ -3178,14 +2844,13 @@ components:
         properties:
           $ref: '#/components/schemas/PropertiesObject'
         identity:
-          additionalProperties: true
+          additionalProperties:
+            type: string
           type: object
         subscriptions:
           items:
-            $ref: '#/components/schemas/SubscriptionObject'
+            $ref: '#/components/schemas/Subscription'
           type: array
-        subscription_options:
-          $ref: '#/components/schemas/User_subscription_options'
       type: object
     UpdateUserRequest:
       example:
@@ -3194,30 +2859,30 @@ components:
           purchases:
           - amount: amount
             iso: iso
-            count: 2.3021358869347655
+            count: 2
             sku: sku
           - amount: amount
             iso: iso
-            count: 2.3021358869347655
+            count: 2
             sku: sku
-          session_count: 6.027456183070403
-          session_time: 0.8008281904610115
+          session_count: 6
+          session_time: 0
         properties:
           country: country
           purchases:
           - amount: amount
             iso: iso
-            count: 2.3021358869347655
+            count: 2
             sku: sku
           - amount: amount
             iso: iso
-            count: 2.3021358869347655
+            count: 2
             sku: sku
           ip: ip
           timezone_id: timezone_id
           language: language
-          first_active: 1.4658129805029452
-          last_active: 5.962133916683182
+          first_active: 1
+          last_active: 5
           lat: 0.8008281904610115
           long: 6.027456183070403
           tags:
@@ -3234,23 +2899,20 @@ components:
       type: object
     CreateNotificationSuccessResponse:
       example:
-        recipients: 0
         external_id: external_id
         id: id
-        errors: null
+        errors: ""
       properties:
         id:
           type: string
-        recipients:
-          description: Estimated number of subscribers targetted by notification.
-          type: integer
         external_id:
           nullable: true
           type: string
         errors:
-          $ref: '#/components/schemas/Notification200Errors'
+          description: "Errors include the identifiers that are invalid, or that there\
+            \ are no subscribers."
       type: object
-    CancelNotificationSuccessResponse:
+    GenericSuccessBoolResponse:
       example:
         success: true
       properties:
@@ -3266,13 +2928,6 @@ components:
           type: boolean
         destination_url:
           type: string
-      type: object
-    UpdatePlayerTagsSuccessResponse:
-      example:
-        success: true
-      properties:
-        success:
-          type: boolean
       type: object
     CreateSegmentSuccessResponse:
       example:
@@ -3294,48 +2949,7 @@ components:
             type: string
           type: array
       type: object
-    DeleteSegmentSuccessResponse:
-      example:
-        success: true
-      properties:
-        success:
-          type: boolean
-      type: object
-    DeleteSegmentNotFoundResponse:
-      properties:
-        success:
-          type: boolean
-      type: object
-    CreatePlayerSuccessResponse:
-      example:
-        success: true
-        id: id
-      properties:
-        success:
-          type: boolean
-        id:
-          type: string
-      type: object
-    DeletePlayerSuccessResponse:
-      example:
-        success: true
-      properties:
-        success:
-          type: boolean
-      type: object
-    DeletePlayerNotFoundResponse:
-      properties:
-        success:
-          type: boolean
-      type: object
-    UpdatePlayerSuccessResponse:
-      example:
-        success: true
-      properties:
-        success:
-          type: boolean
-      type: object
-    ExportPlayersSuccessResponse:
+    ExportSubscriptionsSuccessResponse:
       example:
         csv_file_url: csv_file_url
       properties:
@@ -3344,13 +2958,10 @@ components:
       type: object
     UpdateLiveActivitySuccessResponse:
       example:
-        notification_id: notification_id
-        errors: null
+        id: id
       properties:
-        notification_id:
+        id:
           type: string
-        errors:
-          $ref: '#/components/schemas/Notification200Errors'
       type: object
     CreateUserConflictResponse:
       properties:
@@ -3361,94 +2972,91 @@ components:
       type: object
     GenericError:
       properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/GenericError_errors_inner'
-          type: array
-      type: object
-    RateLimiterError:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/GenericError_errors_inner'
-          type: array
-      type: object
-    CreateSubscriptionRequestBody:
-      example:
-        subscription:
-          notification_types: 7.061401241503109
-          device_model: device_model
-          app_version: app_version
-          web_p256: web_p256
-          net_type: 4.145608029883936
-          type: iOSPush
-          device_os: device_os
-          enabled: true
-          session_time: 9.301444243932576
-          test_type: 2.027123023002322
-          token: token
-          carrier: carrier
-          session_count: 3.616076749251911
-          web_auth: web_auth
-          rooted: true
-          id: id
-          sdk: sdk
-        retain_previous_owner: true
-      properties:
-        subscription:
-          $ref: '#/components/schemas/SubscriptionObject'
-        retain_previous_owner:
+        errors: {}
+        success:
           type: boolean
+        reference: {}
       type: object
-    UpdateSubscriptionRequestBody:
+    RateLimitError:
+      properties:
+        errors:
+          items:
+            type: string
+          type: array
+        limit:
+          type: string
+      type: object
+    PropertiesBody:
+      example:
+        properties:
+          country: country
+          purchases:
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          ip: ip
+          timezone_id: timezone_id
+          language: language
+          first_active: 1
+          last_active: 5
+          lat: 0.8008281904610115
+          long: 6.027456183070403
+          tags:
+            key: ""
+          amount_spent: 5.637376656633329
+      properties:
+        properties:
+          $ref: '#/components/schemas/PropertiesObject'
+      type: object
+    SubscriptionBody:
       example:
         subscription:
-          notification_types: 7.061401241503109
+          notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
-          net_type: 4.145608029883936
+          net_type: 4
           type: iOSPush
           device_os: device_os
           enabled: true
-          session_time: 9.301444243932576
-          test_type: 2.027123023002322
+          session_time: 9
+          test_type: 2
           token: token
           carrier: carrier
-          session_count: 3.616076749251911
+          session_count: 3
           web_auth: web_auth
           rooted: true
           id: id
           sdk: sdk
       properties:
         subscription:
-          $ref: '#/components/schemas/SubscriptionObject'
+          $ref: '#/components/schemas/Subscription'
       type: object
     TransferSubscriptionRequestBody:
       example:
         identity:
-          key: ""
+          key: identity
       properties:
         identity:
-          additionalProperties: true
+          additionalProperties:
+            type: string
+          maxProperties: 1
+          minProperties: 1
           type: object
       type: object
-    UserIdentityRequestBody:
+    UserIdentityBody:
       example:
         identity:
-          key: ""
+          key: identity
       properties:
         identity:
-          additionalProperties: true
-          type: object
-      type: object
-    UserIdentityResponse:
-      example:
-        identity:
-          key: ""
-      properties:
-        identity:
-          additionalProperties: true
+          additionalProperties:
+            type: string
           type: object
       type: object
     ExportEventsSuccessResponse:
@@ -3458,7 +3066,7 @@ components:
         csv_file_url:
           type: string
       type: object
-    get_notification_request_body:
+    get_notification_history_request_body:
       properties:
         events:
           description: "-> \"sent\" - All the devices by player_id that were sent\
@@ -3477,93 +3085,9 @@ components:
           type: string
       required:
       - id
-      title: get_notification_request_body
+      title: get_notification_history_request_body
       type: object
-    update_player_tags_request_body:
-      properties:
-        tags:
-          description: "Custom tags for the device record.  Only support string key\
-            \ value pairs.  Does not support arrays or other nested objects.  Example\
-            \ `{\"foo\":\"bar\",\"this\":\"that\"}`.\nLimitations:\n- 100 tags per\
-            \ call\n- Android SDK users: tags cannot be removed or changed via API\
-            \ if set through SDK sendTag methods.\nRecommended to only tag devices\
-            \ with 1 kilobyte of ata\nPlease consider using your own Database to save\
-            \ more than 1 kilobyte of data.  See: Internal Database & CRM\n"
-          type: object
-      title: update_player_tags_request_body
-      type: object
-    inline_response_202:
-      example:
-        properties:
-          country: country
-          purchases:
-          - amount: amount
-            iso: iso
-            count: 2.3021358869347655
-            sku: sku
-          - amount: amount
-            iso: iso
-            count: 2.3021358869347655
-            sku: sku
-          ip: ip
-          timezone_id: timezone_id
-          language: language
-          first_active: 1.4658129805029452
-          last_active: 5.962133916683182
-          lat: 0.8008281904610115
-          long: 6.027456183070403
-          tags:
-            key: ""
-          amount_spent: 5.637376656633329
-      properties:
-        properties:
-          $ref: '#/components/schemas/PropertiesObject'
-      type: object
-    inline_response_200:
-      example:
-        identity:
-          key: ""
-      properties:
-        identity:
-          additionalProperties: true
-          type: object
-      type: object
-    inline_response_201:
-      example:
-        subscription:
-          notification_types: 7.061401241503109
-          device_model: device_model
-          app_version: app_version
-          web_p256: web_p256
-          net_type: 4.145608029883936
-          type: iOSPush
-          device_os: device_os
-          enabled: true
-          session_time: 9.301444243932576
-          test_type: 2.027123023002322
-          token: token
-          carrier: carrier
-          session_count: 3.616076749251911
-          web_auth: web_auth
-          rooted: true
-          id: id
-          sdk: sdk
-      properties:
-        subscription:
-          $ref: '#/components/schemas/SubscriptionObject'
-      type: object
-    inline_response_200_3:
-      example:
-        in_app_messages:
-        - "{}"
-        - "{}"
-      properties:
-        in_app_messages:
-          items:
-            type: object
-          type: array
-      type: object
-    export_players_request_body:
+    export_subscriptions_request_body:
       properties:
         extra_fields:
           description: "Additional fields that you wish to include. Currently supports\
@@ -3579,15 +3103,7 @@ components:
         segment_name:
           description: Export all devices belonging to the segment.
           type: string
-      title: export_players_request_body
-      type: object
-    PlayerNotificationTarget_include_aliases:
-      nullable: true
-      properties:
-        alias_label:
-          items:
-            type: string
-          type: array
+      title: export_subscriptions_request_body
       type: object
     BasicNotification_allOf_android_background_layout:
       description: "Channel: Push Notifications\nPlatform: Android\nAllowing setting\
@@ -3691,14 +3207,6 @@ components:
           nullable: true
           type: boolean
           writeOnly: true
-        channel_for_external_user_ids:
-          description: "Indicates if the message type when targeting with include_external_user_ids\
-            \ for cases where an email, sms, and/or push subscribers have the same\
-            \ external user id.\nExample: Use the string \"push\" to indicate you\
-            \ are sending a push notification or the string \"email\"for sending emails\
-            \ or \"sms\"for sending SMS.\n"
-          type: string
-          writeOnly: true
         app_id:
           description: "Required: Your OneSignal Application ID, which can be found\
             \ in Keys & IDs.\nIt is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434.\n"
@@ -3732,7 +3240,7 @@ components:
           type: string
         contents:
           allOf:
-          - $ref: '#/components/schemas/StringMap'
+          - $ref: '#/components/schemas/LanguageStringMap'
           - description: "Required unless content_available=true or template_id is\
               \ set.\nThe message's content (excluding the title), a map of language\
               \ codes to text for each language.\nEach hash must have a language code\
@@ -3743,7 +3251,7 @@ components:
             writeOnly: true
         headings:
           allOf:
-          - $ref: '#/components/schemas/StringMap'
+          - $ref: '#/components/schemas/LanguageStringMap'
           - description: "The message's title, a map of language codes to text for\
               \ each language. Each hash must have a language code string for a key,\
               \ mapped to the localized text you would like users to receive for that\
@@ -3752,7 +3260,7 @@ components:
             writeOnly: true
         subtitle:
           allOf:
-          - $ref: '#/components/schemas/StringMap'
+          - $ref: '#/components/schemas/LanguageStringMap'
           - description: "The message's subtitle, a map of language codes to text\
               \ for each language. Each hash must have a language code string for\
               \ a key, mapped to the localized text you would like users to receive\
@@ -3889,7 +3397,7 @@ components:
             text\": \"Read more\", \"icon\": \"http://i.imgur.com/MIxJp1L.png\", \"\
             url\": \"https://yoursite.com\"}]\n"
           items:
-            $ref: '#/components/schemas/Button'
+            $ref: '#/components/schemas/WebButton'
           nullable: true
           type: array
           writeOnly: true
@@ -4273,6 +3781,21 @@ components:
             \ summary_arg\"\n"
           type: integer
           writeOnly: true
+        ios_relevance_score:
+          description: "Channel: Push Notifications\nPlatform: iOS 15+\nA score to\
+            \ be set per notification to indicate how it should be displayed when\
+            \ grouped. Use a float between 0-1.\n"
+          nullable: true
+          type: number
+          writeOnly: true
+        ios_interruption_level:
+          description: "Channel: Push Notifications\nPlatform: iOS 15+\nFocus Modes\
+            \ and Interruption Levels indicate the priority and delivery timing of\
+            \ a notification, to \"interrupt\" the user.\nCan choose from options:\
+            \ ['active', 'passive', 'time_sensitive', 'critical']. Default is active.\n"
+          nullable: true
+          type: string
+          writeOnly: true
         email_subject:
           description: "Channel: Email\nRequired.  The subject of the email.\n"
           nullable: true
@@ -4332,7 +3855,7 @@ components:
           writeOnly: true
         filters:
           items:
-            $ref: '#/components/schemas/Filter'
+            $ref: '#/components/schemas/FilterExpression'
           nullable: true
           type: array
         custom_data:
@@ -4463,13 +3986,6 @@ components:
             unsubscribe link in this email.
           nullable: true
           type: integer
-    User_subscription_options:
-      example:
-        retain_previous_owner: true
-      properties:
-        retain_previous_owner:
-          type: boolean
-      type: object
     CreateUserConflictResponse_errorsItems_meta:
       properties:
         conflicting_aliases:
@@ -4484,17 +4000,10 @@ components:
         meta:
           $ref: '#/components/schemas/CreateUserConflictResponse_errorsItems_meta'
       type: object
-    GenericError_errors_inner:
-      properties:
-        code:
-          type: string
-        title:
-          type: string
-      type: object
   securitySchemes:
-    app_key:
+    rest_api_key:
       scheme: bearer
       type: http
-    user_key:
+    user_auth_key:
       scheme: bearer
       type: http

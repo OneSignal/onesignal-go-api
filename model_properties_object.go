@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -23,8 +23,8 @@ type PropertiesObject struct {
 	Lat *float32 `json:"lat,omitempty"`
 	Long *float32 `json:"long,omitempty"`
 	Country *string `json:"country,omitempty"`
-	FirstActive *float32 `json:"first_active,omitempty"`
-	LastActive *float32 `json:"last_active,omitempty"`
+	FirstActive *int32 `json:"first_active,omitempty"`
+	LastActive *int32 `json:"last_active,omitempty"`
 	AmountSpent *float32 `json:"amount_spent,omitempty"`
 	Purchases []Purchase `json:"purchases,omitempty"`
 	Ip *string `json:"ip,omitempty"`
@@ -243,9 +243,9 @@ func (o *PropertiesObject) SetCountry(v string) {
 }
 
 // GetFirstActive returns the FirstActive field value if set, zero value otherwise.
-func (o *PropertiesObject) GetFirstActive() float32 {
+func (o *PropertiesObject) GetFirstActive() int32 {
 	if o == nil || o.FirstActive == nil {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.FirstActive
@@ -253,7 +253,7 @@ func (o *PropertiesObject) GetFirstActive() float32 {
 
 // GetFirstActiveOk returns a tuple with the FirstActive field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertiesObject) GetFirstActiveOk() (*float32, bool) {
+func (o *PropertiesObject) GetFirstActiveOk() (*int32, bool) {
 	if o == nil || o.FirstActive == nil {
 		return nil, false
 	}
@@ -269,15 +269,15 @@ func (o *PropertiesObject) HasFirstActive() bool {
 	return false
 }
 
-// SetFirstActive gets a reference to the given float32 and assigns it to the FirstActive field.
-func (o *PropertiesObject) SetFirstActive(v float32) {
+// SetFirstActive gets a reference to the given int32 and assigns it to the FirstActive field.
+func (o *PropertiesObject) SetFirstActive(v int32) {
 	o.FirstActive = &v
 }
 
 // GetLastActive returns the LastActive field value if set, zero value otherwise.
-func (o *PropertiesObject) GetLastActive() float32 {
+func (o *PropertiesObject) GetLastActive() int32 {
 	if o == nil || o.LastActive == nil {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.LastActive
@@ -285,7 +285,7 @@ func (o *PropertiesObject) GetLastActive() float32 {
 
 // GetLastActiveOk returns a tuple with the LastActive field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertiesObject) GetLastActiveOk() (*float32, bool) {
+func (o *PropertiesObject) GetLastActiveOk() (*int32, bool) {
 	if o == nil || o.LastActive == nil {
 		return nil, false
 	}
@@ -301,8 +301,8 @@ func (o *PropertiesObject) HasLastActive() bool {
 	return false
 }
 
-// SetLastActive gets a reference to the given float32 and assigns it to the LastActive field.
-func (o *PropertiesObject) SetLastActive(v float32) {
+// SetLastActive gets a reference to the given int32 and assigns it to the LastActive field.
+func (o *PropertiesObject) SetLastActive(v int32) {
 	o.LastActive = &v
 }
 
