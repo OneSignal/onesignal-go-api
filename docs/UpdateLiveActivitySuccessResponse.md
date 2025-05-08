@@ -4,8 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**NotificationId** | Pointer to **string** |  | [optional] 
-**Errors** | Pointer to [**Notification200Errors**](Notification200Errors.md) |  | [optional] 
+**Id** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -26,55 +25,30 @@ NewUpdateLiveActivitySuccessResponseWithDefaults instantiates a new UpdateLiveAc
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetNotificationId
+### GetId
 
-`func (o *UpdateLiveActivitySuccessResponse) GetNotificationId() string`
+`func (o *UpdateLiveActivitySuccessResponse) GetId() string`
 
-GetNotificationId returns the NotificationId field if non-nil, zero value otherwise.
+GetId returns the Id field if non-nil, zero value otherwise.
 
-### GetNotificationIdOk
+### GetIdOk
 
-`func (o *UpdateLiveActivitySuccessResponse) GetNotificationIdOk() (*string, bool)`
+`func (o *UpdateLiveActivitySuccessResponse) GetIdOk() (*string, bool)`
 
-GetNotificationIdOk returns a tuple with the NotificationId field if it's non-nil, zero value otherwise
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNotificationId
+### SetId
 
-`func (o *UpdateLiveActivitySuccessResponse) SetNotificationId(v string)`
+`func (o *UpdateLiveActivitySuccessResponse) SetId(v string)`
 
-SetNotificationId sets NotificationId field to given value.
+SetId sets Id field to given value.
 
-### HasNotificationId
+### HasId
 
-`func (o *UpdateLiveActivitySuccessResponse) HasNotificationId() bool`
+`func (o *UpdateLiveActivitySuccessResponse) HasId() bool`
 
-HasNotificationId returns a boolean if a field has been set.
-
-### GetErrors
-
-`func (o *UpdateLiveActivitySuccessResponse) GetErrors() Notification200Errors`
-
-GetErrors returns the Errors field if non-nil, zero value otherwise.
-
-### GetErrorsOk
-
-`func (o *UpdateLiveActivitySuccessResponse) GetErrorsOk() (*Notification200Errors, bool)`
-
-GetErrorsOk returns a tuple with the Errors field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetErrors
-
-`func (o *UpdateLiveActivitySuccessResponse) SetErrors(v Notification200Errors)`
-
-SetErrors sets Errors field to given value.
-
-### HasErrors
-
-`func (o *UpdateLiveActivitySuccessResponse) HasErrors() bool`
-
-HasErrors returns a boolean if a field has been set.
+HasId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -42,8 +42,6 @@ type BasicNotificationAllOf struct {
 	IsAdm NullableBool `json:"isAdm,omitempty"`
 	// This flag is not used for web push Please see isChromeWeb for sending to web push users. This flag only applies to Google Chrome Apps & Extensions. Indicates whether to send to all devices registered under your app's Google Chrome Apps & Extension platform. 
 	IsChrome NullableBool `json:"isChrome,omitempty"`
-	// Indicates if the message type when targeting with include_external_user_ids for cases where an email, sms, and/or push subscribers have the same external user id. Example: Use the string \"push\" to indicate you are sending a push notification or the string \"email\"for sending emails or \"sms\"for sending SMS. 
-	ChannelForExternalUserIds *string `json:"channel_for_external_user_ids,omitempty"`
 	// Required: Your OneSignal Application ID, which can be found in Keys & IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434. 
 	AppId *string `json:"app_id,omitempty"`
 	// [DEPRECATED] Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
@@ -51,9 +49,9 @@ type BasicNotificationAllOf struct {
 	ExternalId NullableString `json:"external_id,omitempty"`
 	// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same idempotency key. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same idempotency key will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
 	IdempotencyKey NullableString `json:"idempotency_key,omitempty"`
-	Contents NullableStringMap `json:"contents,omitempty"`
-	Headings NullableStringMap `json:"headings,omitempty"`
-	Subtitle NullableStringMap `json:"subtitle,omitempty"`
+	Contents NullableLanguageStringMap `json:"contents,omitempty"`
+	Headings NullableLanguageStringMap `json:"headings,omitempty"`
+	Subtitle NullableLanguageStringMap `json:"subtitle,omitempty"`
 	// Channel: Push Notifications Platform: Huawei A custom map of data that is passed back to your app. Same as using Additional Data within the dashboard. Can use up to 2048 bytes of data. Example: {\"abc\": 123, \"foo\": \"bar\", \"event_performed\": true, \"amount\": 12.1} 
 	Data map[string]interface{} `json:"data,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Use \"data\" or \"message\" depending on the type of notification you are sending. More details in Data & Background Notifications. 
@@ -87,7 +85,7 @@ type BasicNotificationAllOf struct {
 	// Channel: Push Notifications Platform: iOS 8.0+, Android 4.1+, and derivatives like Amazon Buttons to add to the notification. Icon only works for Android. Buttons show in reverse order of array position i.e. Last item in array shows as first button on device. Example: [{\"id\": \"id2\", \"text\": \"second button\", \"icon\": \"ic_menu_share\"}, {\"id\": \"id1\", \"text\": \"first button\", \"icon\": \"ic_menu_send\"}] 
 	Buttons []Button `json:"buttons,omitempty"`
 	// Channel: Push Notifications Platform: Chrome 48+ Add action buttons to the notification. The id field is required. Example: [{\"id\": \"like-button\", \"text\": \"Like\", \"icon\": \"http://i.imgur.com/N8SN8ZS.png\", \"url\": \"https://yoursite.com\"}, {\"id\": \"read-more-button\", \"text\": \"Read more\", \"icon\": \"http://i.imgur.com/MIxJp1L.png\", \"url\": \"https://yoursite.com\"}] 
-	WebButtons []Button `json:"web_buttons,omitempty"`
+	WebButtons []WebButton `json:"web_buttons,omitempty"`
 	// Channel: Push Notifications Platform: iOS Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code. Example: calendar category which contains actions like accept and decline iOS 10+ This will trigger your UNNotificationContentExtension whose ID matches this category. 
 	IosCategory NullableString `json:"ios_category,omitempty"`
 	// Channel: Push Notifications Platform: Android The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it's id. 
@@ -177,6 +175,10 @@ type BasicNotificationAllOf struct {
 	SummaryArg *string `json:"summary_arg,omitempty"`
 	// Channel: Push Notifications Platform: iOS 12+ When using thread_id, you can also control the count of the number of notifications in the group. For example, if the group already has 12 notifications, and you send a new notification with summary_arg_count = 2, the new total will be 14 and the summary will be \"14 more notifications from summary_arg\" 
 	SummaryArgCount *int32 `json:"summary_arg_count,omitempty"`
+	// Channel: Push Notifications Platform: iOS 15+ A score to be set per notification to indicate how it should be displayed when grouped. Use a float between 0-1. 
+	IosRelevanceScore NullableFloat32 `json:"ios_relevance_score,omitempty"`
+	// Channel: Push Notifications Platform: iOS 15+ Focus Modes and Interruption Levels indicate the priority and delivery timing of a notification, to \"interrupt\" the user. Can choose from options: ['active', 'passive', 'time_sensitive', 'critical']. Default is active. 
+	IosInterruptionLevel NullableString `json:"ios_interruption_level,omitempty"`
 	// Channel: Email Required.  The subject of the email. 
 	EmailSubject NullableString `json:"email_subject,omitempty"`
 	// Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an <a> tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid. 
@@ -193,7 +195,7 @@ type BasicNotificationAllOf struct {
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
 	SmsMediaUrls []string `json:"sms_media_urls,omitempty"`
-	Filters []Filter `json:"filters,omitempty"`
+	Filters []FilterExpression `json:"filters,omitempty"`
 	// Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\"order_id\": 123, \"currency\": \"USD\", \"amount\": 25} 
 	CustomData map[string]interface{} `json:"custom_data,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -776,38 +778,6 @@ func (o *BasicNotificationAllOf) UnsetIsChrome() {
 	o.IsChrome.Unset()
 }
 
-// GetChannelForExternalUserIds returns the ChannelForExternalUserIds field value if set, zero value otherwise.
-func (o *BasicNotificationAllOf) GetChannelForExternalUserIds() string {
-	if o == nil || o.ChannelForExternalUserIds == nil {
-		var ret string
-		return ret
-	}
-	return *o.ChannelForExternalUserIds
-}
-
-// GetChannelForExternalUserIdsOk returns a tuple with the ChannelForExternalUserIds field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BasicNotificationAllOf) GetChannelForExternalUserIdsOk() (*string, bool) {
-	if o == nil || o.ChannelForExternalUserIds == nil {
-		return nil, false
-	}
-	return o.ChannelForExternalUserIds, true
-}
-
-// HasChannelForExternalUserIds returns a boolean if a field has been set.
-func (o *BasicNotificationAllOf) HasChannelForExternalUserIds() bool {
-	if o != nil && o.ChannelForExternalUserIds != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetChannelForExternalUserIds gets a reference to the given string and assigns it to the ChannelForExternalUserIds field.
-func (o *BasicNotificationAllOf) SetChannelForExternalUserIds(v string) {
-	o.ChannelForExternalUserIds = &v
-}
-
 // GetAppId returns the AppId field value if set, zero value otherwise.
 func (o *BasicNotificationAllOf) GetAppId() string {
 	if o == nil || o.AppId == nil {
@@ -928,9 +898,9 @@ func (o *BasicNotificationAllOf) UnsetIdempotencyKey() {
 }
 
 // GetContents returns the Contents field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BasicNotificationAllOf) GetContents() StringMap {
+func (o *BasicNotificationAllOf) GetContents() LanguageStringMap {
 	if o == nil || o.Contents.Get() == nil {
-		var ret StringMap
+		var ret LanguageStringMap
 		return ret
 	}
 	return *o.Contents.Get()
@@ -939,7 +909,7 @@ func (o *BasicNotificationAllOf) GetContents() StringMap {
 // GetContentsOk returns a tuple with the Contents field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BasicNotificationAllOf) GetContentsOk() (*StringMap, bool) {
+func (o *BasicNotificationAllOf) GetContentsOk() (*LanguageStringMap, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -955,8 +925,8 @@ func (o *BasicNotificationAllOf) HasContents() bool {
 	return false
 }
 
-// SetContents gets a reference to the given NullableStringMap and assigns it to the Contents field.
-func (o *BasicNotificationAllOf) SetContents(v StringMap) {
+// SetContents gets a reference to the given NullableLanguageStringMap and assigns it to the Contents field.
+func (o *BasicNotificationAllOf) SetContents(v LanguageStringMap) {
 	o.Contents.Set(&v)
 }
 // SetContentsNil sets the value for Contents to be an explicit nil
@@ -970,9 +940,9 @@ func (o *BasicNotificationAllOf) UnsetContents() {
 }
 
 // GetHeadings returns the Headings field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BasicNotificationAllOf) GetHeadings() StringMap {
+func (o *BasicNotificationAllOf) GetHeadings() LanguageStringMap {
 	if o == nil || o.Headings.Get() == nil {
-		var ret StringMap
+		var ret LanguageStringMap
 		return ret
 	}
 	return *o.Headings.Get()
@@ -981,7 +951,7 @@ func (o *BasicNotificationAllOf) GetHeadings() StringMap {
 // GetHeadingsOk returns a tuple with the Headings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BasicNotificationAllOf) GetHeadingsOk() (*StringMap, bool) {
+func (o *BasicNotificationAllOf) GetHeadingsOk() (*LanguageStringMap, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -997,8 +967,8 @@ func (o *BasicNotificationAllOf) HasHeadings() bool {
 	return false
 }
 
-// SetHeadings gets a reference to the given NullableStringMap and assigns it to the Headings field.
-func (o *BasicNotificationAllOf) SetHeadings(v StringMap) {
+// SetHeadings gets a reference to the given NullableLanguageStringMap and assigns it to the Headings field.
+func (o *BasicNotificationAllOf) SetHeadings(v LanguageStringMap) {
 	o.Headings.Set(&v)
 }
 // SetHeadingsNil sets the value for Headings to be an explicit nil
@@ -1012,9 +982,9 @@ func (o *BasicNotificationAllOf) UnsetHeadings() {
 }
 
 // GetSubtitle returns the Subtitle field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BasicNotificationAllOf) GetSubtitle() StringMap {
+func (o *BasicNotificationAllOf) GetSubtitle() LanguageStringMap {
 	if o == nil || o.Subtitle.Get() == nil {
-		var ret StringMap
+		var ret LanguageStringMap
 		return ret
 	}
 	return *o.Subtitle.Get()
@@ -1023,7 +993,7 @@ func (o *BasicNotificationAllOf) GetSubtitle() StringMap {
 // GetSubtitleOk returns a tuple with the Subtitle field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BasicNotificationAllOf) GetSubtitleOk() (*StringMap, bool) {
+func (o *BasicNotificationAllOf) GetSubtitleOk() (*LanguageStringMap, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1039,8 +1009,8 @@ func (o *BasicNotificationAllOf) HasSubtitle() bool {
 	return false
 }
 
-// SetSubtitle gets a reference to the given NullableStringMap and assigns it to the Subtitle field.
-func (o *BasicNotificationAllOf) SetSubtitle(v StringMap) {
+// SetSubtitle gets a reference to the given NullableLanguageStringMap and assigns it to the Subtitle field.
+func (o *BasicNotificationAllOf) SetSubtitle(v LanguageStringMap) {
 	o.Subtitle.Set(&v)
 }
 // SetSubtitleNil sets the value for Subtitle to be an explicit nil
@@ -1689,9 +1659,9 @@ func (o *BasicNotificationAllOf) SetButtons(v []Button) {
 }
 
 // GetWebButtons returns the WebButtons field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BasicNotificationAllOf) GetWebButtons() []Button {
+func (o *BasicNotificationAllOf) GetWebButtons() []WebButton {
 	if o == nil {
-		var ret []Button
+		var ret []WebButton
 		return ret
 	}
 	return o.WebButtons
@@ -1700,7 +1670,7 @@ func (o *BasicNotificationAllOf) GetWebButtons() []Button {
 // GetWebButtonsOk returns a tuple with the WebButtons field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BasicNotificationAllOf) GetWebButtonsOk() ([]Button, bool) {
+func (o *BasicNotificationAllOf) GetWebButtonsOk() ([]WebButton, bool) {
 	if o == nil || o.WebButtons == nil {
 		return nil, false
 	}
@@ -1716,8 +1686,8 @@ func (o *BasicNotificationAllOf) HasWebButtons() bool {
 	return false
 }
 
-// SetWebButtons gets a reference to the given []Button and assigns it to the WebButtons field.
-func (o *BasicNotificationAllOf) SetWebButtons(v []Button) {
+// SetWebButtons gets a reference to the given []WebButton and assigns it to the WebButtons field.
+func (o *BasicNotificationAllOf) SetWebButtons(v []WebButton) {
 	o.WebButtons = v
 }
 
@@ -3523,6 +3493,90 @@ func (o *BasicNotificationAllOf) SetSummaryArgCount(v int32) {
 	o.SummaryArgCount = &v
 }
 
+// GetIosRelevanceScore returns the IosRelevanceScore field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotificationAllOf) GetIosRelevanceScore() float32 {
+	if o == nil || o.IosRelevanceScore.Get() == nil {
+		var ret float32
+		return ret
+	}
+	return *o.IosRelevanceScore.Get()
+}
+
+// GetIosRelevanceScoreOk returns a tuple with the IosRelevanceScore field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotificationAllOf) GetIosRelevanceScoreOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IosRelevanceScore.Get(), o.IosRelevanceScore.IsSet()
+}
+
+// HasIosRelevanceScore returns a boolean if a field has been set.
+func (o *BasicNotificationAllOf) HasIosRelevanceScore() bool {
+	if o != nil && o.IosRelevanceScore.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIosRelevanceScore gets a reference to the given NullableFloat32 and assigns it to the IosRelevanceScore field.
+func (o *BasicNotificationAllOf) SetIosRelevanceScore(v float32) {
+	o.IosRelevanceScore.Set(&v)
+}
+// SetIosRelevanceScoreNil sets the value for IosRelevanceScore to be an explicit nil
+func (o *BasicNotificationAllOf) SetIosRelevanceScoreNil() {
+	o.IosRelevanceScore.Set(nil)
+}
+
+// UnsetIosRelevanceScore ensures that no value is present for IosRelevanceScore, not even an explicit nil
+func (o *BasicNotificationAllOf) UnsetIosRelevanceScore() {
+	o.IosRelevanceScore.Unset()
+}
+
+// GetIosInterruptionLevel returns the IosInterruptionLevel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotificationAllOf) GetIosInterruptionLevel() string {
+	if o == nil || o.IosInterruptionLevel.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.IosInterruptionLevel.Get()
+}
+
+// GetIosInterruptionLevelOk returns a tuple with the IosInterruptionLevel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotificationAllOf) GetIosInterruptionLevelOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IosInterruptionLevel.Get(), o.IosInterruptionLevel.IsSet()
+}
+
+// HasIosInterruptionLevel returns a boolean if a field has been set.
+func (o *BasicNotificationAllOf) HasIosInterruptionLevel() bool {
+	if o != nil && o.IosInterruptionLevel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIosInterruptionLevel gets a reference to the given NullableString and assigns it to the IosInterruptionLevel field.
+func (o *BasicNotificationAllOf) SetIosInterruptionLevel(v string) {
+	o.IosInterruptionLevel.Set(&v)
+}
+// SetIosInterruptionLevelNil sets the value for IosInterruptionLevel to be an explicit nil
+func (o *BasicNotificationAllOf) SetIosInterruptionLevelNil() {
+	o.IosInterruptionLevel.Set(nil)
+}
+
+// UnsetIosInterruptionLevel ensures that no value is present for IosInterruptionLevel, not even an explicit nil
+func (o *BasicNotificationAllOf) UnsetIosInterruptionLevel() {
+	o.IosInterruptionLevel.Unset()
+}
+
 // GetEmailSubject returns the EmailSubject field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BasicNotificationAllOf) GetEmailSubject() string {
 	if o == nil || o.EmailSubject.Get() == nil {
@@ -3831,9 +3885,9 @@ func (o *BasicNotificationAllOf) SetSmsMediaUrls(v []string) {
 }
 
 // GetFilters returns the Filters field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BasicNotificationAllOf) GetFilters() []Filter {
+func (o *BasicNotificationAllOf) GetFilters() []FilterExpression {
 	if o == nil {
-		var ret []Filter
+		var ret []FilterExpression
 		return ret
 	}
 	return o.Filters
@@ -3842,7 +3896,7 @@ func (o *BasicNotificationAllOf) GetFilters() []Filter {
 // GetFiltersOk returns a tuple with the Filters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BasicNotificationAllOf) GetFiltersOk() ([]Filter, bool) {
+func (o *BasicNotificationAllOf) GetFiltersOk() ([]FilterExpression, bool) {
 	if o == nil || o.Filters == nil {
 		return nil, false
 	}
@@ -3858,8 +3912,8 @@ func (o *BasicNotificationAllOf) HasFilters() bool {
 	return false
 }
 
-// SetFilters gets a reference to the given []Filter and assigns it to the Filters field.
-func (o *BasicNotificationAllOf) SetFilters(v []Filter) {
+// SetFilters gets a reference to the given []FilterExpression and assigns it to the Filters field.
+func (o *BasicNotificationAllOf) SetFilters(v []FilterExpression) {
 	o.Filters = v
 }
 
@@ -3939,9 +3993,6 @@ func (o BasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	}
 	if o.IsChrome.IsSet() {
 		toSerialize["isChrome"] = o.IsChrome.Get()
-	}
-	if o.ChannelForExternalUserIds != nil {
-		toSerialize["channel_for_external_user_ids"] = o.ChannelForExternalUserIds
 	}
 	if o.AppId != nil {
 		toSerialize["app_id"] = o.AppId
@@ -4147,6 +4198,12 @@ func (o BasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	if o.SummaryArgCount != nil {
 		toSerialize["summary_arg_count"] = o.SummaryArgCount
 	}
+	if o.IosRelevanceScore.IsSet() {
+		toSerialize["ios_relevance_score"] = o.IosRelevanceScore.Get()
+	}
+	if o.IosInterruptionLevel.IsSet() {
+		toSerialize["ios_interruption_level"] = o.IosInterruptionLevel.Get()
+	}
 	if o.EmailSubject.IsSet() {
 		toSerialize["email_subject"] = o.EmailSubject.Get()
 	}
@@ -4209,7 +4266,6 @@ func (o *BasicNotificationAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "isWP_WNS")
 		delete(additionalProperties, "isAdm")
 		delete(additionalProperties, "isChrome")
-		delete(additionalProperties, "channel_for_external_user_ids")
 		delete(additionalProperties, "app_id")
 		delete(additionalProperties, "external_id")
 		delete(additionalProperties, "idempotency_key")
@@ -4278,6 +4334,8 @@ func (o *BasicNotificationAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "thread_id")
 		delete(additionalProperties, "summary_arg")
 		delete(additionalProperties, "summary_arg_count")
+		delete(additionalProperties, "ios_relevance_score")
+		delete(additionalProperties, "ios_interruption_level")
 		delete(additionalProperties, "email_subject")
 		delete(additionalProperties, "email_body")
 		delete(additionalProperties, "email_from_name")
