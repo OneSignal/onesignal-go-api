@@ -5,9 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** |  | [optional] 
-**Recipients** | Pointer to **int32** | Estimated number of subscribers targetted by notification. | [optional] 
 **ExternalId** | Pointer to **NullableString** |  | [optional] 
-**Errors** | Pointer to [**Notification200Errors**](Notification200Errors.md) |  | [optional] 
+**Errors** | Pointer to **interface{}** | Errors include the identifiers that are invalid, or that there are no subscribers. | [optional] 
 
 ## Methods
 
@@ -53,31 +52,6 @@ SetId sets Id field to given value.
 
 HasId returns a boolean if a field has been set.
 
-### GetRecipients
-
-`func (o *CreateNotificationSuccessResponse) GetRecipients() int32`
-
-GetRecipients returns the Recipients field if non-nil, zero value otherwise.
-
-### GetRecipientsOk
-
-`func (o *CreateNotificationSuccessResponse) GetRecipientsOk() (*int32, bool)`
-
-GetRecipientsOk returns a tuple with the Recipients field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRecipients
-
-`func (o *CreateNotificationSuccessResponse) SetRecipients(v int32)`
-
-SetRecipients sets Recipients field to given value.
-
-### HasRecipients
-
-`func (o *CreateNotificationSuccessResponse) HasRecipients() bool`
-
-HasRecipients returns a boolean if a field has been set.
-
 ### GetExternalId
 
 `func (o *CreateNotificationSuccessResponse) GetExternalId() string`
@@ -115,20 +89,20 @@ HasExternalId returns a boolean if a field has been set.
 UnsetExternalId ensures that no value is present for ExternalId, not even an explicit nil
 ### GetErrors
 
-`func (o *CreateNotificationSuccessResponse) GetErrors() Notification200Errors`
+`func (o *CreateNotificationSuccessResponse) GetErrors() interface{}`
 
 GetErrors returns the Errors field if non-nil, zero value otherwise.
 
 ### GetErrorsOk
 
-`func (o *CreateNotificationSuccessResponse) GetErrorsOk() (*Notification200Errors, bool)`
+`func (o *CreateNotificationSuccessResponse) GetErrorsOk() (*interface{}, bool)`
 
 GetErrorsOk returns a tuple with the Errors field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetErrors
 
-`func (o *CreateNotificationSuccessResponse) SetErrors(v Notification200Errors)`
+`func (o *CreateNotificationSuccessResponse) SetErrors(v interface{})`
 
 SetErrors sets Errors field to given value.
 
@@ -138,6 +112,16 @@ SetErrors sets Errors field to given value.
 
 HasErrors returns a boolean if a field has been set.
 
+### SetErrorsNil
+
+`func (o *CreateNotificationSuccessResponse) SetErrorsNil(b bool)`
+
+ SetErrorsNil sets the value for Errors to be an explicit nil
+
+### UnsetErrors
+`func (o *CreateNotificationSuccessResponse) UnsetErrors()`
+
+UnsetErrors ensures that no value is present for Errors, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

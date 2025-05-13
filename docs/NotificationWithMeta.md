@@ -6,17 +6,16 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **IncludedSegments** | Pointer to **[]string** | The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
 **ExcludedSegments** | Pointer to **[]string** | Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
-**IncludePlayerIds** | Pointer to **[]string** | Specific playerids to send your notification to. _Does not require API Auth Key. Do not combine with other targeting parameters. Not compatible with any other targeting parameters. Example: [\&quot;1dd608f2-c6a1-11e3-851d-000c2940e62c\&quot;] Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeExternalUserIds** | Pointer to **[]string** | Target specific devices by custom user IDs assigned via API. Not compatible with any other targeting parameters Example: [\&quot;custom-id-assigned-by-api\&quot;] REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call. Note: If targeting push, email, or sms subscribers with same ids, use with channel_for_external_user_ids to indicate you are sending a push or email or sms.  | [optional] 
+**IncludeSubscriptionIds** | Pointer to **[]string** | Specific subscription ids to send your notification to. _Does not require API Auth Key._ Not compatible with any other targeting parameters. Example: [\&quot;1dd608f2-c6a1-11e3-851d-000c2940e62c\&quot;] Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeEmailTokens** | Pointer to **[]string** | Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call  | [optional] 
 **IncludePhoneNumbers** | Pointer to **[]string** | Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeIosTokens** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeWpWnsUris** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeAmazonRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Amazon ADM registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeChromeRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeChromeWebRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeAndroidRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_player_ids or include_external_user_ids instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeAliases** | Pointer to [**NullablePlayerNotificationTargetIncludeAliases**](PlayerNotificationTargetIncludeAliases.md) |  | [optional] 
+**IncludeIosTokens** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeWpWnsUris** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAmazonRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Amazon ADM registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeChromeRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Chrome App registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeChromeWebRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Chrome Web Push registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAndroidRegIds** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Android device registration IDs. If a token does not correspond to an existing user, a new user will be created. Example: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_... Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeAliases** | Pointer to **map[string][]string** | Target specific users by aliases assigned via API. An alias can be an external_id, onesignal_id, or a custom alias. Accepts an object where keys are alias labels and values are arrays of alias IDs to include Example usage: { \&quot;external_id\&quot;: [\&quot;exId1\&quot;, \&quot;extId2\&quot;], \&quot;internal_label\&quot;: [\&quot;id1\&quot;, \&quot;id2\&quot;] } Not compatible with any other targeting parameters. REQUIRED: REST API Key Authentication Limit of 2,000 entries per REST API call Note: If targeting push, email, or sms subscribers with same ids, use with target_channel to indicate you are sending a push or email or sms. | [optional] 
 **TargetChannel** | Pointer to **string** |  | [optional] 
 **Id** | Pointer to **string** |  | [optional] 
 **Value** | Pointer to **int32** |  | [optional] [readonly] 
@@ -32,13 +31,12 @@ Name | Type | Description | Notes
 **IsWPWNS** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Windows platform. | [optional] 
 **IsAdm** | Pointer to **NullableBool** | Indicates whether to send to all devices registered under your app&#39;s Amazon Fire platform. | [optional] 
 **IsChrome** | Pointer to **NullableBool** | This flag is not used for web push Please see isChromeWeb for sending to web push users. This flag only applies to Google Chrome Apps &amp; Extensions. Indicates whether to send to all devices registered under your app&#39;s Google Chrome Apps &amp; Extension platform.  | [optional] 
-**ChannelForExternalUserIds** | Pointer to **string** | Indicates if the message type when targeting with include_external_user_ids for cases where an email, sms, and/or push subscribers have the same external user id. Example: Use the string \&quot;push\&quot; to indicate you are sending a push notification or the string \&quot;email\&quot;for sending emails or \&quot;sms\&quot;for sending SMS.  | [optional] 
 **AppId** | **string** | Required: Your OneSignal Application ID, which can be found in Keys &amp; IDs. It is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434.  | 
 **ExternalId** | Pointer to **NullableString** | [DEPRECATED] Correlation and idempotency key. A request received with this parameter will first look for another notification with the same external_id. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it&#39;s important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same external_id will be sent again.   See Idempotent Notification Requests for more details writeOnly: true  | [optional] 
 **IdempotencyKey** | Pointer to **NullableString** | Correlation and idempotency key. A request received with this parameter will first look for another notification with the same idempotency key. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it&#39;s important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same idempotency key will be sent again.   See Idempotent Notification Requests for more details writeOnly: true  | [optional] 
-**Contents** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
-**Headings** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
-**Subtitle** | Pointer to [**NullableStringMap**](StringMap.md) |  | [optional] 
+**Contents** | Pointer to [**NullableLanguageStringMap**](LanguageStringMap.md) |  | [optional] 
+**Headings** | Pointer to [**NullableLanguageStringMap**](LanguageStringMap.md) |  | [optional] 
+**Subtitle** | Pointer to [**NullableLanguageStringMap**](LanguageStringMap.md) |  | [optional] 
 **Data** | Pointer to **map[string]interface{}** | Channel: Push Notifications Platform: Huawei A custom map of data that is passed back to your app. Same as using Additional Data within the dashboard. Can use up to 2048 bytes of data. Example: {\&quot;abc\&quot;: 123, \&quot;foo\&quot;: \&quot;bar\&quot;, \&quot;event_performed\&quot;: true, \&quot;amount\&quot;: 12.1}  | [optional] 
 **HuaweiMsgType** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Use \&quot;data\&quot; or \&quot;message\&quot; depending on the type of notification you are sending. More details in Data &amp; Background Notifications.  | [optional] 
 **Url** | Pointer to **NullableString** | Channel: Push Notifications Platform: All The URL to open in the browser when a user clicks on the notification. Note: iOS needs https or updated NSAppTransportSecurity in plist This field supports inline substitutions. Omit if including web_url or app_url Example: https://onesignal.com  | [optional] 
@@ -55,7 +53,7 @@ Name | Type | Description | Notes
 **ChromeBigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: ChromeApp Large picture to display below the notification text. Must be a local URL.  | [optional] 
 **ChromeWebImage** | Pointer to **NullableString** | Channel: Push Notifications Platform: Chrome 56+ Sets the web push notification&#39;s large image to be shown below the notification&#39;s title and text. Please see Web Push Notification Icons.  | [optional] 
 **Buttons** | Pointer to [**[]Button**](Button.md) | Channel: Push Notifications Platform: iOS 8.0+, Android 4.1+, and derivatives like Amazon Buttons to add to the notification. Icon only works for Android. Buttons show in reverse order of array position i.e. Last item in array shows as first button on device. Example: [{\&quot;id\&quot;: \&quot;id2\&quot;, \&quot;text\&quot;: \&quot;second button\&quot;, \&quot;icon\&quot;: \&quot;ic_menu_share\&quot;}, {\&quot;id\&quot;: \&quot;id1\&quot;, \&quot;text\&quot;: \&quot;first button\&quot;, \&quot;icon\&quot;: \&quot;ic_menu_send\&quot;}]  | [optional] 
-**WebButtons** | Pointer to [**[]Button**](Button.md) | Channel: Push Notifications Platform: Chrome 48+ Add action buttons to the notification. The id field is required. Example: [{\&quot;id\&quot;: \&quot;like-button\&quot;, \&quot;text\&quot;: \&quot;Like\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/N8SN8ZS.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}, {\&quot;id\&quot;: \&quot;read-more-button\&quot;, \&quot;text\&quot;: \&quot;Read more\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/MIxJp1L.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}]  | [optional] 
+**WebButtons** | Pointer to [**[]WebButton**](WebButton.md) | Channel: Push Notifications Platform: Chrome 48+ Add action buttons to the notification. The id field is required. Example: [{\&quot;id\&quot;: \&quot;like-button\&quot;, \&quot;text\&quot;: \&quot;Like\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/N8SN8ZS.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}, {\&quot;id\&quot;: \&quot;read-more-button\&quot;, \&quot;text\&quot;: \&quot;Read more\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/MIxJp1L.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}]  | [optional] 
 **IosCategory** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code. Example: calendar category which contains actions like accept and decline iOS 10+ This will trigger your UNNotificationContentExtension whose ID matches this category.  | [optional] 
 **AndroidChannelId** | Pointer to **string** | Channel: Push Notifications Platform: Android The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
 **HuaweiChannelId** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
@@ -101,6 +99,8 @@ Name | Type | Description | Notes
 **ThreadId** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS 12+ This parameter is supported in iOS 12 and above. It allows you to group related notifications together. If two notifications have the same thread-id, they will both be added to the same group.  | [optional] 
 **SummaryArg** | Pointer to **string** | Channel: Push Notifications Platform: iOS 12+ When using thread_id to create grouped notifications in iOS 12+, you can also control the summary. For example, a grouped notification can say \&quot;12 more notifications from John Doe\&quot;. The summary_arg lets you set the name of the person/thing the notifications are coming from, and will show up as \&quot;X more notifications from summary_arg\&quot;  | [optional] 
 **SummaryArgCount** | Pointer to **int32** | Channel: Push Notifications Platform: iOS 12+ When using thread_id, you can also control the count of the number of notifications in the group. For example, if the group already has 12 notifications, and you send a new notification with summary_arg_count &#x3D; 2, the new total will be 14 and the summary will be \&quot;14 more notifications from summary_arg\&quot;  | [optional] 
+**IosRelevanceScore** | Pointer to **NullableFloat32** | Channel: Push Notifications Platform: iOS 15+ A score to be set per notification to indicate how it should be displayed when grouped. Use a float between 0-1.  | [optional] 
+**IosInterruptionLevel** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS 15+ Focus Modes and Interruption Levels indicate the priority and delivery timing of a notification, to \&quot;interrupt\&quot; the user. Can choose from options: [&#39;active&#39;, &#39;passive&#39;, &#39;time_sensitive&#39;, &#39;critical&#39;]. Default is active.  | [optional] 
 **EmailSubject** | Pointer to **NullableString** | Channel: Email Required.  The subject of the email.  | [optional] 
 **EmailBody** | Pointer to **string** | Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an &lt;a&gt; tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid.  | [optional] 
 **EmailFromName** | Pointer to **NullableString** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
@@ -109,7 +109,7 @@ Name | Type | Description | Notes
 **IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
-**Filters** | Pointer to [**[]Filter**](Filter.md) |  | [optional] 
+**Filters** | Pointer to [**[]FilterExpression**](FilterExpression.md) |  | [optional] 
 **CustomData** | Pointer to **map[string]interface{}** | Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\&quot;order_id\&quot;: 123, \&quot;currency\&quot;: \&quot;USD\&quot;, \&quot;amount\&quot;: 25}  | [optional] 
 **Successful** | Pointer to **int32** | Number of notifications that were successfully delivered. | [optional] 
 **Failed** | Pointer to **int32** | Number of notifications that could not be delivered due to those devices being unsubscribed. | [optional] 
@@ -192,76 +192,41 @@ SetExcludedSegments sets ExcludedSegments field to given value.
 
 HasExcludedSegments returns a boolean if a field has been set.
 
-### GetIncludePlayerIds
+### GetIncludeSubscriptionIds
 
-`func (o *NotificationWithMeta) GetIncludePlayerIds() []string`
+`func (o *NotificationWithMeta) GetIncludeSubscriptionIds() []string`
 
-GetIncludePlayerIds returns the IncludePlayerIds field if non-nil, zero value otherwise.
+GetIncludeSubscriptionIds returns the IncludeSubscriptionIds field if non-nil, zero value otherwise.
 
-### GetIncludePlayerIdsOk
+### GetIncludeSubscriptionIdsOk
 
-`func (o *NotificationWithMeta) GetIncludePlayerIdsOk() (*[]string, bool)`
+`func (o *NotificationWithMeta) GetIncludeSubscriptionIdsOk() (*[]string, bool)`
 
-GetIncludePlayerIdsOk returns a tuple with the IncludePlayerIds field if it's non-nil, zero value otherwise
+GetIncludeSubscriptionIdsOk returns a tuple with the IncludeSubscriptionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIncludePlayerIds
+### SetIncludeSubscriptionIds
 
-`func (o *NotificationWithMeta) SetIncludePlayerIds(v []string)`
+`func (o *NotificationWithMeta) SetIncludeSubscriptionIds(v []string)`
 
-SetIncludePlayerIds sets IncludePlayerIds field to given value.
+SetIncludeSubscriptionIds sets IncludeSubscriptionIds field to given value.
 
-### HasIncludePlayerIds
+### HasIncludeSubscriptionIds
 
-`func (o *NotificationWithMeta) HasIncludePlayerIds() bool`
+`func (o *NotificationWithMeta) HasIncludeSubscriptionIds() bool`
 
-HasIncludePlayerIds returns a boolean if a field has been set.
+HasIncludeSubscriptionIds returns a boolean if a field has been set.
 
-### SetIncludePlayerIdsNil
+### SetIncludeSubscriptionIdsNil
 
-`func (o *NotificationWithMeta) SetIncludePlayerIdsNil(b bool)`
+`func (o *NotificationWithMeta) SetIncludeSubscriptionIdsNil(b bool)`
 
- SetIncludePlayerIdsNil sets the value for IncludePlayerIds to be an explicit nil
+ SetIncludeSubscriptionIdsNil sets the value for IncludeSubscriptionIds to be an explicit nil
 
-### UnsetIncludePlayerIds
-`func (o *NotificationWithMeta) UnsetIncludePlayerIds()`
+### UnsetIncludeSubscriptionIds
+`func (o *NotificationWithMeta) UnsetIncludeSubscriptionIds()`
 
-UnsetIncludePlayerIds ensures that no value is present for IncludePlayerIds, not even an explicit nil
-### GetIncludeExternalUserIds
-
-`func (o *NotificationWithMeta) GetIncludeExternalUserIds() []string`
-
-GetIncludeExternalUserIds returns the IncludeExternalUserIds field if non-nil, zero value otherwise.
-
-### GetIncludeExternalUserIdsOk
-
-`func (o *NotificationWithMeta) GetIncludeExternalUserIdsOk() (*[]string, bool)`
-
-GetIncludeExternalUserIdsOk returns a tuple with the IncludeExternalUserIds field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIncludeExternalUserIds
-
-`func (o *NotificationWithMeta) SetIncludeExternalUserIds(v []string)`
-
-SetIncludeExternalUserIds sets IncludeExternalUserIds field to given value.
-
-### HasIncludeExternalUserIds
-
-`func (o *NotificationWithMeta) HasIncludeExternalUserIds() bool`
-
-HasIncludeExternalUserIds returns a boolean if a field has been set.
-
-### SetIncludeExternalUserIdsNil
-
-`func (o *NotificationWithMeta) SetIncludeExternalUserIdsNil(b bool)`
-
- SetIncludeExternalUserIdsNil sets the value for IncludeExternalUserIds to be an explicit nil
-
-### UnsetIncludeExternalUserIds
-`func (o *NotificationWithMeta) UnsetIncludeExternalUserIds()`
-
-UnsetIncludeExternalUserIds ensures that no value is present for IncludeExternalUserIds, not even an explicit nil
+UnsetIncludeSubscriptionIds ensures that no value is present for IncludeSubscriptionIds, not even an explicit nil
 ### GetIncludeEmailTokens
 
 `func (o *NotificationWithMeta) GetIncludeEmailTokens() []string`
@@ -464,20 +429,20 @@ HasIncludeAndroidRegIds returns a boolean if a field has been set.
 
 ### GetIncludeAliases
 
-`func (o *NotificationWithMeta) GetIncludeAliases() PlayerNotificationTargetIncludeAliases`
+`func (o *NotificationWithMeta) GetIncludeAliases() map[string][]string`
 
 GetIncludeAliases returns the IncludeAliases field if non-nil, zero value otherwise.
 
 ### GetIncludeAliasesOk
 
-`func (o *NotificationWithMeta) GetIncludeAliasesOk() (*PlayerNotificationTargetIncludeAliases, bool)`
+`func (o *NotificationWithMeta) GetIncludeAliasesOk() (*map[string][]string, bool)`
 
 GetIncludeAliasesOk returns a tuple with the IncludeAliases field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncludeAliases
 
-`func (o *NotificationWithMeta) SetIncludeAliases(v PlayerNotificationTargetIncludeAliases)`
+`func (o *NotificationWithMeta) SetIncludeAliases(v map[string][]string)`
 
 SetIncludeAliases sets IncludeAliases field to given value.
 
@@ -982,31 +947,6 @@ HasIsChrome returns a boolean if a field has been set.
 `func (o *NotificationWithMeta) UnsetIsChrome()`
 
 UnsetIsChrome ensures that no value is present for IsChrome, not even an explicit nil
-### GetChannelForExternalUserIds
-
-`func (o *NotificationWithMeta) GetChannelForExternalUserIds() string`
-
-GetChannelForExternalUserIds returns the ChannelForExternalUserIds field if non-nil, zero value otherwise.
-
-### GetChannelForExternalUserIdsOk
-
-`func (o *NotificationWithMeta) GetChannelForExternalUserIdsOk() (*string, bool)`
-
-GetChannelForExternalUserIdsOk returns a tuple with the ChannelForExternalUserIds field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetChannelForExternalUserIds
-
-`func (o *NotificationWithMeta) SetChannelForExternalUserIds(v string)`
-
-SetChannelForExternalUserIds sets ChannelForExternalUserIds field to given value.
-
-### HasChannelForExternalUserIds
-
-`func (o *NotificationWithMeta) HasChannelForExternalUserIds() bool`
-
-HasChannelForExternalUserIds returns a boolean if a field has been set.
-
 ### GetAppId
 
 `func (o *NotificationWithMeta) GetAppId() string`
@@ -1099,20 +1039,20 @@ HasIdempotencyKey returns a boolean if a field has been set.
 UnsetIdempotencyKey ensures that no value is present for IdempotencyKey, not even an explicit nil
 ### GetContents
 
-`func (o *NotificationWithMeta) GetContents() StringMap`
+`func (o *NotificationWithMeta) GetContents() LanguageStringMap`
 
 GetContents returns the Contents field if non-nil, zero value otherwise.
 
 ### GetContentsOk
 
-`func (o *NotificationWithMeta) GetContentsOk() (*StringMap, bool)`
+`func (o *NotificationWithMeta) GetContentsOk() (*LanguageStringMap, bool)`
 
 GetContentsOk returns a tuple with the Contents field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContents
 
-`func (o *NotificationWithMeta) SetContents(v StringMap)`
+`func (o *NotificationWithMeta) SetContents(v LanguageStringMap)`
 
 SetContents sets Contents field to given value.
 
@@ -1134,20 +1074,20 @@ HasContents returns a boolean if a field has been set.
 UnsetContents ensures that no value is present for Contents, not even an explicit nil
 ### GetHeadings
 
-`func (o *NotificationWithMeta) GetHeadings() StringMap`
+`func (o *NotificationWithMeta) GetHeadings() LanguageStringMap`
 
 GetHeadings returns the Headings field if non-nil, zero value otherwise.
 
 ### GetHeadingsOk
 
-`func (o *NotificationWithMeta) GetHeadingsOk() (*StringMap, bool)`
+`func (o *NotificationWithMeta) GetHeadingsOk() (*LanguageStringMap, bool)`
 
 GetHeadingsOk returns a tuple with the Headings field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHeadings
 
-`func (o *NotificationWithMeta) SetHeadings(v StringMap)`
+`func (o *NotificationWithMeta) SetHeadings(v LanguageStringMap)`
 
 SetHeadings sets Headings field to given value.
 
@@ -1169,20 +1109,20 @@ HasHeadings returns a boolean if a field has been set.
 UnsetHeadings ensures that no value is present for Headings, not even an explicit nil
 ### GetSubtitle
 
-`func (o *NotificationWithMeta) GetSubtitle() StringMap`
+`func (o *NotificationWithMeta) GetSubtitle() LanguageStringMap`
 
 GetSubtitle returns the Subtitle field if non-nil, zero value otherwise.
 
 ### GetSubtitleOk
 
-`func (o *NotificationWithMeta) GetSubtitleOk() (*StringMap, bool)`
+`func (o *NotificationWithMeta) GetSubtitleOk() (*LanguageStringMap, bool)`
 
 GetSubtitleOk returns a tuple with the Subtitle field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSubtitle
 
-`func (o *NotificationWithMeta) SetSubtitle(v StringMap)`
+`func (o *NotificationWithMeta) SetSubtitle(v LanguageStringMap)`
 
 SetSubtitle sets Subtitle field to given value.
 
@@ -1754,20 +1694,20 @@ HasButtons returns a boolean if a field has been set.
 UnsetButtons ensures that no value is present for Buttons, not even an explicit nil
 ### GetWebButtons
 
-`func (o *NotificationWithMeta) GetWebButtons() []Button`
+`func (o *NotificationWithMeta) GetWebButtons() []WebButton`
 
 GetWebButtons returns the WebButtons field if non-nil, zero value otherwise.
 
 ### GetWebButtonsOk
 
-`func (o *NotificationWithMeta) GetWebButtonsOk() (*[]Button, bool)`
+`func (o *NotificationWithMeta) GetWebButtonsOk() (*[]WebButton, bool)`
 
 GetWebButtonsOk returns a tuple with the WebButtons field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWebButtons
 
-`func (o *NotificationWithMeta) SetWebButtons(v []Button)`
+`func (o *NotificationWithMeta) SetWebButtons(v []WebButton)`
 
 SetWebButtons sets WebButtons field to given value.
 
@@ -3292,6 +3232,76 @@ SetSummaryArgCount sets SummaryArgCount field to given value.
 
 HasSummaryArgCount returns a boolean if a field has been set.
 
+### GetIosRelevanceScore
+
+`func (o *NotificationWithMeta) GetIosRelevanceScore() float32`
+
+GetIosRelevanceScore returns the IosRelevanceScore field if non-nil, zero value otherwise.
+
+### GetIosRelevanceScoreOk
+
+`func (o *NotificationWithMeta) GetIosRelevanceScoreOk() (*float32, bool)`
+
+GetIosRelevanceScoreOk returns a tuple with the IosRelevanceScore field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIosRelevanceScore
+
+`func (o *NotificationWithMeta) SetIosRelevanceScore(v float32)`
+
+SetIosRelevanceScore sets IosRelevanceScore field to given value.
+
+### HasIosRelevanceScore
+
+`func (o *NotificationWithMeta) HasIosRelevanceScore() bool`
+
+HasIosRelevanceScore returns a boolean if a field has been set.
+
+### SetIosRelevanceScoreNil
+
+`func (o *NotificationWithMeta) SetIosRelevanceScoreNil(b bool)`
+
+ SetIosRelevanceScoreNil sets the value for IosRelevanceScore to be an explicit nil
+
+### UnsetIosRelevanceScore
+`func (o *NotificationWithMeta) UnsetIosRelevanceScore()`
+
+UnsetIosRelevanceScore ensures that no value is present for IosRelevanceScore, not even an explicit nil
+### GetIosInterruptionLevel
+
+`func (o *NotificationWithMeta) GetIosInterruptionLevel() string`
+
+GetIosInterruptionLevel returns the IosInterruptionLevel field if non-nil, zero value otherwise.
+
+### GetIosInterruptionLevelOk
+
+`func (o *NotificationWithMeta) GetIosInterruptionLevelOk() (*string, bool)`
+
+GetIosInterruptionLevelOk returns a tuple with the IosInterruptionLevel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIosInterruptionLevel
+
+`func (o *NotificationWithMeta) SetIosInterruptionLevel(v string)`
+
+SetIosInterruptionLevel sets IosInterruptionLevel field to given value.
+
+### HasIosInterruptionLevel
+
+`func (o *NotificationWithMeta) HasIosInterruptionLevel() bool`
+
+HasIosInterruptionLevel returns a boolean if a field has been set.
+
+### SetIosInterruptionLevelNil
+
+`func (o *NotificationWithMeta) SetIosInterruptionLevelNil(b bool)`
+
+ SetIosInterruptionLevelNil sets the value for IosInterruptionLevel to be an explicit nil
+
+### UnsetIosInterruptionLevel
+`func (o *NotificationWithMeta) UnsetIosInterruptionLevel()`
+
+UnsetIosInterruptionLevel ensures that no value is present for IosInterruptionLevel, not even an explicit nil
 ### GetEmailSubject
 
 `func (o *NotificationWithMeta) GetEmailSubject() string`
@@ -3554,20 +3564,20 @@ HasSmsMediaUrls returns a boolean if a field has been set.
 UnsetSmsMediaUrls ensures that no value is present for SmsMediaUrls, not even an explicit nil
 ### GetFilters
 
-`func (o *NotificationWithMeta) GetFilters() []Filter`
+`func (o *NotificationWithMeta) GetFilters() []FilterExpression`
 
 GetFilters returns the Filters field if non-nil, zero value otherwise.
 
 ### GetFiltersOk
 
-`func (o *NotificationWithMeta) GetFiltersOk() (*[]Filter, bool)`
+`func (o *NotificationWithMeta) GetFiltersOk() (*[]FilterExpression, bool)`
 
 GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFilters
 
-`func (o *NotificationWithMeta) SetFilters(v []Filter)`
+`func (o *NotificationWithMeta) SetFilters(v []FilterExpression)`
 
 SetFilters sets Filters field to given value.
 
