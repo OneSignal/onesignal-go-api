@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,7 +17,9 @@ import (
 
 // GenericError struct for GenericError
 type GenericError struct {
-	Errors []GenericErrorErrorsInner `json:"errors,omitempty"`
+	Errors interface{} `json:"errors,omitempty"`
+	Success *bool `json:"success,omitempty"`
+	Reference interface{} `json:"reference,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -40,10 +42,10 @@ func NewGenericErrorWithDefaults() *GenericError {
 	return &this
 }
 
-// GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *GenericError) GetErrors() []GenericErrorErrorsInner {
-	if o == nil || o.Errors == nil {
-		var ret []GenericErrorErrorsInner
+// GetErrors returns the Errors field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GenericError) GetErrors() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
 	return o.Errors
@@ -51,11 +53,12 @@ func (o *GenericError) GetErrors() []GenericErrorErrorsInner {
 
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GenericError) GetErrorsOk() ([]GenericErrorErrorsInner, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GenericError) GetErrorsOk() (*interface{}, bool) {
 	if o == nil || o.Errors == nil {
 		return nil, false
 	}
-	return o.Errors, true
+	return &o.Errors, true
 }
 
 // HasErrors returns a boolean if a field has been set.
@@ -67,15 +70,86 @@ func (o *GenericError) HasErrors() bool {
 	return false
 }
 
-// SetErrors gets a reference to the given []GenericErrorErrorsInner and assigns it to the Errors field.
-func (o *GenericError) SetErrors(v []GenericErrorErrorsInner) {
+// SetErrors gets a reference to the given interface{} and assigns it to the Errors field.
+func (o *GenericError) SetErrors(v interface{}) {
 	o.Errors = v
+}
+
+// GetSuccess returns the Success field value if set, zero value otherwise.
+func (o *GenericError) GetSuccess() bool {
+	if o == nil || o.Success == nil {
+		var ret bool
+		return ret
+	}
+	return *o.Success
+}
+
+// GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GenericError) GetSuccessOk() (*bool, bool) {
+	if o == nil || o.Success == nil {
+		return nil, false
+	}
+	return o.Success, true
+}
+
+// HasSuccess returns a boolean if a field has been set.
+func (o *GenericError) HasSuccess() bool {
+	if o != nil && o.Success != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSuccess gets a reference to the given bool and assigns it to the Success field.
+func (o *GenericError) SetSuccess(v bool) {
+	o.Success = &v
+}
+
+// GetReference returns the Reference field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GenericError) GetReference() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Reference
+}
+
+// GetReferenceOk returns a tuple with the Reference field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GenericError) GetReferenceOk() (*interface{}, bool) {
+	if o == nil || o.Reference == nil {
+		return nil, false
+	}
+	return &o.Reference, true
+}
+
+// HasReference returns a boolean if a field has been set.
+func (o *GenericError) HasReference() bool {
+	if o != nil && o.Reference != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetReference gets a reference to the given interface{} and assigns it to the Reference field.
+func (o *GenericError) SetReference(v interface{}) {
+	o.Reference = v
 }
 
 func (o GenericError) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Errors != nil {
 		toSerialize["errors"] = o.Errors
+	}
+	if o.Success != nil {
+		toSerialize["success"] = o.Success
+	}
+	if o.Reference != nil {
+		toSerialize["reference"] = o.Reference
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -96,6 +170,8 @@ func (o *GenericError) UnmarshalJSON(bytes []byte) (err error) {
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		delete(additionalProperties, "errors")
+		delete(additionalProperties, "success")
+		delete(additionalProperties, "reference")
 		o.AdditionalProperties = additionalProperties
 	}
 

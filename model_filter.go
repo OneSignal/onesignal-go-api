@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,14 +17,22 @@ import (
 
 // Filter struct for Filter
 type Filter struct {
-	// Name of the field to use as the first operand in the filter expression.
-	Field string `json:"field"`
+	// Required. Name of the field to use as the first operand in the filter expression.
+	Field *string `json:"field,omitempty"`
 	// If `field` is `tag`, this field is *required* to specify `key` inside the tags.
 	Key *string `json:"key,omitempty"`
 	// Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator.
 	Value *string `json:"value,omitempty"`
-	// Operator of a filter expression.
-	Relation string `json:"relation"`
+	// If `field` is session-related, this is *required* to specify the number of hours before or after the user's session.
+	HoursAgo *string `json:"hours_ago,omitempty"`
+	// If `field` is `location`, this will specify the radius in meters from a provided location point. Use with `lat` and `long`.
+	Radius *float32 `json:"radius,omitempty"`
+	// If `field` is `location`, this is *required* to specify the user's latitude.
+	Lat *float32 `json:"lat,omitempty"`
+	// If `field` is `location`, this is *required* to specify the user's longitude.
+	Long *float32 `json:"long,omitempty"`
+	// Required. Operator of a filter expression.
+	Relation *string `json:"relation,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -34,10 +42,8 @@ type _Filter Filter
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFilter(field string, relation string) *Filter {
+func NewFilter() *Filter {
 	this := Filter{}
-	this.Field = field
-	this.Relation = relation
 	return &this
 }
 
@@ -49,28 +55,36 @@ func NewFilterWithDefaults() *Filter {
 	return &this
 }
 
-// GetField returns the Field field value
+// GetField returns the Field field value if set, zero value otherwise.
 func (o *Filter) GetField() string {
-	if o == nil {
+	if o == nil || o.Field == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Field
+	return *o.Field
 }
 
-// GetFieldOk returns a tuple with the Field field value
+// GetFieldOk returns a tuple with the Field field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Filter) GetFieldOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Field == nil {
 		return nil, false
 	}
-	return &o.Field, true
+	return o.Field, true
 }
 
-// SetField sets field value
+// HasField returns a boolean if a field has been set.
+func (o *Filter) HasField() bool {
+	if o != nil && o.Field != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetField gets a reference to the given string and assigns it to the Field field.
 func (o *Filter) SetField(v string) {
-	o.Field = v
+	o.Field = &v
 }
 
 // GetKey returns the Key field value if set, zero value otherwise.
@@ -137,33 +151,169 @@ func (o *Filter) SetValue(v string) {
 	o.Value = &v
 }
 
-// GetRelation returns the Relation field value
-func (o *Filter) GetRelation() string {
-	if o == nil {
+// GetHoursAgo returns the HoursAgo field value if set, zero value otherwise.
+func (o *Filter) GetHoursAgo() string {
+	if o == nil || o.HoursAgo == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Relation
+	return *o.HoursAgo
 }
 
-// GetRelationOk returns a tuple with the Relation field value
+// GetHoursAgoOk returns a tuple with the HoursAgo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Filter) GetRelationOk() (*string, bool) {
-	if o == nil {
+func (o *Filter) GetHoursAgoOk() (*string, bool) {
+	if o == nil || o.HoursAgo == nil {
 		return nil, false
 	}
-	return &o.Relation, true
+	return o.HoursAgo, true
 }
 
-// SetRelation sets field value
+// HasHoursAgo returns a boolean if a field has been set.
+func (o *Filter) HasHoursAgo() bool {
+	if o != nil && o.HoursAgo != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHoursAgo gets a reference to the given string and assigns it to the HoursAgo field.
+func (o *Filter) SetHoursAgo(v string) {
+	o.HoursAgo = &v
+}
+
+// GetRadius returns the Radius field value if set, zero value otherwise.
+func (o *Filter) GetRadius() float32 {
+	if o == nil || o.Radius == nil {
+		var ret float32
+		return ret
+	}
+	return *o.Radius
+}
+
+// GetRadiusOk returns a tuple with the Radius field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Filter) GetRadiusOk() (*float32, bool) {
+	if o == nil || o.Radius == nil {
+		return nil, false
+	}
+	return o.Radius, true
+}
+
+// HasRadius returns a boolean if a field has been set.
+func (o *Filter) HasRadius() bool {
+	if o != nil && o.Radius != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRadius gets a reference to the given float32 and assigns it to the Radius field.
+func (o *Filter) SetRadius(v float32) {
+	o.Radius = &v
+}
+
+// GetLat returns the Lat field value if set, zero value otherwise.
+func (o *Filter) GetLat() float32 {
+	if o == nil || o.Lat == nil {
+		var ret float32
+		return ret
+	}
+	return *o.Lat
+}
+
+// GetLatOk returns a tuple with the Lat field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Filter) GetLatOk() (*float32, bool) {
+	if o == nil || o.Lat == nil {
+		return nil, false
+	}
+	return o.Lat, true
+}
+
+// HasLat returns a boolean if a field has been set.
+func (o *Filter) HasLat() bool {
+	if o != nil && o.Lat != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLat gets a reference to the given float32 and assigns it to the Lat field.
+func (o *Filter) SetLat(v float32) {
+	o.Lat = &v
+}
+
+// GetLong returns the Long field value if set, zero value otherwise.
+func (o *Filter) GetLong() float32 {
+	if o == nil || o.Long == nil {
+		var ret float32
+		return ret
+	}
+	return *o.Long
+}
+
+// GetLongOk returns a tuple with the Long field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Filter) GetLongOk() (*float32, bool) {
+	if o == nil || o.Long == nil {
+		return nil, false
+	}
+	return o.Long, true
+}
+
+// HasLong returns a boolean if a field has been set.
+func (o *Filter) HasLong() bool {
+	if o != nil && o.Long != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLong gets a reference to the given float32 and assigns it to the Long field.
+func (o *Filter) SetLong(v float32) {
+	o.Long = &v
+}
+
+// GetRelation returns the Relation field value if set, zero value otherwise.
+func (o *Filter) GetRelation() string {
+	if o == nil || o.Relation == nil {
+		var ret string
+		return ret
+	}
+	return *o.Relation
+}
+
+// GetRelationOk returns a tuple with the Relation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Filter) GetRelationOk() (*string, bool) {
+	if o == nil || o.Relation == nil {
+		return nil, false
+	}
+	return o.Relation, true
+}
+
+// HasRelation returns a boolean if a field has been set.
+func (o *Filter) HasRelation() bool {
+	if o != nil && o.Relation != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRelation gets a reference to the given string and assigns it to the Relation field.
 func (o *Filter) SetRelation(v string) {
-	o.Relation = v
+	o.Relation = &v
 }
 
 func (o Filter) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
+	if o.Field != nil {
 		toSerialize["field"] = o.Field
 	}
 	if o.Key != nil {
@@ -172,7 +322,19 @@ func (o Filter) MarshalJSON() ([]byte, error) {
 	if o.Value != nil {
 		toSerialize["value"] = o.Value
 	}
-	if true {
+	if o.HoursAgo != nil {
+		toSerialize["hours_ago"] = o.HoursAgo
+	}
+	if o.Radius != nil {
+		toSerialize["radius"] = o.Radius
+	}
+	if o.Lat != nil {
+		toSerialize["lat"] = o.Lat
+	}
+	if o.Long != nil {
+		toSerialize["long"] = o.Long
+	}
+	if o.Relation != nil {
 		toSerialize["relation"] = o.Relation
 	}
 
@@ -196,6 +358,10 @@ func (o *Filter) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "field")
 		delete(additionalProperties, "key")
 		delete(additionalProperties, "value")
+		delete(additionalProperties, "hours_ago")
+		delete(additionalProperties, "radius")
+		delete(additionalProperties, "lat")
+		delete(additionalProperties, "long")
 		delete(additionalProperties, "relation")
 		o.AdditionalProperties = additionalProperties
 	}

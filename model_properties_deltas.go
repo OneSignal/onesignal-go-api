@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,8 +17,8 @@ import (
 
 // PropertiesDeltas struct for PropertiesDeltas
 type PropertiesDeltas struct {
-	SessionTime *float32 `json:"session_time,omitempty"`
-	SessionCount *float32 `json:"session_count,omitempty"`
+	SessionTime *int32 `json:"session_time,omitempty"`
+	SessionCount *int32 `json:"session_count,omitempty"`
 	Purchases []Purchase `json:"purchases,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -43,9 +43,9 @@ func NewPropertiesDeltasWithDefaults() *PropertiesDeltas {
 }
 
 // GetSessionTime returns the SessionTime field value if set, zero value otherwise.
-func (o *PropertiesDeltas) GetSessionTime() float32 {
+func (o *PropertiesDeltas) GetSessionTime() int32 {
 	if o == nil || o.SessionTime == nil {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.SessionTime
@@ -53,7 +53,7 @@ func (o *PropertiesDeltas) GetSessionTime() float32 {
 
 // GetSessionTimeOk returns a tuple with the SessionTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertiesDeltas) GetSessionTimeOk() (*float32, bool) {
+func (o *PropertiesDeltas) GetSessionTimeOk() (*int32, bool) {
 	if o == nil || o.SessionTime == nil {
 		return nil, false
 	}
@@ -69,15 +69,15 @@ func (o *PropertiesDeltas) HasSessionTime() bool {
 	return false
 }
 
-// SetSessionTime gets a reference to the given float32 and assigns it to the SessionTime field.
-func (o *PropertiesDeltas) SetSessionTime(v float32) {
+// SetSessionTime gets a reference to the given int32 and assigns it to the SessionTime field.
+func (o *PropertiesDeltas) SetSessionTime(v int32) {
 	o.SessionTime = &v
 }
 
 // GetSessionCount returns the SessionCount field value if set, zero value otherwise.
-func (o *PropertiesDeltas) GetSessionCount() float32 {
+func (o *PropertiesDeltas) GetSessionCount() int32 {
 	if o == nil || o.SessionCount == nil {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.SessionCount
@@ -85,7 +85,7 @@ func (o *PropertiesDeltas) GetSessionCount() float32 {
 
 // GetSessionCountOk returns a tuple with the SessionCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertiesDeltas) GetSessionCountOk() (*float32, bool) {
+func (o *PropertiesDeltas) GetSessionCountOk() (*int32, bool) {
 	if o == nil || o.SessionCount == nil {
 		return nil, false
 	}
@@ -101,8 +101,8 @@ func (o *PropertiesDeltas) HasSessionCount() bool {
 	return false
 }
 
-// SetSessionCount gets a reference to the given float32 and assigns it to the SessionCount field.
-func (o *PropertiesDeltas) SetSessionCount(v float32) {
+// SetSessionCount gets a reference to the given int32 and assigns it to the SessionCount field.
+func (o *PropertiesDeltas) SetSessionCount(v int32) {
 	o.SessionCount = &v
 }
 

@@ -5,9 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Properties** | Pointer to [**PropertiesObject**](PropertiesObject.md) |  | [optional] 
-**Identity** | Pointer to **map[string]interface{}** |  | [optional] 
-**Subscriptions** | Pointer to [**[]SubscriptionObject**](SubscriptionObject.md) |  | [optional] 
-**SubscriptionOptions** | Pointer to [**UserSubscriptionOptions**](UserSubscriptionOptions.md) |  | [optional] 
+**Identity** | Pointer to **map[string]string** |  | [optional] 
+**Subscriptions** | Pointer to [**[]Subscription**](Subscription.md) |  | [optional] 
 
 ## Methods
 
@@ -55,20 +54,20 @@ HasProperties returns a boolean if a field has been set.
 
 ### GetIdentity
 
-`func (o *User) GetIdentity() map[string]interface{}`
+`func (o *User) GetIdentity() map[string]string`
 
 GetIdentity returns the Identity field if non-nil, zero value otherwise.
 
 ### GetIdentityOk
 
-`func (o *User) GetIdentityOk() (*map[string]interface{}, bool)`
+`func (o *User) GetIdentityOk() (*map[string]string, bool)`
 
 GetIdentityOk returns a tuple with the Identity field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIdentity
 
-`func (o *User) SetIdentity(v map[string]interface{})`
+`func (o *User) SetIdentity(v map[string]string)`
 
 SetIdentity sets Identity field to given value.
 
@@ -80,20 +79,20 @@ HasIdentity returns a boolean if a field has been set.
 
 ### GetSubscriptions
 
-`func (o *User) GetSubscriptions() []SubscriptionObject`
+`func (o *User) GetSubscriptions() []Subscription`
 
 GetSubscriptions returns the Subscriptions field if non-nil, zero value otherwise.
 
 ### GetSubscriptionsOk
 
-`func (o *User) GetSubscriptionsOk() (*[]SubscriptionObject, bool)`
+`func (o *User) GetSubscriptionsOk() (*[]Subscription, bool)`
 
 GetSubscriptionsOk returns a tuple with the Subscriptions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSubscriptions
 
-`func (o *User) SetSubscriptions(v []SubscriptionObject)`
+`func (o *User) SetSubscriptions(v []Subscription)`
 
 SetSubscriptions sets Subscriptions field to given value.
 
@@ -102,31 +101,6 @@ SetSubscriptions sets Subscriptions field to given value.
 `func (o *User) HasSubscriptions() bool`
 
 HasSubscriptions returns a boolean if a field has been set.
-
-### GetSubscriptionOptions
-
-`func (o *User) GetSubscriptionOptions() UserSubscriptionOptions`
-
-GetSubscriptionOptions returns the SubscriptionOptions field if non-nil, zero value otherwise.
-
-### GetSubscriptionOptionsOk
-
-`func (o *User) GetSubscriptionOptionsOk() (*UserSubscriptionOptions, bool)`
-
-GetSubscriptionOptionsOk returns a tuple with the SubscriptionOptions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSubscriptionOptions
-
-`func (o *User) SetSubscriptionOptions(v UserSubscriptionOptions)`
-
-SetSubscriptionOptions sets SubscriptionOptions field to given value.
-
-### HasSubscriptionOptions
-
-`func (o *User) HasSubscriptionOptions() bool`
-
-HasSubscriptionOptions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

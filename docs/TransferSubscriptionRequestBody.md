@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Identity** | Pointer to **map[string]interface{}** |  | [optional] 
+**Identity** | Pointer to **map[string]string** |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetIdentity
 
-`func (o *TransferSubscriptionRequestBody) GetIdentity() map[string]interface{}`
+`func (o *TransferSubscriptionRequestBody) GetIdentity() map[string]string`
 
 GetIdentity returns the Identity field if non-nil, zero value otherwise.
 
 ### GetIdentityOk
 
-`func (o *TransferSubscriptionRequestBody) GetIdentityOk() (*map[string]interface{}, bool)`
+`func (o *TransferSubscriptionRequestBody) GetIdentityOk() (*map[string]string, bool)`
 
 GetIdentityOk returns a tuple with the Identity field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIdentity
 
-`func (o *TransferSubscriptionRequestBody) SetIdentity(v map[string]interface{})`
+`func (o *TransferSubscriptionRequestBody) SetIdentity(v map[string]string)`
 
 SetIdentity sets Identity field to given value.
 

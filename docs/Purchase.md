@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Sku** | **string** | The unique identifier of the purchased item. | 
 **Amount** | **string** | The amount, in USD, spent purchasing the item. | 
 **Iso** | **string** | The 3-letter ISO 4217 currency code. Required for correct storage and conversion of amount. | 
-**Count** | Pointer to **float32** |  | [optional] 
+**Count** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -90,20 +90,20 @@ SetIso sets Iso field to given value.
 
 ### GetCount
 
-`func (o *Purchase) GetCount() float32`
+`func (o *Purchase) GetCount() int32`
 
 GetCount returns the Count field if non-nil, zero value otherwise.
 
 ### GetCountOk
 
-`func (o *Purchase) GetCountOk() (*float32, bool)`
+`func (o *Purchase) GetCountOk() (*int32, bool)`
 
 GetCountOk returns a tuple with the Count field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCount
 
-`func (o *Purchase) SetCount(v float32)`
+`func (o *Purchase) SetCount(v int32)`
 
 SetCount sets Count field to given value.
 
