@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -22,7 +22,7 @@ type Segment struct {
 	// Name of the segment.  You'll see this name on the Web UI.
 	Name string `json:"name"`
 	// Filter or operators the segment will have.  For a list of available filters with details, please see Send to Users Based on Filters.
-	Filters []FilterExpressions `json:"filters"`
+	Filters []FilterExpression `json:"filters"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -32,7 +32,7 @@ type _Segment Segment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSegment(name string, filters []FilterExpressions) *Segment {
+func NewSegment(name string, filters []FilterExpression) *Segment {
 	this := Segment{}
 	this.Name = name
 	this.Filters = filters
@@ -104,9 +104,9 @@ func (o *Segment) SetName(v string) {
 }
 
 // GetFilters returns the Filters field value
-func (o *Segment) GetFilters() []FilterExpressions {
+func (o *Segment) GetFilters() []FilterExpression {
 	if o == nil {
-		var ret []FilterExpressions
+		var ret []FilterExpression
 		return ret
 	}
 
@@ -115,7 +115,7 @@ func (o *Segment) GetFilters() []FilterExpressions {
 
 // GetFiltersOk returns a tuple with the Filters field value
 // and a boolean to check if the value has been set.
-func (o *Segment) GetFiltersOk() ([]FilterExpressions, bool) {
+func (o *Segment) GetFiltersOk() ([]FilterExpression, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -123,7 +123,7 @@ func (o *Segment) GetFiltersOk() ([]FilterExpressions, bool) {
 }
 
 // SetFilters sets field value
-func (o *Segment) SetFilters(v []FilterExpressions) {
+func (o *Segment) SetFilters(v []FilterExpression) {
 	o.Filters = v
 }
 

@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -17,8 +17,7 @@ import (
 
 // UpdateLiveActivitySuccessResponse struct for UpdateLiveActivitySuccessResponse
 type UpdateLiveActivitySuccessResponse struct {
-	NotificationId *string `json:"notification_id,omitempty"`
-	Errors *Notification200Errors `json:"errors,omitempty"`
+	Id *string `json:"id,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -41,77 +40,42 @@ func NewUpdateLiveActivitySuccessResponseWithDefaults() *UpdateLiveActivitySucce
 	return &this
 }
 
-// GetNotificationId returns the NotificationId field value if set, zero value otherwise.
-func (o *UpdateLiveActivitySuccessResponse) GetNotificationId() string {
-	if o == nil || o.NotificationId == nil {
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *UpdateLiveActivitySuccessResponse) GetId() string {
+	if o == nil || o.Id == nil {
 		var ret string
 		return ret
 	}
-	return *o.NotificationId
+	return *o.Id
 }
 
-// GetNotificationIdOk returns a tuple with the NotificationId field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateLiveActivitySuccessResponse) GetNotificationIdOk() (*string, bool) {
-	if o == nil || o.NotificationId == nil {
+func (o *UpdateLiveActivitySuccessResponse) GetIdOk() (*string, bool) {
+	if o == nil || o.Id == nil {
 		return nil, false
 	}
-	return o.NotificationId, true
+	return o.Id, true
 }
 
-// HasNotificationId returns a boolean if a field has been set.
-func (o *UpdateLiveActivitySuccessResponse) HasNotificationId() bool {
-	if o != nil && o.NotificationId != nil {
+// HasId returns a boolean if a field has been set.
+func (o *UpdateLiveActivitySuccessResponse) HasId() bool {
+	if o != nil && o.Id != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetNotificationId gets a reference to the given string and assigns it to the NotificationId field.
-func (o *UpdateLiveActivitySuccessResponse) SetNotificationId(v string) {
-	o.NotificationId = &v
-}
-
-// GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *UpdateLiveActivitySuccessResponse) GetErrors() Notification200Errors {
-	if o == nil || o.Errors == nil {
-		var ret Notification200Errors
-		return ret
-	}
-	return *o.Errors
-}
-
-// GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateLiveActivitySuccessResponse) GetErrorsOk() (*Notification200Errors, bool) {
-	if o == nil || o.Errors == nil {
-		return nil, false
-	}
-	return o.Errors, true
-}
-
-// HasErrors returns a boolean if a field has been set.
-func (o *UpdateLiveActivitySuccessResponse) HasErrors() bool {
-	if o != nil && o.Errors != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetErrors gets a reference to the given Notification200Errors and assigns it to the Errors field.
-func (o *UpdateLiveActivitySuccessResponse) SetErrors(v Notification200Errors) {
-	o.Errors = &v
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *UpdateLiveActivitySuccessResponse) SetId(v string) {
+	o.Id = &v
 }
 
 func (o UpdateLiveActivitySuccessResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.NotificationId != nil {
-		toSerialize["notification_id"] = o.NotificationId
-	}
-	if o.Errors != nil {
-		toSerialize["errors"] = o.Errors
+	if o.Id != nil {
+		toSerialize["id"] = o.Id
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -131,8 +95,7 @@ func (o *UpdateLiveActivitySuccessResponse) UnmarshalJSON(bytes []byte) (err err
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
-		delete(additionalProperties, "notification_id")
-		delete(additionalProperties, "errors")
+		delete(additionalProperties, "id")
 		o.AdditionalProperties = additionalProperties
 	}
 

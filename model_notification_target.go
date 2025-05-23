@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 5.0.1
 Contact: devrel@onesignal.com
 */
 
@@ -18,26 +18,13 @@ import (
 
 // NotificationTarget struct for NotificationTarget
 type NotificationTarget struct {
-	PlayerNotificationTarget *PlayerNotificationTarget
 	SegmentNotificationTarget *SegmentNotificationTarget
+	SubscriptionNotificationTarget *SubscriptionNotificationTarget
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
 func (dst *NotificationTarget) UnmarshalJSON(data []byte) error {
 	var err error
-	// try to unmarshal JSON data into PlayerNotificationTarget
-	err = json.Unmarshal(data, &dst.PlayerNotificationTarget);
-	if err == nil {
-		jsonPlayerNotificationTarget, _ := json.Marshal(dst.PlayerNotificationTarget)
-		if string(jsonPlayerNotificationTarget) == "{}" { // empty struct
-			dst.PlayerNotificationTarget = nil
-		} else {
-			return nil // data stored in dst.PlayerNotificationTarget, return on the first match
-		}
-	} else {
-		dst.PlayerNotificationTarget = nil
-	}
-
 	// try to unmarshal JSON data into SegmentNotificationTarget
 	err = json.Unmarshal(data, &dst.SegmentNotificationTarget);
 	if err == nil {
@@ -51,17 +38,30 @@ func (dst *NotificationTarget) UnmarshalJSON(data []byte) error {
 		dst.SegmentNotificationTarget = nil
 	}
 
+	// try to unmarshal JSON data into SubscriptionNotificationTarget
+	err = json.Unmarshal(data, &dst.SubscriptionNotificationTarget);
+	if err == nil {
+		jsonSubscriptionNotificationTarget, _ := json.Marshal(dst.SubscriptionNotificationTarget)
+		if string(jsonSubscriptionNotificationTarget) == "{}" { // empty struct
+			dst.SubscriptionNotificationTarget = nil
+		} else {
+			return nil // data stored in dst.SubscriptionNotificationTarget, return on the first match
+		}
+	} else {
+		dst.SubscriptionNotificationTarget = nil
+	}
+
 	return fmt.Errorf("Data failed to match schemas in anyOf(NotificationTarget)")
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src *NotificationTarget) MarshalJSON() ([]byte, error) {
-	if src.PlayerNotificationTarget != nil {
-		return json.Marshal(&src.PlayerNotificationTarget)
-	}
-
 	if src.SegmentNotificationTarget != nil {
 		return json.Marshal(&src.SegmentNotificationTarget)
+	}
+
+	if src.SubscriptionNotificationTarget != nil {
+		return json.Marshal(&src.SubscriptionNotificationTarget)
 	}
 
 	return nil, nil // no data in anyOf schemas
