@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 1.4.0
+API version: 1.4.1
 Contact: devrel@onesignal.com
 */
 
@@ -21,7 +21,7 @@ type SubscriptionObject struct {
 	Type *string `json:"type,omitempty"`
 	Token *string `json:"token,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
-	NotificationTypes *float32 `json:"notification_types,omitempty"`
+	NotificationTypes *int32 `json:"notification_types,omitempty"`
 	SessionTime *float32 `json:"session_time,omitempty"`
 	SessionCount *float32 `json:"session_count,omitempty"`
 	Sdk *string `json:"sdk,omitempty"`
@@ -185,9 +185,9 @@ func (o *SubscriptionObject) SetEnabled(v bool) {
 }
 
 // GetNotificationTypes returns the NotificationTypes field value if set, zero value otherwise.
-func (o *SubscriptionObject) GetNotificationTypes() float32 {
+func (o *SubscriptionObject) GetNotificationTypes() int32 {
 	if o == nil || o.NotificationTypes == nil {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.NotificationTypes
@@ -195,7 +195,7 @@ func (o *SubscriptionObject) GetNotificationTypes() float32 {
 
 // GetNotificationTypesOk returns a tuple with the NotificationTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SubscriptionObject) GetNotificationTypesOk() (*float32, bool) {
+func (o *SubscriptionObject) GetNotificationTypesOk() (*int32, bool) {
 	if o == nil || o.NotificationTypes == nil {
 		return nil, false
 	}
@@ -211,8 +211,8 @@ func (o *SubscriptionObject) HasNotificationTypes() bool {
 	return false
 }
 
-// SetNotificationTypes gets a reference to the given float32 and assigns it to the NotificationTypes field.
-func (o *SubscriptionObject) SetNotificationTypes(v float32) {
+// SetNotificationTypes gets a reference to the given int32 and assigns it to the NotificationTypes field.
+func (o *SubscriptionObject) SetNotificationTypes(v int32) {
 	o.NotificationTypes = &v
 }
 

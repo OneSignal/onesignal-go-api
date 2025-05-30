@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 1.4.0
+  version: 1.4.1
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -3045,7 +3045,7 @@ components:
       type: object
     SubscriptionObject:
       example:
-        notification_types: 7.061401241503109
+        notification_types: 7
         device_model: device_model
         app_version: app_version
         web_p256: web_p256
@@ -3086,7 +3086,7 @@ components:
         enabled:
           type: boolean
         notification_types:
-          type: number
+          type: integer
         session_time:
           type: number
         session_count:
@@ -3115,7 +3115,7 @@ components:
     User:
       example:
         subscriptions:
-        - notification_types: 7.061401241503109
+        - notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
@@ -3132,7 +3132,7 @@ components:
           rooted: true
           id: id
           sdk: sdk
-        - notification_types: 7.061401241503109
+        - notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
@@ -3376,7 +3376,7 @@ components:
     CreateSubscriptionRequestBody:
       example:
         subscription:
-          notification_types: 7.061401241503109
+          notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
@@ -3403,7 +3403,7 @@ components:
     UpdateSubscriptionRequestBody:
       example:
         subscription:
-          notification_types: 7.061401241503109
+          notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
@@ -3531,7 +3531,7 @@ components:
     inline_response_201:
       example:
         subscription:
-          notification_types: 7.061401241503109
+          notification_types: 7
           device_model: device_model
           app_version: app_version
           web_p256: web_p256
