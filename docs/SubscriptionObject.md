@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Type** | Pointer to **string** |  | [optional] 
 **Token** | Pointer to **string** |  | [optional] 
 **Enabled** | Pointer to **bool** |  | [optional] 
-**NotificationTypes** | Pointer to **float32** |  | [optional] 
+**NotificationTypes** | Pointer to **int32** |  | [optional] 
 **SessionTime** | Pointer to **float32** |  | [optional] 
 **SessionCount** | Pointer to **float32** |  | [optional] 
 **Sdk** | Pointer to **string** |  | [optional] 
@@ -143,20 +143,20 @@ HasEnabled returns a boolean if a field has been set.
 
 ### GetNotificationTypes
 
-`func (o *SubscriptionObject) GetNotificationTypes() float32`
+`func (o *SubscriptionObject) GetNotificationTypes() int32`
 
 GetNotificationTypes returns the NotificationTypes field if non-nil, zero value otherwise.
 
 ### GetNotificationTypesOk
 
-`func (o *SubscriptionObject) GetNotificationTypesOk() (*float32, bool)`
+`func (o *SubscriptionObject) GetNotificationTypesOk() (*int32, bool)`
 
 GetNotificationTypesOk returns a tuple with the NotificationTypes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNotificationTypes
 
-`func (o *SubscriptionObject) SetNotificationTypes(v float32)`
+`func (o *SubscriptionObject) SetNotificationTypes(v int32)`
 
 SetNotificationTypes sets NotificationTypes field to given value.
 
