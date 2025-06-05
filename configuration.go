@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.0.1
+API version: 5.1.0
 Contact: devrel@onesignal.com
 */
 
@@ -35,11 +35,11 @@ var (
 	// ContextBasicAuth takes BasicAuth as authentication for the request.
 	ContextBasicAuth = contextKey("basic")
 
-	// AppAuth takes a string oauth2 access token as authentication for the request.
-	AppAuth = contextKey("osappkey")
+	// RestApiKey takes a string oauth2 access token as authentication for the request.
+	RestApiKey = contextKey("osappkey")
 
-    // UserAuth takes a string oauth2 access token as authentication for the request.
-	UserAuth = contextKey("osuserkey")
+	// OrganizationApiKey takes a string oauth2 access token as authentication for the request.
+	OrganizationApiKey = contextKey("osuserkey")
 
 	// ContextAPIKeys takes a string apikey as authentication for the request
 	ContextAPIKeys = contextKey("apiKeys")
@@ -105,7 +105,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "OpenAPI-Generator/5.0.0-beta1/go",
+		UserAgent:        "OpenAPI-Generator/5.1.0-beta1/go",
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{

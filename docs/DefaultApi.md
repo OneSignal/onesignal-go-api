@@ -69,8 +69,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.CancelNotification(, notificationId).AppId(appId).Execute()
+    resp, r, err := apiClient.DefaultApi.CancelNotification(restAuth, notificationId).AppId(appId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CancelNotification``: %v\n", err)
@@ -147,8 +148,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.CreateAlias(, appId, aliasLabel, aliasId).UserIdentityBody(userIdentityBody).Execute()
+    resp, r, err := apiClient.DefaultApi.CreateAlias(restAuth, appId, aliasLabel, aliasId).UserIdentityBody(userIdentityBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateAlias``: %v\n", err)
@@ -228,8 +230,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.CreateAliasBySubscription(, appId, subscriptionId).UserIdentityBody(userIdentityBody).Execute()
+    resp, r, err := apiClient.DefaultApi.CreateAliasBySubscription(restAuth, appId, subscriptionId).UserIdentityBody(userIdentityBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateAliasBySubscription``: %v\n", err)
@@ -284,7 +287,7 @@ Create an app
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### Example
 
@@ -305,8 +308,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    orgAuth := context.WithValue(context.Background(), onesignal.OrganizationApiKey, "YOUR_ORGANIZATION_API_KEY") // Organization API key is only required for creating new apps and other top-level endpoints
 
-    resp, r, err := apiClient.DefaultApi.CreateApp().App(app).Execute()
+    resp, r, err := apiClient.DefaultApi.CreateApp(orgAuth).App(app).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateApp``: %v\n", err)
@@ -375,8 +379,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.CreateNotification().Notification(notification).Execute()
+    resp, r, err := apiClient.DefaultApi.CreateNotification(restAuth).Notification(notification).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateNotification``: %v\n", err)
@@ -446,8 +451,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.CreateSegment(, appId).Segment(segment).Execute()
+    resp, r, err := apiClient.DefaultApi.CreateSegment(restAuth, appId).Segment(segment).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSegment``: %v\n", err)
@@ -524,8 +530,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.CreateSubscription(, appId, aliasLabel, aliasId).SubscriptionBody(subscriptionBody).Execute()
+    resp, r, err := apiClient.DefaultApi.CreateSubscription(restAuth, appId, aliasLabel, aliasId).SubscriptionBody(subscriptionBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSubscription``: %v\n", err)
@@ -604,8 +611,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.CreateUser(, appId).User(user).Execute()
+    resp, r, err := apiClient.DefaultApi.CreateUser(restAuth, appId).User(user).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateUser``: %v\n", err)
@@ -682,8 +690,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.DeleteAlias(, appId, aliasLabel, aliasId, aliasLabelToDelete).Execute()
+    resp, r, err := apiClient.DefaultApi.DeleteAlias(restAuth, appId, aliasLabel, aliasId, aliasLabelToDelete).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteAlias``: %v\n", err)
@@ -763,8 +772,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.DeleteSegment(, appId, segmentId).Execute()
+    resp, r, err := apiClient.DefaultApi.DeleteSegment(restAuth, appId, segmentId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSegment``: %v\n", err)
@@ -840,8 +850,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.DeleteSubscription(, appId, subscriptionId).Execute()
+    resp, r, err := apiClient.DefaultApi.DeleteSubscription(restAuth, appId, subscriptionId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSubscription``: %v\n", err)
@@ -916,8 +927,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.DeleteUser(, appId, aliasLabel, aliasId).Execute()
+    resp, r, err := apiClient.DefaultApi.DeleteUser(restAuth, appId, aliasLabel, aliasId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteUser``: %v\n", err)
@@ -993,8 +1005,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.ExportEvents(, notificationId).AppId(appId).Execute()
+    resp, r, err := apiClient.DefaultApi.ExportEvents(restAuth, notificationId).AppId(appId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportEvents``: %v\n", err)
@@ -1069,8 +1082,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.ExportSubscriptions(, appId).ExportSubscriptionsRequestBody(exportSubscriptionsRequestBody).Execute()
+    resp, r, err := apiClient.DefaultApi.ExportSubscriptions(restAuth, appId).ExportSubscriptionsRequestBody(exportSubscriptionsRequestBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportSubscriptions``: %v\n", err)
@@ -1146,8 +1160,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetAliases(, appId, aliasLabel, aliasId).Execute()
+    resp, r, err := apiClient.DefaultApi.GetAliases(restAuth, appId, aliasLabel, aliasId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAliases``: %v\n", err)
@@ -1225,8 +1240,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetAliasesBySubscription(, appId, subscriptionId).Execute()
+    resp, r, err := apiClient.DefaultApi.GetAliasesBySubscription(restAuth, appId, subscriptionId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAliasesBySubscription``: %v\n", err)
@@ -1280,7 +1296,7 @@ View an app
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### Example
 
@@ -1301,8 +1317,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    orgAuth := context.WithValue(context.Background(), onesignal.OrganizationApiKey, "YOUR_ORGANIZATION_API_KEY") // Organization API key is only required for creating new apps and other top-level endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetApp(, appId).Execute()
+    resp, r, err := apiClient.DefaultApi.GetApp(orgAuth, appId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApp``: %v\n", err)
@@ -1354,7 +1371,7 @@ View apps
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### Example
 
@@ -1374,8 +1391,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    orgAuth := context.WithValue(context.Background(), onesignal.OrganizationApiKey, "YOUR_ORGANIZATION_API_KEY") // Organization API key is only required for creating new apps and other top-level endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetApps().Execute()
+    resp, r, err := apiClient.DefaultApi.GetApps(orgAuth).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApps``: %v\n", err)
@@ -1441,8 +1459,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetNotification(, notificationId).AppId(appId).Execute()
+    resp, r, err := apiClient.DefaultApi.GetNotification(restAuth, notificationId).AppId(appId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotification``: %v\n", err)
@@ -1517,8 +1536,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetNotificationHistory(, notificationId).GetNotificationHistoryRequestBody(getNotificationHistoryRequestBody).Execute()
+    resp, r, err := apiClient.DefaultApi.GetNotificationHistory(restAuth, notificationId).GetNotificationHistoryRequestBody(getNotificationHistoryRequestBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotificationHistory``: %v\n", err)
@@ -1595,8 +1615,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetNotifications().AppId(appId).Limit(limit).Offset(offset).Kind(kind).Execute()
+    resp, r, err := apiClient.DefaultApi.GetNotifications(restAuth).AppId(appId).Limit(limit).Offset(offset).Kind(kind).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotifications``: %v\n", err)
@@ -1673,8 +1694,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetOutcomes(, appId).OutcomeNames(outcomeNames).OutcomeNames2(outcomeNames2).OutcomeTimeRange(outcomeTimeRange).OutcomePlatforms(outcomePlatforms).OutcomeAttribution(outcomeAttribution).Execute()
+    resp, r, err := apiClient.DefaultApi.GetOutcomes(restAuth, appId).OutcomeNames(outcomeNames).OutcomeNames2(outcomeNames2).OutcomeTimeRange(outcomeTimeRange).OutcomePlatforms(outcomePlatforms).OutcomeAttribution(outcomeAttribution).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetOutcomes``: %v\n", err)
@@ -1754,8 +1776,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetSegments(, appId).Offset(offset).Limit(limit).Execute()
+    resp, r, err := apiClient.DefaultApi.GetSegments(restAuth, appId).Offset(offset).Limit(limit).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSegments``: %v\n", err)
@@ -1832,8 +1855,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.GetUser(, appId, aliasLabel, aliasId).Execute()
+    resp, r, err := apiClient.DefaultApi.GetUser(restAuth, appId, aliasLabel, aliasId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetUser``: %v\n", err)
@@ -1912,8 +1936,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.TransferSubscription(, appId, subscriptionId).TransferSubscriptionRequestBody(transferSubscriptionRequestBody).Execute()
+    resp, r, err := apiClient.DefaultApi.TransferSubscription(restAuth, appId, subscriptionId).TransferSubscriptionRequestBody(transferSubscriptionRequestBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TransferSubscription``: %v\n", err)
@@ -1991,8 +2016,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.UnsubscribeEmailWithToken(, appId, notificationId).Token(token).Execute()
+    resp, r, err := apiClient.DefaultApi.UnsubscribeEmailWithToken(restAuth, appId, notificationId).Token(token).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UnsubscribeEmailWithToken``: %v\n", err)
@@ -2047,7 +2073,7 @@ Update an app
 
 ### Authorization
 
-[user_auth_key](../README.md#user_auth_key)
+[organization_api_key](../README.md#organization_api_key)
 
 ### Example
 
@@ -2069,8 +2095,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    orgAuth := context.WithValue(context.Background(), onesignal.OrganizationApiKey, "YOUR_ORGANIZATION_API_KEY") // Organization API key is only required for creating new apps and other top-level endpoints
 
-    resp, r, err := apiClient.DefaultApi.UpdateApp(, appId).App(app).Execute()
+    resp, r, err := apiClient.DefaultApi.UpdateApp(orgAuth, appId).App(app).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateApp``: %v\n", err)
@@ -2146,8 +2173,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.UpdateLiveActivity(, appId, activityId).UpdateLiveActivityRequest(updateLiveActivityRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.UpdateLiveActivity(restAuth, appId, activityId).UpdateLiveActivityRequest(updateLiveActivityRequest).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateLiveActivity``: %v\n", err)
@@ -2225,8 +2253,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.UpdateSubscription(, appId, subscriptionId).SubscriptionBody(subscriptionBody).Execute()
+    resp, r, err := apiClient.DefaultApi.UpdateSubscription(restAuth, appId, subscriptionId).SubscriptionBody(subscriptionBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSubscription``: %v\n", err)
@@ -2303,8 +2332,9 @@ func main() {
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.UpdateUser(, appId, aliasLabel, aliasId).UpdateUserRequest(updateUserRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.UpdateUser(restAuth, appId, aliasLabel, aliasId).UpdateUserRequest(updateUserRequest).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUser``: %v\n", err)
