@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.0.1
+  version: 5.1.0
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -319,7 +319,7 @@ paths:
                 $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_auth_key: []
+      - organization_api_key: []
       summary: View apps
     post:
       description: Creates a new OneSignal app
@@ -350,7 +350,7 @@ paths:
                 $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_auth_key: []
+      - organization_api_key: []
       summary: Create an app
   /apps/{app_id}:
     get:
@@ -385,7 +385,7 @@ paths:
                 $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_auth_key: []
+      - organization_api_key: []
       summary: View an app
     put:
       description: Updates the name or configuration settings of an existing OneSignal
@@ -426,7 +426,7 @@ paths:
                 $ref: '#/components/schemas/RateLimitError'
           description: Rate Limit Exceeded
       security:
-      - user_auth_key: []
+      - organization_api_key: []
       summary: Update an app
   /apps/{app_id}/segments:
     get:
@@ -4004,6 +4004,6 @@ components:
     rest_api_key:
       scheme: bearer
       type: http
-    user_auth_key:
+    organization_api_key:
       scheme: bearer
       type: http
