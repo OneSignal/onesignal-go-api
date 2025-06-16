@@ -354,7 +354,7 @@ func (c *APIClient) prepareRequest(
 		}
 
         // AccessToken Authentication
-		if auth, ok := ctx.Value(OrganizationKey).(string); ok {
+		if auth, ok := ctx.Value(OrganizationApiKey).(string); ok {
 			localVarRequest.Header.Add("Authorization", "Key "+auth)
 		}
 
