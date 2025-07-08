@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.1.0
+API version: 5.2.0
 Contact: devrel@onesignal.com
 */
 
@@ -214,6 +214,8 @@ type BasicNotification struct {
 	EmailFromAddress NullableString `json:"email_from_address,omitempty"`
 	// Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null. 
 	EmailPreheader NullableString `json:"email_preheader,omitempty"`
+	// Channel: Email Default is `false`. If set to `true`, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked.
+	DisableEmailClickTracking NullableBool `json:"disable_email_click_tracking,omitempty"`
 	// Channel: Email Default is `false`. This field is used to send transactional notifications. If set to `true`, this notification will also be sent to unsubscribed emails. If a `template_id` is provided, the `include_unsubscribed` value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP's list of unsubscribed emails to be cleared.
 	IncludeUnsubscribed *bool `json:"include_unsubscribed,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
@@ -4213,6 +4215,48 @@ func (o *BasicNotification) UnsetEmailPreheader() {
 	o.EmailPreheader.Unset()
 }
 
+// GetDisableEmailClickTracking returns the DisableEmailClickTracking field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotification) GetDisableEmailClickTracking() bool {
+	if o == nil || o.DisableEmailClickTracking.Get() == nil {
+		var ret bool
+		return ret
+	}
+	return *o.DisableEmailClickTracking.Get()
+}
+
+// GetDisableEmailClickTrackingOk returns a tuple with the DisableEmailClickTracking field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotification) GetDisableEmailClickTrackingOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DisableEmailClickTracking.Get(), o.DisableEmailClickTracking.IsSet()
+}
+
+// HasDisableEmailClickTracking returns a boolean if a field has been set.
+func (o *BasicNotification) HasDisableEmailClickTracking() bool {
+	if o != nil && o.DisableEmailClickTracking.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDisableEmailClickTracking gets a reference to the given NullableBool and assigns it to the DisableEmailClickTracking field.
+func (o *BasicNotification) SetDisableEmailClickTracking(v bool) {
+	o.DisableEmailClickTracking.Set(&v)
+}
+// SetDisableEmailClickTrackingNil sets the value for DisableEmailClickTracking to be an explicit nil
+func (o *BasicNotification) SetDisableEmailClickTrackingNil() {
+	o.DisableEmailClickTracking.Set(nil)
+}
+
+// UnsetDisableEmailClickTracking ensures that no value is present for DisableEmailClickTracking, not even an explicit nil
+func (o *BasicNotification) UnsetDisableEmailClickTracking() {
+	o.DisableEmailClickTracking.Unset()
+}
+
 // GetIncludeUnsubscribed returns the IncludeUnsubscribed field value if set, zero value otherwise.
 func (o *BasicNotification) GetIncludeUnsubscribed() bool {
 	if o == nil || o.IncludeUnsubscribed == nil {
@@ -4694,6 +4738,9 @@ func (o BasicNotification) MarshalJSON() ([]byte, error) {
 	if o.EmailPreheader.IsSet() {
 		toSerialize["email_preheader"] = o.EmailPreheader.Get()
 	}
+	if o.DisableEmailClickTracking.IsSet() {
+		toSerialize["disable_email_click_tracking"] = o.DisableEmailClickTracking.Get()
+	}
 	if o.IncludeUnsubscribed != nil {
 		toSerialize["include_unsubscribed"] = o.IncludeUnsubscribed
 	}
@@ -4829,6 +4876,7 @@ func (o *BasicNotification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_from_name")
 		delete(additionalProperties, "email_from_address")
 		delete(additionalProperties, "email_preheader")
+		delete(additionalProperties, "disable_email_click_tracking")
 		delete(additionalProperties, "include_unsubscribed")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")

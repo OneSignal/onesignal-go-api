@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.1.0
+  version: 5.2.0
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -3829,6 +3829,14 @@ components:
             \ will default to null.\n"
           nullable: true
           type: string
+          writeOnly: true
+        disable_email_click_tracking:
+          description: "Channel: Email\nDefault is `false`. If set to `true`, the\
+            \ URLs sent within the email will not include link tracking and will be\
+            \ the same as originally set; otherwise, all the URLs in the email will\
+            \ be tracked."
+          nullable: true
+          type: boolean
           writeOnly: true
         include_unsubscribed:
           description: "Channel: Email\nDefault is `false`. This field is used to\
