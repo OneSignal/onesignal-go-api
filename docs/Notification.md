@@ -106,6 +106,7 @@ Name | Type | Description | Notes
 **EmailFromName** | Pointer to **NullableString** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **EmailPreheader** | Pointer to **NullableString** | Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null.  | [optional] 
+**DisableEmailClickTracking** | Pointer to **NullableBool** | Channel: Email Default is &#x60;false&#x60;. If set to &#x60;true&#x60;, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked. | [optional] 
 **IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
@@ -3457,6 +3458,41 @@ HasEmailPreheader returns a boolean if a field has been set.
 `func (o *Notification) UnsetEmailPreheader()`
 
 UnsetEmailPreheader ensures that no value is present for EmailPreheader, not even an explicit nil
+### GetDisableEmailClickTracking
+
+`func (o *Notification) GetDisableEmailClickTracking() bool`
+
+GetDisableEmailClickTracking returns the DisableEmailClickTracking field if non-nil, zero value otherwise.
+
+### GetDisableEmailClickTrackingOk
+
+`func (o *Notification) GetDisableEmailClickTrackingOk() (*bool, bool)`
+
+GetDisableEmailClickTrackingOk returns a tuple with the DisableEmailClickTracking field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisableEmailClickTracking
+
+`func (o *Notification) SetDisableEmailClickTracking(v bool)`
+
+SetDisableEmailClickTracking sets DisableEmailClickTracking field to given value.
+
+### HasDisableEmailClickTracking
+
+`func (o *Notification) HasDisableEmailClickTracking() bool`
+
+HasDisableEmailClickTracking returns a boolean if a field has been set.
+
+### SetDisableEmailClickTrackingNil
+
+`func (o *Notification) SetDisableEmailClickTrackingNil(b bool)`
+
+ SetDisableEmailClickTrackingNil sets the value for DisableEmailClickTracking to be an explicit nil
+
+### UnsetDisableEmailClickTracking
+`func (o *Notification) UnsetDisableEmailClickTracking()`
+
+UnsetDisableEmailClickTracking ensures that no value is present for DisableEmailClickTracking, not even an explicit nil
 ### GetIncludeUnsubscribed
 
 `func (o *Notification) GetIncludeUnsubscribed() bool`
