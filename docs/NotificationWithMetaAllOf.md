@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **PlatformDeliveryStats** | Pointer to [**PlatformDeliveryData**](PlatformDeliveryData.md) |  | [optional] 
 **Received** | Pointer to **NullableInt32** | Confirmed Deliveries number of devices that received the push notification. Paid Feature Only. Free accounts will see 0. | [optional] 
 **ThrottleRatePerMinute** | Pointer to **NullableInt32** | number of push notifications sent per minute. Paid Feature Only. If throttling is not enabled for the app or the notification, and for free accounts, null is returned. Refer to Throttling for more details. | [optional] 
+**Canceled** | Pointer to **bool** | Indicates whether the notification was canceled before it could be sent. | [optional] 
 
 ## Methods
 
@@ -350,6 +351,31 @@ HasThrottleRatePerMinute returns a boolean if a field has been set.
 `func (o *NotificationWithMetaAllOf) UnsetThrottleRatePerMinute()`
 
 UnsetThrottleRatePerMinute ensures that no value is present for ThrottleRatePerMinute, not even an explicit nil
+### GetCanceled
+
+`func (o *NotificationWithMetaAllOf) GetCanceled() bool`
+
+GetCanceled returns the Canceled field if non-nil, zero value otherwise.
+
+### GetCanceledOk
+
+`func (o *NotificationWithMetaAllOf) GetCanceledOk() (*bool, bool)`
+
+GetCanceledOk returns a tuple with the Canceled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanceled
+
+`func (o *NotificationWithMetaAllOf) SetCanceled(v bool)`
+
+SetCanceled sets Canceled field to given value.
+
+### HasCanceled
+
+`func (o *NotificationWithMetaAllOf) HasCanceled() bool`
+
+HasCanceled returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -123,6 +123,7 @@ Name | Type | Description | Notes
 **SendAfter** | Pointer to **NullableInt64** | Unix timestamp indicating when notification delivery should begin. | [optional] 
 **CompletedAt** | Pointer to **NullableInt64** | Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after. | [optional] 
 **PlatformDeliveryStats** | Pointer to [**PlatformDeliveryData**](PlatformDeliveryData.md) |  | [optional] 
+**Canceled** | Pointer to **bool** | Indicates whether the notification was canceled before it could be sent. | [optional] 
 
 ## Methods
 
@@ -3972,6 +3973,31 @@ SetPlatformDeliveryStats sets PlatformDeliveryStats field to given value.
 `func (o *NotificationWithMeta) HasPlatformDeliveryStats() bool`
 
 HasPlatformDeliveryStats returns a boolean if a field has been set.
+
+### GetCanceled
+
+`func (o *NotificationWithMeta) GetCanceled() bool`
+
+GetCanceled returns the Canceled field if non-nil, zero value otherwise.
+
+### GetCanceledOk
+
+`func (o *NotificationWithMeta) GetCanceledOk() (*bool, bool)`
+
+GetCanceledOk returns a tuple with the Canceled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanceled
+
+`func (o *NotificationWithMeta) SetCanceled(v bool)`
+
+SetCanceled sets Canceled field to given value.
+
+### HasCanceled
+
+`func (o *NotificationWithMeta) HasCanceled() bool`
+
+HasCanceled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
