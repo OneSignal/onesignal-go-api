@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.2.0
+  version: 5.2.1
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -3943,6 +3943,10 @@ components:
             \ details."
           nullable: true
           type: integer
+        canceled:
+          description: Indicates whether the notification was canceled before it could
+            be sent.
+          type: boolean
       type: object
     PlatformDeliveryData_sms_allOf:
       properties:

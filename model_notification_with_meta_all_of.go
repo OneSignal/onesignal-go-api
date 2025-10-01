@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.2.0
+API version: 5.2.1
 Contact: devrel@onesignal.com
 */
 
@@ -38,6 +38,8 @@ type NotificationWithMetaAllOf struct {
 	Received NullableInt32 `json:"received,omitempty"`
 	// number of push notifications sent per minute. Paid Feature Only. If throttling is not enabled for the app or the notification, and for free accounts, null is returned. Refer to Throttling for more details.
 	ThrottleRatePerMinute NullableInt32 `json:"throttle_rate_per_minute,omitempty"`
+	// Indicates whether the notification was canceled before it could be sent.
+	Canceled *bool `json:"canceled,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -452,6 +454,38 @@ func (o *NotificationWithMetaAllOf) UnsetThrottleRatePerMinute() {
 	o.ThrottleRatePerMinute.Unset()
 }
 
+// GetCanceled returns the Canceled field value if set, zero value otherwise.
+func (o *NotificationWithMetaAllOf) GetCanceled() bool {
+	if o == nil || o.Canceled == nil {
+		var ret bool
+		return ret
+	}
+	return *o.Canceled
+}
+
+// GetCanceledOk returns a tuple with the Canceled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotificationWithMetaAllOf) GetCanceledOk() (*bool, bool) {
+	if o == nil || o.Canceled == nil {
+		return nil, false
+	}
+	return o.Canceled, true
+}
+
+// HasCanceled returns a boolean if a field has been set.
+func (o *NotificationWithMetaAllOf) HasCanceled() bool {
+	if o != nil && o.Canceled != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCanceled gets a reference to the given bool and assigns it to the Canceled field.
+func (o *NotificationWithMetaAllOf) SetCanceled(v bool) {
+	o.Canceled = &v
+}
+
 func (o NotificationWithMetaAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Remaining != nil {
@@ -487,6 +521,9 @@ func (o NotificationWithMetaAllOf) MarshalJSON() ([]byte, error) {
 	if o.ThrottleRatePerMinute.IsSet() {
 		toSerialize["throttle_rate_per_minute"] = o.ThrottleRatePerMinute.Get()
 	}
+	if o.Canceled != nil {
+		toSerialize["canceled"] = o.Canceled
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -516,6 +553,7 @@ func (o *NotificationWithMetaAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "platform_delivery_stats")
 		delete(additionalProperties, "received")
 		delete(additionalProperties, "throttle_rate_per_minute")
+		delete(additionalProperties, "canceled")
 		o.AdditionalProperties = additionalProperties
 	}
 
