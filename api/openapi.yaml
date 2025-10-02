@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.2.1
+  version: 5.3.0
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -681,6 +681,57 @@ paths:
       security:
       - rest_api_key: []
       summary: View Outcomes
+  /apps/{app_id}/activities/activity/{activity_type}:
+    post:
+      description: Remotely start a Live Activity on iOS devices via OneSignal’s REST
+        API.
+      operationId: start_live_activity
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the Live Activity defined in your app. This should
+          match the attributes struct used in your app's Live Activity implementation.
+        explode: false
+        in: path
+        name: activity_type
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartLiveActivityRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartLiveActivitySuccessResponse'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Start Live Activity
   /apps/{app_id}/live_activities/{activity_id}/notifications:
     post:
       description: Updates a specified live activity.
@@ -1463,6 +1514,66 @@ paths:
           description: Rate Limit Exceeded
       security:
       - rest_api_key: []
+  /apps/{app_id}/subscriptions_by_token/{token_type}/{token}:
+    patch:
+      description: Update properties on an existing OneSignal subscription using its
+        token.
+      operationId: update_subscription_by_token
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The type of token to use when looking up the subscription. See
+          Subscription Types.
+        explode: false
+        in: path
+        name: token_type
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The value of the token to lookup by (e.g., email address, phone\
+          \ number)."
+        explode: false
+        in: path
+        name: token
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionBody'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: ACCEPTED
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+      security:
+      - rest_api_key: []
+      summary: Update subscription by token
   /apps/{app_id}/notifications/{notification_id}/unsubscribe:
     post:
       description: Unsubscribe an email with a token when using your own custom email
@@ -1666,6 +1777,494 @@ paths:
       security:
       - rest_api_key: []
       summary: Export CSV of Events
+  /templates:
+    get:
+      description: List templates for an app.
+      operationId: view_templates
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Maximum number of templates. Default and max is 50.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: integer
+        style: form
+      - description: Pagination offset.
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - description: Filter by delivery channel.
+        explode: true
+        in: query
+        name: channel
+        required: false
+        schema:
+          enum:
+          - push
+          - email
+          - sms
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplatesListResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View templates
+    post:
+      description: "Create reusable message templates for push, email, and SMS channels."
+      operationId: create_template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unprocessable Entity
+      security:
+      - rest_api_key: []
+      summary: Create template
+  /templates/{template_id}:
+    delete:
+      description: Delete a template by id.
+      operationId: delete_template
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+      security:
+      - rest_api_key: []
+      summary: Delete template
+    get:
+      description: Fetch a single template by id.
+      operationId: view_template
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+      security:
+      - rest_api_key: []
+      summary: View template
+    patch:
+      description: Update an existing template.
+      operationId: update_template
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTemplateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - rest_api_key: []
+      summary: Update template
+  /templates/{template_id}/copy_to_app:
+    post:
+      description: Copy a template to a destination app.
+      operationId: copy_template_to_app
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyTemplateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Copy template to another app
+  /apps/{app_id}/auth/tokens:
+    get:
+      description: View the details of all of your current app API keys (Rich Authentication
+        Token) for a single OneSignal app.
+      operationId: view_api_keys
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyTokensListResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: View API keys
+    post:
+      description: "Use this API to create a new App API Key (also called a Rich Authentication\
+        \ Token) for a specific OneSignal app. These keys are used to authenticate\
+        \ API requests at the app level and offer enhanced security features, including\
+        \ optional IP allowlisting."
+      operationId: create_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiKeyResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Create API key
+  /apps/{app_id}/auth/tokens/{token_id}:
+    delete:
+      description: "Delete a specific Rich Authentication Token (App API Key) for\
+        \ a OneSignal app. Requires your Organization API Key and the token’s unique\
+        \ ID, not the token value itself."
+      operationId: delete_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Delete API key
+    patch:
+      description: Update a Rich Authentication Token (App API Key) for a OneSignal
+        app.
+      operationId: update_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Update API key
+  /apps/{app_id}/auth/tokens/{token_id}/rotate:
+    post:
+      description: Rotate a Rich Authentication Token (App API Key) for a OneSignal
+        app. Rotating a key revokes the current token and generates a new one under
+        the same configuration—ideal when a token is lost or compromised but you don’t
+        want to recreate and reconfigure it from scratch.
+      operationId: rotate_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiKeyResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Rotate API key
+  /apps/{app_id}/integrations/custom_events:
+    post:
+      description: "The Custom Events API allows you to record user events. Custom\
+        \ events can represent any action users take in your application, such as\
+        \ completing a purchase, viewing content, or achieving milestones."
+      operationId: create_custom_events
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomEventsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEventsResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unauthorized
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Create custom events
 components:
   requestBodies:
     get_notification_history_request_body:
@@ -2963,6 +3562,472 @@ components:
         id:
           type: string
       type: object
+    StartLiveActivityRequest:
+      example:
+        excluded_segments:
+        - excluded_segments
+        - excluded_segments
+        stale_date: 0
+        included_segments:
+        - included_segments
+        - included_segments
+        filters:
+        - null
+        - null
+        priority: 6
+        include_aliases:
+          key:
+          - include_aliases
+          - include_aliases
+        ios_relevance_score: 1.4658129805029452
+        event_updates: "{}"
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        name: name
+        activity_id: activity_id
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        idempotency_key: idempotency_key
+        event_attributes: "{}"
+        include_subscription_ids:
+        - include_subscription_ids
+        - include_subscription_ids
+        event: start
+      properties:
+        name:
+          description: An internal name to assist with your campaign organization.
+            This does not get displayed in the message itself.
+          type: string
+        event:
+          default: start
+          enum:
+          - start
+          type: string
+        activity_id:
+          description: Set a unique activity_id to track and manage the Live Activity.
+          type: string
+        event_attributes:
+          description: Default/static data to initialize the Live Activity upon start.
+          type: object
+        event_updates:
+          description: Dynamic content used to update the running Live Activity at
+            start. Must match the ContentState interface defined in your app.
+          type: object
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        stale_date:
+          description: "Accepts Unix timestamp in seconds. When time reaches the configured\
+            \ stale date, the system considers the Live Activity out of date, and\
+            \ the ActivityState of the Live Activity changes to ActivityState.stale."
+          type: integer
+        priority:
+          description: "Delivery priority through the push provider (APNs). Pass 10\
+            \ for higher priority notifications, or 5 for lower priority notifications.\
+            \ Lower priority notifications are sent based on the power considerations\
+            \ of the end user's device. If not set, defaults to 10."
+          type: integer
+        ios_relevance_score:
+          description: iOS 15+. A score to indicate how a notification should be displayed
+            when grouped. Use a float between 0-1.
+          nullable: true
+          type: number
+        idempotency_key:
+          description: "Correlation and idempotency key.\nA request received with\
+            \ this parameter will first look for another notification with the same\
+            \ idempotency key. If one exists, a notification will not be sent, and\
+            \ result of the previous operation will instead be returned. Therefore,\
+            \ if you plan on using this feature, it's important to use a good source\
+            \ of randomness to generate the UUID passed here.\nThis key is only idempotent\
+            \ for 30 days. After 30 days, the notification could be removed from our\
+            \ system and a notification with the same idempotency key will be sent\
+            \ again.\n  See Idempotent Notification Requests for more details\nwriteOnly:\
+            \ true\n"
+          nullable: true
+          type: string
+        include_aliases:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: "Target specific users by aliases assigned via API. An alias\
+            \ can be an external_id, onesignal_id, or a custom alias.\nAccepts an\
+            \ object where keys are alias labels and values are arrays of alias IDs\
+            \ to include\nExample usage: { \"external_id\": [\"exId1\", \"extId2\"\
+            ], \"internal_label\": [\"id1\", \"id2\"] }\nNot compatible with any other\
+            \ targeting parameters.\nREQUIRED: REST API Key Authentication\nLimit\
+            \ of 2,000 entries per REST API call\nNote: If targeting push, email,\
+            \ or sms subscribers with same ids, use with target_channel to indicate\
+            \ you are sending a push or email or sms."
+          nullable: true
+          type: object
+        include_subscription_ids:
+          description: Specific subscription ids to target. Not compatible with other
+            targeting parameters.
+          items:
+            type: string
+          nullable: true
+          type: array
+        included_segments:
+          description: Segment names to include. Only compatible with excluded_segments.
+          items:
+            type: string
+          nullable: true
+          type: array
+        excluded_segments:
+          description: Segment names to exclude. Only compatible with included_segments.
+          items:
+            type: string
+          nullable: true
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/FilterExpression'
+          nullable: true
+          type: array
+      required:
+      - activity_id
+      - contents
+      - event
+      - event_attributes
+      - event_updates
+      - headings
+      - name
+      type: object
+    StartLiveActivitySuccessResponse:
+      example:
+        notification_id: notification_id
+      properties:
+        notification_id:
+          type: string
+      type: object
+    IncludeAliases:
+      additionalProperties:
+        items:
+          type: string
+        type: array
+      description: "Target specific users by aliases assigned via API. An alias can\
+        \ be an external_id, onesignal_id, or a custom alias.\nAccepts an object where\
+        \ keys are alias labels and values are arrays of alias IDs to include\nExample\
+        \ usage: { \"external_id\": [\"exId1\", \"extId2\"], \"internal_label\": [\"\
+        id1\", \"id2\"] }\nNot compatible with any other targeting parameters.\nREQUIRED:\
+        \ REST API Key Authentication\nLimit of 2,000 entries per REST API call\n\
+        Note: If targeting push, email, or sms subscribers with same ids, use with\
+        \ target_channel to indicate you are sending a push or email or sms."
+      nullable: true
+      type: object
+    CreateTemplateRequest:
+      example:
+        isSMS: true
+        email_body: email_body
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        name: name
+        isEmail: true
+        dynamic_content: dynamic_content
+        app_id: app_id
+        email_subject: email_subject
+      properties:
+        app_id:
+          description: Your OneSignal App ID in UUID v4 format.
+          type: string
+        name:
+          description: Name of the template.
+          type: string
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        isEmail:
+          description: Set true for an Email template.
+          type: boolean
+        email_subject:
+          description: Subject of the email.
+          nullable: true
+          type: string
+        email_body:
+          description: Body of the email (HTML supported).
+          nullable: true
+          type: string
+        isSMS:
+          description: Set true for an SMS template.
+          type: boolean
+        dynamic_content:
+          description: JSON string for dynamic content personalization.
+          nullable: true
+          type: string
+      required:
+      - app_id
+      - contents
+      - name
+      type: object
+    UpdateTemplateRequest:
+      example:
+        isSMS: true
+        email_body: email_body
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        name: name
+        isEmail: true
+        dynamic_content: dynamic_content
+        email_subject: email_subject
+      properties:
+        name:
+          description: Updated name of the template.
+          type: string
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        isEmail:
+          description: Set true for an Email template.
+          type: boolean
+        email_subject:
+          description: Subject of the email.
+          nullable: true
+          type: string
+        email_body:
+          description: Body of the email (HTML supported).
+          nullable: true
+          type: string
+        isSMS:
+          description: Set true for an SMS template.
+          type: boolean
+        dynamic_content:
+          description: JSON string for dynamic content personalization.
+          nullable: true
+          type: string
+      type: object
+    TemplateResource:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        channel: push
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        content:
+          key: ""
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        channel:
+          enum:
+          - push
+          - email
+          - sms
+          nullable: true
+          type: string
+        content:
+          additionalProperties: true
+          description: Rendered content and channel/platform flags for the template.
+          type: object
+      type: object
+    TemplatesListResponse:
+      example:
+        templates:
+        - updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          channel: push
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          content:
+            key: ""
+        - updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          channel: push
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          content:
+            key: ""
+      properties:
+        templates:
+          items:
+            $ref: '#/components/schemas/TemplateResource'
+          type: array
+      type: object
+    CopyTemplateRequest:
+      example:
+        target_app_id: target_app_id
+      properties:
+        target_app_id:
+          description: Destination OneSignal App ID in UUID v4 format.
+          type: string
+      required:
+      - target_app_id
+      type: object
     CreateUserConflictResponse:
       properties:
         errors:
@@ -3065,6 +4130,170 @@ components:
       properties:
         csv_file_url:
           type: string
+      type: object
+    CustomEvent:
+      example:
+        onesignal_id: onesignal_id
+        payload:
+          key: ""
+        name: name
+        external_id: external_id
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        name:
+          description: The identifier or name of the event. Maximum 128 characters.
+          type: string
+        external_id:
+          description: The external ID of the user targeted for the event. Either
+            the user's External ID or OneSignal ID is required.
+          nullable: true
+          type: string
+        onesignal_id:
+          description: The OneSignal ID of the user targeted for the event. Either
+            the user's External ID or OneSignal ID is required.
+          nullable: true
+          type: string
+        timestamp:
+          description: Time the event occurred as an ISO8601 formatted string. Defaults
+            to now if not included or past date provided.
+          format: date-time
+          type: string
+        payload:
+          additionalProperties: true
+          description: "Properties or data related to the event, like {\"geography\"\
+            : \"USA\"}"
+          type: object
+      required:
+      - name
+      type: object
+    CustomEventsRequest:
+      example:
+        events:
+        - onesignal_id: onesignal_id
+          payload:
+            key: ""
+          name: name
+          external_id: external_id
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        - onesignal_id: onesignal_id
+          payload:
+            key: ""
+          name: name
+          external_id: external_id
+          timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/CustomEvent'
+          type: array
+      required:
+      - events
+      type: object
+    CustomEventsResponse:
+      type: object
+    ApiKeyToken:
+      example:
+        token_id: token_id
+        updated_at: updated_at
+        name: name
+        created_at: created_at
+        ip_allowlist_mode: disabled
+        ip_allowlist:
+        - ip_allowlist
+        - ip_allowlist
+      properties:
+        token_id:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        name:
+          type: string
+        ip_allowlist_mode:
+          enum:
+          - disabled
+          - explicit
+          type: string
+        ip_allowlist:
+          items:
+            type: string
+          type: array
+      type: object
+    ApiKeyTokensListResponse:
+      example:
+        tokens:
+        - token_id: token_id
+          updated_at: updated_at
+          name: name
+          created_at: created_at
+          ip_allowlist_mode: disabled
+          ip_allowlist:
+          - ip_allowlist
+          - ip_allowlist
+        - token_id: token_id
+          updated_at: updated_at
+          name: name
+          created_at: created_at
+          ip_allowlist_mode: disabled
+          ip_allowlist:
+          - ip_allowlist
+          - ip_allowlist
+      properties:
+        tokens:
+          items:
+            $ref: '#/components/schemas/ApiKeyToken'
+          type: array
+      type: object
+    CreateApiKeyRequest:
+      example:
+        name: name
+        ip_allowlist_mode: disabled
+        ip_allowlist:
+        - ip_allowlist
+        - ip_allowlist
+      properties:
+        name:
+          type: string
+        ip_allowlist_mode:
+          enum:
+          - disabled
+          - explicit
+          type: string
+        ip_allowlist:
+          items:
+            type: string
+          type: array
+      type: object
+    CreateApiKeyResponse:
+      example:
+        token_id: token_id
+        formatted_token: formatted_token
+      properties:
+        token_id:
+          type: string
+        formatted_token:
+          type: string
+      type: object
+    UpdateApiKeyRequest:
+      example:
+        name: name
+        ip_allowlist_mode: disabled
+        ip_allowlist:
+        - ip_allowlist
+        - ip_allowlist
+      properties:
+        name:
+          type: string
+        ip_allowlist_mode:
+          enum:
+          - disabled
+          - explicit
+          type: string
+        ip_allowlist:
+          items:
+            type: string
+          type: array
       type: object
     get_notification_history_request_body:
       properties:
