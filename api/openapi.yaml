@@ -5051,6 +5051,12 @@ components:
           nullable: true
           type: string
           writeOnly: true
+        email_reply_to_address:
+          description: "Channel: Email\nThe email address where replies should be\
+            \ sent. If not specified, replies will go to the from address.\n"
+          nullable: true
+          type: string
+          writeOnly: true
         email_preheader:
           description: "Channel: Email\nThe preheader text of the email.\nPreheader\
             \ is the preview text displayed immediately after an email subject that\
@@ -5103,6 +5109,49 @@ components:
             : \"USD\", \"amount\": 25}\n"
           nullable: true
           type: object
+          writeOnly: true
+        huawei_badge_class:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nFull path of\
+            \ the app entry activity class"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_badge_add_num:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nAccumulative\
+            \ badge number, which is an integer ranging from 1 to 99"
+          nullable: true
+          type: integer
+          writeOnly: true
+        huawei_badge_set_num:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nBadge number,\
+            \ which is an integer ranging from 0 to 99"
+          nullable: true
+          type: integer
+          writeOnly: true
+        huawei_category:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nCategory of\
+            \ the push notification for HMS classification."
+          enum:
+          - IM
+          - VOIP
+          - SUBSCRIPTION
+          - TRAVEL
+          - HEALTH
+          - WORK
+          - ACCOUNT
+          - EXPRESS
+          - FINANCE
+          - DEVICE_REMINDER
+          - MAIL
+          - MARKETING
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_bi_tag:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nA tag used\
+            \ for Huawei business intelligence and analytics."
+          nullable: true
+          type: string
           writeOnly: true
       type: object
     Notification_allOf:
