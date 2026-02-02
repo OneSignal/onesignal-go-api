@@ -212,6 +212,8 @@ type NotificationWithMeta struct {
 	EmailFromName NullableString `json:"email_from_name,omitempty"`
 	// Channel: Email The email address the email is from. If not specified, will default to \"from email\" set in the OneSignal Dashboard Email Settings. 
 	EmailFromAddress NullableString `json:"email_from_address,omitempty"`
+	// Channel: Email The email address where replies should be sent. If not specified, replies will go to the from address. 
+	EmailReplyToAddress NullableString `json:"email_reply_to_address,omitempty"`
 	// Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null. 
 	EmailPreheader NullableString `json:"email_preheader,omitempty"`
 	// Channel: Email Default is `false`. If set to `true`, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked.
@@ -225,6 +227,16 @@ type NotificationWithMeta struct {
 	Filters []FilterExpression `json:"filters,omitempty"`
 	// Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\"order_id\": 123, \"currency\": \"USD\", \"amount\": 25} 
 	CustomData map[string]interface{} `json:"custom_data,omitempty"`
+	// Channel: Push Notifications Platform: Huawei Full path of the app entry activity class
+	HuaweiBadgeClass NullableString `json:"huawei_badge_class,omitempty"`
+	// Channel: Push Notifications Platform: Huawei Accumulative badge number, which is an integer ranging from 1 to 99
+	HuaweiBadgeAddNum NullableInt32 `json:"huawei_badge_add_num,omitempty"`
+	// Channel: Push Notifications Platform: Huawei Badge number, which is an integer ranging from 0 to 99
+	HuaweiBadgeSetNum NullableInt32 `json:"huawei_badge_set_num,omitempty"`
+	// Channel: Push Notifications Platform: Huawei Category of the push notification for HMS classification.
+	HuaweiCategory NullableString `json:"huawei_category,omitempty"`
+	// Channel: Push Notifications Platform: Huawei A tag used for Huawei business intelligence and analytics.
+	HuaweiBiTag NullableString `json:"huawei_bi_tag,omitempty"`
 	// Number of notifications that were successfully delivered.
 	Successful *int32 `json:"successful,omitempty"`
 	// Number of notifications that could not be delivered due to those devices being unsubscribed.
@@ -4195,6 +4207,48 @@ func (o *NotificationWithMeta) UnsetEmailFromAddress() {
 	o.EmailFromAddress.Unset()
 }
 
+// GetEmailReplyToAddress returns the EmailReplyToAddress field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetEmailReplyToAddress() string {
+	if o == nil || o.EmailReplyToAddress.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.EmailReplyToAddress.Get()
+}
+
+// GetEmailReplyToAddressOk returns a tuple with the EmailReplyToAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetEmailReplyToAddressOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EmailReplyToAddress.Get(), o.EmailReplyToAddress.IsSet()
+}
+
+// HasEmailReplyToAddress returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasEmailReplyToAddress() bool {
+	if o != nil && o.EmailReplyToAddress.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailReplyToAddress gets a reference to the given NullableString and assigns it to the EmailReplyToAddress field.
+func (o *NotificationWithMeta) SetEmailReplyToAddress(v string) {
+	o.EmailReplyToAddress.Set(&v)
+}
+// SetEmailReplyToAddressNil sets the value for EmailReplyToAddress to be an explicit nil
+func (o *NotificationWithMeta) SetEmailReplyToAddressNil() {
+	o.EmailReplyToAddress.Set(nil)
+}
+
+// UnsetEmailReplyToAddress ensures that no value is present for EmailReplyToAddress, not even an explicit nil
+func (o *NotificationWithMeta) UnsetEmailReplyToAddress() {
+	o.EmailReplyToAddress.Unset()
+}
+
 // GetEmailPreheader returns the EmailPreheader field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NotificationWithMeta) GetEmailPreheader() string {
 	if o == nil || o.EmailPreheader.Get() == nil {
@@ -4450,6 +4504,216 @@ func (o *NotificationWithMeta) HasCustomData() bool {
 // SetCustomData gets a reference to the given map[string]interface{} and assigns it to the CustomData field.
 func (o *NotificationWithMeta) SetCustomData(v map[string]interface{}) {
 	o.CustomData = v
+}
+
+// GetHuaweiBadgeClass returns the HuaweiBadgeClass field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetHuaweiBadgeClass() string {
+	if o == nil || o.HuaweiBadgeClass.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.HuaweiBadgeClass.Get()
+}
+
+// GetHuaweiBadgeClassOk returns a tuple with the HuaweiBadgeClass field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetHuaweiBadgeClassOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HuaweiBadgeClass.Get(), o.HuaweiBadgeClass.IsSet()
+}
+
+// HasHuaweiBadgeClass returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasHuaweiBadgeClass() bool {
+	if o != nil && o.HuaweiBadgeClass.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHuaweiBadgeClass gets a reference to the given NullableString and assigns it to the HuaweiBadgeClass field.
+func (o *NotificationWithMeta) SetHuaweiBadgeClass(v string) {
+	o.HuaweiBadgeClass.Set(&v)
+}
+// SetHuaweiBadgeClassNil sets the value for HuaweiBadgeClass to be an explicit nil
+func (o *NotificationWithMeta) SetHuaweiBadgeClassNil() {
+	o.HuaweiBadgeClass.Set(nil)
+}
+
+// UnsetHuaweiBadgeClass ensures that no value is present for HuaweiBadgeClass, not even an explicit nil
+func (o *NotificationWithMeta) UnsetHuaweiBadgeClass() {
+	o.HuaweiBadgeClass.Unset()
+}
+
+// GetHuaweiBadgeAddNum returns the HuaweiBadgeAddNum field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetHuaweiBadgeAddNum() int32 {
+	if o == nil || o.HuaweiBadgeAddNum.Get() == nil {
+		var ret int32
+		return ret
+	}
+	return *o.HuaweiBadgeAddNum.Get()
+}
+
+// GetHuaweiBadgeAddNumOk returns a tuple with the HuaweiBadgeAddNum field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetHuaweiBadgeAddNumOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HuaweiBadgeAddNum.Get(), o.HuaweiBadgeAddNum.IsSet()
+}
+
+// HasHuaweiBadgeAddNum returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasHuaweiBadgeAddNum() bool {
+	if o != nil && o.HuaweiBadgeAddNum.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHuaweiBadgeAddNum gets a reference to the given NullableInt32 and assigns it to the HuaweiBadgeAddNum field.
+func (o *NotificationWithMeta) SetHuaweiBadgeAddNum(v int32) {
+	o.HuaweiBadgeAddNum.Set(&v)
+}
+// SetHuaweiBadgeAddNumNil sets the value for HuaweiBadgeAddNum to be an explicit nil
+func (o *NotificationWithMeta) SetHuaweiBadgeAddNumNil() {
+	o.HuaweiBadgeAddNum.Set(nil)
+}
+
+// UnsetHuaweiBadgeAddNum ensures that no value is present for HuaweiBadgeAddNum, not even an explicit nil
+func (o *NotificationWithMeta) UnsetHuaweiBadgeAddNum() {
+	o.HuaweiBadgeAddNum.Unset()
+}
+
+// GetHuaweiBadgeSetNum returns the HuaweiBadgeSetNum field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetHuaweiBadgeSetNum() int32 {
+	if o == nil || o.HuaweiBadgeSetNum.Get() == nil {
+		var ret int32
+		return ret
+	}
+	return *o.HuaweiBadgeSetNum.Get()
+}
+
+// GetHuaweiBadgeSetNumOk returns a tuple with the HuaweiBadgeSetNum field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetHuaweiBadgeSetNumOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HuaweiBadgeSetNum.Get(), o.HuaweiBadgeSetNum.IsSet()
+}
+
+// HasHuaweiBadgeSetNum returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasHuaweiBadgeSetNum() bool {
+	if o != nil && o.HuaweiBadgeSetNum.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHuaweiBadgeSetNum gets a reference to the given NullableInt32 and assigns it to the HuaweiBadgeSetNum field.
+func (o *NotificationWithMeta) SetHuaweiBadgeSetNum(v int32) {
+	o.HuaweiBadgeSetNum.Set(&v)
+}
+// SetHuaweiBadgeSetNumNil sets the value for HuaweiBadgeSetNum to be an explicit nil
+func (o *NotificationWithMeta) SetHuaweiBadgeSetNumNil() {
+	o.HuaweiBadgeSetNum.Set(nil)
+}
+
+// UnsetHuaweiBadgeSetNum ensures that no value is present for HuaweiBadgeSetNum, not even an explicit nil
+func (o *NotificationWithMeta) UnsetHuaweiBadgeSetNum() {
+	o.HuaweiBadgeSetNum.Unset()
+}
+
+// GetHuaweiCategory returns the HuaweiCategory field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetHuaweiCategory() string {
+	if o == nil || o.HuaweiCategory.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.HuaweiCategory.Get()
+}
+
+// GetHuaweiCategoryOk returns a tuple with the HuaweiCategory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetHuaweiCategoryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HuaweiCategory.Get(), o.HuaweiCategory.IsSet()
+}
+
+// HasHuaweiCategory returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasHuaweiCategory() bool {
+	if o != nil && o.HuaweiCategory.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHuaweiCategory gets a reference to the given NullableString and assigns it to the HuaweiCategory field.
+func (o *NotificationWithMeta) SetHuaweiCategory(v string) {
+	o.HuaweiCategory.Set(&v)
+}
+// SetHuaweiCategoryNil sets the value for HuaweiCategory to be an explicit nil
+func (o *NotificationWithMeta) SetHuaweiCategoryNil() {
+	o.HuaweiCategory.Set(nil)
+}
+
+// UnsetHuaweiCategory ensures that no value is present for HuaweiCategory, not even an explicit nil
+func (o *NotificationWithMeta) UnsetHuaweiCategory() {
+	o.HuaweiCategory.Unset()
+}
+
+// GetHuaweiBiTag returns the HuaweiBiTag field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetHuaweiBiTag() string {
+	if o == nil || o.HuaweiBiTag.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.HuaweiBiTag.Get()
+}
+
+// GetHuaweiBiTagOk returns a tuple with the HuaweiBiTag field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetHuaweiBiTagOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HuaweiBiTag.Get(), o.HuaweiBiTag.IsSet()
+}
+
+// HasHuaweiBiTag returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasHuaweiBiTag() bool {
+	if o != nil && o.HuaweiBiTag.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHuaweiBiTag gets a reference to the given NullableString and assigns it to the HuaweiBiTag field.
+func (o *NotificationWithMeta) SetHuaweiBiTag(v string) {
+	o.HuaweiBiTag.Set(&v)
+}
+// SetHuaweiBiTagNil sets the value for HuaweiBiTag to be an explicit nil
+func (o *NotificationWithMeta) SetHuaweiBiTagNil() {
+	o.HuaweiBiTag.Set(nil)
+}
+
+// UnsetHuaweiBiTag ensures that no value is present for HuaweiBiTag, not even an explicit nil
+func (o *NotificationWithMeta) UnsetHuaweiBiTag() {
+	o.HuaweiBiTag.Unset()
 }
 
 // GetSuccessful returns the Successful field value if set, zero value otherwise.
@@ -5171,6 +5435,9 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.EmailFromAddress.IsSet() {
 		toSerialize["email_from_address"] = o.EmailFromAddress.Get()
 	}
+	if o.EmailReplyToAddress.IsSet() {
+		toSerialize["email_reply_to_address"] = o.EmailReplyToAddress.Get()
+	}
 	if o.EmailPreheader.IsSet() {
 		toSerialize["email_preheader"] = o.EmailPreheader.Get()
 	}
@@ -5191,6 +5458,21 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	}
 	if o.CustomData != nil {
 		toSerialize["custom_data"] = o.CustomData
+	}
+	if o.HuaweiBadgeClass.IsSet() {
+		toSerialize["huawei_badge_class"] = o.HuaweiBadgeClass.Get()
+	}
+	if o.HuaweiBadgeAddNum.IsSet() {
+		toSerialize["huawei_badge_add_num"] = o.HuaweiBadgeAddNum.Get()
+	}
+	if o.HuaweiBadgeSetNum.IsSet() {
+		toSerialize["huawei_badge_set_num"] = o.HuaweiBadgeSetNum.Get()
+	}
+	if o.HuaweiCategory.IsSet() {
+		toSerialize["huawei_category"] = o.HuaweiCategory.Get()
+	}
+	if o.HuaweiBiTag.IsSet() {
+		toSerialize["huawei_bi_tag"] = o.HuaweiBiTag.Get()
 	}
 	if o.Successful != nil {
 		toSerialize["successful"] = o.Successful
@@ -5347,6 +5629,7 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_body")
 		delete(additionalProperties, "email_from_name")
 		delete(additionalProperties, "email_from_address")
+		delete(additionalProperties, "email_reply_to_address")
 		delete(additionalProperties, "email_preheader")
 		delete(additionalProperties, "disable_email_click_tracking")
 		delete(additionalProperties, "include_unsubscribed")
@@ -5354,6 +5637,11 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "sms_media_urls")
 		delete(additionalProperties, "filters")
 		delete(additionalProperties, "custom_data")
+		delete(additionalProperties, "huawei_badge_class")
+		delete(additionalProperties, "huawei_badge_add_num")
+		delete(additionalProperties, "huawei_badge_set_num")
+		delete(additionalProperties, "huawei_category")
+		delete(additionalProperties, "huawei_bi_tag")
 		delete(additionalProperties, "successful")
 		delete(additionalProperties, "failed")
 		delete(additionalProperties, "errored")
