@@ -105,6 +105,7 @@ Name | Type | Description | Notes
 **EmailBody** | Pointer to **string** | Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an &lt;a&gt; tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid.  | [optional] 
 **EmailFromName** | Pointer to **NullableString** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
+**EmailReplyToAddress** | Pointer to **NullableString** | Channel: Email The email address where replies should be sent. If not specified, replies will go to the from address.  | [optional] 
 **EmailPreheader** | Pointer to **NullableString** | Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null.  | [optional] 
 **DisableEmailClickTracking** | Pointer to **NullableBool** | Channel: Email Default is &#x60;false&#x60;. If set to &#x60;true&#x60;, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked. | [optional] 
 **IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
@@ -112,6 +113,11 @@ Name | Type | Description | Notes
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
 **Filters** | Pointer to [**[]FilterExpression**](FilterExpression.md) |  | [optional] 
 **CustomData** | Pointer to **map[string]interface{}** | Channel: All JSON object that can be used as a source of message personalization data for fields that support tag variable substitution. Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept up to 10000 bytes of valid JSON. Example: {\&quot;order_id\&quot;: 123, \&quot;currency\&quot;: \&quot;USD\&quot;, \&quot;amount\&quot;: 25}  | [optional] 
+**HuaweiBadgeClass** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Full path of the app entry activity class | [optional] 
+**HuaweiBadgeAddNum** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Huawei Accumulative badge number, which is an integer ranging from 1 to 99 | [optional] 
+**HuaweiBadgeSetNum** | Pointer to **NullableInt32** | Channel: Push Notifications Platform: Huawei Badge number, which is an integer ranging from 0 to 99 | [optional] 
+**HuaweiCategory** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Category of the push notification for HMS classification. | [optional] 
+**HuaweiBiTag** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei A tag used for Huawei business intelligence and analytics. | [optional] 
 **SendAfter** | Pointer to **NullableTime** | Channel: All Schedule notification for future delivery. API defaults to UTC -1100 Examples: All examples are the exact same date &amp; time. \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\&quot; \&quot;September 24th 2015, 2:00:00 pm UTC-07:00\&quot; \&quot;2015-09-24 14:00:00 GMT-0700\&quot; \&quot;Sept 24 2015 14:00:00 GMT-0700\&quot; \&quot;Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific Daylight Time)\&quot; Note: SMS currently only supports send_after parameter.  | [optional] 
 
 ## Methods
@@ -3423,6 +3429,41 @@ HasEmailFromAddress returns a boolean if a field has been set.
 `func (o *Notification) UnsetEmailFromAddress()`
 
 UnsetEmailFromAddress ensures that no value is present for EmailFromAddress, not even an explicit nil
+### GetEmailReplyToAddress
+
+`func (o *Notification) GetEmailReplyToAddress() string`
+
+GetEmailReplyToAddress returns the EmailReplyToAddress field if non-nil, zero value otherwise.
+
+### GetEmailReplyToAddressOk
+
+`func (o *Notification) GetEmailReplyToAddressOk() (*string, bool)`
+
+GetEmailReplyToAddressOk returns a tuple with the EmailReplyToAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailReplyToAddress
+
+`func (o *Notification) SetEmailReplyToAddress(v string)`
+
+SetEmailReplyToAddress sets EmailReplyToAddress field to given value.
+
+### HasEmailReplyToAddress
+
+`func (o *Notification) HasEmailReplyToAddress() bool`
+
+HasEmailReplyToAddress returns a boolean if a field has been set.
+
+### SetEmailReplyToAddressNil
+
+`func (o *Notification) SetEmailReplyToAddressNil(b bool)`
+
+ SetEmailReplyToAddressNil sets the value for EmailReplyToAddress to be an explicit nil
+
+### UnsetEmailReplyToAddress
+`func (o *Notification) UnsetEmailReplyToAddress()`
+
+UnsetEmailReplyToAddress ensures that no value is present for EmailReplyToAddress, not even an explicit nil
 ### GetEmailPreheader
 
 `func (o *Notification) GetEmailPreheader() string`
@@ -3658,6 +3699,181 @@ HasCustomData returns a boolean if a field has been set.
 `func (o *Notification) UnsetCustomData()`
 
 UnsetCustomData ensures that no value is present for CustomData, not even an explicit nil
+### GetHuaweiBadgeClass
+
+`func (o *Notification) GetHuaweiBadgeClass() string`
+
+GetHuaweiBadgeClass returns the HuaweiBadgeClass field if non-nil, zero value otherwise.
+
+### GetHuaweiBadgeClassOk
+
+`func (o *Notification) GetHuaweiBadgeClassOk() (*string, bool)`
+
+GetHuaweiBadgeClassOk returns a tuple with the HuaweiBadgeClass field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHuaweiBadgeClass
+
+`func (o *Notification) SetHuaweiBadgeClass(v string)`
+
+SetHuaweiBadgeClass sets HuaweiBadgeClass field to given value.
+
+### HasHuaweiBadgeClass
+
+`func (o *Notification) HasHuaweiBadgeClass() bool`
+
+HasHuaweiBadgeClass returns a boolean if a field has been set.
+
+### SetHuaweiBadgeClassNil
+
+`func (o *Notification) SetHuaweiBadgeClassNil(b bool)`
+
+ SetHuaweiBadgeClassNil sets the value for HuaweiBadgeClass to be an explicit nil
+
+### UnsetHuaweiBadgeClass
+`func (o *Notification) UnsetHuaweiBadgeClass()`
+
+UnsetHuaweiBadgeClass ensures that no value is present for HuaweiBadgeClass, not even an explicit nil
+### GetHuaweiBadgeAddNum
+
+`func (o *Notification) GetHuaweiBadgeAddNum() int32`
+
+GetHuaweiBadgeAddNum returns the HuaweiBadgeAddNum field if non-nil, zero value otherwise.
+
+### GetHuaweiBadgeAddNumOk
+
+`func (o *Notification) GetHuaweiBadgeAddNumOk() (*int32, bool)`
+
+GetHuaweiBadgeAddNumOk returns a tuple with the HuaweiBadgeAddNum field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHuaweiBadgeAddNum
+
+`func (o *Notification) SetHuaweiBadgeAddNum(v int32)`
+
+SetHuaweiBadgeAddNum sets HuaweiBadgeAddNum field to given value.
+
+### HasHuaweiBadgeAddNum
+
+`func (o *Notification) HasHuaweiBadgeAddNum() bool`
+
+HasHuaweiBadgeAddNum returns a boolean if a field has been set.
+
+### SetHuaweiBadgeAddNumNil
+
+`func (o *Notification) SetHuaweiBadgeAddNumNil(b bool)`
+
+ SetHuaweiBadgeAddNumNil sets the value for HuaweiBadgeAddNum to be an explicit nil
+
+### UnsetHuaweiBadgeAddNum
+`func (o *Notification) UnsetHuaweiBadgeAddNum()`
+
+UnsetHuaweiBadgeAddNum ensures that no value is present for HuaweiBadgeAddNum, not even an explicit nil
+### GetHuaweiBadgeSetNum
+
+`func (o *Notification) GetHuaweiBadgeSetNum() int32`
+
+GetHuaweiBadgeSetNum returns the HuaweiBadgeSetNum field if non-nil, zero value otherwise.
+
+### GetHuaweiBadgeSetNumOk
+
+`func (o *Notification) GetHuaweiBadgeSetNumOk() (*int32, bool)`
+
+GetHuaweiBadgeSetNumOk returns a tuple with the HuaweiBadgeSetNum field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHuaweiBadgeSetNum
+
+`func (o *Notification) SetHuaweiBadgeSetNum(v int32)`
+
+SetHuaweiBadgeSetNum sets HuaweiBadgeSetNum field to given value.
+
+### HasHuaweiBadgeSetNum
+
+`func (o *Notification) HasHuaweiBadgeSetNum() bool`
+
+HasHuaweiBadgeSetNum returns a boolean if a field has been set.
+
+### SetHuaweiBadgeSetNumNil
+
+`func (o *Notification) SetHuaweiBadgeSetNumNil(b bool)`
+
+ SetHuaweiBadgeSetNumNil sets the value for HuaweiBadgeSetNum to be an explicit nil
+
+### UnsetHuaweiBadgeSetNum
+`func (o *Notification) UnsetHuaweiBadgeSetNum()`
+
+UnsetHuaweiBadgeSetNum ensures that no value is present for HuaweiBadgeSetNum, not even an explicit nil
+### GetHuaweiCategory
+
+`func (o *Notification) GetHuaweiCategory() string`
+
+GetHuaweiCategory returns the HuaweiCategory field if non-nil, zero value otherwise.
+
+### GetHuaweiCategoryOk
+
+`func (o *Notification) GetHuaweiCategoryOk() (*string, bool)`
+
+GetHuaweiCategoryOk returns a tuple with the HuaweiCategory field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHuaweiCategory
+
+`func (o *Notification) SetHuaweiCategory(v string)`
+
+SetHuaweiCategory sets HuaweiCategory field to given value.
+
+### HasHuaweiCategory
+
+`func (o *Notification) HasHuaweiCategory() bool`
+
+HasHuaweiCategory returns a boolean if a field has been set.
+
+### SetHuaweiCategoryNil
+
+`func (o *Notification) SetHuaweiCategoryNil(b bool)`
+
+ SetHuaweiCategoryNil sets the value for HuaweiCategory to be an explicit nil
+
+### UnsetHuaweiCategory
+`func (o *Notification) UnsetHuaweiCategory()`
+
+UnsetHuaweiCategory ensures that no value is present for HuaweiCategory, not even an explicit nil
+### GetHuaweiBiTag
+
+`func (o *Notification) GetHuaweiBiTag() string`
+
+GetHuaweiBiTag returns the HuaweiBiTag field if non-nil, zero value otherwise.
+
+### GetHuaweiBiTagOk
+
+`func (o *Notification) GetHuaweiBiTagOk() (*string, bool)`
+
+GetHuaweiBiTagOk returns a tuple with the HuaweiBiTag field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHuaweiBiTag
+
+`func (o *Notification) SetHuaweiBiTag(v string)`
+
+SetHuaweiBiTag sets HuaweiBiTag field to given value.
+
+### HasHuaweiBiTag
+
+`func (o *Notification) HasHuaweiBiTag() bool`
+
+HasHuaweiBiTag returns a boolean if a field has been set.
+
+### SetHuaweiBiTagNil
+
+`func (o *Notification) SetHuaweiBiTagNil(b bool)`
+
+ SetHuaweiBiTagNil sets the value for HuaweiBiTag to be an explicit nil
+
+### UnsetHuaweiBiTag
+`func (o *Notification) UnsetHuaweiBiTag()`
+
+UnsetHuaweiBiTag ensures that no value is present for HuaweiBiTag, not even an explicit nil
 ### GetSendAfter
 
 `func (o *Notification) GetSendAfter() time.Time`
