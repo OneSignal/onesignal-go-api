@@ -61,7 +61,7 @@ Stop a scheduled or currently outgoing notification
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -123,9 +123,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CopyTemplateToApp
@@ -138,7 +137,7 @@ Copy template to another app
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -202,9 +201,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateAlias
@@ -217,7 +215,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -285,9 +283,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateAliasBySubscription
@@ -300,7 +297,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -365,9 +362,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateApiKey
@@ -380,7 +376,7 @@ Create API key
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -442,9 +438,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateApp
@@ -457,7 +452,7 @@ Create an app
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -513,9 +508,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateCustomEvents
@@ -528,7 +522,7 @@ Create custom events
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -590,9 +584,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateNotification
@@ -605,7 +598,7 @@ Create notification
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -661,9 +654,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateSegment
@@ -676,7 +668,7 @@ Create Segment
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -738,9 +730,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateSubscription
@@ -753,7 +744,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -821,9 +812,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateTemplate
@@ -836,7 +826,7 @@ Create template
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -892,9 +882,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## CreateUser
@@ -907,7 +896,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -969,9 +958,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## DeleteAlias
@@ -984,7 +972,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1053,9 +1041,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## DeleteApiKey
@@ -1068,7 +1055,7 @@ Delete API key
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1131,9 +1118,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## DeleteSegment
@@ -1146,7 +1132,7 @@ Delete Segment
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1209,9 +1195,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## DeleteSubscription
@@ -1224,7 +1209,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1285,9 +1270,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## DeleteTemplate
@@ -1300,7 +1284,7 @@ Delete template
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1362,9 +1346,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## DeleteUser
@@ -1377,7 +1360,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1441,9 +1424,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## ExportEvents
@@ -1456,7 +1438,7 @@ Export CSV of Events
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1518,9 +1500,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## ExportSubscriptions
@@ -1533,7 +1514,7 @@ Export CSV of Subscriptions
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1595,9 +1576,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetAliases
@@ -1610,7 +1590,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1676,9 +1656,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetAliasesBySubscription
@@ -1691,7 +1670,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1754,9 +1733,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetApp
@@ -1769,7 +1747,7 @@ View an app
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1829,9 +1807,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetApps
@@ -1844,7 +1821,7 @@ View apps
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1895,9 +1872,8 @@ Other parameters are passed through a pointer to a apiGetAppsRequest struct via 
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetNotification
@@ -1910,7 +1886,7 @@ View notification
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -1972,9 +1948,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetNotificationHistory
@@ -1987,7 +1962,7 @@ Notification History
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2049,9 +2024,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetNotifications
@@ -2064,7 +2038,7 @@ View notifications
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2126,9 +2100,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetOutcomes
@@ -2141,7 +2114,7 @@ View Outcomes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2211,9 +2184,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetSegments
@@ -2226,7 +2198,7 @@ Get Segments
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2290,9 +2262,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## GetUser
@@ -2305,7 +2276,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2371,9 +2342,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## RotateApiKey
@@ -2386,7 +2356,7 @@ Rotate API key
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2449,9 +2419,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## StartLiveActivity
@@ -2464,7 +2433,7 @@ Start Live Activity
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2529,9 +2498,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## TransferSubscription
@@ -2544,7 +2512,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2609,9 +2577,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UnsubscribeEmailWithToken
@@ -2624,7 +2591,7 @@ Unsubscribe with token
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2689,9 +2656,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UpdateApiKey
@@ -2704,7 +2670,7 @@ Update API key
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2769,9 +2735,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UpdateApp
@@ -2784,7 +2749,7 @@ Update an app
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2846,9 +2811,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UpdateLiveActivity
@@ -2861,7 +2825,7 @@ Update a Live Activity via Push
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -2926,9 +2890,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UpdateSubscription
@@ -2941,7 +2904,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -3004,9 +2967,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UpdateSubscriptionByToken
@@ -3019,7 +2981,7 @@ Update subscription by token
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -3087,9 +3049,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UpdateTemplate
@@ -3102,7 +3063,7 @@ Update template
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -3166,9 +3127,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## UpdateUser
@@ -3181,7 +3141,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -3249,9 +3209,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## ViewApiKeys
@@ -3264,7 +3223,7 @@ View API keys
 
 ### Authorization
 
-[organization_api_key](../README.md#organization_api_key)
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -3324,9 +3283,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## ViewTemplate
@@ -3339,7 +3297,7 @@ View template
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -3401,9 +3359,8 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
 ## ViewTemplates
@@ -3416,7 +3373,7 @@ View templates
 
 ### Authorization
 
-[rest_api_key](../README.md#rest_api_key)
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
 
 ### Example
 
@@ -3478,7 +3435,6 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
