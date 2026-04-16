@@ -42,9 +42,9 @@ Name | Type | Description | Notes
 **Buttons** | Pointer to [**[]Button**](Button.md) | Channel: Push Notifications Platform: iOS 8.0+, Android 4.1+, and derivatives like Amazon Buttons to add to the notification. Icon only works for Android. Buttons show in reverse order of array position i.e. Last item in array shows as first button on device. Example: [{\&quot;id\&quot;: \&quot;id2\&quot;, \&quot;text\&quot;: \&quot;second button\&quot;, \&quot;icon\&quot;: \&quot;ic_menu_share\&quot;}, {\&quot;id\&quot;: \&quot;id1\&quot;, \&quot;text\&quot;: \&quot;first button\&quot;, \&quot;icon\&quot;: \&quot;ic_menu_send\&quot;}]  | [optional] 
 **WebButtons** | Pointer to [**[]WebButton**](WebButton.md) | Channel: Push Notifications Platform: Chrome 48+ Add action buttons to the notification. The id field is required. Example: [{\&quot;id\&quot;: \&quot;like-button\&quot;, \&quot;text\&quot;: \&quot;Like\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/N8SN8ZS.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}, {\&quot;id\&quot;: \&quot;read-more-button\&quot;, \&quot;text\&quot;: \&quot;Read more\&quot;, \&quot;icon\&quot;: \&quot;http://i.imgur.com/MIxJp1L.png\&quot;, \&quot;url\&quot;: \&quot;https://yoursite.com\&quot;}]  | [optional] 
 **IosCategory** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code. Example: calendar category which contains actions like accept and decline iOS 10+ This will trigger your UNNotificationContentExtension whose ID matches this category.  | [optional] 
-**AndroidChannelId** | Pointer to **string** | Channel: Push Notifications Platform: Android The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
+**AndroidChannelId** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
 **HuaweiChannelId** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it&#39;s id.  | [optional] 
-**ExistingAndroidChannelId** | Pointer to **string** | Channel: Push Notifications Platform: Android Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional] 
+**ExistingAndroidChannelId** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional] 
 **HuaweiExistingChannelId** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Use this if you have client side Android Oreo Channels you have already defined in your app with code.  | [optional] 
 **AndroidBackgroundLayout** | Pointer to [**BasicNotificationAllOfAndroidBackgroundLayout**](BasicNotificationAllOfAndroidBackgroundLayout.md) |  | [optional] 
 **SmallIcon** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Icon shown in the status bar and on the top left of the notification. If not set a bell icon will be used or ic_stat_onesignal_default if you have set this resource name. See: How to create small icons  | [optional] 
@@ -1430,6 +1430,16 @@ SetAndroidChannelId sets AndroidChannelId field to given value.
 
 HasAndroidChannelId returns a boolean if a field has been set.
 
+### SetAndroidChannelIdNil
+
+`func (o *BasicNotificationAllOf) SetAndroidChannelIdNil(b bool)`
+
+ SetAndroidChannelIdNil sets the value for AndroidChannelId to be an explicit nil
+
+### UnsetAndroidChannelId
+`func (o *BasicNotificationAllOf) UnsetAndroidChannelId()`
+
+UnsetAndroidChannelId ensures that no value is present for AndroidChannelId, not even an explicit nil
 ### GetHuaweiChannelId
 
 `func (o *BasicNotificationAllOf) GetHuaweiChannelId() string`
@@ -1490,6 +1500,16 @@ SetExistingAndroidChannelId sets ExistingAndroidChannelId field to given value.
 
 HasExistingAndroidChannelId returns a boolean if a field has been set.
 
+### SetExistingAndroidChannelIdNil
+
+`func (o *BasicNotificationAllOf) SetExistingAndroidChannelIdNil(b bool)`
+
+ SetExistingAndroidChannelIdNil sets the value for ExistingAndroidChannelId to be an explicit nil
+
+### UnsetExistingAndroidChannelId
+`func (o *BasicNotificationAllOf) UnsetExistingAndroidChannelId()`
+
+UnsetExistingAndroidChannelId ensures that no value is present for ExistingAndroidChannelId, not even an explicit nil
 ### GetHuaweiExistingChannelId
 
 `func (o *BasicNotificationAllOf) GetHuaweiExistingChannelId() string`

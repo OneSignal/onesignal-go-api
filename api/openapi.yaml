@@ -3849,8 +3849,96 @@ components:
           ro: ro
           nl: nl
           tr: tr
+        subtitle:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
         name: name
         isEmail: true
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
         dynamic_content: dynamic_content
         app_id: app_id
         email_subject: email_subject
@@ -3862,6 +3950,10 @@ components:
           description: Name of the template.
           type: string
         contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        subtitle:
           $ref: '#/components/schemas/LanguageStringMap'
         isEmail:
           description: Set true for an Email template.
@@ -3934,8 +4026,96 @@ components:
           ro: ro
           nl: nl
           tr: tr
+        subtitle:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
         name: name
         isEmail: true
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
         dynamic_content: dynamic_content
         email_subject: email_subject
       properties:
@@ -3943,6 +4123,10 @@ components:
           description: Updated name of the template.
           type: string
         contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        subtitle:
           $ref: '#/components/schemas/LanguageStringMap'
         isEmail:
           description: Set true for an Email template.
@@ -4643,6 +4827,7 @@ components:
           description: "Channel: Push Notifications\nPlatform: Android\nThe Android\
             \ Oreo Notification Category to send the notification under. See the Category\
             \ documentation on creating one and getting it's id.\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_channel_id:
@@ -4656,6 +4841,7 @@ components:
           description: "Channel: Push Notifications\nPlatform: Android\nUse this if\
             \ you have client side Android Oreo Channels you have already defined\
             \ in your app with code.\n"
+          nullable: true
           type: string
           writeOnly: true
         huawei_existing_channel_id:

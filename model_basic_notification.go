@@ -114,11 +114,11 @@ type BasicNotification struct {
 	// Channel: Push Notifications Platform: iOS Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code. Example: calendar category which contains actions like accept and decline iOS 10+ This will trigger your UNNotificationContentExtension whose ID matches this category. 
 	IosCategory NullableString `json:"ios_category,omitempty"`
 	// Channel: Push Notifications Platform: Android The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it's id. 
-	AndroidChannelId *string `json:"android_channel_id,omitempty"`
+	AndroidChannelId NullableString `json:"android_channel_id,omitempty"`
 	// Channel: Push Notifications Platform: Huawei The Android Oreo Notification Category to send the notification under. See the Category documentation on creating one and getting it's id. 
 	HuaweiChannelId NullableString `json:"huawei_channel_id,omitempty"`
 	// Channel: Push Notifications Platform: Android Use this if you have client side Android Oreo Channels you have already defined in your app with code. 
-	ExistingAndroidChannelId *string `json:"existing_android_channel_id,omitempty"`
+	ExistingAndroidChannelId NullableString `json:"existing_android_channel_id,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Use this if you have client side Android Oreo Channels you have already defined in your app with code. 
 	HuaweiExistingChannelId NullableString `json:"huawei_existing_channel_id,omitempty"`
 	AndroidBackgroundLayout *BasicNotificationAllOfAndroidBackgroundLayout `json:"android_background_layout,omitempty"`
@@ -2183,36 +2183,46 @@ func (o *BasicNotification) UnsetIosCategory() {
 	o.IosCategory.Unset()
 }
 
-// GetAndroidChannelId returns the AndroidChannelId field value if set, zero value otherwise.
+// GetAndroidChannelId returns the AndroidChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BasicNotification) GetAndroidChannelId() string {
-	if o == nil || o.AndroidChannelId == nil {
+	if o == nil || o.AndroidChannelId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AndroidChannelId
+	return *o.AndroidChannelId.Get()
 }
 
 // GetAndroidChannelIdOk returns a tuple with the AndroidChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *BasicNotification) GetAndroidChannelIdOk() (*string, bool) {
-	if o == nil || o.AndroidChannelId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.AndroidChannelId, true
+	return o.AndroidChannelId.Get(), o.AndroidChannelId.IsSet()
 }
 
 // HasAndroidChannelId returns a boolean if a field has been set.
 func (o *BasicNotification) HasAndroidChannelId() bool {
-	if o != nil && o.AndroidChannelId != nil {
+	if o != nil && o.AndroidChannelId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAndroidChannelId gets a reference to the given string and assigns it to the AndroidChannelId field.
+// SetAndroidChannelId gets a reference to the given NullableString and assigns it to the AndroidChannelId field.
 func (o *BasicNotification) SetAndroidChannelId(v string) {
-	o.AndroidChannelId = &v
+	o.AndroidChannelId.Set(&v)
+}
+// SetAndroidChannelIdNil sets the value for AndroidChannelId to be an explicit nil
+func (o *BasicNotification) SetAndroidChannelIdNil() {
+	o.AndroidChannelId.Set(nil)
+}
+
+// UnsetAndroidChannelId ensures that no value is present for AndroidChannelId, not even an explicit nil
+func (o *BasicNotification) UnsetAndroidChannelId() {
+	o.AndroidChannelId.Unset()
 }
 
 // GetHuaweiChannelId returns the HuaweiChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -2257,36 +2267,46 @@ func (o *BasicNotification) UnsetHuaweiChannelId() {
 	o.HuaweiChannelId.Unset()
 }
 
-// GetExistingAndroidChannelId returns the ExistingAndroidChannelId field value if set, zero value otherwise.
+// GetExistingAndroidChannelId returns the ExistingAndroidChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BasicNotification) GetExistingAndroidChannelId() string {
-	if o == nil || o.ExistingAndroidChannelId == nil {
+	if o == nil || o.ExistingAndroidChannelId.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ExistingAndroidChannelId
+	return *o.ExistingAndroidChannelId.Get()
 }
 
 // GetExistingAndroidChannelIdOk returns a tuple with the ExistingAndroidChannelId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *BasicNotification) GetExistingAndroidChannelIdOk() (*string, bool) {
-	if o == nil || o.ExistingAndroidChannelId == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.ExistingAndroidChannelId, true
+	return o.ExistingAndroidChannelId.Get(), o.ExistingAndroidChannelId.IsSet()
 }
 
 // HasExistingAndroidChannelId returns a boolean if a field has been set.
 func (o *BasicNotification) HasExistingAndroidChannelId() bool {
-	if o != nil && o.ExistingAndroidChannelId != nil {
+	if o != nil && o.ExistingAndroidChannelId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetExistingAndroidChannelId gets a reference to the given string and assigns it to the ExistingAndroidChannelId field.
+// SetExistingAndroidChannelId gets a reference to the given NullableString and assigns it to the ExistingAndroidChannelId field.
 func (o *BasicNotification) SetExistingAndroidChannelId(v string) {
-	o.ExistingAndroidChannelId = &v
+	o.ExistingAndroidChannelId.Set(&v)
+}
+// SetExistingAndroidChannelIdNil sets the value for ExistingAndroidChannelId to be an explicit nil
+func (o *BasicNotification) SetExistingAndroidChannelIdNil() {
+	o.ExistingAndroidChannelId.Set(nil)
+}
+
+// UnsetExistingAndroidChannelId ensures that no value is present for ExistingAndroidChannelId, not even an explicit nil
+func (o *BasicNotification) UnsetExistingAndroidChannelId() {
+	o.ExistingAndroidChannelId.Unset()
 }
 
 // GetHuaweiExistingChannelId returns the HuaweiExistingChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -4849,14 +4869,14 @@ func (o BasicNotification) MarshalJSON() ([]byte, error) {
 	if o.IosCategory.IsSet() {
 		toSerialize["ios_category"] = o.IosCategory.Get()
 	}
-	if o.AndroidChannelId != nil {
-		toSerialize["android_channel_id"] = o.AndroidChannelId
+	if o.AndroidChannelId.IsSet() {
+		toSerialize["android_channel_id"] = o.AndroidChannelId.Get()
 	}
 	if o.HuaweiChannelId.IsSet() {
 		toSerialize["huawei_channel_id"] = o.HuaweiChannelId.Get()
 	}
-	if o.ExistingAndroidChannelId != nil {
-		toSerialize["existing_android_channel_id"] = o.ExistingAndroidChannelId
+	if o.ExistingAndroidChannelId.IsSet() {
+		toSerialize["existing_android_channel_id"] = o.ExistingAndroidChannelId.Get()
 	}
 	if o.HuaweiExistingChannelId.IsSet() {
 		toSerialize["huawei_existing_channel_id"] = o.HuaweiExistingChannelId.Get()
