@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.3.0
+API version: 5.4.0
 Contact: devrel@onesignal.com
 */
 
@@ -22,6 +22,8 @@ type CreateTemplateRequest struct {
 	// Name of the template.
 	Name string `json:"name"`
 	Contents LanguageStringMap `json:"contents"`
+	Headings *LanguageStringMap `json:"headings,omitempty"`
+	Subtitle *LanguageStringMap `json:"subtitle,omitempty"`
 	// Set true for an Email template.
 	IsEmail *bool `json:"isEmail,omitempty"`
 	// Subject of the email.
@@ -127,6 +129,70 @@ func (o *CreateTemplateRequest) GetContentsOk() (*LanguageStringMap, bool) {
 // SetContents sets field value
 func (o *CreateTemplateRequest) SetContents(v LanguageStringMap) {
 	o.Contents = v
+}
+
+// GetHeadings returns the Headings field value if set, zero value otherwise.
+func (o *CreateTemplateRequest) GetHeadings() LanguageStringMap {
+	if o == nil || o.Headings == nil {
+		var ret LanguageStringMap
+		return ret
+	}
+	return *o.Headings
+}
+
+// GetHeadingsOk returns a tuple with the Headings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateTemplateRequest) GetHeadingsOk() (*LanguageStringMap, bool) {
+	if o == nil || o.Headings == nil {
+		return nil, false
+	}
+	return o.Headings, true
+}
+
+// HasHeadings returns a boolean if a field has been set.
+func (o *CreateTemplateRequest) HasHeadings() bool {
+	if o != nil && o.Headings != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHeadings gets a reference to the given LanguageStringMap and assigns it to the Headings field.
+func (o *CreateTemplateRequest) SetHeadings(v LanguageStringMap) {
+	o.Headings = &v
+}
+
+// GetSubtitle returns the Subtitle field value if set, zero value otherwise.
+func (o *CreateTemplateRequest) GetSubtitle() LanguageStringMap {
+	if o == nil || o.Subtitle == nil {
+		var ret LanguageStringMap
+		return ret
+	}
+	return *o.Subtitle
+}
+
+// GetSubtitleOk returns a tuple with the Subtitle field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateTemplateRequest) GetSubtitleOk() (*LanguageStringMap, bool) {
+	if o == nil || o.Subtitle == nil {
+		return nil, false
+	}
+	return o.Subtitle, true
+}
+
+// HasSubtitle returns a boolean if a field has been set.
+func (o *CreateTemplateRequest) HasSubtitle() bool {
+	if o != nil && o.Subtitle != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSubtitle gets a reference to the given LanguageStringMap and assigns it to the Subtitle field.
+func (o *CreateTemplateRequest) SetSubtitle(v LanguageStringMap) {
+	o.Subtitle = &v
 }
 
 // GetIsEmail returns the IsEmail field value if set, zero value otherwise.
@@ -330,6 +396,12 @@ func (o CreateTemplateRequest) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["contents"] = o.Contents
 	}
+	if o.Headings != nil {
+		toSerialize["headings"] = o.Headings
+	}
+	if o.Subtitle != nil {
+		toSerialize["subtitle"] = o.Subtitle
+	}
 	if o.IsEmail != nil {
 		toSerialize["isEmail"] = o.IsEmail
 	}
@@ -366,6 +438,8 @@ func (o *CreateTemplateRequest) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "app_id")
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "contents")
+		delete(additionalProperties, "headings")
+		delete(additionalProperties, "subtitle")
 		delete(additionalProperties, "isEmail")
 		delete(additionalProperties, "email_subject")
 		delete(additionalProperties, "email_body")
