@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **AppId** | **string** | Your OneSignal App ID in UUID v4 format. | 
 **Name** | **string** | Name of the template. | 
 **Contents** | [**LanguageStringMap**](LanguageStringMap.md) |  | 
+**Headings** | Pointer to [**LanguageStringMap**](LanguageStringMap.md) |  | [optional] 
+**Subtitle** | Pointer to [**LanguageStringMap**](LanguageStringMap.md) |  | [optional] 
 **IsEmail** | Pointer to **bool** | Set true for an Email template. | [optional] 
 **EmailSubject** | Pointer to **NullableString** | Subject of the email. | [optional] 
 **EmailBody** | Pointer to **NullableString** | Body of the email (HTML supported). | [optional] 
@@ -91,6 +93,56 @@ and a boolean to check if the value has been set.
 
 SetContents sets Contents field to given value.
 
+
+### GetHeadings
+
+`func (o *CreateTemplateRequest) GetHeadings() LanguageStringMap`
+
+GetHeadings returns the Headings field if non-nil, zero value otherwise.
+
+### GetHeadingsOk
+
+`func (o *CreateTemplateRequest) GetHeadingsOk() (*LanguageStringMap, bool)`
+
+GetHeadingsOk returns a tuple with the Headings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHeadings
+
+`func (o *CreateTemplateRequest) SetHeadings(v LanguageStringMap)`
+
+SetHeadings sets Headings field to given value.
+
+### HasHeadings
+
+`func (o *CreateTemplateRequest) HasHeadings() bool`
+
+HasHeadings returns a boolean if a field has been set.
+
+### GetSubtitle
+
+`func (o *CreateTemplateRequest) GetSubtitle() LanguageStringMap`
+
+GetSubtitle returns the Subtitle field if non-nil, zero value otherwise.
+
+### GetSubtitleOk
+
+`func (o *CreateTemplateRequest) GetSubtitleOk() (*LanguageStringMap, bool)`
+
+GetSubtitleOk returns a tuple with the Subtitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubtitle
+
+`func (o *CreateTemplateRequest) SetSubtitle(v LanguageStringMap)`
+
+SetSubtitle sets Subtitle field to given value.
+
+### HasSubtitle
+
+`func (o *CreateTemplateRequest) HasSubtitle() bool`
+
+HasSubtitle returns a boolean if a field has been set.
 
 ### GetIsEmail
 
