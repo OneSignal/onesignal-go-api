@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | Updated name of the template. | [optional] 
 **Contents** | Pointer to [**LanguageStringMap**](LanguageStringMap.md) |  | [optional] 
+**Headings** | Pointer to [**LanguageStringMap**](LanguageStringMap.md) |  | [optional] 
+**Subtitle** | Pointer to [**LanguageStringMap**](LanguageStringMap.md) |  | [optional] 
 **IsEmail** | Pointer to **bool** | Set true for an Email template. | [optional] 
 **EmailSubject** | Pointer to **NullableString** | Subject of the email. | [optional] 
 **EmailBody** | Pointer to **NullableString** | Body of the email (HTML supported). | [optional] 
@@ -80,6 +82,56 @@ SetContents sets Contents field to given value.
 `func (o *UpdateTemplateRequest) HasContents() bool`
 
 HasContents returns a boolean if a field has been set.
+
+### GetHeadings
+
+`func (o *UpdateTemplateRequest) GetHeadings() LanguageStringMap`
+
+GetHeadings returns the Headings field if non-nil, zero value otherwise.
+
+### GetHeadingsOk
+
+`func (o *UpdateTemplateRequest) GetHeadingsOk() (*LanguageStringMap, bool)`
+
+GetHeadingsOk returns a tuple with the Headings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHeadings
+
+`func (o *UpdateTemplateRequest) SetHeadings(v LanguageStringMap)`
+
+SetHeadings sets Headings field to given value.
+
+### HasHeadings
+
+`func (o *UpdateTemplateRequest) HasHeadings() bool`
+
+HasHeadings returns a boolean if a field has been set.
+
+### GetSubtitle
+
+`func (o *UpdateTemplateRequest) GetSubtitle() LanguageStringMap`
+
+GetSubtitle returns the Subtitle field if non-nil, zero value otherwise.
+
+### GetSubtitleOk
+
+`func (o *UpdateTemplateRequest) GetSubtitleOk() (*LanguageStringMap, bool)`
+
+GetSubtitleOk returns a tuple with the Subtitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubtitle
+
+`func (o *UpdateTemplateRequest) SetSubtitle(v LanguageStringMap)`
+
+SetSubtitle sets Subtitle field to given value.
+
+### HasSubtitle
+
+`func (o *UpdateTemplateRequest) HasSubtitle() bool`
+
+HasSubtitle returns a boolean if a field has been set.
 
 ### GetIsEmail
 
