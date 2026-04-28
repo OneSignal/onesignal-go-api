@@ -614,20 +614,23 @@ import (
 )
 
 func main() {
-    notification := *onesignal.NewNotification("AppId_example") // Notification | 
-
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
-    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY")
 
-    resp, r, err := apiClient.DefaultApi.CreateNotification(restAuth).Notification(notification).Execute()
+    notification := onesignal.NewNotification("YOUR_APP_ID")
+    contents := onesignal.NewLanguageStringMap()
+    contents.SetEn("Hello from OneSignal!")
+    notification.SetContents(*contents)
+    notification.SetIncludeAliases(map[string][]string{"external_id": {"YOUR_USER_EXTERNAL_ID"}})
+    notification.SetTargetChannel("push")
 
+    resp, r, err := apiClient.DefaultApi.CreateNotification(restAuth).Notification(*notification).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CreateNotification`: CreateNotificationSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateNotification`: %v\n", resp)
 }
 ```
