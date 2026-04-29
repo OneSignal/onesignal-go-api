@@ -121,6 +121,7 @@ paths:
       security:
       - rest_api_key: []
       summary: Create notification
+      x-onesignal-flat-notification-example: true
   /notifications/{notification_id}:
     delete:
       description: Used to stop a scheduled or currently outgoing notification
