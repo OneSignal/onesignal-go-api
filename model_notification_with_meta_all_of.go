@@ -40,6 +40,10 @@ type NotificationWithMetaAllOf struct {
 	ThrottleRatePerMinute NullableInt32 `json:"throttle_rate_per_minute,omitempty"`
 	// Indicates whether the notification was canceled before it could be sent.
 	Canceled *bool `json:"canceled,omitempty"`
+	// BCC recipients that were set on this email notification.
+	EmailBcc []string `json:"email_bcc,omitempty"`
+	// Number of BCC copies successfully sent for this notification.
+	BccSent NullableInt32 `json:"bcc_sent,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -486,6 +490,81 @@ func (o *NotificationWithMetaAllOf) SetCanceled(v bool) {
 	o.Canceled = &v
 }
 
+// GetEmailBcc returns the EmailBcc field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMetaAllOf) GetEmailBcc() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.EmailBcc
+}
+
+// GetEmailBccOk returns a tuple with the EmailBcc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMetaAllOf) GetEmailBccOk() ([]string, bool) {
+	if o == nil || o.EmailBcc == nil {
+		return nil, false
+	}
+	return o.EmailBcc, true
+}
+
+// HasEmailBcc returns a boolean if a field has been set.
+func (o *NotificationWithMetaAllOf) HasEmailBcc() bool {
+	if o != nil && o.EmailBcc != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailBcc gets a reference to the given []string and assigns it to the EmailBcc field.
+func (o *NotificationWithMetaAllOf) SetEmailBcc(v []string) {
+	o.EmailBcc = v
+}
+
+// GetBccSent returns the BccSent field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMetaAllOf) GetBccSent() int32 {
+	if o == nil || o.BccSent.Get() == nil {
+		var ret int32
+		return ret
+	}
+	return *o.BccSent.Get()
+}
+
+// GetBccSentOk returns a tuple with the BccSent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMetaAllOf) GetBccSentOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BccSent.Get(), o.BccSent.IsSet()
+}
+
+// HasBccSent returns a boolean if a field has been set.
+func (o *NotificationWithMetaAllOf) HasBccSent() bool {
+	if o != nil && o.BccSent.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBccSent gets a reference to the given NullableInt32 and assigns it to the BccSent field.
+func (o *NotificationWithMetaAllOf) SetBccSent(v int32) {
+	o.BccSent.Set(&v)
+}
+// SetBccSentNil sets the value for BccSent to be an explicit nil
+func (o *NotificationWithMetaAllOf) SetBccSentNil() {
+	o.BccSent.Set(nil)
+}
+
+// UnsetBccSent ensures that no value is present for BccSent, not even an explicit nil
+func (o *NotificationWithMetaAllOf) UnsetBccSent() {
+	o.BccSent.Unset()
+}
+
 func (o NotificationWithMetaAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Remaining != nil {
@@ -524,6 +603,12 @@ func (o NotificationWithMetaAllOf) MarshalJSON() ([]byte, error) {
 	if o.Canceled != nil {
 		toSerialize["canceled"] = o.Canceled
 	}
+	if o.EmailBcc != nil {
+		toSerialize["email_bcc"] = o.EmailBcc
+	}
+	if o.BccSent.IsSet() {
+		toSerialize["bcc_sent"] = o.BccSent.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -554,6 +639,8 @@ func (o *NotificationWithMetaAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "received")
 		delete(additionalProperties, "throttle_rate_per_minute")
 		delete(additionalProperties, "canceled")
+		delete(additionalProperties, "email_bcc")
+		delete(additionalProperties, "bcc_sent")
 		o.AdditionalProperties = additionalProperties
 	}
 
