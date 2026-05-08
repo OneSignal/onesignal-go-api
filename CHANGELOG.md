@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.5.0](https://github.com/OneSignal/onesignal-go-api/compare/v5.4.0...v5.5.0) (2026-05-08)
+
+### Features
+
+* add v5.5.0 package updates ([b009b65](https://github.com/OneSignal/onesignal-go-api/commit/b009b655595eefd45be2f04d80e60572dc0b07b7))
+
 ## [5.4.0](https://github.com/OneSignal/onesignal-go-api/compare/v5.3.0...v5.4.0) (2026-04-17)
 
 ### Features
