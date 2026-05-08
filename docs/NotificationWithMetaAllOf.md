@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **Received** | Pointer to **NullableInt32** | Confirmed Deliveries number of devices that received the push notification. Paid Feature Only. Free accounts will see 0. | [optional] 
 **ThrottleRatePerMinute** | Pointer to **NullableInt32** | number of push notifications sent per minute. Paid Feature Only. If throttling is not enabled for the app or the notification, and for free accounts, null is returned. Refer to Throttling for more details. | [optional] 
 **Canceled** | Pointer to **bool** | Indicates whether the notification was canceled before it could be sent. | [optional] 
+**EmailBcc** | Pointer to **[]string** | BCC recipients that were set on this email notification. | [optional] 
+**BccSent** | Pointer to **NullableInt32** | Number of BCC copies successfully sent for this notification. | [optional] 
 
 ## Methods
 
@@ -376,6 +378,76 @@ SetCanceled sets Canceled field to given value.
 
 HasCanceled returns a boolean if a field has been set.
 
+### GetEmailBcc
+
+`func (o *NotificationWithMetaAllOf) GetEmailBcc() []string`
+
+GetEmailBcc returns the EmailBcc field if non-nil, zero value otherwise.
+
+### GetEmailBccOk
+
+`func (o *NotificationWithMetaAllOf) GetEmailBccOk() (*[]string, bool)`
+
+GetEmailBccOk returns a tuple with the EmailBcc field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailBcc
+
+`func (o *NotificationWithMetaAllOf) SetEmailBcc(v []string)`
+
+SetEmailBcc sets EmailBcc field to given value.
+
+### HasEmailBcc
+
+`func (o *NotificationWithMetaAllOf) HasEmailBcc() bool`
+
+HasEmailBcc returns a boolean if a field has been set.
+
+### SetEmailBccNil
+
+`func (o *NotificationWithMetaAllOf) SetEmailBccNil(b bool)`
+
+ SetEmailBccNil sets the value for EmailBcc to be an explicit nil
+
+### UnsetEmailBcc
+`func (o *NotificationWithMetaAllOf) UnsetEmailBcc()`
+
+UnsetEmailBcc ensures that no value is present for EmailBcc, not even an explicit nil
+### GetBccSent
+
+`func (o *NotificationWithMetaAllOf) GetBccSent() int32`
+
+GetBccSent returns the BccSent field if non-nil, zero value otherwise.
+
+### GetBccSentOk
+
+`func (o *NotificationWithMetaAllOf) GetBccSentOk() (*int32, bool)`
+
+GetBccSentOk returns a tuple with the BccSent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBccSent
+
+`func (o *NotificationWithMetaAllOf) SetBccSent(v int32)`
+
+SetBccSent sets BccSent field to given value.
+
+### HasBccSent
+
+`func (o *NotificationWithMetaAllOf) HasBccSent() bool`
+
+HasBccSent returns a boolean if a field has been set.
+
+### SetBccSentNil
+
+`func (o *NotificationWithMetaAllOf) SetBccSentNil(b bool)`
+
+ SetBccSentNil sets the value for BccSent to be an explicit nil
+
+### UnsetBccSent
+`func (o *NotificationWithMetaAllOf) UnsetBccSent()`
+
+UnsetBccSent ensures that no value is present for BccSent, not even an explicit nil
 
 [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 

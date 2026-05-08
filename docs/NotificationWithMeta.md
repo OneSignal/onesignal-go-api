@@ -109,6 +109,7 @@ Name | Type | Description | Notes
 **EmailPreheader** | Pointer to **NullableString** | Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null.  | [optional] 
 **DisableEmailClickTracking** | Pointer to **NullableBool** | Channel: Email Default is &#x60;false&#x60;. If set to &#x60;true&#x60;, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked. | [optional] 
 **IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
+**EmailBcc** | Pointer to **[]string** | BCC recipients that were set on this email notification. | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
 **Filters** | Pointer to [**[]FilterExpression**](FilterExpression.md) |  | [optional] 
@@ -130,6 +131,7 @@ Name | Type | Description | Notes
 **CompletedAt** | Pointer to **NullableInt64** | Unix timestamp indicating when notification delivery completed. The delivery duration from start to finish can be calculated with completed_at - send_after. | [optional] 
 **PlatformDeliveryStats** | Pointer to [**PlatformDeliveryData**](PlatformDeliveryData.md) |  | [optional] 
 **Canceled** | Pointer to **bool** | Indicates whether the notification was canceled before it could be sent. | [optional] 
+**BccSent** | Pointer to **NullableInt32** | Number of BCC copies successfully sent for this notification. | [optional] 
 
 ## Methods
 
@@ -3590,6 +3592,41 @@ SetIncludeUnsubscribed sets IncludeUnsubscribed field to given value.
 
 HasIncludeUnsubscribed returns a boolean if a field has been set.
 
+### GetEmailBcc
+
+`func (o *NotificationWithMeta) GetEmailBcc() []string`
+
+GetEmailBcc returns the EmailBcc field if non-nil, zero value otherwise.
+
+### GetEmailBccOk
+
+`func (o *NotificationWithMeta) GetEmailBccOk() (*[]string, bool)`
+
+GetEmailBccOk returns a tuple with the EmailBcc field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailBcc
+
+`func (o *NotificationWithMeta) SetEmailBcc(v []string)`
+
+SetEmailBcc sets EmailBcc field to given value.
+
+### HasEmailBcc
+
+`func (o *NotificationWithMeta) HasEmailBcc() bool`
+
+HasEmailBcc returns a boolean if a field has been set.
+
+### SetEmailBccNil
+
+`func (o *NotificationWithMeta) SetEmailBccNil(b bool)`
+
+ SetEmailBccNil sets the value for EmailBcc to be an explicit nil
+
+### UnsetEmailBcc
+`func (o *NotificationWithMeta) UnsetEmailBcc()`
+
+UnsetEmailBcc ensures that no value is present for EmailBcc, not even an explicit nil
 ### GetSmsFrom
 
 `func (o *NotificationWithMeta) GetSmsFrom() string`
@@ -4235,6 +4272,41 @@ SetCanceled sets Canceled field to given value.
 
 HasCanceled returns a boolean if a field has been set.
 
+### GetBccSent
+
+`func (o *NotificationWithMeta) GetBccSent() int32`
+
+GetBccSent returns the BccSent field if non-nil, zero value otherwise.
+
+### GetBccSentOk
+
+`func (o *NotificationWithMeta) GetBccSentOk() (*int32, bool)`
+
+GetBccSentOk returns a tuple with the BccSent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBccSent
+
+`func (o *NotificationWithMeta) SetBccSent(v int32)`
+
+SetBccSent sets BccSent field to given value.
+
+### HasBccSent
+
+`func (o *NotificationWithMeta) HasBccSent() bool`
+
+HasBccSent returns a boolean if a field has been set.
+
+### SetBccSentNil
+
+`func (o *NotificationWithMeta) SetBccSentNil(b bool)`
+
+ SetBccSentNil sets the value for BccSent to be an explicit nil
+
+### UnsetBccSent
+`func (o *NotificationWithMeta) UnsetBccSent()`
+
+UnsetBccSent ensures that no value is present for BccSent, not even an explicit nil
 
 [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 

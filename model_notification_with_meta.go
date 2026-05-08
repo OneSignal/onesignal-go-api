@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.4.0
+API version: 5.5.0
 Contact: devrel@onesignal.com
 */
 
@@ -220,6 +220,8 @@ type NotificationWithMeta struct {
 	DisableEmailClickTracking NullableBool `json:"disable_email_click_tracking,omitempty"`
 	// Channel: Email Default is `false`. This field is used to send transactional notifications. If set to `true`, this notification will also be sent to unsubscribed emails. If a `template_id` is provided, the `include_unsubscribed` value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP's list of unsubscribed emails to be cleared.
 	IncludeUnsubscribed *bool `json:"include_unsubscribed,omitempty"`
+	// BCC recipients that were set on this email notification.
+	EmailBcc []string `json:"email_bcc,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
@@ -259,6 +261,8 @@ type NotificationWithMeta struct {
 	PlatformDeliveryStats *PlatformDeliveryData `json:"platform_delivery_stats,omitempty"`
 	// Indicates whether the notification was canceled before it could be sent.
 	Canceled *bool `json:"canceled,omitempty"`
+	// Number of BCC copies successfully sent for this notification.
+	BccSent NullableInt32 `json:"bcc_sent,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -4385,6 +4389,39 @@ func (o *NotificationWithMeta) SetIncludeUnsubscribed(v bool) {
 	o.IncludeUnsubscribed = &v
 }
 
+// GetEmailBcc returns the EmailBcc field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetEmailBcc() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.EmailBcc
+}
+
+// GetEmailBccOk returns a tuple with the EmailBcc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetEmailBccOk() ([]string, bool) {
+	if o == nil || o.EmailBcc == nil {
+		return nil, false
+	}
+	return o.EmailBcc, true
+}
+
+// HasEmailBcc returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasEmailBcc() bool {
+	if o != nil && o.EmailBcc != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailBcc gets a reference to the given []string and assigns it to the EmailBcc field.
+func (o *NotificationWithMeta) SetEmailBcc(v []string) {
+	o.EmailBcc = v
+}
+
 // GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NotificationWithMeta) GetSmsFrom() string {
 	if o == nil || o.SmsFrom.Get() == nil {
@@ -5150,6 +5187,48 @@ func (o *NotificationWithMeta) SetCanceled(v bool) {
 	o.Canceled = &v
 }
 
+// GetBccSent returns the BccSent field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetBccSent() int32 {
+	if o == nil || o.BccSent.Get() == nil {
+		var ret int32
+		return ret
+	}
+	return *o.BccSent.Get()
+}
+
+// GetBccSentOk returns a tuple with the BccSent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetBccSentOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BccSent.Get(), o.BccSent.IsSet()
+}
+
+// HasBccSent returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasBccSent() bool {
+	if o != nil && o.BccSent.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBccSent gets a reference to the given NullableInt32 and assigns it to the BccSent field.
+func (o *NotificationWithMeta) SetBccSent(v int32) {
+	o.BccSent.Set(&v)
+}
+// SetBccSentNil sets the value for BccSent to be an explicit nil
+func (o *NotificationWithMeta) SetBccSentNil() {
+	o.BccSent.Set(nil)
+}
+
+// UnsetBccSent ensures that no value is present for BccSent, not even an explicit nil
+func (o *NotificationWithMeta) UnsetBccSent() {
+	o.BccSent.Unset()
+}
+
 func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.IncludedSegments != nil {
@@ -5467,6 +5546,9 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.IncludeUnsubscribed != nil {
 		toSerialize["include_unsubscribed"] = o.IncludeUnsubscribed
 	}
+	if o.EmailBcc != nil {
+		toSerialize["email_bcc"] = o.EmailBcc
+	}
 	if o.SmsFrom.IsSet() {
 		toSerialize["sms_from"] = o.SmsFrom.Get()
 	}
@@ -5529,6 +5611,9 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	}
 	if o.Canceled != nil {
 		toSerialize["canceled"] = o.Canceled
+	}
+	if o.BccSent.IsSet() {
+		toSerialize["bcc_sent"] = o.BccSent.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -5653,6 +5738,7 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_preheader")
 		delete(additionalProperties, "disable_email_click_tracking")
 		delete(additionalProperties, "include_unsubscribed")
+		delete(additionalProperties, "email_bcc")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
 		delete(additionalProperties, "filters")
@@ -5674,6 +5760,7 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "completed_at")
 		delete(additionalProperties, "platform_delivery_stats")
 		delete(additionalProperties, "canceled")
+		delete(additionalProperties, "bcc_sent")
 		o.AdditionalProperties = additionalProperties
 	}
 
