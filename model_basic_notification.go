@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.4.0
+API version: 5.5.0
 Contact: devrel@onesignal.com
 */
 
@@ -220,6 +220,8 @@ type BasicNotification struct {
 	DisableEmailClickTracking NullableBool `json:"disable_email_click_tracking,omitempty"`
 	// Channel: Email Default is `false`. This field is used to send transactional notifications. If set to `true`, this notification will also be sent to unsubscribed emails. If a `template_id` is provided, the `include_unsubscribed` value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP's list of unsubscribed emails to be cleared.
 	IncludeUnsubscribed *bool `json:"include_unsubscribed,omitempty"`
+	// Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email. 
+	EmailBcc []string `json:"email_bcc,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
@@ -4363,6 +4365,39 @@ func (o *BasicNotification) SetIncludeUnsubscribed(v bool) {
 	o.IncludeUnsubscribed = &v
 }
 
+// GetEmailBcc returns the EmailBcc field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotification) GetEmailBcc() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.EmailBcc
+}
+
+// GetEmailBccOk returns a tuple with the EmailBcc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotification) GetEmailBccOk() ([]string, bool) {
+	if o == nil || o.EmailBcc == nil {
+		return nil, false
+	}
+	return o.EmailBcc, true
+}
+
+// HasEmailBcc returns a boolean if a field has been set.
+func (o *BasicNotification) HasEmailBcc() bool {
+	if o != nil && o.EmailBcc != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailBcc gets a reference to the given []string and assigns it to the EmailBcc field.
+func (o *BasicNotification) SetEmailBcc(v []string) {
+	o.EmailBcc = v
+}
+
 // GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BasicNotification) GetSmsFrom() string {
 	if o == nil || o.SmsFrom.Get() == nil {
@@ -5031,6 +5066,9 @@ func (o BasicNotification) MarshalJSON() ([]byte, error) {
 	if o.IncludeUnsubscribed != nil {
 		toSerialize["include_unsubscribed"] = o.IncludeUnsubscribed
 	}
+	if o.EmailBcc != nil {
+		toSerialize["email_bcc"] = o.EmailBcc
+	}
 	if o.SmsFrom.IsSet() {
 		toSerialize["sms_from"] = o.SmsFrom.Get()
 	}
@@ -5181,6 +5219,7 @@ func (o *BasicNotification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "email_preheader")
 		delete(additionalProperties, "disable_email_click_tracking")
 		delete(additionalProperties, "include_unsubscribed")
+		delete(additionalProperties, "email_bcc")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
 		delete(additionalProperties, "filters")

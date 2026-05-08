@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **IsEmail** | Pointer to **bool** | Set true for an Email template. | [optional] 
 **EmailSubject** | Pointer to **NullableString** | Subject of the email. | [optional] 
 **EmailBody** | Pointer to **NullableString** | Body of the email (HTML supported). | [optional] 
+**EmailBcc** | Pointer to **[]string** | BCC recipients for the email template. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email. | [optional] 
 **IsSMS** | Pointer to **bool** | Set true for an SMS template. | [optional] 
 **DynamicContent** | Pointer to **NullableString** | JSON string for dynamic content personalization. | [optional] 
 
@@ -239,6 +240,41 @@ HasEmailBody returns a boolean if a field has been set.
 `func (o *CreateTemplateRequest) UnsetEmailBody()`
 
 UnsetEmailBody ensures that no value is present for EmailBody, not even an explicit nil
+### GetEmailBcc
+
+`func (o *CreateTemplateRequest) GetEmailBcc() []string`
+
+GetEmailBcc returns the EmailBcc field if non-nil, zero value otherwise.
+
+### GetEmailBccOk
+
+`func (o *CreateTemplateRequest) GetEmailBccOk() (*[]string, bool)`
+
+GetEmailBccOk returns a tuple with the EmailBcc field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailBcc
+
+`func (o *CreateTemplateRequest) SetEmailBcc(v []string)`
+
+SetEmailBcc sets EmailBcc field to given value.
+
+### HasEmailBcc
+
+`func (o *CreateTemplateRequest) HasEmailBcc() bool`
+
+HasEmailBcc returns a boolean if a field has been set.
+
+### SetEmailBccNil
+
+`func (o *CreateTemplateRequest) SetEmailBccNil(b bool)`
+
+ SetEmailBccNil sets the value for EmailBcc to be an explicit nil
+
+### UnsetEmailBcc
+`func (o *CreateTemplateRequest) UnsetEmailBcc()`
+
+UnsetEmailBcc ensures that no value is present for EmailBcc, not even an explicit nil
 ### GetIsSMS
 
 `func (o *CreateTemplateRequest) GetIsSMS() bool`

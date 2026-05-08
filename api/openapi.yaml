@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.4.0
+  version: 5.5.0
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -3926,6 +3926,12 @@ components:
           tr: tr
         name: name
         isEmail: true
+        email_bcc:
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
         headings:
           de: de
           hi: hi
@@ -3997,6 +4003,14 @@ components:
           description: Body of the email (HTML supported).
           nullable: true
           type: string
+        email_bcc:
+          description: BCC recipients for the email template. Maximum 5 addresses.
+            Only supported when the email service provider is OneSignal Email.
+          items:
+            type: string
+          maxItems: 5
+          nullable: true
+          type: array
         isSMS:
           description: Set true for an SMS template.
           type: boolean
@@ -4103,6 +4117,12 @@ components:
           tr: tr
         name: name
         isEmail: true
+        email_bcc:
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
         headings:
           de: de
           hi: hi
@@ -4170,6 +4190,14 @@ components:
           description: Body of the email (HTML supported).
           nullable: true
           type: string
+        email_bcc:
+          description: BCC recipients for the email template. Maximum 5 addresses.
+            Only supported when the email service provider is OneSignal Email.
+          items:
+            type: string
+          maxItems: 5
+          nullable: true
+          type: array
         isSMS:
           description: Set true for an SMS template.
           type: boolean
@@ -5302,6 +5330,15 @@ components:
             \ of unsubscribed emails to be cleared."
           type: boolean
           writeOnly: true
+        email_bcc:
+          description: "Channel: Email\nBCC recipients for the email. Maximum 5 addresses.\
+            \ Only supported when the email service provider is OneSignal Email.\n"
+          items:
+            type: string
+          maxItems: 5
+          nullable: true
+          type: array
+          writeOnly: true
         sms_from:
           description: "Channel: SMS\nPhone Number used to send SMS. Should be a registered\
             \ Twilio phone number in E.164 format.\n"
@@ -5445,6 +5482,16 @@ components:
           description: Indicates whether the notification was canceled before it could
             be sent.
           type: boolean
+        email_bcc:
+          description: BCC recipients that were set on this email notification.
+          items:
+            type: string
+          nullable: true
+          type: array
+        bcc_sent:
+          description: Number of BCC copies successfully sent for this notification.
+          nullable: true
+          type: integer
       type: object
     PlatformDeliveryData_sms_allOf:
       properties:

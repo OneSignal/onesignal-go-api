@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.4.0
+API version: 5.5.0
 Contact: devrel@onesignal.com
 */
 
@@ -28,6 +28,8 @@ type UpdateTemplateRequest struct {
 	EmailSubject NullableString `json:"email_subject,omitempty"`
 	// Body of the email (HTML supported).
 	EmailBody NullableString `json:"email_body,omitempty"`
+	// BCC recipients for the email template. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email.
+	EmailBcc []string `json:"email_bcc,omitempty"`
 	// Set true for an SMS template.
 	IsSMS *bool `json:"isSMS,omitempty"`
 	// JSON string for dynamic content personalization.
@@ -298,6 +300,39 @@ func (o *UpdateTemplateRequest) UnsetEmailBody() {
 	o.EmailBody.Unset()
 }
 
+// GetEmailBcc returns the EmailBcc field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateTemplateRequest) GetEmailBcc() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.EmailBcc
+}
+
+// GetEmailBccOk returns a tuple with the EmailBcc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateTemplateRequest) GetEmailBccOk() ([]string, bool) {
+	if o == nil || o.EmailBcc == nil {
+		return nil, false
+	}
+	return o.EmailBcc, true
+}
+
+// HasEmailBcc returns a boolean if a field has been set.
+func (o *UpdateTemplateRequest) HasEmailBcc() bool {
+	if o != nil && o.EmailBcc != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailBcc gets a reference to the given []string and assigns it to the EmailBcc field.
+func (o *UpdateTemplateRequest) SetEmailBcc(v []string) {
+	o.EmailBcc = v
+}
+
 // GetIsSMS returns the IsSMS field value if set, zero value otherwise.
 func (o *UpdateTemplateRequest) GetIsSMS() bool {
 	if o == nil || o.IsSMS == nil {
@@ -395,6 +430,9 @@ func (o UpdateTemplateRequest) MarshalJSON() ([]byte, error) {
 	if o.EmailBody.IsSet() {
 		toSerialize["email_body"] = o.EmailBody.Get()
 	}
+	if o.EmailBcc != nil {
+		toSerialize["email_bcc"] = o.EmailBcc
+	}
 	if o.IsSMS != nil {
 		toSerialize["isSMS"] = o.IsSMS
 	}
@@ -426,6 +464,7 @@ func (o *UpdateTemplateRequest) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "isEmail")
 		delete(additionalProperties, "email_subject")
 		delete(additionalProperties, "email_body")
+		delete(additionalProperties, "email_bcc")
 		delete(additionalProperties, "isSMS")
 		delete(additionalProperties, "dynamic_content")
 		o.AdditionalProperties = additionalProperties
