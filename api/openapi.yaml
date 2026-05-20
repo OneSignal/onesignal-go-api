@@ -2514,10 +2514,19 @@ components:
           nullable: true
           type: array
         include_email_tokens:
-          description: "Recommended for Sending Emails - Target specific email addresses.\n\
-            If an email does not correspond to an existing user, a new user will be\
-            \ created.\nExample: nick@catfac.ts\nLimit of 2,000 entries per REST API\
-            \ call\n"
+          deprecated: true
+          description: "Deprecated alias for `email_to`. Target specific email addresses.\
+            \ If an email does not correspond to an existing user, a new user will\
+            \ be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST\
+            \ API call. Prefer `email_to` in new integrations.\n"
+          items:
+            type: string
+          type: array
+        email_to:
+          description: "Recommended for Sending Emails - Target specific email addresses.\
+            \ If an email does not correspond to an existing user, a new user will\
+            \ be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST\
+            \ API call. Supersedes the deprecated `include_email_tokens` field.\n"
           items:
             type: string
           type: array
@@ -5338,6 +5347,13 @@ components:
           maxItems: 5
           nullable: true
           type: array
+          writeOnly: true
+        email_sender_domain:
+          description: "Channel: Email\nSender domain to use for the email message.\
+            \ Overrides the default sender domain configured for the app. Only supported\
+            \ when the email service provider is OneSignal Email.\n"
+          nullable: true
+          type: string
           writeOnly: true
         sms_from:
           description: "Channel: SMS\nPhone Number used to send SMS. Should be a registered\

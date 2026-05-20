@@ -197,6 +197,8 @@ type BasicNotificationAllOf struct {
 	IncludeUnsubscribed *bool `json:"include_unsubscribed,omitempty"`
 	// Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email. 
 	EmailBcc []string `json:"email_bcc,omitempty"`
+	// Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email. 
+	EmailSenderDomain NullableString `json:"email_sender_domain,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
@@ -3962,6 +3964,48 @@ func (o *BasicNotificationAllOf) SetEmailBcc(v []string) {
 	o.EmailBcc = v
 }
 
+// GetEmailSenderDomain returns the EmailSenderDomain field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotificationAllOf) GetEmailSenderDomain() string {
+	if o == nil || o.EmailSenderDomain.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.EmailSenderDomain.Get()
+}
+
+// GetEmailSenderDomainOk returns a tuple with the EmailSenderDomain field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotificationAllOf) GetEmailSenderDomainOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EmailSenderDomain.Get(), o.EmailSenderDomain.IsSet()
+}
+
+// HasEmailSenderDomain returns a boolean if a field has been set.
+func (o *BasicNotificationAllOf) HasEmailSenderDomain() bool {
+	if o != nil && o.EmailSenderDomain.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailSenderDomain gets a reference to the given NullableString and assigns it to the EmailSenderDomain field.
+func (o *BasicNotificationAllOf) SetEmailSenderDomain(v string) {
+	o.EmailSenderDomain.Set(&v)
+}
+// SetEmailSenderDomainNil sets the value for EmailSenderDomain to be an explicit nil
+func (o *BasicNotificationAllOf) SetEmailSenderDomainNil() {
+	o.EmailSenderDomain.Set(nil)
+}
+
+// UnsetEmailSenderDomain ensures that no value is present for EmailSenderDomain, not even an explicit nil
+func (o *BasicNotificationAllOf) UnsetEmailSenderDomain() {
+	o.EmailSenderDomain.Unset()
+}
+
 // GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BasicNotificationAllOf) GetSmsFrom() string {
 	if o == nil || o.SmsFrom.Get() == nil {
@@ -4594,6 +4638,9 @@ func (o BasicNotificationAllOf) MarshalJSON() ([]byte, error) {
 	if o.EmailBcc != nil {
 		toSerialize["email_bcc"] = o.EmailBcc
 	}
+	if o.EmailSenderDomain.IsSet() {
+		toSerialize["email_sender_domain"] = o.EmailSenderDomain.Get()
+	}
 	if o.SmsFrom.IsSet() {
 		toSerialize["sms_from"] = o.SmsFrom.Get()
 	}
@@ -4732,6 +4779,7 @@ func (o *BasicNotificationAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "disable_email_click_tracking")
 		delete(additionalProperties, "include_unsubscribed")
 		delete(additionalProperties, "email_bcc")
+		delete(additionalProperties, "email_sender_domain")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
 		delete(additionalProperties, "filters")
