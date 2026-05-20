@@ -7,7 +7,8 @@ Name | Type | Description | Notes
 **IncludedSegments** | Pointer to **[]string** | The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
 **ExcludedSegments** | Pointer to **[]string** | Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
 **IncludeSubscriptionIds** | Pointer to **[]string** | Specific subscription ids to send your notification to. _Does not require API Auth Key._ Not compatible with any other targeting parameters. Example: [\&quot;1dd608f2-c6a1-11e3-851d-000c2940e62c\&quot;] Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeEmailTokens** | Pointer to **[]string** | Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeEmailTokens** | Pointer to **[]string** | Deprecated alias for &#x60;email_to&#x60;. Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Prefer &#x60;email_to&#x60; in new integrations.  | [optional] 
+**EmailTo** | Pointer to **[]string** | Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Supersedes the deprecated &#x60;include_email_tokens&#x60; field.  | [optional] 
 **IncludePhoneNumbers** | Pointer to **[]string** | Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeIosTokens** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeWpWnsUris** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call  | [optional] 
@@ -146,6 +147,31 @@ SetIncludeEmailTokens sets IncludeEmailTokens field to given value.
 `func (o *NotificationTarget) HasIncludeEmailTokens() bool`
 
 HasIncludeEmailTokens returns a boolean if a field has been set.
+
+### GetEmailTo
+
+`func (o *NotificationTarget) GetEmailTo() []string`
+
+GetEmailTo returns the EmailTo field if non-nil, zero value otherwise.
+
+### GetEmailToOk
+
+`func (o *NotificationTarget) GetEmailToOk() (*[]string, bool)`
+
+GetEmailToOk returns a tuple with the EmailTo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailTo
+
+`func (o *NotificationTarget) SetEmailTo(v []string)`
+
+SetEmailTo sets EmailTo field to given value.
+
+### HasEmailTo
+
+`func (o *NotificationTarget) HasEmailTo() bool`
+
+HasEmailTo returns a boolean if a field has been set.
 
 ### GetIncludePhoneNumbers
 

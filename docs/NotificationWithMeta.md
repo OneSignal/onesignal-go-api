@@ -7,7 +7,8 @@ Name | Type | Description | Notes
 **IncludedSegments** | Pointer to **[]string** | The segment names you want to target. Users in these segments will receive a notification. This targeting parameter is only compatible with excluded_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
 **ExcludedSegments** | Pointer to **[]string** | Segment that will be excluded when sending. Users in these segments will not receive a notification, even if they were included in included_segments. This targeting parameter is only compatible with included_segments. Example: [\&quot;Active Users\&quot;, \&quot;Inactive Users\&quot;]  | [optional] 
 **IncludeSubscriptionIds** | Pointer to **[]string** | Specific subscription ids to send your notification to. _Does not require API Auth Key._ Not compatible with any other targeting parameters. Example: [\&quot;1dd608f2-c6a1-11e3-851d-000c2940e62c\&quot;] Limit of 2,000 entries per REST API call  | [optional] 
-**IncludeEmailTokens** | Pointer to **[]string** | Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call  | [optional] 
+**IncludeEmailTokens** | Pointer to **[]string** | Deprecated alias for &#x60;email_to&#x60;. Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Prefer &#x60;email_to&#x60; in new integrations.  | [optional] 
+**EmailTo** | Pointer to **[]string** | Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Supersedes the deprecated &#x60;include_email_tokens&#x60; field.  | [optional] 
 **IncludePhoneNumbers** | Pointer to **[]string** | Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeIosTokens** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call  | [optional] 
 **IncludeWpWnsUris** | Pointer to **[]string** | Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using Windows URIs. If a token does not correspond to an existing user, a new user will be created. Example: http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-... Limit of 2,000 entries per REST API call  | [optional] 
@@ -110,6 +111,7 @@ Name | Type | Description | Notes
 **DisableEmailClickTracking** | Pointer to **NullableBool** | Channel: Email Default is &#x60;false&#x60;. If set to &#x60;true&#x60;, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked. | [optional] 
 **IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
 **EmailBcc** | Pointer to **[]string** | BCC recipients that were set on this email notification. | [optional] 
+**EmailSenderDomain** | Pointer to **NullableString** | Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email.  | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
 **Filters** | Pointer to [**[]FilterExpression**](FilterExpression.md) |  | [optional] 
@@ -261,6 +263,31 @@ SetIncludeEmailTokens sets IncludeEmailTokens field to given value.
 `func (o *NotificationWithMeta) HasIncludeEmailTokens() bool`
 
 HasIncludeEmailTokens returns a boolean if a field has been set.
+
+### GetEmailTo
+
+`func (o *NotificationWithMeta) GetEmailTo() []string`
+
+GetEmailTo returns the EmailTo field if non-nil, zero value otherwise.
+
+### GetEmailToOk
+
+`func (o *NotificationWithMeta) GetEmailToOk() (*[]string, bool)`
+
+GetEmailToOk returns a tuple with the EmailTo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailTo
+
+`func (o *NotificationWithMeta) SetEmailTo(v []string)`
+
+SetEmailTo sets EmailTo field to given value.
+
+### HasEmailTo
+
+`func (o *NotificationWithMeta) HasEmailTo() bool`
+
+HasEmailTo returns a boolean if a field has been set.
 
 ### GetIncludePhoneNumbers
 
@@ -3627,6 +3654,41 @@ HasEmailBcc returns a boolean if a field has been set.
 `func (o *NotificationWithMeta) UnsetEmailBcc()`
 
 UnsetEmailBcc ensures that no value is present for EmailBcc, not even an explicit nil
+### GetEmailSenderDomain
+
+`func (o *NotificationWithMeta) GetEmailSenderDomain() string`
+
+GetEmailSenderDomain returns the EmailSenderDomain field if non-nil, zero value otherwise.
+
+### GetEmailSenderDomainOk
+
+`func (o *NotificationWithMeta) GetEmailSenderDomainOk() (*string, bool)`
+
+GetEmailSenderDomainOk returns a tuple with the EmailSenderDomain field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailSenderDomain
+
+`func (o *NotificationWithMeta) SetEmailSenderDomain(v string)`
+
+SetEmailSenderDomain sets EmailSenderDomain field to given value.
+
+### HasEmailSenderDomain
+
+`func (o *NotificationWithMeta) HasEmailSenderDomain() bool`
+
+HasEmailSenderDomain returns a boolean if a field has been set.
+
+### SetEmailSenderDomainNil
+
+`func (o *NotificationWithMeta) SetEmailSenderDomainNil(b bool)`
+
+ SetEmailSenderDomainNil sets the value for EmailSenderDomain to be an explicit nil
+
+### UnsetEmailSenderDomain
+`func (o *NotificationWithMeta) UnsetEmailSenderDomain()`
+
+UnsetEmailSenderDomain ensures that no value is present for EmailSenderDomain, not even an explicit nil
 ### GetSmsFrom
 
 `func (o *NotificationWithMeta) GetSmsFrom() string`

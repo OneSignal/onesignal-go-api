@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.5.0
+API version: 5.6.0
 Contact: devrel@onesignal.com
 */
 
@@ -23,8 +23,11 @@ type NotificationWithMeta struct {
 	ExcludedSegments []string `json:"excluded_segments,omitempty"`
 	// Specific subscription ids to send your notification to. _Does not require API Auth Key._ Not compatible with any other targeting parameters. Example: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"] Limit of 2,000 entries per REST API call 
 	IncludeSubscriptionIds []string `json:"include_subscription_ids,omitempty"`
-	// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts Limit of 2,000 entries per REST API call 
+	// Deprecated alias for `email_to`. Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Prefer `email_to` in new integrations. 
+	// Deprecated
 	IncludeEmailTokens []string `json:"include_email_tokens,omitempty"`
+	// Recommended for Sending Emails - Target specific email addresses. If an email does not correspond to an existing user, a new user will be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST API call. Supersedes the deprecated `include_email_tokens` field. 
+	EmailTo []string `json:"email_to,omitempty"`
 	// Recommended for Sending SMS - Target specific phone numbers. The phone number should be in the E.164 format. Phone number should be an existing subscriber on OneSignal. Refer our docs to learn how to add phone numbers to OneSignal. Example phone number: +1999999999 Limit of 2,000 entries per REST API call 
 	IncludePhoneNumbers []string `json:"include_phone_numbers,omitempty"`
 	// Not Recommended: Please consider using include_subscription_ids or include_aliases instead. Target using iOS device tokens. Warning: Only works with Production tokens. All non-alphanumeric characters must be removed from each token. If a token does not correspond to an existing user, a new user will be created. Example: ce777617da7f548fe7a9ab6febb56cf39fba6d38203... Limit of 2,000 entries per REST API call 
@@ -222,6 +225,8 @@ type NotificationWithMeta struct {
 	IncludeUnsubscribed *bool `json:"include_unsubscribed,omitempty"`
 	// BCC recipients that were set on this email notification.
 	EmailBcc []string `json:"email_bcc,omitempty"`
+	// Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email. 
+	EmailSenderDomain NullableString `json:"email_sender_domain,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
@@ -384,6 +389,7 @@ func (o *NotificationWithMeta) SetIncludeSubscriptionIds(v []string) {
 }
 
 // GetIncludeEmailTokens returns the IncludeEmailTokens field value if set, zero value otherwise.
+// Deprecated
 func (o *NotificationWithMeta) GetIncludeEmailTokens() []string {
 	if o == nil || o.IncludeEmailTokens == nil {
 		var ret []string
@@ -394,6 +400,7 @@ func (o *NotificationWithMeta) GetIncludeEmailTokens() []string {
 
 // GetIncludeEmailTokensOk returns a tuple with the IncludeEmailTokens field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *NotificationWithMeta) GetIncludeEmailTokensOk() ([]string, bool) {
 	if o == nil || o.IncludeEmailTokens == nil {
 		return nil, false
@@ -411,8 +418,41 @@ func (o *NotificationWithMeta) HasIncludeEmailTokens() bool {
 }
 
 // SetIncludeEmailTokens gets a reference to the given []string and assigns it to the IncludeEmailTokens field.
+// Deprecated
 func (o *NotificationWithMeta) SetIncludeEmailTokens(v []string) {
 	o.IncludeEmailTokens = v
+}
+
+// GetEmailTo returns the EmailTo field value if set, zero value otherwise.
+func (o *NotificationWithMeta) GetEmailTo() []string {
+	if o == nil || o.EmailTo == nil {
+		var ret []string
+		return ret
+	}
+	return o.EmailTo
+}
+
+// GetEmailToOk returns a tuple with the EmailTo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotificationWithMeta) GetEmailToOk() ([]string, bool) {
+	if o == nil || o.EmailTo == nil {
+		return nil, false
+	}
+	return o.EmailTo, true
+}
+
+// HasEmailTo returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasEmailTo() bool {
+	if o != nil && o.EmailTo != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailTo gets a reference to the given []string and assigns it to the EmailTo field.
+func (o *NotificationWithMeta) SetEmailTo(v []string) {
+	o.EmailTo = v
 }
 
 // GetIncludePhoneNumbers returns the IncludePhoneNumbers field value if set, zero value otherwise.
@@ -4422,6 +4462,48 @@ func (o *NotificationWithMeta) SetEmailBcc(v []string) {
 	o.EmailBcc = v
 }
 
+// GetEmailSenderDomain returns the EmailSenderDomain field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotificationWithMeta) GetEmailSenderDomain() string {
+	if o == nil || o.EmailSenderDomain.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.EmailSenderDomain.Get()
+}
+
+// GetEmailSenderDomainOk returns a tuple with the EmailSenderDomain field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotificationWithMeta) GetEmailSenderDomainOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EmailSenderDomain.Get(), o.EmailSenderDomain.IsSet()
+}
+
+// HasEmailSenderDomain returns a boolean if a field has been set.
+func (o *NotificationWithMeta) HasEmailSenderDomain() bool {
+	if o != nil && o.EmailSenderDomain.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailSenderDomain gets a reference to the given NullableString and assigns it to the EmailSenderDomain field.
+func (o *NotificationWithMeta) SetEmailSenderDomain(v string) {
+	o.EmailSenderDomain.Set(&v)
+}
+// SetEmailSenderDomainNil sets the value for EmailSenderDomain to be an explicit nil
+func (o *NotificationWithMeta) SetEmailSenderDomainNil() {
+	o.EmailSenderDomain.Set(nil)
+}
+
+// UnsetEmailSenderDomain ensures that no value is present for EmailSenderDomain, not even an explicit nil
+func (o *NotificationWithMeta) UnsetEmailSenderDomain() {
+	o.EmailSenderDomain.Unset()
+}
+
 // GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *NotificationWithMeta) GetSmsFrom() string {
 	if o == nil || o.SmsFrom.Get() == nil {
@@ -5243,6 +5325,9 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.IncludeEmailTokens != nil {
 		toSerialize["include_email_tokens"] = o.IncludeEmailTokens
 	}
+	if o.EmailTo != nil {
+		toSerialize["email_to"] = o.EmailTo
+	}
 	if o.IncludePhoneNumbers != nil {
 		toSerialize["include_phone_numbers"] = o.IncludePhoneNumbers
 	}
@@ -5549,6 +5634,9 @@ func (o NotificationWithMeta) MarshalJSON() ([]byte, error) {
 	if o.EmailBcc != nil {
 		toSerialize["email_bcc"] = o.EmailBcc
 	}
+	if o.EmailSenderDomain.IsSet() {
+		toSerialize["email_sender_domain"] = o.EmailSenderDomain.Get()
+	}
 	if o.SmsFrom.IsSet() {
 		toSerialize["sms_from"] = o.SmsFrom.Get()
 	}
@@ -5637,6 +5725,7 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "excluded_segments")
 		delete(additionalProperties, "include_subscription_ids")
 		delete(additionalProperties, "include_email_tokens")
+		delete(additionalProperties, "email_to")
 		delete(additionalProperties, "include_phone_numbers")
 		delete(additionalProperties, "include_ios_tokens")
 		delete(additionalProperties, "include_wp_wns_uris")
@@ -5739,6 +5828,7 @@ func (o *NotificationWithMeta) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "disable_email_click_tracking")
 		delete(additionalProperties, "include_unsubscribed")
 		delete(additionalProperties, "email_bcc")
+		delete(additionalProperties, "email_sender_domain")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
 		delete(additionalProperties, "filters")
