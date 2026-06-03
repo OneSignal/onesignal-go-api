@@ -77,8 +77,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    notificationId := "notificationId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    notificationId := "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -90,6 +90,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CancelNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CancelNotification`: GenericSuccessBoolResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CancelNotification`: %v\n", resp)
@@ -153,8 +156,8 @@ import (
 )
 
 func main() {
-    templateId := "templateId_example" // string | 
-    appId := "appId_example" // string | 
+    templateId := "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
     copyTemplateRequest := *onesignal.NewCopyTemplateRequest("TargetAppId_example") // CopyTemplateRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -167,6 +170,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CopyTemplateToApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CopyTemplateToApp`: TemplateResource
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CopyTemplateToApp`: %v\n", resp)
@@ -231,9 +237,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    aliasLabel := "aliasLabel_example" // string | 
-    aliasId := "aliasId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    aliasLabel := "external_id" // string | 
+    aliasId := "YOUR_USER_EXTERNAL_ID" // string | 
     userIdentityBody := *onesignal.NewUserIdentityBody() // UserIdentityBody | 
 
     configuration := onesignal.NewConfiguration()
@@ -246,6 +252,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateAlias``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateAlias`: UserIdentityBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateAlias`: %v\n", resp)
@@ -313,8 +322,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    subscriptionId := "subscriptionId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    subscriptionId := "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51" // string | 
     userIdentityBody := *onesignal.NewUserIdentityBody() // UserIdentityBody | 
 
     configuration := onesignal.NewConfiguration()
@@ -327,6 +336,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateAliasBySubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateAliasBySubscription`: UserIdentityBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateAliasBySubscription`: %v\n", resp)
@@ -392,7 +404,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
     createApiKeyRequest := *onesignal.NewCreateApiKeyRequest() // CreateApiKeyRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -405,6 +417,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateApiKey`: CreateApiKeyResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateApiKey`: %v\n", resp)
@@ -480,6 +495,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateApp`: App
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateApp`: %v\n", resp)
@@ -538,7 +556,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | Your OneSignal App ID in UUID v4 format.
+    appId := "00000000-0000-0000-0000-000000000000" // string | Your OneSignal App ID in UUID v4 format.
     customEventsRequest := *onesignal.NewCustomEventsRequest([]onesignal.CustomEvent{*onesignal.NewCustomEvent("Name_example")}) // CustomEventsRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -551,6 +569,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateCustomEvents``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateCustomEvents`: map[string]interface{}
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateCustomEvents`: %v\n", resp)
@@ -630,6 +651,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateNotification`: %v\n", resp)
 }
@@ -687,7 +711,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    appId := "00000000-0000-0000-0000-000000000000" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
     segment := *onesignal.NewSegment("Name_example", []onesignal.FilterExpression{onesignal.FilterExpression{Filter: onesignal.NewFilter()}}) // Segment |  (optional)
 
     configuration := onesignal.NewConfiguration()
@@ -700,6 +724,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSegment``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateSegment`: CreateSegmentSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateSegment`: %v\n", resp)
@@ -763,9 +790,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    aliasLabel := "aliasLabel_example" // string | 
-    aliasId := "aliasId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    aliasLabel := "external_id" // string | 
+    aliasId := "YOUR_USER_EXTERNAL_ID" // string | 
     subscriptionBody := *onesignal.NewSubscriptionBody() // SubscriptionBody | 
 
     configuration := onesignal.NewConfiguration()
@@ -778,6 +805,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateSubscription`: SubscriptionBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateSubscription`: %v\n", resp)
@@ -857,6 +887,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateTemplate`: TemplateResource
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateTemplate`: %v\n", resp)
@@ -915,7 +948,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
     user := *onesignal.NewUser() // User | 
 
     configuration := onesignal.NewConfiguration()
@@ -928,6 +961,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `CreateUser`: User
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateUser`: %v\n", resp)
@@ -991,10 +1027,10 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    aliasLabel := "aliasLabel_example" // string | 
-    aliasId := "aliasId_example" // string | 
-    aliasLabelToDelete := "aliasLabelToDelete_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    aliasLabel := "external_id" // string | 
+    aliasId := "YOUR_USER_EXTERNAL_ID" // string | 
+    aliasLabelToDelete := "external_id" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1006,6 +1042,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteAlias``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `DeleteAlias`: UserIdentityBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteAlias`: %v\n", resp)
@@ -1074,8 +1113,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    tokenId := "tokenId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    tokenId := "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1087,6 +1126,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `DeleteApiKey`: map[string]interface{}
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteApiKey`: %v\n", resp)
@@ -1151,8 +1193,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    segmentId := "segmentId_example" // string | The segment_id can be found in the URL of the segment when viewing it in the dashboard.
+    appId := "00000000-0000-0000-0000-000000000000" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment_id can be found in the URL of the segment when viewing it in the dashboard.
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1164,6 +1206,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSegment``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `DeleteSegment`: GenericSuccessBoolResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteSegment`: %v\n", resp)
@@ -1228,8 +1273,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    subscriptionId := "subscriptionId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    subscriptionId := "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1241,6 +1286,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
 }
 ```
@@ -1303,8 +1351,8 @@ import (
 )
 
 func main() {
-    templateId := "templateId_example" // string | 
-    appId := "appId_example" // string | 
+    templateId := "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1316,6 +1364,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `DeleteTemplate`: GenericSuccessBoolResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteTemplate`: %v\n", resp)
@@ -1379,9 +1430,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    aliasLabel := "aliasLabel_example" // string | 
-    aliasId := "aliasId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    aliasLabel := "external_id" // string | 
+    aliasId := "YOUR_USER_EXTERNAL_ID" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1393,6 +1444,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
 }
 ```
@@ -1457,8 +1511,8 @@ import (
 )
 
 func main() {
-    notificationId := "notificationId_example" // string | The ID of the notification to export events from.
-    appId := "appId_example" // string | The ID of the app that the notification belongs to.
+    notificationId := "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88" // string | The ID of the notification to export events from.
+    appId := "00000000-0000-0000-0000-000000000000" // string | The ID of the app that the notification belongs to.
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1470,6 +1524,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportEvents``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `ExportEvents`: ExportEventsSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ExportEvents`: %v\n", resp)
@@ -1533,7 +1590,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The app ID that you want to export devices from
+    appId := "00000000-0000-0000-0000-000000000000" // string | The app ID that you want to export devices from
     exportSubscriptionsRequestBody := *onesignal.NewExportSubscriptionsRequestBody() // ExportSubscriptionsRequestBody |  (optional)
 
     configuration := onesignal.NewConfiguration()
@@ -1546,6 +1603,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportSubscriptions``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `ExportSubscriptions`: ExportSubscriptionsSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ExportSubscriptions`: %v\n", resp)
@@ -1609,9 +1669,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    aliasLabel := "aliasLabel_example" // string | 
-    aliasId := "aliasId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    aliasLabel := "external_id" // string | 
+    aliasId := "YOUR_USER_EXTERNAL_ID" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1623,6 +1683,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAliases``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetAliases`: UserIdentityBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetAliases`: %v\n", resp)
@@ -1689,8 +1752,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    subscriptionId := "subscriptionId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    subscriptionId := "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1702,6 +1765,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAliasesBySubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetAliasesBySubscription`: UserIdentityBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetAliasesBySubscription`: %v\n", resp)
@@ -1766,7 +1832,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | An app id
+    appId := "00000000-0000-0000-0000-000000000000" // string | An app id
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1778,6 +1844,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetApp`: App
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetApp`: %v\n", resp)
@@ -1851,6 +1920,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApps``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetApps`: []App
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetApps`: %v\n", resp)
@@ -1905,8 +1977,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    notificationId := "notificationId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    notificationId := "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1918,6 +1990,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetNotification`: NotificationWithMeta
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetNotification`: %v\n", resp)
@@ -1981,7 +2056,7 @@ import (
 )
 
 func main() {
-    notificationId := "notificationId_example" // string | The \"id\" of the message found in the Notification object
+    notificationId := "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88" // string | The \"id\" of the message found in the Notification object
     getNotificationHistoryRequestBody := *onesignal.NewGetNotificationHistoryRequestBody() // GetNotificationHistoryRequestBody | 
 
     configuration := onesignal.NewConfiguration()
@@ -1994,6 +2069,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotificationHistory``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetNotificationHistory`: NotificationHistorySuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetNotificationHistory`: %v\n", resp)
@@ -2057,10 +2135,10 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The app ID that you want to view notifications from
-    limit := int32(56) // int32 | How many notifications to return.  Max is 50.  Default is 50. (optional)
-    offset := int32(56) // int32 | Page offset.  Default is 0.  Results are sorted by queued_at in descending order.  queued_at is a representation of the time that the notification was queued at. (optional)
-    kind := int32(56) // int32 | Kind of notifications returned:   * unset - All notification types (default)   * `0` - Dashboard only   * `1` - API only   * `3` - Automated only  (optional)
+    appId := "00000000-0000-0000-0000-000000000000" // string | The app ID that you want to view notifications from
+    limit := int32(10) // int32 | How many notifications to return.  Max is 50.  Default is 50. (optional)
+    offset := int32(0) // int32 | Page offset.  Default is 0.  Results are sorted by queued_at in descending order.  queued_at is a representation of the time that the notification was queued at. (optional)
+    kind := int32(0) // int32 | Kind of notifications returned:   * unset - All notification types (default)   * `0` - Dashboard only   * `1` - API only   * `3` - Automated only  (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -2072,6 +2150,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotifications``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetNotifications`: NotificationSlice
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetNotifications`: %v\n", resp)
@@ -2133,12 +2214,12 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    outcomeNames := "outcomeNames_example" // string | Required Comma-separated list of names and the value (sum/count) for the returned outcome data. Note: Clicks only support count aggregation. For out-of-the-box OneSignal outcomes such as click and session duration, please use the \"os\" prefix with two underscores. For other outcomes, please use the name specified by the user. Example:os__session_duration.count,os__click.count,CustomOutcomeName.sum 
-    outcomeNames2 := "outcomeNames_example" // string | Optional If outcome names contain any commas, then please specify only one value at a time. Example: outcome_names[]=os__click.count&outcome_names[]=Sales, Purchase.count where \"Sales, Purchase\" is the custom outcomes with a comma in the name.  (optional)
-    outcomeTimeRange := "outcomeTimeRange_example" // string | Optional Time range for the returned data. The values can be 1h (for the last 1 hour data), 1d (for the last 1 day data), or 1mo (for the last 1 month data). Default is 1h if the parameter is omitted.  (optional)
-    outcomePlatforms := "outcomePlatforms_example" // string | Optional Platform id. Refer device's platform ids for values. Example: outcome_platform=0 for iOS outcome_platform=7,8 for Safari and Firefox Default is data from all platforms if the parameter is omitted.  (optional)
-    outcomeAttribution := "outcomeAttribution_example" // string | Optional Attribution type for the outcomes. The values can be direct or influenced or unattributed. Example: outcome_attribution=direct Default is total (returns direct+influenced+unattributed) if the parameter is omitted.  (optional)
+    appId := "00000000-0000-0000-0000-000000000000" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    outcomeNames := "os__session_duration.count,os__click.count" // string | Required Comma-separated list of names and the value (sum/count) for the returned outcome data. Note: Clicks only support count aggregation. For out-of-the-box OneSignal outcomes such as click and session duration, please use the \"os\" prefix with two underscores. For other outcomes, please use the name specified by the user. Example:os__session_duration.count,os__click.count,CustomOutcomeName.sum 
+    outcomeNames2 := "os__session_duration.count" // string | Optional If outcome names contain any commas, then please specify only one value at a time. Example: outcome_names[]=os__click.count&outcome_names[]=Sales, Purchase.count where \"Sales, Purchase\" is the custom outcomes with a comma in the name.  (optional)
+    outcomeTimeRange := "1d" // string | Optional Time range for the returned data. The values can be 1h (for the last 1 hour data), 1d (for the last 1 day data), or 1mo (for the last 1 month data). Default is 1h if the parameter is omitted.  (optional)
+    outcomePlatforms := "0,1" // string | Optional Platform id. Refer device's platform ids for values. Example: outcome_platform=0 for iOS outcome_platform=7,8 for Safari and Firefox Default is data from all platforms if the parameter is omitted.  (optional)
+    outcomeAttribution := "direct" // string | Optional Attribution type for the outcomes. The values can be direct or influenced or unattributed. Example: outcome_attribution=direct Default is total (returns direct+influenced+unattributed) if the parameter is omitted.  (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -2150,6 +2231,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetOutcomes``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetOutcomes`: OutcomesData
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetOutcomes`: %v\n", resp)
@@ -2217,9 +2301,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    offset := int32(56) // int32 | Segments are listed in ascending order of created_at date. offset will omit that number of segments from the beginning of the list. Eg offset 5, will remove the 5 earliest created Segments. (optional)
-    limit := int32(56) // int32 | The amount of Segments in the response. Maximum 300. (optional)
+    appId := "00000000-0000-0000-0000-000000000000" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    offset := int32(0) // int32 | Segments are listed in ascending order of created_at date. offset will omit that number of segments from the beginning of the list. Eg offset 5, will remove the 5 earliest created Segments. (optional)
+    limit := int32(10) // int32 | The amount of Segments in the response. Maximum 300. (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -2231,6 +2315,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSegments``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetSegments`: GetSegmentsSuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSegments`: %v\n", resp)
@@ -2295,9 +2382,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    aliasLabel := "aliasLabel_example" // string | 
-    aliasId := "aliasId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    aliasLabel := "external_id" // string | 
+    aliasId := "YOUR_USER_EXTERNAL_ID" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -2309,6 +2396,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `GetUser`: User
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetUser`: %v\n", resp)
@@ -2375,8 +2465,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    tokenId := "tokenId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    tokenId := "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -2388,6 +2478,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.RotateApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `RotateApiKey`: CreateApiKeyResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.RotateApiKey`: %v\n", resp)
@@ -2452,8 +2545,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | Your OneSignal App ID in UUID v4 format.
-    activityType := "activityType_example" // string | The name of the Live Activity defined in your app. This should match the attributes struct used in your app's Live Activity implementation.
+    appId := "00000000-0000-0000-0000-000000000000" // string | Your OneSignal App ID in UUID v4 format.
+    activityType := "order_status" // string | The name of the Live Activity defined in your app. This should match the attributes struct used in your app's Live Activity implementation.
     startLiveActivityRequest := *onesignal.NewStartLiveActivityRequest("Name_example", "Event_example", "ActivityId_example", map[string]interface{}(123), map[string]interface{}(123), *onesignal.NewLanguageStringMap(), *onesignal.NewLanguageStringMap()) // StartLiveActivityRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -2466,6 +2559,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.StartLiveActivity``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `StartLiveActivity`: StartLiveActivitySuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.StartLiveActivity`: %v\n", resp)
@@ -2531,8 +2627,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    subscriptionId := "subscriptionId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    subscriptionId := "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51" // string | 
     transferSubscriptionRequestBody := *onesignal.NewTransferSubscriptionRequestBody() // TransferSubscriptionRequestBody | 
 
     configuration := onesignal.NewConfiguration()
@@ -2545,6 +2641,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TransferSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `TransferSubscription`: UserIdentityBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TransferSubscription`: %v\n", resp)
@@ -2610,9 +2709,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    notificationId := "notificationId_example" // string | The id of the message found in the creation notification POST response, View Notifications GET response, or URL within the Message Report.
-    token := "token_example" // string | The unsubscribe token that is generated via liquid syntax in {{subscription.unsubscribe_token}} when personalizing an email.
+    appId := "00000000-0000-0000-0000-000000000000" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    notificationId := "b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88" // string | The id of the message found in the creation notification POST response, View Notifications GET response, or URL within the Message Report.
+    token := "YOUR_TOKEN_ID" // string | The unsubscribe token that is generated via liquid syntax in {{subscription.unsubscribe_token}} when personalizing an email.
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -2624,6 +2723,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UnsubscribeEmailWithToken``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `UnsubscribeEmailWithToken`: GenericSuccessBoolResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UnsubscribeEmailWithToken`: %v\n", resp)
@@ -2689,8 +2791,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    tokenId := "tokenId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    tokenId := "0aa1b2c3-d4e5-46f7-8899-aabbccddeeff" // string | 
     updateApiKeyRequest := *onesignal.NewUpdateApiKeyRequest() // UpdateApiKeyRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -2703,6 +2805,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `UpdateApiKey`: map[string]interface{}
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateApiKey`: %v\n", resp)
@@ -2768,7 +2873,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | An app id
+    appId := "00000000-0000-0000-0000-000000000000" // string | An app id
     app := *onesignal.NewApp() // App | 
 
     configuration := onesignal.NewConfiguration()
@@ -2781,6 +2886,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `UpdateApp`: App
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateApp`: %v\n", resp)
@@ -2844,8 +2952,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    activityId := "activityId_example" // string | Live Activity record ID
+    appId := "00000000-0000-0000-0000-000000000000" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    activityId := "12345" // string | Live Activity record ID
     updateLiveActivityRequest := *onesignal.NewUpdateLiveActivityRequest("Name_example", "Event_example", map[string]interface{}(123)) // UpdateLiveActivityRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -2858,6 +2966,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateLiveActivity``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `UpdateLiveActivity`: UpdateLiveActivitySuccessResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateLiveActivity`: %v\n", resp)
@@ -2923,8 +3034,8 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    subscriptionId := "subscriptionId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    subscriptionId := "7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51" // string | 
     subscriptionBody := *onesignal.NewSubscriptionBody() // SubscriptionBody | 
 
     configuration := onesignal.NewConfiguration()
@@ -2937,6 +3048,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
 }
 ```
@@ -3000,9 +3114,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | Your OneSignal App ID in UUID v4 format.
-    tokenType := "tokenType_example" // string | The type of token to use when looking up the subscription. See Subscription Types.
-    token := "token_example" // string | The value of the token to lookup by (e.g., email address, phone number).
+    appId := "00000000-0000-0000-0000-000000000000" // string | Your OneSignal App ID in UUID v4 format.
+    tokenType := "Email" // string | The type of token to use when looking up the subscription. See Subscription Types.
+    token := "user@example.com" // string | The value of the token to lookup by (e.g., email address, phone number).
     subscriptionBody := *onesignal.NewSubscriptionBody() // SubscriptionBody | 
 
     configuration := onesignal.NewConfiguration()
@@ -3015,6 +3129,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSubscriptionByToken``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `UpdateSubscriptionByToken`: map[string]interface{}
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateSubscriptionByToken`: %v\n", resp)
@@ -3082,8 +3199,8 @@ import (
 )
 
 func main() {
-    templateId := "templateId_example" // string | 
-    appId := "appId_example" // string | 
+    templateId := "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
     updateTemplateRequest := *onesignal.NewUpdateTemplateRequest() // UpdateTemplateRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -3096,6 +3213,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `UpdateTemplate`: TemplateResource
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateTemplate`: %v\n", resp)
@@ -3160,9 +3280,9 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
-    aliasLabel := "aliasLabel_example" // string | 
-    aliasId := "aliasId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
+    aliasLabel := "external_id" // string | 
+    aliasId := "YOUR_USER_EXTERNAL_ID" // string | 
     updateUserRequest := *onesignal.NewUpdateUserRequest() // UpdateUserRequest | 
 
     configuration := onesignal.NewConfiguration()
@@ -3175,6 +3295,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `UpdateUser`: PropertiesBody
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUser`: %v\n", resp)
@@ -3242,7 +3365,7 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -3254,6 +3377,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewApiKeys``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `ViewApiKeys`: ApiKeyTokensListResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ViewApiKeys`: %v\n", resp)
@@ -3316,8 +3442,8 @@ import (
 )
 
 func main() {
-    templateId := "templateId_example" // string | 
-    appId := "appId_example" // string | 
+    templateId := "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c" // string | 
+    appId := "00000000-0000-0000-0000-000000000000" // string | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -3329,6 +3455,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `ViewTemplate`: TemplateResource
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ViewTemplate`: %v\n", resp)
@@ -3392,10 +3521,10 @@ import (
 )
 
 func main() {
-    appId := "appId_example" // string | Your OneSignal App ID in UUID v4 format.
-    limit := int32(56) // int32 | Maximum number of templates. Default and max is 50. (optional) (default to 50)
-    offset := int32(56) // int32 | Pagination offset. (optional) (default to 0)
-    channel := "channel_example" // string | Filter by delivery channel. (optional)
+    appId := "00000000-0000-0000-0000-000000000000" // string | Your OneSignal App ID in UUID v4 format.
+    limit := int32(10) // int32 | Maximum number of templates. Default and max is 50. (optional) (default to 50)
+    offset := int32(0) // int32 | Pagination offset. (optional) (default to 0)
+    channel := "push" // string | Filter by delivery channel. (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -3407,6 +3536,9 @@ func main() {
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewTemplates``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
     }
     // response from `ViewTemplates`: TemplatesListResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ViewTemplates`: %v\n", resp)
