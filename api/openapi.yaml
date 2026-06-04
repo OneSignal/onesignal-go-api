@@ -1,0 +1,5672 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: devrel@onesignal.com
+    name: OneSignal DevRel
+    url: https://onesignal.com
+  description: A powerful way to send personalized messages at scale and build effective
+    customer engagement strategies. Learn more at onesignal.com
+  termsOfService: https://onesignal.com/tos
+  title: OneSignal
+  version: 5.6.0
+servers:
+- url: https://api.onesignal.com
+paths:
+  /notifications:
+    get:
+      description: View the details of multiple notifications
+      operationId: get_notifications
+      parameters:
+      - description: The app ID that you want to view notifications from
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      - description: How many notifications to return.  Max is 50.  Default is 50.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: 10
+          type: integer
+        style: form
+      - description: Page offset.  Default is 0.  Results are sorted by queued_at
+          in descending order.  queued_at is a representation of the time that the
+          notification was queued at.
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: 0
+          type: integer
+        style: form
+      - description: |
+          Kind of notifications returned:
+            * unset - All notification types (default)
+            * `0` - Dashboard only
+            * `1` - API only
+            * `3` - Automated only
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          enum:
+          - 0
+          - 1
+          - 3
+          example: 0
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationSlice'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View notifications
+    post:
+      description: "Sends notifications to your users.\n\n**Target by External ID\
+        \ (push example):** set `include_aliases` to `{ \"external_id\": [\"your-user-id\"\
+        ] }` and set `target_channel` to `push` (or `email` / `sms` for those channels).\
+        \ Alias object keys must match API labels exactly (for example `external_id`,\
+        \ not camelCase).\n\n**Do not confuse** the notification-level `external_id`\
+        \ field with External ID targeting: top-level `external_id` / `idempotency_key`\
+        \ are for idempotent notification requests only, not for selecting recipients.\n\
+        \n**Targeting compatibility:** `include_aliases` must not be combined with\
+        \ other targeting modes (segments, filters, subscription IDs, legacy player\
+        \ IDs, etc.). Clients should send only one targeting strategy per request.\n"
+      operationId: create_notification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNotificationSuccessResponse'
+          description: "OK, invalid_aliases, or No Subscribed Players\nIf a message\
+            \ was successfully created, you will get a 200 response with a non-empty\
+            \ `id` for the notification.\nIf the 200 response contains `invalid_aliases`,\
+            \ that marks devices that exist in the provided app_id but are no longer\
+            \ subscribed.\nIf `id` is an empty string, no notification was created:\
+            \ check the `errors` array (for example messages such as \"All included\
+            \ players are not subscribed\") even though HTTP status is still 200.\
+            \ This can happen when alias keys are wrong, External IDs do not resolve\
+            \ to subscribed users, or other validation issues.\nIf no id is returned,\
+            \ then a message was not created and the targeted User IDs do not exist\
+            \ under the provided app_id.\nAny User IDs sent in the request that do\
+            \ not exist under the specified app_id will be ignored.\n"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Create notification
+      x-onesignal-flat-notification-example: true
+  /notifications/{notification_id}:
+    delete:
+      description: Used to stop a scheduled or currently outgoing notification
+      operationId: cancel_notification
+      parameters:
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      - explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          example: b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Stop a scheduled or currently outgoing notification
+    get:
+      description: View the details of a single notification and outcomes associated
+        with it
+      operationId: get_notification
+      parameters:
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      - explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          example: b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationWithMeta'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View notification
+  /notifications/{notification_id}/history:
+    post:
+      description: "-> View the devices sent a message - OneSignal Paid Plan Required\
+        \ This method will return all devices that were sent the given notification_id\
+        \ of an Email or Push Notification if used within 7 days of the date sent.\
+        \ After 7 days of the sending date, the message history data will be unavailable.\
+        \ After a successful response is received, the destination url may be polled\
+        \ until the file becomes available. Most exports are done in ~1-3 minutes,\
+        \ so setting a poll interval of 10 seconds should be adequate. For use cases\
+        \ that are not meant to be consumed by a script, an email will be sent to\
+        \ the supplied email address. &#x1F6A7; Requirements A OneSignal Paid Plan.\
+        \ Turn on Send History via OneSignal API in Settings -> Analytics. Cannot\
+        \ get data before this was turned on. Must be called within 7 days after sending\
+        \ the message. Messages targeting under 1000 recipients will not have \"sent\"\
+        \ events recorded, but will show \"clicked\" events. Requires your OneSignal\
+        \ App's REST API Key, available in Keys & IDs."
+      operationId: get_notification_history
+      parameters:
+      - description: The "id" of the message found in the Notification object
+        explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          example: b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/get_notification_history_request_body'
+        content:
+          application/json:
+            schema:
+              properties:
+                events:
+                  description: "-> \"sent\" - All the devices by player_id that were\
+                    \ sent the specified notification_id.  Notifications targeting\
+                    \ under 1000 recipients will not have \"sent\" events recorded,\
+                    \ but will show \"clicked\" events. \"clicked\" - All the devices\
+                    \ by `player_id` that clicked the specified notification_id."
+                  enum:
+                  - sent
+                  - clicked
+                  type: string
+                email:
+                  description: The email address you would like the report sent.
+                  type: string
+                app_id:
+                  type: string
+              required:
+              - id
+              title: get_notification_history_request_body
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationHistorySuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Notification History
+  /apps:
+    get:
+      description: View the details of all of your current OneSignal apps
+      operationId: get_apps
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apps'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - organization_api_key: []
+      summary: View apps
+    post:
+      description: Creates a new OneSignal app
+      operationId: create_app
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/App'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - organization_api_key: []
+      summary: Create an app
+  /apps/{app_id}:
+    get:
+      description: View the details of a single OneSignal app
+      operationId: get_app
+      parameters:
+      - description: An app id
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - organization_api_key: []
+      summary: View an app
+    put:
+      description: Updates the name or configuration settings of an existing OneSignal
+        app
+      operationId: update_app
+      parameters:
+      - description: An app id
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/App'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - organization_api_key: []
+      summary: Update an app
+  /apps/{app_id}/segments:
+    get:
+      description: Returns an array of segments from an app.
+      operationId: get_segments
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - description: "Segments are listed in ascending order of created_at date. offset\
+          \ will omit that number of segments from the beginning of the list. Eg offset\
+          \ 5, will remove the 5 earliest created Segments."
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: 0
+          type: integer
+        style: form
+      - description: The amount of Segments in the response. Maximum 300.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: 10
+          type: integer
+        style: form
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentsSuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Get Segments
+    post:
+      description: "Create a segment visible and usable in the dashboard and API -\
+        \ Required: OneSignal Paid Plan\nThe Create Segment method is used when you\
+        \ want your server to programmatically create a segment instead of using the\
+        \ OneSignal Dashboard UI. Just like creating Segments from the dashboard you\
+        \ can pass in filters with multiple \"AND\" or \"OR\" operator's.\n&#x1F6A7;\n\
+        Does Not Update Segments\nThis endpoint will only create segments, it does\
+        \ not edit or update currently created Segments. You will need to use the\
+        \ Delete Segment endpoint and re-create it with this endpoint to edit.\n"
+      operationId: create_segment
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Segment'
+        required: false
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSegmentSuccessResponse'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSegmentConflictResponse'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Create Segment
+  /apps/{app_id}/segments/{segment_id}:
+    delete:
+      description: "Delete a segment (not user devices) - Required: OneSignal Paid\
+        \ Plan\nYou can delete a segment under your app by calling this API. You must\
+        \ provide an API key in the Authorization header that has admin access on\
+        \ the app.\nThe segment_id can be found in the URL of the segment when viewing\
+        \ it in the dashboard.\n"
+      operationId: delete_segment
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - description: The segment_id can be found in the URL of the segment when viewing
+          it in the dashboard.
+        explode: false
+        in: path
+        name: segment_id
+        required: true
+        schema:
+          example: d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Delete Segment
+  /apps/{app_id}/outcomes:
+    get:
+      description: "View the details of all the outcomes associated with your app\n\
+        \n&#x1F6A7;\nRequires Authentication Key\nRequires your OneSignal App's REST\
+        \ API Key, available in Keys & IDs.\n\n&#x1F6A7;\nOutcome Data Limitations\n\
+        Outcomes are only accessible for around 30 days before deleted from our servers.\
+        \ You will need to export this data every month if you want to keep it.\n"
+      operationId: get_outcomes
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - description: "Required\nComma-separated list of names and the value (sum/count)\
+          \ for the returned outcome data.\nNote: Clicks only support count aggregation.\n\
+          For out-of-the-box OneSignal outcomes such as click and session duration,\
+          \ please use the \"os\" prefix with two underscores. For other outcomes,\
+          \ please use the name specified by the user.\nExample:os__session_duration.count,os__click.count,CustomOutcomeName.sum\n"
+        explode: true
+        in: query
+        name: outcome_names
+        required: true
+        schema:
+          example: "os__session_duration.count,os__click.count"
+          type: string
+        style: form
+      - description: "Optional\nIf outcome names contain any commas, then please specify\
+          \ only one value at a time.\nExample: outcome_names[]=os__click.count&outcome_names[]=Sales,\
+          \ Purchase.count\nwhere \"Sales, Purchase\" is the custom outcomes with\
+          \ a comma in the name.\n"
+        explode: true
+        in: query
+        name: "outcome_names[]"
+        required: false
+        schema:
+          example: os__session_duration.count
+          type: string
+        style: form
+      - description: "Optional\nTime range for the returned data. The values can be\
+          \ 1h (for the last 1 hour data), 1d (for the last 1 day data), or 1mo (for\
+          \ the last 1 month data).\nDefault is 1h if the parameter is omitted.\n"
+        explode: true
+        in: query
+        name: outcome_time_range
+        required: false
+        schema:
+          example: 1d
+          type: string
+        style: form
+      - description: "Optional\nPlatform id. Refer device's platform ids for values.\n\
+          Example:\noutcome_platform=0 for iOS\noutcome_platform=7,8 for Safari and\
+          \ Firefox\nDefault is data from all platforms if the parameter is omitted.\n"
+        explode: true
+        in: query
+        name: outcome_platforms
+        required: false
+        schema:
+          example: "0,1"
+          type: string
+        style: form
+      - description: "Optional\nAttribution type for the outcomes. The values can\
+          \ be direct or influenced or unattributed.\nExample: outcome_attribution=direct\n\
+          Default is total (returns direct+influenced+unattributed) if the parameter\
+          \ is omitted.\n"
+        explode: true
+        in: query
+        name: outcome_attribution
+        required: false
+        schema:
+          example: direct
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutcomesData'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View Outcomes
+  /apps/{app_id}/activities/activity/{activity_type}:
+    post:
+      description: Remotely start a Live Activity on iOS devices via OneSignal’s REST
+        API.
+      operationId: start_live_activity
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - description: The name of the Live Activity defined in your app. This should
+          match the attributes struct used in your app's Live Activity implementation.
+        explode: false
+        in: path
+        name: activity_type
+        required: true
+        schema:
+          example: order_status
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartLiveActivityRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartLiveActivitySuccessResponse'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Start Live Activity
+  /apps/{app_id}/live_activities/{activity_id}/notifications:
+    post:
+      description: Updates a specified live activity.
+      operationId: update_live_activity
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - description: Live Activity record ID
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          example: "12345"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLiveActivityRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateLiveActivitySuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Update a Live Activity via Push
+  /apps/{app_id}/users:
+    post:
+      description: "Creates a User, optionally Subscriptions owned by the User as\
+        \ well as Aliases.\nAliases provided in the payload will be used to look up\
+        \ an existing User."
+      operationId: create_user
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: CREATED
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: CREATED
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ACCEPTED
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserConflictResponse'
+          description: Multiple User Identity Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/users/by/{alias_label}/{alias_id}:
+    delete:
+      description: "Removes the User identified by (:alias_label, :alias_id), and\
+        \ all Subscriptions and Aliases"
+      operationId: delete_user
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_id
+        required: true
+        schema:
+          example: YOUR_USER_EXTERNAL_ID
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+    get:
+      description: "Returns the User’s properties, Aliases, and Subscriptions."
+      operationId: get_user
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_id
+        required: true
+        schema:
+          example: YOUR_USER_EXTERNAL_ID
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+    patch:
+      description: Updates an existing User’s properties.
+      operationId: update_user
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_id
+        required: true
+        schema:
+          example: YOUR_USER_EXTERNAL_ID
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertiesBody'
+          description: ACCEPTED
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity:
+    get:
+      description: "Lists all Aliases for the User identified by (:alias_label, :alias_id)."
+      operationId: get_aliases
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_id
+        required: true
+        schema:
+          example: YOUR_USER_EXTERNAL_ID
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserIdentityBody'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+    patch:
+      description: "Upserts one or more Aliases to an existing User identified by\
+        \ (:alias_label, :alias_id)."
+      operationId: create_alias
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_id
+        required: true
+        schema:
+          example: YOUR_USER_EXTERNAL_ID
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserIdentityBody'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserIdentityBody'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete}:
+    delete:
+      description: Deletes an alias by alias label
+      operationId: delete_alias
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_id
+        required: true
+        schema:
+          example: YOUR_USER_EXTERNAL_ID
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label_to_delete
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserIdentityBody'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/users/by/{alias_label}/{alias_id}/subscriptions:
+    post:
+      description: Creates a new Subscription under the User provided. Useful to add
+        email addresses and SMS numbers to the User.
+      operationId: create_subscription
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_label
+        required: true
+        schema:
+          example: external_id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alias_id
+        required: true
+        schema:
+          example: YOUR_USER_EXTERNAL_ID
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionBody'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionBody'
+          description: CREATED
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionBody'
+          description: ACCEPTED
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Operation is not permitted due to user having the maximum number
+            of subscriptions assigned
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/subscriptions/{subscription_id}:
+    delete:
+      description: Deletes the Subscription.
+      operationId: delete_subscription
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: subscription_id
+        required: true
+        schema:
+          example: 7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51
+          type: string
+        style: simple
+      responses:
+        "202":
+          description: ACCEPTED
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+    patch:
+      description: Updates an existing Subscription’s properties.
+      operationId: update_subscription
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: subscription_id
+        required: true
+        schema:
+          example: 7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionBody'
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/subscriptions/{subscription_id}/user/identity:
+    get:
+      description: Lists all Aliases for the User identified by :subscription_id.
+      operationId: get_aliases_by_subscription
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: subscription_id
+        required: true
+        schema:
+          example: 7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserIdentityBody'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+      security:
+      - rest_api_key: []
+    patch:
+      description: Upserts one or more Aliases for the User identified by :subscription_id.
+      operationId: create_alias_by_subscription
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: subscription_id
+        required: true
+        schema:
+          example: 7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserIdentityBody'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserIdentityBody'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/subscriptions/{subscription_id}/owner:
+    patch:
+      description: Transfers this Subscription to the User identified by the identity
+        in the payload.
+      operationId: transfer_subscription
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: subscription_id
+        required: true
+        schema:
+          example: 7e4c5b9a-1f60-4d07-9b1a-2e8c8d2cae51
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferSubscriptionRequestBody'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserIdentityBody'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+  /apps/{app_id}/subscriptions_by_token/{token_type}/{token}:
+    patch:
+      description: Update properties on an existing OneSignal subscription using its
+        token.
+      operationId: update_subscription_by_token
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - description: The type of token to use when looking up the subscription. See
+          Subscription Types.
+        explode: false
+        in: path
+        name: token_type
+        required: true
+        schema:
+          example: Email
+          type: string
+        style: simple
+      - description: "The value of the token to lookup by (e.g., email address, phone\
+          \ number)."
+        explode: false
+        in: path
+        name: token
+        required: true
+        schema:
+          example: user@example.com
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionBody'
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: ACCEPTED
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+      security:
+      - rest_api_key: []
+      summary: Update subscription by token
+  /apps/{app_id}/notifications/{notification_id}/unsubscribe:
+    post:
+      description: Unsubscribe an email with a token when using your own custom email
+        unsubscribe landing page
+      operationId: unsubscribe_email_with_token
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - description: "The id of the message found in the creation notification POST\
+          \ response, View Notifications GET response, or URL within the Message Report."
+        explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          example: b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88
+          type: string
+        style: simple
+      - description: "The unsubscribe token that is generated via liquid syntax in\
+          \ {{subscription.unsubscribe_token}} when personalizing an email."
+        explode: true
+        in: query
+        name: token
+        required: true
+        schema:
+          example: YOUR_TOKEN_ID
+          type: string
+        style: form
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Unsubscribe with token
+  /players/csv_export?app_id={app_id}:
+    post:
+      description: "Generate a compressed CSV export of all of your current user data\n\
+        This method can be used to generate a compressed CSV export of all of your\
+        \ current user data. It is a much faster alternative than retrieving this\
+        \ data using the /players API endpoint.\nThe file will be compressed using\
+        \ GZip.\nThe file may take several minutes to generate depending on the number\
+        \ of users in your app.\nThe URL generated will be available for 3 days and\
+        \ includes random v4 uuid as part of the resource name to be unguessable.\n\
+        &#x1F6A7;\n403 Error Responses          You can test if it is complete by\
+        \ making a GET request to the csv_file_url value. This file may take time\
+        \ to generate depending on how many device records are being pulled. If the\
+        \ file is not ready, a 403 error will be returned. Otherwise the file itself\
+        \ will be returned.\n&#x1F6A7;\nRequires Authentication Key\nRequires your\
+        \ OneSignal App's REST API Key, available in Keys & IDs.\n&#x1F6A7;\nConcurrent\
+        \ Exports\nOnly one concurrent export is allowed per OneSignal account. Please\
+        \ ensure you have successfully downloaded the .csv.gz file before exporting\
+        \ another app.\nCSV File Format:\n- Default Columns:\n  | Field | Details\
+        \ |\n  | --- | --- |\n  | id | OneSignal Player Id |\n  | identifier | Push\
+        \ Token |\n  | session_count | Number of times they visited the app or site\n\
+        \  | language | Device language code |\n  | timezone | Number of seconds away\
+        \ from UTC. Example: -28800 |\n  | game_version | Version of your mobile app\
+        \ gathered from Android Studio versionCode in your App/build.gradle and iOS\
+        \ uses kCFBundleVersionKey in Xcode. |\n  | device_os | Device Operating System\
+        \ Version. Example: 80 = Chrome 80, 9 = Android 9 |\n  | device_type | Device\
+        \ Operating System Type |\n  | device_model | Device Hardware String Code.\
+        \ Example: Mobile Web Subscribers will have `Linux armv` |\n  | ad_id | Based\
+        \ on the Google Advertising Id for Android, identifierForVendor for iOS. OptedOut\
+        \ means user turned off Advertising tracking on the device. |\n  | tags |\
+        \ Current OneSignal Data Tags on the device. |\n  | last_active | Date and\
+        \ time the user last opened the mobile app or visited the site. |\n  | playtime\
+        \ | Total amount of time in seconds the user had the mobile app open. |\n\
+        \  | amount_spent | \tMobile only - amount spent in USD on In-App Purchases.\
+        \ | \n  | created_at | Date and time the device record was created in OneSignal.\
+        \ Mobile - first time they opened the app with OneSignal SDK. Web - first\
+        \ time the user subscribed to the site. |\n  | invalid_identifier | t = unsubscribed,\
+        \ f = subscibed |\n  | badge_count | Current number of badges on the device\
+        \ |\n- Extra Columns:\n  | Field | Details |\n  | --- | --- |\n  | external_user_id\
+        \ | Your User Id set on the device |\n  | notification_types | Notification\
+        \ types |\n  | location | Location points (Latitude and Longitude) set on\
+        \ the device. |\n  | country | Country code |\n  | rooted | Android device\
+        \ rooted or not |\n  | ip | IP Address of the device if being tracked. See\
+        \ Handling Personal Data. |\n  | web_auth | Web Only authorization key. |\n\
+        \  | web_p256 | Web Only p256 key. |\n"
+      operationId: export_subscriptions
+      parameters:
+      - description: The app ID that you want to export devices from
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/export_subscriptions_request_body'
+        content:
+          application/json:
+            schema:
+              properties:
+                extra_fields:
+                  description: "Additional fields that you wish to include. Currently\
+                    \ supports location, country, rooted, notification_types, ip,\
+                    \ external_user_id, web_auth, and web_p256."
+                  items:
+                    type: string
+                  type: array
+                last_active_since:
+                  description: Export all devices with a last_active timestamp greater
+                    than this time.  Unixtime in seconds.
+                  type: string
+                segment_name:
+                  description: Export all devices belonging to the segment.
+                  type: string
+              title: export_subscriptions_request_body
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportSubscriptionsSuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Export CSV of Subscriptions
+  /notifications/{notification_id}/export_events?app_id={app_id}:
+    post:
+      description: |-
+        Generate a compressed CSV report of all of the events data for a notification.
+        This will return a URL immediately upon success but it may take several minutes for the CSV to become available at that URL depending on the volume of data. Only one export can be in-progress per OneSignal account at any given time.
+      operationId: export_events
+      parameters:
+      - description: The ID of the notification to export events from.
+        explode: false
+        in: path
+        name: notification_id
+        required: true
+        schema:
+          example: b3a0c8bd-3a4c-4b22-9a73-3f1a8c2d1b88
+          type: string
+        style: simple
+      - description: The ID of the app that the notification belongs to.
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportEventsSuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Export CSV of Events
+  /templates:
+    get:
+      description: List templates for an app.
+      operationId: view_templates
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      - description: Maximum number of templates. Default and max is 50.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          example: 10
+          type: integer
+        style: form
+      - description: Pagination offset.
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          example: 0
+          type: integer
+        style: form
+      - description: Filter by delivery channel.
+        explode: true
+        in: query
+        name: channel
+        required: false
+        schema:
+          enum:
+          - push
+          - email
+          - sms
+          example: push
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplatesListResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View templates
+    post:
+      description: "Create reusable message templates for push, email, and SMS channels."
+      operationId: create_template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unprocessable Entity
+      security:
+      - rest_api_key: []
+      summary: Create template
+  /templates/{template_id}:
+    delete:
+      description: Delete a template by id.
+      operationId: delete_template
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          example: e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+      security:
+      - rest_api_key: []
+      summary: Delete template
+    get:
+      description: Fetch a single template by id.
+      operationId: view_template
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          example: e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+      security:
+      - rest_api_key: []
+      summary: View template
+    patch:
+      description: Update an existing template.
+      operationId: update_template
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          example: e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTemplateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - rest_api_key: []
+      summary: Update template
+  /templates/{template_id}/copy_to_app:
+    post:
+      description: Copy a template to a destination app.
+      operationId: copy_template_to_app
+      parameters:
+      - explode: false
+        in: path
+        name: template_id
+        required: true
+        schema:
+          example: e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyTemplateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResource'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Copy template to another app
+  /apps/{app_id}/auth/tokens:
+    get:
+      description: View the details of all of your current app API keys (Rich Authentication
+        Token) for a single OneSignal app.
+      operationId: view_api_keys
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyTokensListResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: View API keys
+    post:
+      description: "Use this API to create a new App API Key (also called a Rich Authentication\
+        \ Token) for a specific OneSignal app. These keys are used to authenticate\
+        \ API requests at the app level and offer enhanced security features, including\
+        \ optional IP allowlisting."
+      operationId: create_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiKeyResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Create API key
+  /apps/{app_id}/auth/tokens/{token_id}:
+    delete:
+      description: "Delete a specific Rich Authentication Token (App API Key) for\
+        \ a OneSignal app. Requires your Organization API Key and the token’s unique\
+        \ ID, not the token value itself."
+      operationId: delete_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          example: 0aa1b2c3-d4e5-46f7-8899-aabbccddeeff
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Delete API key
+    patch:
+      description: Update a Rich Authentication Token (App API Key) for a OneSignal
+        app.
+      operationId: update_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          example: 0aa1b2c3-d4e5-46f7-8899-aabbccddeeff
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Update API key
+  /apps/{app_id}/auth/tokens/{token_id}/rotate:
+    post:
+      description: Rotate a Rich Authentication Token (App API Key) for a OneSignal
+        app. Rotating a key revokes the current token and generates a new one under
+        the same configuration—ideal when a token is lost or compromised but you don’t
+        want to recreate and reconfigure it from scratch.
+      operationId: rotate_api_key
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          example: 0aa1b2c3-d4e5-46f7-8899-aabbccddeeff
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiKeyResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+      security:
+      - organization_api_key: []
+      summary: Rotate API key
+  /apps/{app_id}/integrations/custom_events:
+    post:
+      description: "The Custom Events API allows you to record user events. Custom\
+        \ events can represent any action users take in your application, such as\
+        \ completing a purchase, viewing content, or achieving milestones."
+      operationId: create_custom_events
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomEventsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEventsResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unauthorized
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Create custom events
+components:
+  requestBodies:
+    get_notification_history_request_body:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/get_notification_history_request_body'
+      required: true
+    export_subscriptions_request_body:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/export_subscriptions_request_body'
+  schemas:
+    App:
+      example:
+        apns_key_id: apns_key_id
+        apns_team_id: apns_team_id
+        apns_p12: apns_p12
+        safari_site_origin: safari_site_origin
+        apns_p12_password: apns_p12_password
+        created_at: 2000-01-23T04:56:07.000+00:00
+        safari_icon_64_64: safari_icon_64_64
+        chrome_web_sub_domain: chrome_web_sub_domain
+        gcm_key: gcm_key
+        apns_bundle_id: apns_bundle_id
+        chrome_key: chrome_key
+        safari_push_id: safari_push_id
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        apns_certificates: apns_certificates
+        safari_apns_p12: safari_apns_p12
+        safari_icon_128_128: safari_icon_128_128
+        id: id
+        android_gcm_sender_id: android_gcm_sender_id
+        safari_icon_32_32: safari_icon_32_32
+        additional_data_is_root_payload: true
+        apns_env: sandbox
+        players: 0
+        messageable_players: 6
+        apns_p8: apns_p8
+        chrome_web_origin: chrome_web_origin
+        basic_auth_key: basic_auth_key
+        site_name: site_name
+        safari_icon_16_16: safari_icon_16_16
+        chrome_web_default_notification_icon: chrome_web_default_notification_icon
+        organization_id: organization_id
+        name: name
+        safari_apns_certificates: safari_apns_certificates
+        safari_apns_p12_password: safari_apns_p12_password
+        safari_icon_256_256: safari_icon_256_256
+      properties:
+        id:
+          readOnly: true
+          type: string
+        name:
+          description: "The name of your app, as displayed on your apps list on the\
+            \ dashboard.  This can be renamed."
+          type: string
+        players:
+          readOnly: true
+          type: integer
+        messageable_players:
+          readOnly: true
+          type: integer
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        android_gcm_sender_id:
+          description: "Android: Your Google Project number.  Also known as Sender\
+            \ ID."
+          type: string
+          writeOnly: true
+        gcm_key:
+          description: "Android: Your Google Push Messaging Auth Key"
+          nullable: true
+          type: string
+        chrome_web_origin:
+          description: "Chrome (All Browsers except Safari) (Recommended): The URL\
+            \ to your website.  This field is required if you wish to enable web push\
+            \ and specify other web push parameters."
+          nullable: true
+          type: string
+        chrome_key:
+          description: Not for web push.  Your Google Push Messaging Auth Key if you
+            use Chrome Apps / Extensions.
+          nullable: true
+          type: string
+        chrome_web_default_notification_icon:
+          description: "Chrome (All Browsers except Safari): Your default notification\
+            \ icon. Should be 256x256 pixels, min 80x80."
+          nullable: true
+          type: string
+        chrome_web_sub_domain:
+          description: "Chrome (All Browsers except Safari): A subdomain of your choice\
+            \ in order to support Web Push on non-HTTPS websites. This field must\
+            \ be set in order for the chrome_web_gcm_sender_id property to be processed."
+          nullable: true
+          type: string
+        apns_env:
+          description: "iOS: Either sandbox or production"
+          enum:
+          - sandbox
+          - production
+          nullable: true
+          type: string
+        apns_p12:
+          description: "iOS: Your apple push notification p12 certificate file, converted\
+            \ to a string and Base64 encoded."
+          type: string
+          writeOnly: true
+        apns_p12_password:
+          description: "iOS: Required if using p12 certificate.  Password for the\
+            \ apns_p12 file."
+          type: string
+          writeOnly: true
+        apns_certificates:
+          nullable: true
+          readOnly: true
+          type: string
+        safari_apns_certificates:
+          readOnly: true
+          type: string
+        safari_apns_p12:
+          description: "Safari: Your apple push notification p12 certificate file\
+            \ for Safari Push Notifications, converted to a string and Base64 encoded."
+          type: string
+          writeOnly: true
+        safari_apns_p12_password:
+          description: "Safari: Password for safari_apns_p12 file"
+          type: string
+          writeOnly: true
+        apns_key_id:
+          description: "iOS: Required if using p8. Unique identifier for the p8 authentication\
+            \ key."
+          nullable: true
+          type: string
+        apns_team_id:
+          description: "iOS: Required if using p8. Team ID generated by Apple for\
+            \ your developer account."
+          nullable: true
+          type: string
+        apns_bundle_id:
+          description: "iOS: Required if using p8. Bundle ID for your app in the Apple\
+            \ ecosystem."
+          nullable: true
+          type: string
+        apns_p8:
+          description: "iOS: Required if using p8. Base64 encoded p8 key"
+          nullable: true
+          type: string
+        safari_site_origin:
+          description: "Safari (Recommended): The hostname to your website including\
+            \ http(s)://"
+          nullable: true
+          type: string
+        safari_push_id:
+          nullable: true
+          readOnly: true
+          type: string
+        safari_icon_16_16:
+          readOnly: true
+          type: string
+        safari_icon_32_32:
+          readOnly: true
+          type: string
+        safari_icon_64_64:
+          readOnly: true
+          type: string
+        safari_icon_128_128:
+          readOnly: true
+          type: string
+        safari_icon_256_256:
+          description: "Safari: A url for a 256x256 png notification icon. This is\
+            \ the only Safari icon URL you need to provide."
+          type: string
+        site_name:
+          description: "All Browsers (Recommended): The Site Name. Requires both chrome_web_origin\
+            \ and safari_site_origin to be set to add or update it."
+          nullable: true
+          type: string
+        basic_auth_key:
+          nullable: true
+          readOnly: true
+          type: string
+        organization_id:
+          description: The Id of the Organization you would like to add this app to.
+          type: string
+          writeOnly: true
+        additional_data_is_root_payload:
+          description: "iOS: Notification data (additional data) values will be added\
+            \ to the root of the apns payload when sent to the device.  Ignore if\
+            \ you're not using any other plugins, or not using OneSignal SDK methods\
+            \ to read the payload."
+          type: boolean
+          writeOnly: true
+      type: object
+    Apps:
+      items:
+        $ref: '#/components/schemas/App'
+      type: array
+    SegmentNotificationTarget:
+      properties:
+        included_segments:
+          description: "The segment names you want to target. Users in these segments\
+            \ will receive a notification. This targeting parameter is only compatible\
+            \ with excluded_segments.\nExample: [\"Active Users\", \"Inactive Users\"\
+            ]\n"
+          items:
+            type: string
+          type: array
+        excluded_segments:
+          description: "Segment that will be excluded when sending. Users in these\
+            \ segments will not receive a notification, even if they were included\
+            \ in included_segments. This targeting parameter is only compatible with\
+            \ included_segments.\nExample: [\"Active Users\", \"Inactive Users\"]\n"
+          items:
+            type: string
+          type: array
+      type: object
+    SubscriptionNotificationTarget:
+      properties:
+        include_subscription_ids:
+          description: "Specific subscription ids to send your notification to. _Does\
+            \ not require API Auth Key._\nNot compatible with any other targeting\
+            \ parameters.\nExample: [\"1dd608f2-c6a1-11e3-851d-000c2940e62c\"]\nLimit\
+            \ of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          nullable: true
+          type: array
+        include_email_tokens:
+          deprecated: true
+          description: "Deprecated alias for `email_to`. Target specific email addresses.\
+            \ If an email does not correspond to an existing user, a new user will\
+            \ be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST\
+            \ API call. Prefer `email_to` in new integrations.\n"
+          items:
+            type: string
+          type: array
+        email_to:
+          description: "Recommended for Sending Emails - Target specific email addresses.\
+            \ If an email does not correspond to an existing user, a new user will\
+            \ be created. Example: nick@catfac.ts. Limit of 2,000 entries per REST\
+            \ API call. Supersedes the deprecated `include_email_tokens` field.\n"
+          items:
+            type: string
+          type: array
+        include_phone_numbers:
+          description: "Recommended for Sending SMS - Target specific phone numbers.\
+            \ The phone number should be in the E.164 format. Phone number should\
+            \ be an existing subscriber on OneSignal. Refer our docs to learn how\
+            \ to add phone numbers to OneSignal.\nExample phone number: +1999999999\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_ios_tokens:
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using iOS device tokens.\nWarning:\
+            \ Only works with Production tokens.\nAll non-alphanumeric characters\
+            \ must be removed from each token. If a token does not correspond to an\
+            \ existing user, a new user will be created.\nExample: ce777617da7f548fe7a9ab6febb56cf39fba6d38203...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_wp_wns_uris:
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Windows URIs. If a token does\
+            \ not correspond to an existing user, a new user will be created.\nExample:\
+            \ http://s.notify.live.net/u/1/bn1/HmQAAACPaLDr-...\nLimit of 2,000 entries\
+            \ per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_amazon_reg_ids:
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Amazon ADM registration IDs.\
+            \ If a token does not correspond to an existing user, a new user will\
+            \ be created.\nExample: amzn1.adm-registration.v1.XpvSSUk0Rc3hTVVV...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_chrome_reg_ids:
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Chrome App registration IDs.\
+            \ If a token does not correspond to an existing user, a new user will\
+            \ be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\nLimit\
+            \ of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_chrome_web_reg_ids:
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Chrome Web Push registration\
+            \ IDs. If a token does not correspond to an existing user, a new user\
+            \ will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_android_reg_ids:
+          description: "Not Recommended: Please consider using include_subscription_ids\
+            \ or include_aliases instead.\nTarget using Android device registration\
+            \ IDs. If a token does not correspond to an existing user, a new user\
+            \ will be created.\nExample: APA91bEeiUeSukAAUdnw3O2RB45FWlSpgJ7Ji_...\n\
+            Limit of 2,000 entries per REST API call\n"
+          items:
+            type: string
+          type: array
+        include_aliases:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: "Target specific users by aliases assigned via API. An alias\
+            \ can be an external_id, onesignal_id, or a custom alias.\nAccepts an\
+            \ object where keys are alias labels and values are arrays of alias IDs\
+            \ to include\nExample usage: { \"external_id\": [\"exId1\", \"extId2\"\
+            ], \"internal_label\": [\"id1\", \"id2\"] }\nKeys must match API spellings\
+            \ exactly (for example the label for External ID is the string `external_id`;\
+            \ arbitrary keys such as camelCase variants are not aliases and may yield\
+            \ no recipients).\nNot compatible with any other targeting parameters.\n\
+            REQUIRED: REST API Key Authentication\nLimit of 2,000 entries per REST\
+            \ API call\nNote: If targeting push, email, or sms subscribers with same\
+            \ ids, use with target_channel to indicate you are sending a push or email\
+            \ or sms."
+          nullable: true
+          type: object
+        target_channel:
+          enum:
+          - push
+          - email
+          - sms
+          type: string
+      type: object
+    NotificationTarget:
+      anyOf:
+      - $ref: '#/components/schemas/SegmentNotificationTarget'
+      - $ref: '#/components/schemas/SubscriptionNotificationTarget'
+    BasicNotification:
+      allOf:
+      - $ref: '#/components/schemas/NotificationTarget'
+      - $ref: '#/components/schemas/BasicNotification_allOf'
+      - required:
+        - app_id
+    Notification:
+      allOf:
+      - $ref: '#/components/schemas/BasicNotification'
+      - $ref: '#/components/schemas/Notification_allOf'
+    NotificationWithMeta:
+      allOf:
+      - $ref: '#/components/schemas/BasicNotification'
+      - $ref: '#/components/schemas/DeliveryData'
+      - $ref: '#/components/schemas/OutcomesData'
+      - $ref: '#/components/schemas/NotificationWithMeta_allOf'
+    Button:
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        icon:
+          type: string
+      required:
+      - id
+      type: object
+    WebButton:
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        icon:
+          type: string
+        url:
+          type: string
+      required:
+      - id
+      type: object
+    LanguageStringMap:
+      example:
+        de: de
+        hi: hi
+        fi: fi
+        ru: ru
+        pt: pt
+        bg: bg
+        lt: lt
+        hr: hr
+        lv: lv
+        fr: fr
+        hu: hu
+        bs: bs
+        zh-Hans: zh-Hans
+        zh-Hant: zh-Hant
+        ka: ka
+        uk: uk
+        sk: sk
+        id: id
+        ca: ca
+        sr: sr
+        sv: sv
+        ko: ko
+        ms: ms
+        el: el
+        en: en
+        it: it
+        zh: zh
+        es: es
+        et: et
+        cs: cs
+        ar: ar
+        pa: pa
+        vi: vi
+        nb: nb
+        th: th
+        ja: ja
+        fa: fa
+        pl: pl
+        da: da
+        he: he
+        ro: ro
+        nl: nl
+        tr: tr
+      properties:
+        en:
+          description: Text in English.  Will be used as a fallback
+          type: string
+        ar:
+          description: Text in Arabic.
+          type: string
+        bs:
+          description: Text in Bosnian.
+          type: string
+        bg:
+          description: Text in Bulgarian.
+          type: string
+        ca:
+          description: Text in Catalan.
+          type: string
+        zh-Hans:
+          description: Text in Chinese (Simplified).
+          type: string
+        zh-Hant:
+          description: Text in Chinese (Traditional).
+          type: string
+        zh:
+          description: Alias for zh-Hans.
+          type: string
+        hr:
+          description: Text in Croatian.
+          type: string
+        cs:
+          description: Text in Czech.
+          type: string
+        da:
+          description: Text in Danish.
+          type: string
+        nl:
+          description: Text in Dutch.
+          type: string
+        et:
+          description: Text in Estonian.
+          type: string
+        fi:
+          description: Text in Finnish.
+          type: string
+        fr:
+          description: Text in French.
+          type: string
+        ka:
+          description: Text in Georgian.
+          type: string
+        de:
+          description: Text in German.
+          type: string
+        el:
+          description: Text in Greek.
+          type: string
+        hi:
+          description: Text in Hindi.
+          type: string
+        he:
+          description: Text in Hebrew.
+          type: string
+        hu:
+          description: Text in Hungarian.
+          type: string
+        id:
+          description: Text in Indonesian.
+          type: string
+        it:
+          description: Text in Italian.
+          type: string
+        ja:
+          description: Text in Japanese.
+          type: string
+        ko:
+          description: Text in Korean.
+          type: string
+        lv:
+          description: Text in Latvian.
+          type: string
+        lt:
+          description: Text in Lithuanian.
+          type: string
+        ms:
+          description: Text in Malay.
+          type: string
+        nb:
+          description: Text in Norwegian.
+          type: string
+        pl:
+          description: Text in Polish.
+          type: string
+        fa:
+          description: Text in Persian.
+          type: string
+        pt:
+          description: Text in Portugese.
+          type: string
+        pa:
+          description: Text in Punjabi.
+          type: string
+        ro:
+          description: Text in Romanian.
+          type: string
+        ru:
+          description: Text in Russian.
+          type: string
+        sr:
+          description: Text in Serbian.
+          type: string
+        sk:
+          description: Text in Slovak.
+          type: string
+        es:
+          description: Text in Spanish.
+          type: string
+        sv:
+          description: Text in Swedish.
+          type: string
+        th:
+          description: Text in Thai.
+          type: string
+        tr:
+          description: Text in Turkish.
+          type: string
+        uk:
+          description: Text in Ukrainian.
+          type: string
+        vi:
+          description: Text in Vietnamese.
+          type: string
+      type: object
+    NotificationSlice:
+      example:
+        offset: 6
+        total_count: 0
+        limit: 1
+        notifications:
+        - null
+        - null
+      properties:
+        total_count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+        notifications:
+          items:
+            $ref: '#/components/schemas/NotificationWithMeta'
+          type: array
+      type: object
+    PlatformDeliveryData:
+      description: Hash of delivery statistics broken out by target device platform.
+      properties:
+        edge_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        chrome_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        firefox_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        safari_web_push:
+          $ref: '#/components/schemas/DeliveryData'
+        android:
+          $ref: '#/components/schemas/DeliveryData'
+        ios:
+          $ref: '#/components/schemas/DeliveryData'
+        sms:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryData'
+          - $ref: '#/components/schemas/PlatformDeliveryData_sms_allOf'
+        email:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryData'
+          - $ref: '#/components/schemas/PlatformDeliveryData_email_allOf'
+      type: object
+    DeliveryData:
+      properties:
+        successful:
+          description: "Number of messages delivered to push servers, mobile carriers,\
+            \ or email service providers."
+          nullable: true
+          type: integer
+        failed:
+          description: Number of messages sent to unsubscribed devices.
+          nullable: true
+          type: integer
+        errored:
+          description: Number of errors reported.
+          nullable: true
+          type: integer
+        converted:
+          description: Number of messages that were clicked.
+          nullable: true
+          type: integer
+        received:
+          description: Number of devices that received the message.
+          nullable: true
+          type: integer
+      type: object
+    Purchase:
+      example:
+        amount: amount
+        iso: iso
+        count: 2
+        sku: sku
+      properties:
+        sku:
+          description: The unique identifier of the purchased item.
+          type: string
+        amount:
+          description: "The amount, in USD, spent purchasing the item."
+          type: string
+        iso:
+          description: The 3-letter ISO 4217 currency code. Required for correct storage
+            and conversion of amount.
+          type: string
+        count:
+          type: integer
+      required:
+      - amount
+      - iso
+      - sku
+      type: object
+    OutcomeData:
+      example:
+        aggregation: sum
+        id: id
+        value: 0
+      properties:
+        id:
+          type: string
+        value:
+          type: integer
+        aggregation:
+          enum:
+          - sum
+          - count
+          type: string
+      required:
+      - aggregation
+      - id
+      - value
+      type: object
+    OutcomesData:
+      example:
+        outcomes:
+        - aggregation: sum
+          id: id
+          value: 0
+        - aggregation: sum
+          id: id
+          value: 0
+      properties:
+        outcomes:
+          items:
+            $ref: '#/components/schemas/OutcomeData'
+          type: array
+      type: object
+    Filter:
+      properties:
+        field:
+          description: Required. Name of the field to use as the first operand in
+            the filter expression.
+          type: string
+        key:
+          description: "If `field` is `tag`, this field is *required* to specify `key`\
+            \ inside the tags."
+          type: string
+        value:
+          description: Constant value to use as the second operand in the filter expression.
+            This value is *required* when the relation operator is a binary operator.
+          type: string
+        hours_ago:
+          description: "If `field` is session-related, this is *required* to specify\
+            \ the number of hours before or after the user's session."
+          type: string
+        radius:
+          description: "If `field` is `location`, this will specify the radius in\
+            \ meters from a provided location point. Use with `lat` and `long`."
+          type: number
+        lat:
+          description: "If `field` is `location`, this is *required* to specify the\
+            \ user's latitude."
+          type: number
+        long:
+          description: "If `field` is `location`, this is *required* to specify the\
+            \ user's longitude."
+          type: number
+        relation:
+          description: Required. Operator of a filter expression.
+          enum:
+          - '>'
+          - <
+          - =
+          - '!='
+          - exists
+          - not_exists
+          - time_elapsed_gt
+          - time_elapsed_lt
+          type: string
+      type: object
+    Operator:
+      properties:
+        operator:
+          description: "Strictly, this must be either `\"OR\"`, or `\"AND\"`.  It\
+            \ can be used to compose Filters as part of a Filters object."
+          enum:
+          - OR
+          - AND
+          type: string
+      type: object
+    FilterExpression:
+      oneOf:
+      - $ref: '#/components/schemas/Filter'
+      - $ref: '#/components/schemas/Operator'
+    Segment:
+      example:
+        name: name
+        id: id
+        filters:
+        - null
+        - null
+      properties:
+        id:
+          description: "UUID of the segment.  If left empty, it will be assigned automaticaly."
+          type: string
+        name:
+          description: Name of the segment.  You'll see this name on the Web UI.
+          type: string
+        filters:
+          description: "Filter or operators the segment will have.  For a list of\
+            \ available filters with details, please see Send to Users Based on Filters."
+          items:
+            $ref: '#/components/schemas/FilterExpression'
+          type: array
+      required:
+      - filters
+      - name
+      type: object
+    SegmentData:
+      example:
+        is_active: true
+        updated_at: updated_at
+        read_only: true
+        name: name
+        created_at: created_at
+        id: id
+        app_id: app_id
+      properties:
+        id:
+          description: The segment ID
+          type: string
+        name:
+          description: The segment name
+          type: string
+        created_at:
+          description: Date segment created
+          type: string
+        updated_at:
+          description: Date segment last updated
+          type: string
+        app_id:
+          description: The app id
+          type: string
+        read_only:
+          description: Is the segment read only?
+          type: boolean
+        is_active:
+          description: Is the segment active?
+          type: boolean
+      type: object
+    GetSegmentsSuccessResponse:
+      example:
+        offset: 6
+        total_count: 0
+        limit: 1
+        segments:
+        - is_active: true
+          updated_at: updated_at
+          read_only: true
+          name: name
+          created_at: created_at
+          id: id
+          app_id: app_id
+        - is_active: true
+          updated_at: updated_at
+          read_only: true
+          name: name
+          created_at: created_at
+          id: id
+          app_id: app_id
+      properties:
+        total_count:
+          description: The number of Segments in the response.
+          type: integer
+        offset:
+          description: Set with the offset query parameter. Default 0.
+          type: integer
+        limit:
+          description: Maximum number of Segments returned. Default 300.
+          type: integer
+        segments:
+          description: An array containing the Segment information.
+          items:
+            $ref: '#/components/schemas/SegmentData'
+          type: array
+      type: object
+    UpdateLiveActivityRequest:
+      example:
+        event_updates: "{}"
+        stale_date: 0
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        sound: sound
+        name: name
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        dismissal_date: 6
+        event: update
+        priority: 1
+      properties:
+        name:
+          description: An internal name to assist with your campaign organization.
+            This does not get displayed in the message itself.
+          type: string
+        event:
+          enum:
+          - update
+          - end
+          type: string
+        event_updates:
+          description: This must match the ContentState interface you have defined
+            within your Live Activity in your app.
+          type: object
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        sound:
+          description: Sound file that is included in your app to play instead of
+            the default device notification sound. Omit to disable vibration and sound
+            for the notification.
+          type: string
+        stale_date:
+          description: "Accepts Unix timestamp in seconds. When time reaches the configured\
+            \ stale date, the system considers the Live Activity out of date, and\
+            \ the ActivityState of the Live Activity changes to ActivityState.stale."
+          type: integer
+        dismissal_date:
+          description: Accepts Unix timestamp in seconds; only allowed if event is
+            "end"
+          type: integer
+        priority:
+          description: "Delivery priority through the the push provider (APNs). Pass\
+            \ 10 for higher priority notifications, or 5 for lower priority notifications.\
+            \ Lower priority notifications are sent based on the power considerations\
+            \ of the end user's device. If not set, defaults to 10. Some providers\
+            \ (APNs) allow for a limited budget of high priority notifications per\
+            \ hour, and if that budget is exceeded, the provider may throttle notification\
+            \ delivery."
+          type: integer
+      required:
+      - event
+      - event_updates
+      - name
+      type: object
+    IdentityObject:
+      additionalProperties:
+        type: string
+      type: object
+    PropertiesObject:
+      example:
+        country: country
+        purchases:
+        - amount: amount
+          iso: iso
+          count: 2
+          sku: sku
+        - amount: amount
+          iso: iso
+          count: 2
+          sku: sku
+        ip: ip
+        timezone_id: timezone_id
+        language: language
+        first_active: 1
+        last_active: 5
+        lat: 0.8008281904610115
+        long: 6.027456183070403
+        tags:
+          key: ""
+        amount_spent: 5.637376656633329
+      properties:
+        tags:
+          additionalProperties: true
+          type: object
+        language:
+          type: string
+        timezone_id:
+          type: string
+        lat:
+          type: number
+        long:
+          type: number
+        country:
+          type: string
+        first_active:
+          type: integer
+        last_active:
+          type: integer
+        amount_spent:
+          type: number
+        purchases:
+          items:
+            $ref: '#/components/schemas/Purchase'
+          type: array
+        ip:
+          type: string
+      type: object
+    PropertiesDeltas:
+      example:
+        purchases:
+        - amount: amount
+          iso: iso
+          count: 2
+          sku: sku
+        - amount: amount
+          iso: iso
+          count: 2
+          sku: sku
+        session_count: 6
+        session_time: 0
+      properties:
+        session_time:
+          type: integer
+        session_count:
+          type: integer
+        purchases:
+          items:
+            $ref: '#/components/schemas/Purchase'
+          type: array
+      type: object
+    Subscription:
+      example:
+        notification_types: 7
+        device_model: device_model
+        app_version: app_version
+        web_p256: web_p256
+        net_type: 4
+        type: iOSPush
+        device_os: device_os
+        enabled: true
+        session_time: 9
+        test_type: 2
+        token: token
+        carrier: carrier
+        session_count: 3
+        web_auth: web_auth
+        rooted: true
+        id: id
+        sdk: sdk
+      properties:
+        id:
+          type: string
+        type:
+          enum:
+          - iOSPush
+          - AndroidPush
+          - FireOSPush
+          - ChromeExtensionPush
+          - ChromePush
+          - WindowsPush
+          - SafariLegacyPush
+          - FirefoxPush
+          - macOSPush
+          - HuaweiPush
+          - SafariPush
+          - Email
+          - SMS
+          type: string
+        token:
+          type: string
+        enabled:
+          type: boolean
+        notification_types:
+          type: integer
+        session_time:
+          type: integer
+        session_count:
+          type: integer
+        sdk:
+          type: string
+        device_model:
+          type: string
+        device_os:
+          type: string
+        rooted:
+          type: boolean
+        test_type:
+          type: integer
+        app_version:
+          type: string
+        net_type:
+          type: integer
+        carrier:
+          type: string
+        web_auth:
+          type: string
+        web_p256:
+          type: string
+      type: object
+    User:
+      example:
+        subscriptions:
+        - notification_types: 7
+          device_model: device_model
+          app_version: app_version
+          web_p256: web_p256
+          net_type: 4
+          type: iOSPush
+          device_os: device_os
+          enabled: true
+          session_time: 9
+          test_type: 2
+          token: token
+          carrier: carrier
+          session_count: 3
+          web_auth: web_auth
+          rooted: true
+          id: id
+          sdk: sdk
+        - notification_types: 7
+          device_model: device_model
+          app_version: app_version
+          web_p256: web_p256
+          net_type: 4
+          type: iOSPush
+          device_os: device_os
+          enabled: true
+          session_time: 9
+          test_type: 2
+          token: token
+          carrier: carrier
+          session_count: 3
+          web_auth: web_auth
+          rooted: true
+          id: id
+          sdk: sdk
+        identity:
+          key: identity
+        properties:
+          country: country
+          purchases:
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          ip: ip
+          timezone_id: timezone_id
+          language: language
+          first_active: 1
+          last_active: 5
+          lat: 0.8008281904610115
+          long: 6.027456183070403
+          tags:
+            key: ""
+          amount_spent: 5.637376656633329
+      properties:
+        properties:
+          $ref: '#/components/schemas/PropertiesObject'
+        identity:
+          additionalProperties:
+            type: string
+          type: object
+        subscriptions:
+          items:
+            $ref: '#/components/schemas/Subscription'
+          type: array
+      type: object
+    UpdateUserRequest:
+      example:
+        refresh_device_metadata: false
+        deltas:
+          purchases:
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          session_count: 6
+          session_time: 0
+        properties:
+          country: country
+          purchases:
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          ip: ip
+          timezone_id: timezone_id
+          language: language
+          first_active: 1
+          last_active: 5
+          lat: 0.8008281904610115
+          long: 6.027456183070403
+          tags:
+            key: ""
+          amount_spent: 5.637376656633329
+      properties:
+        properties:
+          $ref: '#/components/schemas/PropertiesObject'
+        refresh_device_metadata:
+          default: false
+          type: boolean
+        deltas:
+          $ref: '#/components/schemas/PropertiesDeltas'
+      type: object
+    CreateNotificationSuccessResponse:
+      example:
+        external_id: external_id
+        id: id
+        errors: ""
+      properties:
+        id:
+          description: Notification identifier when the request created a notification.
+            An empty string means no notification was created; read `errors` for details
+            (HTTP may still be 200).
+          type: string
+        external_id:
+          description: Optional correlation / idempotency-related value from the API
+            response. This is not the end-user External ID used for targeting recipients
+            (that lives under `include_aliases.external_id`).
+          nullable: true
+          type: string
+        errors:
+          description: "Polymorphic field: may be an array of human-readable strings\
+            \ and/or an object (for example with `invalid_aliases`, `invalid_external_user_ids`,\
+            \ or `invalid_player_ids`) depending on the API response; HTTP may still\
+            \ be 200 with partial success. Typed SDKs model this loosely so both shapes\
+            \ deserialize."
+      type: object
+    GenericSuccessBoolResponse:
+      example:
+        success: true
+      properties:
+        success:
+          type: boolean
+      type: object
+    NotificationHistorySuccessResponse:
+      example:
+        success: true
+        destination_url: destination_url
+      properties:
+        success:
+          type: boolean
+        destination_url:
+          type: string
+      type: object
+    CreateSegmentSuccessResponse:
+      example:
+        success: true
+        id: id
+      properties:
+        success:
+          type: boolean
+        id:
+          description: UUID of created segment
+          type: string
+      type: object
+    CreateSegmentConflictResponse:
+      properties:
+        success:
+          type: boolean
+        errors:
+          items:
+            type: string
+          type: array
+      type: object
+    ExportSubscriptionsSuccessResponse:
+      example:
+        csv_file_url: csv_file_url
+      properties:
+        csv_file_url:
+          type: string
+      type: object
+    UpdateLiveActivitySuccessResponse:
+      example:
+        id: id
+      properties:
+        id:
+          type: string
+      type: object
+    StartLiveActivityRequest:
+      example:
+        excluded_segments:
+        - excluded_segments
+        - excluded_segments
+        stale_date: 0
+        included_segments:
+        - included_segments
+        - included_segments
+        filters:
+        - null
+        - null
+        priority: 6
+        include_aliases:
+          key:
+          - include_aliases
+          - include_aliases
+        ios_relevance_score: 1.4658129805029452
+        event_updates: "{}"
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        name: name
+        activity_id: activity_id
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        idempotency_key: idempotency_key
+        event_attributes: "{}"
+        include_subscription_ids:
+        - include_subscription_ids
+        - include_subscription_ids
+        event: start
+      properties:
+        name:
+          description: An internal name to assist with your campaign organization.
+            This does not get displayed in the message itself.
+          type: string
+        event:
+          default: start
+          enum:
+          - start
+          type: string
+        activity_id:
+          description: Set a unique activity_id to track and manage the Live Activity.
+          type: string
+        event_attributes:
+          description: Default/static data to initialize the Live Activity upon start.
+          type: object
+        event_updates:
+          description: Dynamic content used to update the running Live Activity at
+            start. Must match the ContentState interface defined in your app.
+          type: object
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        stale_date:
+          description: "Accepts Unix timestamp in seconds. When time reaches the configured\
+            \ stale date, the system considers the Live Activity out of date, and\
+            \ the ActivityState of the Live Activity changes to ActivityState.stale."
+          type: integer
+        priority:
+          description: "Delivery priority through the push provider (APNs). Pass 10\
+            \ for higher priority notifications, or 5 for lower priority notifications.\
+            \ Lower priority notifications are sent based on the power considerations\
+            \ of the end user's device. If not set, defaults to 10."
+          type: integer
+        ios_relevance_score:
+          description: iOS 15+. A score to indicate how a notification should be displayed
+            when grouped. Use a float between 0-1.
+          nullable: true
+          type: number
+        idempotency_key:
+          description: "Correlation and idempotency key.\nA request received with\
+            \ this parameter will first look for another notification with the same\
+            \ idempotency key. If one exists, a notification will not be sent, and\
+            \ result of the previous operation will instead be returned. Therefore,\
+            \ if you plan on using this feature, it's important to use a good source\
+            \ of randomness to generate the UUID passed here.\nThis key is only idempotent\
+            \ for 30 days. After 30 days, the notification could be removed from our\
+            \ system and a notification with the same idempotency key will be sent\
+            \ again.\n  See Idempotent Notification Requests for more details\nwriteOnly:\
+            \ true\n"
+          nullable: true
+          type: string
+        include_aliases:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: "Target specific users by aliases assigned via API. An alias\
+            \ can be an external_id, onesignal_id, or a custom alias.\nAccepts an\
+            \ object where keys are alias labels and values are arrays of alias IDs\
+            \ to include\nExample usage: { \"external_id\": [\"exId1\", \"extId2\"\
+            ], \"internal_label\": [\"id1\", \"id2\"] }\nKeys must match API spellings\
+            \ exactly (for example the label for External ID is the string `external_id`;\
+            \ arbitrary keys such as camelCase variants are not aliases and may yield\
+            \ no recipients).\nNot compatible with any other targeting parameters.\n\
+            REQUIRED: REST API Key Authentication\nLimit of 2,000 entries per REST\
+            \ API call\nNote: If targeting push, email, or sms subscribers with same\
+            \ ids, use with target_channel to indicate you are sending a push or email\
+            \ or sms."
+          nullable: true
+          type: object
+        include_subscription_ids:
+          description: Specific subscription ids to target. Not compatible with other
+            targeting parameters.
+          items:
+            type: string
+          nullable: true
+          type: array
+        included_segments:
+          description: Segment names to include. Only compatible with excluded_segments.
+          items:
+            type: string
+          nullable: true
+          type: array
+        excluded_segments:
+          description: Segment names to exclude. Only compatible with included_segments.
+          items:
+            type: string
+          nullable: true
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/FilterExpression'
+          nullable: true
+          type: array
+      required:
+      - activity_id
+      - contents
+      - event
+      - event_attributes
+      - event_updates
+      - headings
+      - name
+      type: object
+    StartLiveActivitySuccessResponse:
+      example:
+        notification_id: notification_id
+      properties:
+        notification_id:
+          type: string
+      type: object
+    IncludeAliases:
+      additionalProperties:
+        items:
+          type: string
+        type: array
+      description: "Target specific users by aliases assigned via API. An alias can\
+        \ be an external_id, onesignal_id, or a custom alias.\nAccepts an object where\
+        \ keys are alias labels and values are arrays of alias IDs to include\nExample\
+        \ usage: { \"external_id\": [\"exId1\", \"extId2\"], \"internal_label\": [\"\
+        id1\", \"id2\"] }\nKeys must match API spellings exactly (for example the\
+        \ label for External ID is the string `external_id`; arbitrary keys such as\
+        \ camelCase variants are not aliases and may yield no recipients).\nNot compatible\
+        \ with any other targeting parameters.\nREQUIRED: REST API Key Authentication\n\
+        Limit of 2,000 entries per REST API call\nNote: If targeting push, email,\
+        \ or sms subscribers with same ids, use with target_channel to indicate you\
+        \ are sending a push or email or sms."
+      nullable: true
+      type: object
+    CreateTemplateRequest:
+      example:
+        isSMS: true
+        email_body: email_body
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        subtitle:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        name: name
+        isEmail: true
+        email_bcc:
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        dynamic_content: dynamic_content
+        app_id: app_id
+        email_subject: email_subject
+      properties:
+        app_id:
+          description: Your OneSignal App ID in UUID v4 format.
+          type: string
+        name:
+          description: Name of the template.
+          type: string
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        subtitle:
+          $ref: '#/components/schemas/LanguageStringMap'
+        isEmail:
+          description: Set true for an Email template.
+          type: boolean
+        email_subject:
+          description: Subject of the email.
+          nullable: true
+          type: string
+        email_body:
+          description: Body of the email (HTML supported).
+          nullable: true
+          type: string
+        email_bcc:
+          description: BCC recipients for the email template. Maximum 5 addresses.
+            Only supported when the email service provider is OneSignal Email.
+          items:
+            type: string
+          maxItems: 5
+          nullable: true
+          type: array
+        isSMS:
+          description: Set true for an SMS template.
+          type: boolean
+        dynamic_content:
+          description: JSON string for dynamic content personalization.
+          nullable: true
+          type: string
+      required:
+      - app_id
+      - contents
+      - name
+      type: object
+    UpdateTemplateRequest:
+      example:
+        isSMS: true
+        email_body: email_body
+        contents:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        subtitle:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        name: name
+        isEmail: true
+        email_bcc:
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        - email_bcc
+        headings:
+          de: de
+          hi: hi
+          fi: fi
+          ru: ru
+          pt: pt
+          bg: bg
+          lt: lt
+          hr: hr
+          lv: lv
+          fr: fr
+          hu: hu
+          bs: bs
+          zh-Hans: zh-Hans
+          zh-Hant: zh-Hant
+          ka: ka
+          uk: uk
+          sk: sk
+          id: id
+          ca: ca
+          sr: sr
+          sv: sv
+          ko: ko
+          ms: ms
+          el: el
+          en: en
+          it: it
+          zh: zh
+          es: es
+          et: et
+          cs: cs
+          ar: ar
+          pa: pa
+          vi: vi
+          nb: nb
+          th: th
+          ja: ja
+          fa: fa
+          pl: pl
+          da: da
+          he: he
+          ro: ro
+          nl: nl
+          tr: tr
+        dynamic_content: dynamic_content
+        email_subject: email_subject
+      properties:
+        name:
+          description: Updated name of the template.
+          type: string
+        contents:
+          $ref: '#/components/schemas/LanguageStringMap'
+        headings:
+          $ref: '#/components/schemas/LanguageStringMap'
+        subtitle:
+          $ref: '#/components/schemas/LanguageStringMap'
+        isEmail:
+          description: Set true for an Email template.
+          type: boolean
+        email_subject:
+          description: Subject of the email.
+          nullable: true
+          type: string
+        email_body:
+          description: Body of the email (HTML supported).
+          nullable: true
+          type: string
+        email_bcc:
+          description: BCC recipients for the email template. Maximum 5 addresses.
+            Only supported when the email service provider is OneSignal Email.
+          items:
+            type: string
+          maxItems: 5
+          nullable: true
+          type: array
+        isSMS:
+          description: Set true for an SMS template.
+          type: boolean
+        dynamic_content:
+          description: JSON string for dynamic content personalization.
+          nullable: true
+          type: string
+      type: object
+    TemplateResource:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        channel: push
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        content:
+          key: ""
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        channel:
+          enum:
+          - push
+          - email
+          - sms
+          nullable: true
+          type: string
+        content:
+          additionalProperties: true
+          description: Rendered content and channel/platform flags for the template.
+          type: object
+      type: object
+    TemplatesListResponse:
+      example:
+        templates:
+        - updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          channel: push
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          content:
+            key: ""
+        - updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          channel: push
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          content:
+            key: ""
+      properties:
+        templates:
+          items:
+            $ref: '#/components/schemas/TemplateResource'
+          type: array
+      type: object
+    CopyTemplateRequest:
+      example:
+        target_app_id: target_app_id
+      properties:
+        target_app_id:
+          description: Destination OneSignal App ID in UUID v4 format.
+          type: string
+      required:
+      - target_app_id
+      type: object
+    CreateUserConflictResponse:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/CreateUserConflictResponse_errors_inner'
+          type: array
+      type: object
+    GenericError:
+      properties:
+        errors: {}
+        success:
+          type: boolean
+        reference: {}
+      type: object
+    RateLimitError:
+      properties:
+        errors:
+          items:
+            type: string
+          type: array
+        limit:
+          type: string
+      type: object
+    PropertiesBody:
+      example:
+        properties:
+          country: country
+          purchases:
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          - amount: amount
+            iso: iso
+            count: 2
+            sku: sku
+          ip: ip
+          timezone_id: timezone_id
+          language: language
+          first_active: 1
+          last_active: 5
+          lat: 0.8008281904610115
+          long: 6.027456183070403
+          tags:
+            key: ""
+          amount_spent: 5.637376656633329
+      properties:
+        properties:
+          $ref: '#/components/schemas/PropertiesObject'
+      type: object
+    SubscriptionBody:
+      example:
+        subscription:
+          notification_types: 7
+          device_model: device_model
+          app_version: app_version
+          web_p256: web_p256
+          net_type: 4
+          type: iOSPush
+          device_os: device_os
+          enabled: true
+          session_time: 9
+          test_type: 2
+          token: token
+          carrier: carrier
+          session_count: 3
+          web_auth: web_auth
+          rooted: true
+          id: id
+          sdk: sdk
+      properties:
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+      type: object
+    TransferSubscriptionRequestBody:
+      example:
+        identity:
+          key: identity
+      properties:
+        identity:
+          additionalProperties:
+            type: string
+          maxProperties: 1
+          minProperties: 1
+          type: object
+      type: object
+    UserIdentityBody:
+      example:
+        identity:
+          key: identity
+      properties:
+        identity:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
+    ExportEventsSuccessResponse:
+      example:
+        csv_file_url: csv_file_url
+      properties:
+        csv_file_url:
+          type: string
+      type: object
+    CustomEvent:
+      example:
+        onesignal_id: onesignal_id
+        payload:
+          key: ""
+        name: name
+        external_id: external_id
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        name:
+          description: The identifier or name of the event. Maximum 128 characters.
+          type: string
+        external_id:
+          description: The external ID of the user targeted for the event. Either
+            the user's External ID or OneSignal ID is required.
+          nullable: true
+          type: string
+        onesignal_id:
+          description: The OneSignal ID of the user targeted for the event. Either
+            the user's External ID or OneSignal ID is required.
+          nullable: true
+          type: string
+        timestamp:
+          description: Time the event occurred as an ISO8601 formatted string. Defaults
+            to now if not included or past date provided.
+          format: date-time
+          type: string
+        payload:
+          additionalProperties: true
+          description: "Properties or data related to the event, like {\"geography\"\
+            : \"USA\"}"
+          type: object
+      required:
+      - name
+      type: object
+    CustomEventsRequest:
+      example:
+        events:
+        - onesignal_id: onesignal_id
+          payload:
+            key: ""
+          name: name
+          external_id: external_id
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        - onesignal_id: onesignal_id
+          payload:
+            key: ""
+          name: name
+          external_id: external_id
+          timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/CustomEvent'
+          type: array
+      required:
+      - events
+      type: object
+    CustomEventsResponse:
+      type: object
+    ApiKeyToken:
+      example:
+        token_id: token_id
+        updated_at: updated_at
+        name: name
+        created_at: created_at
+        ip_allowlist_mode: disabled
+        ip_allowlist:
+        - ip_allowlist
+        - ip_allowlist
+      properties:
+        token_id:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        name:
+          type: string
+        ip_allowlist_mode:
+          enum:
+          - disabled
+          - explicit
+          type: string
+        ip_allowlist:
+          items:
+            type: string
+          type: array
+      type: object
+    ApiKeyTokensListResponse:
+      example:
+        tokens:
+        - token_id: token_id
+          updated_at: updated_at
+          name: name
+          created_at: created_at
+          ip_allowlist_mode: disabled
+          ip_allowlist:
+          - ip_allowlist
+          - ip_allowlist
+        - token_id: token_id
+          updated_at: updated_at
+          name: name
+          created_at: created_at
+          ip_allowlist_mode: disabled
+          ip_allowlist:
+          - ip_allowlist
+          - ip_allowlist
+      properties:
+        tokens:
+          items:
+            $ref: '#/components/schemas/ApiKeyToken'
+          type: array
+      type: object
+    CreateApiKeyRequest:
+      example:
+        name: name
+        ip_allowlist_mode: disabled
+        ip_allowlist:
+        - ip_allowlist
+        - ip_allowlist
+      properties:
+        name:
+          type: string
+        ip_allowlist_mode:
+          enum:
+          - disabled
+          - explicit
+          type: string
+        ip_allowlist:
+          items:
+            type: string
+          type: array
+      type: object
+    CreateApiKeyResponse:
+      example:
+        token_id: token_id
+        formatted_token: formatted_token
+      properties:
+        token_id:
+          type: string
+        formatted_token:
+          type: string
+      type: object
+    UpdateApiKeyRequest:
+      example:
+        name: name
+        ip_allowlist_mode: disabled
+        ip_allowlist:
+        - ip_allowlist
+        - ip_allowlist
+      properties:
+        name:
+          type: string
+        ip_allowlist_mode:
+          enum:
+          - disabled
+          - explicit
+          type: string
+        ip_allowlist:
+          items:
+            type: string
+          type: array
+      type: object
+    get_notification_history_request_body:
+      properties:
+        events:
+          description: "-> \"sent\" - All the devices by player_id that were sent\
+            \ the specified notification_id.  Notifications targeting under 1000 recipients\
+            \ will not have \"sent\" events recorded, but will show \"clicked\" events.\
+            \ \"clicked\" - All the devices by `player_id` that clicked the specified\
+            \ notification_id."
+          enum:
+          - sent
+          - clicked
+          type: string
+        email:
+          description: The email address you would like the report sent.
+          type: string
+        app_id:
+          type: string
+      required:
+      - id
+      title: get_notification_history_request_body
+      type: object
+    export_subscriptions_request_body:
+      properties:
+        extra_fields:
+          description: "Additional fields that you wish to include. Currently supports\
+            \ location, country, rooted, notification_types, ip, external_user_id,\
+            \ web_auth, and web_p256."
+          items:
+            type: string
+          type: array
+        last_active_since:
+          description: Export all devices with a last_active timestamp greater than
+            this time.  Unixtime in seconds.
+          type: string
+        segment_name:
+          description: Export all devices belonging to the segment.
+          type: string
+      title: export_subscriptions_request_body
+      type: object
+    BasicNotification_allOf_android_background_layout:
+      description: "Channel: Push Notifications\nPlatform: Android\nAllowing setting\
+        \ a background image for the notification. This is a JSON object containing\
+        \ the following keys. See our Background Image documentation for image sizes.\n"
+      properties:
+        image:
+          description: "Asset file, android resource name, or URL to remote image."
+          type: string
+        headings_color:
+          description: Title text color ARGB Hex format. Example(Blue) "FF0000FF".
+          type: string
+        contents_color:
+          description: Body text color ARGB Hex format. Example(Red) "FFFF0000".
+          type: string
+      type: object
+      writeOnly: true
+    BasicNotification_allOf:
+      properties:
+        id:
+          type: string
+        value:
+          readOnly: true
+          type: integer
+        name:
+          description: |-
+            Required for SMS Messages.
+            An identifier for tracking message within the OneSignal dashboard or export analytics.
+            Not shown to end user.
+          nullable: true
+          type: string
+          writeOnly: true
+        aggregation:
+          enum:
+          - sum
+          - count
+          readOnly: true
+          type: string
+        isIos:
+          description: Indicates whether to send to all devices registered under your
+            app's Apple iOS platform.
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isAndroid:
+          description: Indicates whether to send to all devices registered under your
+            app's Google Android platform.
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isHuawei:
+          description: Indicates whether to send to all devices registered under your
+            app's Huawei Android platform.
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isAnyWeb:
+          description: "Indicates whether to send to all subscribed web browser users,\
+            \ including Chrome, Firefox, and Safari.\nYou may use this instead as\
+            \ a combined flag instead of separately enabling isChromeWeb, isFirefox,\
+            \ and isSafari, though the three options are equivalent to this one.\n"
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isChromeWeb:
+          description: "Indicates whether to send to all Google Chrome, Chrome on\
+            \ Android, and Mozilla Firefox users registered under your Chrome & Firefox\
+            \ web push platform."
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isFirefox:
+          description: Indicates whether to send to all Mozilla Firefox desktop users
+            registered under your Firefox web push platform.
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isSafari:
+          description: Does not support iOS Safari. Indicates whether to send to all
+            Apple's Safari desktop users registered under your Safari web push platform.
+            Read more iOS Safari
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isWP_WNS:
+          description: Indicates whether to send to all devices registered under your
+            app's Windows platform.
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isAdm:
+          description: Indicates whether to send to all devices registered under your
+            app's Amazon Fire platform.
+          nullable: true
+          type: boolean
+          writeOnly: true
+        isChrome:
+          description: |
+            This flag is not used for web push Please see isChromeWeb for sending to web push users. This flag only applies to Google Chrome Apps & Extensions.
+            Indicates whether to send to all devices registered under your app's Google Chrome Apps & Extension platform.
+          nullable: true
+          type: boolean
+          writeOnly: true
+        app_id:
+          description: "Required: Your OneSignal Application ID, which can be found\
+            \ in Keys & IDs.\nIt is a UUID and looks similar to 8250eaf6-1a58-489e-b136-7c74a864b434.\n"
+          type: string
+          writeOnly: true
+        external_id:
+          deprecated: true
+          description: "This field does **not** target users by their External ID.\
+            \ To send to External IDs, use `include_aliases` with the label `external_id`\
+            \ plus `target_channel` as documented for alias-based targeting.\n\n[DEPRECATED]\
+            \ Correlation and idempotency key.\nA request received with this parameter\
+            \ will first look for another notification with the same external_id.\
+            \ If one exists, a notification will not be sent, and result of the previous\
+            \ operation will instead be returned. Therefore, if you plan on using\
+            \ this feature, it's important to use a good source of randomness to generate\
+            \ the UUID passed here.\nThis key is only idempotent for 30 days. After\
+            \ 30 days, the notification could be removed from our system and a notification\
+            \ with the same external_id will be sent again.\n  See Idempotent Notification\
+            \ Requests for more details\nwriteOnly: true\n"
+          nullable: true
+          type: string
+        idempotency_key:
+          description: "Correlation and idempotency key.\nA request received with\
+            \ this parameter will first look for another notification with the same\
+            \ idempotency key. If one exists, a notification will not be sent, and\
+            \ result of the previous operation will instead be returned. Therefore,\
+            \ if you plan on using this feature, it's important to use a good source\
+            \ of randomness to generate the UUID passed here.\nThis key is only idempotent\
+            \ for 30 days. After 30 days, the notification could be removed from our\
+            \ system and a notification with the same idempotency key will be sent\
+            \ again.\n  See Idempotent Notification Requests for more details\nwriteOnly:\
+            \ true\n"
+          nullable: true
+          type: string
+        contents:
+          allOf:
+          - $ref: '#/components/schemas/LanguageStringMap'
+          - description: "Required unless content_available=true or template_id is\
+              \ set.\nThe message's content (excluding the title), a map of language\
+              \ codes to text for each language.\nEach hash must have a language code\
+              \ string for a key, mapped to the localized text you would like users\
+              \ to receive for that language.\nThis field supports inline substitutions.\n\
+              English must be included in the hash.\nExample: {\"en\": \"English Message\"\
+              , \"es\": \"Spanish Message\"}\n"
+            writeOnly: true
+        headings:
+          allOf:
+          - $ref: '#/components/schemas/LanguageStringMap'
+          - description: "The message's title, a map of language codes to text for\
+              \ each language. Each hash must have a language code string for a key,\
+              \ mapped to the localized text you would like users to receive for that\
+              \ language.\nThis field supports inline substitutions.\nExample: {\"\
+              en\": \"English Title\", \"es\": \"Spanish Title\"}\n"
+            writeOnly: true
+        subtitle:
+          allOf:
+          - $ref: '#/components/schemas/LanguageStringMap'
+          - description: "The message's subtitle, a map of language codes to text\
+              \ for each language. Each hash must have a language code string for\
+              \ a key, mapped to the localized text you would like users to receive\
+              \ for that language.\nThis field supports inline substitutions.\nExample:\
+              \ {\"en\": \"English Subtitle\", \"es\": \"Spanish Subtitle\"}\n"
+            writeOnly: true
+        data:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nA custom map\
+            \ of data that is passed back to your app. Same as using Additional Data\
+            \ within the dashboard. Can use up to 2048 bytes of data.\nExample: {\"\
+            abc\": 123, \"foo\": \"bar\", \"event_performed\": true, \"amount\": 12.1}\n"
+          nullable: true
+          type: object
+          writeOnly: true
+        huawei_msg_type:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nUse \"data\"\
+            \ or \"message\" depending on the type of notification you are sending.\
+            \ More details in Data & Background Notifications.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        url:
+          description: "Channel: Push Notifications\nPlatform: All\nThe URL to open\
+            \ in the browser when a user clicks on the notification.\nNote: iOS needs\
+            \ https or updated NSAppTransportSecurity in plist\nThis field supports\
+            \ inline substitutions.\nOmit if including web_url or app_url\nExample:\
+            \ https://onesignal.com\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        web_url:
+          description: "Channel: Push Notifications\nPlatform: All Browsers\nSame\
+            \ as url but only sent to web push platforms.\nIncluding Chrome, Firefox,\
+            \ Safari, Opera, etc.\nExample: https://onesignal.com\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        app_url:
+          description: "Channel: Push Notifications\nPlatform: All Browsers\nSame\
+            \ as url but only sent to web push platforms.\nIncluding iOS, Android,\
+            \ macOS, Windows, ChromeApps, etc.\nExample: https://onesignal.com\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        ios_attachments:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+\nAdds media\
+            \ attachments to notifications. Set as JSON object, key as a media id\
+            \ of your choice and the value as a valid local filename or URL. User\
+            \ must press and hold on the notification to view.\nDo not set mutable_content\
+            \ to download attachments. The OneSignal SDK does this automatically\n\
+            Example: {\"id1\": \"https://domain.com/image.jpg\"}\n"
+          nullable: true
+          type: object
+          writeOnly: true
+        template_id:
+          description: "Channel: Push Notifications\nPlatform: All\nUse a template\
+            \ you setup on our dashboard. The template_id is the UUID found in the\
+            \ URL when viewing a template on our dashboard.\nExample: be4a8044-bbd6-11e4-a581-000c2940e62c\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        content_available:
+          description: "Channel: Push Notifications\nPlatform: iOS\nSending true wakes\
+            \ your app from background to run custom native code (Apple interprets\
+            \ this as content-available=1). Note: Not applicable if the app is in\
+            \ the \"force-quit\" state (i.e app was swiped away). Omit the contents\
+            \ field to prevent displaying a visible notification.\n"
+          nullable: true
+          type: boolean
+          writeOnly: true
+        mutable_content:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+\nAlways defaults\
+            \ to true and cannot be turned off. Allows tracking of notification receives\
+            \ and changing of the notification content in your app before it is displayed.\
+            \ Triggers didReceive(_:withContentHandler:) on your UNNotificationServiceExtension.\n"
+          type: boolean
+          writeOnly: true
+        target_content_identifier:
+          description: "Channel: Push Notifications\nPlatform: iOS 13+\nUse to target\
+            \ a specific experience in your App Clip, or to target your notification\
+            \ to a specific window in a multi-scene App.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        big_picture:
+          description: "Channel: Push Notifications\nPlatform: Android\nPicture to\
+            \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_big_picture:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nPicture to\
+            \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        adm_big_picture:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nPicture to\
+            \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        chrome_big_picture:
+          description: "Channel: Push Notifications\nPlatform: ChromeApp\nLarge picture\
+            \ to display below the notification text. Must be a local URL.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        chrome_web_image:
+          description: "Channel: Push Notifications\nPlatform: Chrome 56+\nSets the\
+            \ web push notification's large image to be shown below the notification's\
+            \ title and text. Please see Web Push Notification Icons.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        buttons:
+          description: "Channel: Push Notifications\nPlatform: iOS 8.0+, Android 4.1+,\
+            \ and derivatives like Amazon Buttons to add to the notification. Icon\
+            \ only works for Android.\nButtons show in reverse order of array position\
+            \ i.e. Last item in array shows as first button on device.\nExample: [{\"\
+            id\": \"id2\", \"text\": \"second button\", \"icon\": \"ic_menu_share\"\
+            }, {\"id\": \"id1\", \"text\": \"first button\", \"icon\": \"ic_menu_send\"\
+            }]\n"
+          items:
+            $ref: '#/components/schemas/Button'
+          nullable: true
+          type: array
+          writeOnly: true
+        web_buttons:
+          description: "Channel: Push Notifications\nPlatform: Chrome 48+\nAdd action\
+            \ buttons to the notification. The id field is required.\nExample: [{\"\
+            id\": \"like-button\", \"text\": \"Like\", \"icon\": \"http://i.imgur.com/N8SN8ZS.png\"\
+            , \"url\": \"https://yoursite.com\"}, {\"id\": \"read-more-button\", \"\
+            text\": \"Read more\", \"icon\": \"http://i.imgur.com/MIxJp1L.png\", \"\
+            url\": \"https://yoursite.com\"}]\n"
+          items:
+            $ref: '#/components/schemas/WebButton'
+          nullable: true
+          type: array
+          writeOnly: true
+        ios_category:
+          description: "Channel: Push Notifications\nPlatform: iOS\nCategory APS payload,\
+            \ use with registerUserNotificationSettings:categories in your Objective-C\
+            \ / Swift code.\nExample: calendar category which contains actions like\
+            \ accept and decline\niOS 10+ This will trigger your UNNotificationContentExtension\
+            \ whose ID matches this category.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Android\nThe Android\
+            \ Oreo Notification Category to send the notification under. See the Category\
+            \ documentation on creating one and getting it's id.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nThe Android\
+            \ Oreo Notification Category to send the notification under. See the Category\
+            \ documentation on creating one and getting it's id.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        existing_android_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Android\nUse this if\
+            \ you have client side Android Oreo Channels you have already defined\
+            \ in your app with code.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_existing_channel_id:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nUse this if\
+            \ you have client side Android Oreo Channels you have already defined\
+            \ in your app with code.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_background_layout:
+          $ref: '#/components/schemas/BasicNotification_allOf_android_background_layout'
+        small_icon:
+          description: "Channel: Push Notifications\nPlatform: Android\nIcon shown\
+            \ in the status bar and on the top left of the notification.\nIf not set\
+            \ a bell icon will be used or ic_stat_onesignal_default if you have set\
+            \ this resource name.\nSee: How to create small icons\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_small_icon:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nIcon shown\
+            \ in the status bar and on the top left of the notification.\nUse an Android\
+            \ resource path (E.g. /drawable/small_icon).\nDefaults to your app icon\
+            \ if not set.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        large_icon:
+          description: "Channel: Push Notifications\nPlatform: Android\nCan be a drawable\
+            \ resource name or a URL.\nSee: How to create large icons\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_large_icon:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nCan be a drawable\
+            \ resource name or a URL.\nSee: How to create large icons\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        adm_small_icon:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nIf not set\
+            \ a bell icon will be used or ic_stat_onesignal_default if you have set\
+            \ this resource name.\nSee: How to create small icons\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        adm_large_icon:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nIf blank the\
+            \ small_icon is used. Can be a drawable resource name or a URL.\nSee:\
+            \ How to create large icons\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        chrome_web_icon:
+          description: "Channel: Push Notifications\nPlatform: Chrome\nSets the web\
+            \ push notification's icon. An image URL linking to a valid image. Common\
+            \ image types are supported; GIF will not animate. We recommend 256x256\
+            \ (at least 80x80) to display well on high DPI devices. Firefox will also\
+            \ use this icon, unless you specify firefox_icon.\n"
+          nullable: true
+          type: string
+        chrome_web_badge:
+          description: "Channel: Push Notifications\nPlatform: Chrome\nSets the web\
+            \ push notification icon for Android devices in the notification shade.\
+            \ Please see Web Push Notification Badge.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        firefox_icon:
+          description: "Channel: Push Notifications\nPlatform: Firefox\nNot recommended\
+            \ Few people need to set Firefox-specific icons. We recommend setting\
+            \ chrome_web_icon instead, which Firefox will also use.\nSets the web\
+            \ push notification's icon for Firefox. An image URL linking to a valid\
+            \ image. Common image types are supported; GIF will not animate. We recommend\
+            \ 256x256 (at least 80x80) to display well on high DPI devices.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        chrome_icon:
+          description: "Channel: Push Notifications\nPlatform: ChromeApp\nThis flag\
+            \ is not used for web push For web push, please see chrome_web_icon instead.\n\
+            The local URL to an icon to use. If blank, the app icon will be used.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        ios_sound:
+          description: "Channel: Push Notifications\nPlatform: iOS\nSound file that\
+            \ is included in your app to play instead of the default device notification\
+            \ sound. Pass nil to disable vibration and sound for the notification.\n\
+            Example: \"notification.wav\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_sound:
+          description: "Channel: Push Notifications\nPlatform: Android\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\nSound file that is included in your app to\
+            \ play instead of the default device notification sound. Pass nil to disable\
+            \ sound for the notification.\nNOTE: Leave off file extension for Android.\n\
+            Example: \"notification\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_sound:
+          description: "Channel: Push Notifications\nPlatform: Huawei\n&#9888;&#65039;Deprecated,\
+            \ this field ONLY works on EMUI 5 (Android 7 based) and older devices.\n\
+            Please also set Notification Categories / Channels noted above to support\
+            \ EMUI 8 (Android 8 based) devices.\nSound file that is included in your\
+            \ app to play instead of the default device notification sound. NOTE:\
+            \ Leave off file extension for and include the full path.\n\nExample:\
+            \ \"/res/raw/notification\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        adm_sound:
+          description: "Channel: Push Notifications\nPlatform: Amazon\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\nSound file that is included in your app to\
+            \ play instead of the default device notification sound. Pass nil to disable\
+            \ sound for the notification.\nNOTE: Leave off file extension for Android.\n\
+            Example: \"notification\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        wp_wns_sound:
+          description: "Channel: Push Notifications\nPlatform: Windows\nSound file\
+            \ that is included in your app to play instead of the default device notification\
+            \ sound.\nExample: \"notification.wav\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_led_color:
+          description: "Channel: Push Notifications\nPlatform: Android\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\nSets the devices LED notification light if\
+            \ the device has one. ARGB Hex format.\nExample(Blue): \"FF0000FF\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_led_color:
+          description: "Channel: Push Notifications\nPlatform: Huawei\n&#9888;&#65039;Deprecated,\
+            \ this field ONLY works on EMUI 5 (Android 7 based) and older devices.\n\
+            Please also set Notification Categories / Channels noted above to support\
+            \ EMUI 8 (Android 8 based) devices.\nSets the devices LED notification\
+            \ light if the device has one. RGB Hex format.\nExample(Blue): \"0000FF\"\
+            \n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_accent_color:
+          description: "Channel: Push Notifications\nPlatform: Android\nSets the background\
+            \ color of the notification circle to the left of the notification text.\
+            \ Only applies to apps targeting Android API level 21+ on Android 5.0+\
+            \ devices.\nExample(Red): \"FFFF0000\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_accent_color:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nAccent Color\
+            \ used on Action Buttons and Group overflow count.\nUses RGB Hex value\
+            \ (E.g. #9900FF).\nDefaults to device's theme color if not set.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_visibility:
+          description: "Channel: Push Notifications\nPlatform: Android 5.0_\n&#9888;&#65039;Deprecated,\
+            \ this field doesn't work on Android 8 (Oreo) and newer devices!\nPlease\
+            \ use Notification Categories / Channels noted above instead to support\
+            \ ALL versions of Android.\n1 = Public (default) (Shows the full message\
+            \ on the lock screen unless the user has disabled all notifications from\
+            \ showing on the lock screen. Please consider the user and mark private\
+            \ if the contents are.)\n0 = Private (Hides message contents on lock screen\
+            \ if the user set \"Hide sensitive notification content\" in the system\
+            \ settings)\n-1 = Secret (Notification does not show on the lock screen\
+            \ at all)\n"
+          nullable: true
+          type: integer
+          writeOnly: true
+        huawei_visibility:
+          description: "Channel: Push Notifications\nPlatform: Huawei\n&#9888;&#65039;Deprecated,\
+            \ this field ONLY works on EMUI 5 (Android 7 based) and older devices.\n\
+            Please also set Notification Categories / Channels noted above to support\
+            \ EMUI 8 (Android 8 based) devices.\n1 = Public (default) (Shows the full\
+            \ message on the lock screen unless the user has disabled all notifications\
+            \ from showing on the lock screen. Please consider the user and mark private\
+            \ if the contents are.)\n0 = Private (Hides message contents on lock screen\
+            \ if the user set \"Hide sensitive notification content\" in the system\
+            \ settings)\n-1 = Secret (Notification does not show on the lock screen\
+            \ at all)\n"
+          nullable: true
+          type: integer
+          writeOnly: true
+        ios_badgeType:
+          description: "Channel: Push Notifications\nPlatform: iOS\nDescribes whether\
+            \ to set or increase/decrease your app's iOS badge count by the ios_badgeCount\
+            \ specified count. Can specify None, SetTo, or Increase.\n`None` leaves\
+            \ the count unaffected.\n`SetTo` directly sets the badge count to the\
+            \ number specified in ios_badgeCount.\n`Increase` adds the number specified\
+            \ in ios_badgeCount to the total. Use a negative number to decrease the\
+            \ badge count.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        ios_badgeCount:
+          description: "Channel: Push Notifications\nPlatform: iOS\nUsed with ios_badgeType,\
+            \ describes the value to set or amount to increase/decrease your app's\
+            \ iOS badge count by.\nYou can use a negative number to decrease the badge\
+            \ count when used with an ios_badgeType of Increase.\n"
+          nullable: true
+          type: integer
+          writeOnly: true
+        collapse_id:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+, Android\n\
+            Only one notification with the same id will be shown on the device. Use\
+            \ the same id to update an existing notification instead of showing a\
+            \ new one. Limit of 64 characters.\n"
+          type: string
+          writeOnly: true
+        web_push_topic:
+          description: "Channel: Push Notifications\nPlatform: All Browsers\nDisplay\
+            \ multiple notifications at once with different topics.\n"
+          nullable: true
+          type: string
+        apns_alert:
+          description: "Channel: Push Notifications\nPlatform: iOS 10+\niOS can localize\
+            \ push notification messages on the client using special parameters such\
+            \ as loc-key. When using the Create Notification endpoint, you must include\
+            \ these parameters inside of a field called apns_alert. Please see Apple's\
+            \ guide on localizing push notifications to learn more.\n"
+          nullable: true
+          type: object
+          writeOnly: true
+        delayed_option:
+          description: "Channel: All\nPossible values are:\ntimezone (Deliver at a\
+            \ specific time-of-day in each users own timezone)\nlast-active Same as\
+            \ Intelligent Delivery . (Deliver at the same time of day as each user\
+            \ last used your app).\nIf send_after is used, this takes effect after\
+            \ the send_after time has elapsed.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        delivery_time_of_day:
+          description: "Channel: All\nUse with delayed_option=timezone.\nExamples:\
+            \ \"9:00AM\"\n\"21:45\"\n\"9:45:30\"\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        ttl:
+          description: "Channel: Push Notifications\nPlatform: iOS, Android, Chrome,\
+            \ Firefox, Safari, ChromeWeb\nTime To Live - In seconds. The notification\
+            \ will be expired if the device does not come back online within this\
+            \ time. The default is 259,200 seconds (3 days).\nMax value to set is\
+            \ 2419200 seconds (28 days).\n"
+          nullable: true
+          type: integer
+          writeOnly: true
+        priority:
+          description: "Channel: Push Notifications\nPlatform: Android, Chrome, ChromeWeb\n\
+            Delivery priority through the push server (example GCM/FCM). Pass 10 for\
+            \ high priority or any other integer for normal priority. Defaults to\
+            \ normal priority for Android and high for iOS. For Android 6.0+ devices\
+            \ setting priority to high will wake the device out of doze mode.\n"
+          nullable: true
+          type: integer
+          writeOnly: true
+        apns_push_type_override:
+          description: "Channel: Push Notifications\nPlatform: iOS\nvalid values:\
+            \ voip\nSet the value to voip for sending VoIP Notifications\nThis field\
+            \ maps to the APNS header apns-push-type.\nNote: alert and background\
+            \ are automatically set by OneSignal\n"
+          type: string
+          writeOnly: true
+        throttle_rate_per_minute:
+          description: "Channel: All\nApps with throttling enabled:\n  - the parameter\
+            \ value will be used to override the default application throttling value\
+            \ set from the dashboard settings.\n  - parameter value 0 indicates not\
+            \ to apply throttling to the notification.\n  - if the parameter is not\
+            \ passed then the default app throttling value will be applied to the\
+            \ notification.\nApps with throttling disabled:\n  - this parameter can\
+            \ be used to throttle delivery for the notification even though throttling\
+            \ is not enabled at the application level.\nRefer to throttling for more\
+            \ details.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_group:
+          description: "Channel: Push Notifications\nPlatform: Android\nNotifications\
+            \ with the same group will be stacked together using Android's Notification\
+            \ Grouping feature.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        android_group_message:
+          description: "Channel: Push Notifications\nPlatform: Android\nNote: This\
+            \ only works for Android 6 and older. Android 7+ allows full expansion\
+            \ of all message.\nSummary message to display when 2+ notifications are\
+            \ stacked together. Default is \"# new messages\". Include $[notif_count]\
+            \ in your message and it will be replaced with the current number.\nLanguages\
+            \ - The value of each key is the message that will be sent to users for\
+            \ that language. \"en\" (English) is required. The key of each hash is\
+            \ either a a 2 character language code or one of zh-Hans/zh-Hant for Simplified\
+            \ or Traditional Chinese. Read more: supported languages.\nExample: {\"\
+            en\": \"You have $[notif_count] new messages\"}\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        adm_group:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nNotifications\
+            \ with the same group will be stacked together using Android's Notification\
+            \ Grouping feature.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        adm_group_message:
+          description: "Channel: Push Notifications\nPlatform: Amazon\nSummary message\
+            \ to display when 2+ notifications are stacked together. Default is \"\
+            # new messages\". Include $[notif_count] in your message and it will be\
+            \ replaced with the current number. \"en\" (English) is required. The\
+            \ key of each hash is either a a 2 character language code or one of zh-Hans/zh-Hant\
+            \ for Simplified or Traditional Chinese. The value of each key is the\
+            \ message that will be sent to users for that language.\nExample: {\"\
+            en\": \"You have $[notif_count] new messages\"}\n"
+          nullable: true
+          type: object
+          writeOnly: true
+        thread_id:
+          description: "Channel: Push Notifications\nPlatform: iOS 12+\nThis parameter\
+            \ is supported in iOS 12 and above. It allows you to group related notifications\
+            \ together.\nIf two notifications have the same thread-id, they will both\
+            \ be added to the same group.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        summary_arg:
+          description: "Channel: Push Notifications\nPlatform: iOS 12+\nWhen using\
+            \ thread_id to create grouped notifications in iOS 12+, you can also control\
+            \ the summary. For example, a grouped notification can say \"12 more notifications\
+            \ from John Doe\".\nThe summary_arg lets you set the name of the person/thing\
+            \ the notifications are coming from, and will show up as \"X more notifications\
+            \ from summary_arg\"\n"
+          type: string
+          writeOnly: true
+        summary_arg_count:
+          description: "Channel: Push Notifications\nPlatform: iOS 12+\nWhen using\
+            \ thread_id, you can also control the count of the number of notifications\
+            \ in the group. For example, if the group already has 12 notifications,\
+            \ and you send a new notification with summary_arg_count = 2, the new\
+            \ total will be 14 and the summary will be \"14 more notifications from\
+            \ summary_arg\"\n"
+          type: integer
+          writeOnly: true
+        ios_relevance_score:
+          description: "Channel: Push Notifications\nPlatform: iOS 15+\nA score to\
+            \ be set per notification to indicate how it should be displayed when\
+            \ grouped. Use a float between 0-1.\n"
+          nullable: true
+          type: number
+          writeOnly: true
+        ios_interruption_level:
+          description: "Channel: Push Notifications\nPlatform: iOS 15+\nFocus Modes\
+            \ and Interruption Levels indicate the priority and delivery timing of\
+            \ a notification, to \"interrupt\" the user.\nCan choose from options:\
+            \ ['active', 'passive', 'time_sensitive', 'critical']. Default is active.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        email_subject:
+          description: "Channel: Email\nRequired.  The subject of the email.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        email_body:
+          description: "Channel: Email\nRequired unless template_id is set.\nHTML\
+            \ suported\nThe body of the email you wish to send. Typically, customers\
+            \ include their own HTML templates here. Must include [unsubscribe_url]\
+            \ in an <a> tag somewhere in the email.\nNote: any malformed HTML content\
+            \ will be sent to users. Please double-check your HTML is valid.\n"
+          type: string
+          writeOnly: true
+        email_from_name:
+          description: "Channel: Email\nThe name the email is from. If not specified,\
+            \ will default to \"from name\" set in the OneSignal Dashboard Email Settings.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        email_from_address:
+          description: "Channel: Email\nThe email address the email is from. If not\
+            \ specified, will default to \"from email\" set in the OneSignal Dashboard\
+            \ Email Settings.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        email_reply_to_address:
+          description: "Channel: Email\nThe email address where replies should be\
+            \ sent. If not specified, replies will go to the from address.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        email_preheader:
+          description: "Channel: Email\nThe preheader text of the email.\nPreheader\
+            \ is the preview text displayed immediately after an email subject that\
+            \ provides additional context about the email content.\nIf not specified,\
+            \ will default to null.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        disable_email_click_tracking:
+          description: "Channel: Email\nDefault is `false`. If set to `true`, the\
+            \ URLs sent within the email will not include link tracking and will be\
+            \ the same as originally set; otherwise, all the URLs in the email will\
+            \ be tracked."
+          nullable: true
+          type: boolean
+          writeOnly: true
+        include_unsubscribed:
+          description: "Channel: Email\nDefault is `false`. This field is used to\
+            \ send transactional notifications. If set to `true`, this notification\
+            \ will also be sent to unsubscribed emails. If a `template_id` is provided,\
+            \ the `include_unsubscribed` value from the template will be inherited.\
+            \ If you are using a third-party ESP, this field requires the ESP's list\
+            \ of unsubscribed emails to be cleared."
+          type: boolean
+          writeOnly: true
+        email_bcc:
+          description: "Channel: Email\nBCC recipients for the email. Maximum 5 addresses.\
+            \ Only supported when the email service provider is OneSignal Email.\n"
+          items:
+            type: string
+          maxItems: 5
+          nullable: true
+          type: array
+          writeOnly: true
+        email_sender_domain:
+          description: "Channel: Email\nSender domain to use for the email message.\
+            \ Overrides the default sender domain configured for the app. Only supported\
+            \ when the email service provider is OneSignal Email.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        sms_from:
+          description: "Channel: SMS\nPhone Number used to send SMS. Should be a registered\
+            \ Twilio phone number in E.164 format.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        sms_media_urls:
+          description: "Channel: SMS\nURLs for the media files to be attached to the\
+            \ SMS content.\nLimit: 10 media urls with a total max. size of 5MBs.\n"
+          items:
+            type: string
+          nullable: true
+          type: array
+          writeOnly: true
+        filters:
+          items:
+            $ref: '#/components/schemas/FilterExpression'
+          nullable: true
+          type: array
+        custom_data:
+          description: "Channel: All\nJSON object that can be used as a source of\
+            \ message personalization data for fields that support tag variable substitution.\n\
+            Push, SMS: Can accept up to 2048 bytes of valid JSON. Email: Can accept\
+            \ up to 10000 bytes of valid JSON.\nExample: {\"order_id\": 123, \"currency\"\
+            : \"USD\", \"amount\": 25}\n"
+          nullable: true
+          type: object
+          writeOnly: true
+        huawei_badge_class:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nFull path of\
+            \ the app entry activity class"
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_badge_add_num:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nAccumulative\
+            \ badge number, which is an integer ranging from 1 to 99"
+          nullable: true
+          type: integer
+          writeOnly: true
+        huawei_badge_set_num:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nBadge number,\
+            \ which is an integer ranging from 0 to 99"
+          nullable: true
+          type: integer
+          writeOnly: true
+        huawei_category:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nCategory of\
+            \ the push notification for HMS classification."
+          enum:
+          - IM
+          - VOIP
+          - SUBSCRIPTION
+          - TRAVEL
+          - HEALTH
+          - WORK
+          - ACCOUNT
+          - EXPRESS
+          - FINANCE
+          - DEVICE_REMINDER
+          - MAIL
+          - MARKETING
+          nullable: true
+          type: string
+          writeOnly: true
+        huawei_bi_tag:
+          description: "Channel: Push Notifications\nPlatform: Huawei\nA tag used\
+            \ for Huawei business intelligence and analytics."
+          nullable: true
+          type: string
+          writeOnly: true
+      type: object
+    Notification_allOf:
+      properties:
+        send_after:
+          description: "Channel: All\nSchedule notification for future delivery. API\
+            \ defaults to UTC -1100\nExamples: All examples are the exact same date\
+            \ & time.\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (PDT)\"\n\"September 24th\
+            \ 2015, 2:00:00 pm UTC-07:00\"\n\"2015-09-24 14:00:00 GMT-0700\"\n\"Sept\
+            \ 24 2015 14:00:00 GMT-0700\"\n\"Thu Sep 24 2015 14:00:00 GMT-0700 (Pacific\
+            \ Daylight Time)\"\nNote: SMS currently only supports send_after parameter.\n"
+          format: date-time
+          nullable: true
+          type: string
+          writeOnly: true
+      type: object
+    NotificationWithMeta_allOf:
+      properties:
+        remaining:
+          description: Number of notifications that have not been sent out yet. This
+            can mean either our system is still processing the notification or you
+            have delayed options set.
+          type: integer
+        successful:
+          description: Number of notifications that were successfully delivered.
+          type: integer
+        failed:
+          description: Number of notifications that could not be delivered due to
+            those devices being unsubscribed.
+          type: integer
+        errored:
+          description: Number of notifications that could not be delivered due to
+            an error. You can find more information by viewing the notification in
+            the dashboard.
+          type: integer
+        converted:
+          description: Number of users who have clicked / tapped on your notification.
+          type: integer
+        queued_at:
+          description: Unix timestamp indicating when the notification was created.
+          format: int64
+          type: integer
+        send_after:
+          description: Unix timestamp indicating when notification delivery should
+            begin.
+          format: int64
+          nullable: true
+          type: integer
+        completed_at:
+          description: Unix timestamp indicating when notification delivery completed.
+            The delivery duration from start to finish can be calculated with completed_at
+            - send_after.
+          format: int64
+          nullable: true
+          type: integer
+        platform_delivery_stats:
+          $ref: '#/components/schemas/PlatformDeliveryData'
+        received:
+          description: Confirmed Deliveries number of devices that received the push
+            notification. Paid Feature Only. Free accounts will see 0.
+          nullable: true
+          type: integer
+        throttle_rate_per_minute:
+          description: "number of push notifications sent per minute. Paid Feature\
+            \ Only. If throttling is not enabled for the app or the notification,\
+            \ and for free accounts, null is returned. Refer to Throttling for more\
+            \ details."
+          nullable: true
+          type: integer
+        canceled:
+          description: Indicates whether the notification was canceled before it could
+            be sent.
+          type: boolean
+        email_bcc:
+          description: BCC recipients that were set on this email notification.
+          items:
+            type: string
+          nullable: true
+          type: array
+        bcc_sent:
+          description: Number of BCC copies successfully sent for this notification.
+          nullable: true
+          type: integer
+      type: object
+    PlatformDeliveryData_sms_allOf:
+      properties:
+        provider_successful:
+          description: Number of messages reported as delivered successfully by the
+            SMS service provider.
+          nullable: true
+          type: integer
+        provider_failed:
+          description: Number of recipients who didn't receive your message as reported
+            by the SMS service provider.
+          nullable: true
+          type: integer
+        provider_errored:
+          description: Number of errors reported by the SMS service provider.
+          nullable: true
+          type: integer
+    PlatformDeliveryData_email_allOf:
+      properties:
+        opened:
+          description: Number of times an email has been opened.
+          nullable: true
+          type: integer
+        unique_opens:
+          description: Number of unique recipients who have opened your email.
+          nullable: true
+          type: integer
+        clicks:
+          description: Number of clicked links from your email. This can include the
+            recipient clicking email links multiple times.
+          nullable: true
+          type: integer
+        unique_clicks:
+          description: Number of unique clicks that your recipients have made on links
+            from your email.
+          nullable: true
+          type: integer
+        bounced:
+          description: Number of recipients who registered as a hard or soft bounce
+            and didn't receive your email.
+          nullable: true
+          type: integer
+        reported_spam:
+          description: Number of recipients who reported this email as spam.
+          nullable: true
+          type: integer
+        unsubscribed:
+          description: Number of recipients who opted out of your emails using the
+            unsubscribe link in this email.
+          nullable: true
+          type: integer
+    CreateUserConflictResponse_errorsItems_meta:
+      properties:
+        conflicting_aliases:
+          type: object
+      type: object
+    CreateUserConflictResponse_errors_inner:
+      properties:
+        code:
+          type: string
+        title:
+          type: string
+        meta:
+          $ref: '#/components/schemas/CreateUserConflictResponse_errorsItems_meta'
+      type: object
+  securitySchemes:
+    rest_api_key:
+      scheme: bearer
+      type: http
+    organization_api_key:
+      scheme: bearer
+      type: http
