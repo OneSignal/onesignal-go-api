@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.6.0
+API version: 5.7.0
 Contact: devrel@onesignal.com
 */
 
@@ -29,6 +29,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -42,7 +43,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the OneSignal API v5.6.0
+// APIClient manages communication with the OneSignal API v5.7.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -324,7 +325,7 @@ func (c *APIClient) prepareRequest(
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
 
     // Add the SDK version to OS-Usage header for telemetry
-    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=5.6.0")
+    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=5.7.0")
 
 	if ctx != nil {
 		// add context to the request
@@ -566,4 +567,82 @@ func (e GenericOpenAPIError) Body() []byte {
 // Model returns the unpacked model of the error
 func (e GenericOpenAPIError) Model() interface{} {
 	return e.model
+}
+
+// ErrorMessages returns the error messages carried by the response body,
+// normalized to a flat string slice regardless of which envelope shape the API
+// returned (`{"errors": "..."}`, `{"errors": ["..."]}`,
+// `{"errors": [{"code": ..., "title": ...}]}`, or an object map such as
+// `{"errors": {"invalid_aliases": {...}}}`, surfaced as `"<key>: <value>"`
+// entries). It returns an empty slice when the body is not a recognizable error
+// envelope. The raw body remains available via Body().
+func (e GenericOpenAPIError) ErrorMessages() []string {
+	messages := []string{}
+	if len(e.body) == 0 {
+		return messages
+	}
+
+	var envelope struct {
+		Errors json.RawMessage `json:"errors"`
+	}
+	if err := json.Unmarshal(e.body, &envelope); err != nil || len(envelope.Errors) == 0 {
+		return messages
+	}
+	if string(envelope.Errors) == "null" {
+		return messages
+	}
+
+	var asString string
+	if err := json.Unmarshal(envelope.Errors, &asString); err == nil {
+		return []string{asString}
+	}
+
+	var items []json.RawMessage
+	if err := json.Unmarshal(envelope.Errors, &items); err == nil {
+		for _, item := range items {
+			if string(item) == "null" {
+				continue
+			}
+			var itemString string
+			if err := json.Unmarshal(item, &itemString); err == nil {
+				messages = append(messages, itemString)
+				continue
+			}
+			var itemObject struct {
+				Code  interface{} `json:"code"`
+				Title interface{} `json:"title"`
+			}
+			if err := json.Unmarshal(item, &itemObject); err != nil {
+				continue
+			}
+			if title, ok := itemObject.Title.(string); ok && title != "" {
+				messages = append(messages, title)
+			} else if itemObject.Code != nil {
+				messages = append(messages, fmt.Sprintf("%v", itemObject.Code))
+			}
+		}
+		return messages
+	}
+
+	// Object-shaped envelopes (e.g. {"invalid_aliases": {...}}) carry data under
+	// arbitrary keys; surface each so it isn't silently dropped. Map iteration
+	// order is unspecified, so sort for deterministic output.
+	var asObject map[string]json.RawMessage
+	if err := json.Unmarshal(envelope.Errors, &asObject); err == nil {
+		for key, value := range asObject {
+			var valueString string
+			if err := json.Unmarshal(value, &valueString); err == nil {
+				messages = append(messages, fmt.Sprintf("%s: %s", key, valueString))
+				continue
+			}
+			var compact bytes.Buffer
+			if err := json.Compact(&compact, value); err == nil {
+				messages = append(messages, fmt.Sprintf("%s: %s", key, compact.String()))
+			} else {
+				messages = append(messages, fmt.Sprintf("%s: %s", key, string(value)))
+			}
+		}
+		sort.Strings(messages)
+	}
+	return messages
 }

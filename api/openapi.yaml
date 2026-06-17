@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.6.0
+  version: 5.7.0
 servers:
 - url: https://api.onesignal.com
 paths:
