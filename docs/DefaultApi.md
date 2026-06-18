@@ -62,9 +62,18 @@ Every operation requires either a **REST API Key** (App-scoped, used by ~77% of 
 
 `POST /notifications` accepts a top-level `idempotency_key` (UUIDv4) that the server uses for request dedup within a **30-day window**. Pass a freshly-generated UUID per logical send so that network-level retries are safe. Never reuse a key across distinct sends — the server returns the original response instead of acting on the new payload. The hero `CreateNotification` example below demonstrates the call.
 
+Prefer the bundled `CreateNotificationWithRetry` helper over wiring this up by hand: it generates the key when absent (a caller-provided key is respected), retries 429 / 503 / transport errors with the **same** key (honoring `Retry-After`, exponential backoff otherwise; `MaxRetries` / `BaseDelay` configurable via the options struct), fails fast on other errors, and reports via `WasReplayed` whether the server answered from a previously completed request (`Idempotent-Replayed` response header). It is available as a `DefaultApi` method so the call mirrors `CreateNotification`:
+
+```go
+result, err := apiClient.DefaultApi.CreateNotificationWithRetry(context.Background(), *notification, nil)
+if err == nil {
+    fmt.Printf("%s replayed=%v\n", result.Response.GetId(), result.WasReplayed)
+}
+```
+
 ### Error handling
 
-When a request fails, the call returns a non-nil `err`. The raw `*http.Response` (the second return value, conventionally `r`) is non-nil only when the failure occurred AFTER the HTTP round-trip completed — for pre-roundtrip failures (URL build, missing required parameter, prepareRequest error, transport errors like DNS/timeout/TLS) `r` is `nil`. Always nil-check `r` before reading `r.StatusCode` (int). For the parsed error body, type-assert `err` to `*onesignal.GenericOpenAPIError` (pointer — the SDK constructs every error as `&GenericOpenAPIError{...}`, so a value-type assertion silently returns `ok=false`) and call `apiErr.Body()` (returns `[]byte`, the raw JSON envelope). Most envelopes match `{ "errors": ["..."] }` (an array of strings) but a few endpoints return `{ "errors": [{"code": ..., "title": ..., "meta": {...}}] }` (an array of structured error objects — used by `POST /apps/{app_id}/users` 409 conflict, see `CreateUserConflictResponse`), `{ "errors": "..." }` (string), or `{ "success": false }` (no `errors` field at all). Robust error-handling code should tolerate all four shapes.
+When a request fails, the call returns a non-nil `err`. The raw `*http.Response` (the second return value, conventionally `r`) is non-nil only when the failure occurred AFTER the HTTP round-trip completed — for pre-roundtrip failures (URL build, missing required parameter, prepareRequest error, transport errors like DNS/timeout/TLS) `r` is `nil`. Always nil-check `r` before reading `r.StatusCode` (int). For the parsed error body, type-assert `err` to `*onesignal.GenericOpenAPIError` (pointer — the SDK constructs every error as `&GenericOpenAPIError{...}`, so a value-type assertion silently returns `ok=false`) and call `apiErr.Body()` (returns `[]byte`, the raw JSON envelope). Most envelopes match `{ "errors": ["..."] }` (an array of strings) but a few endpoints return `{ "errors": [{"code": ..., "title": ..., "meta": {...}}] }` (an array of structured error objects — used by `POST /apps/{app_id}/users` 409 conflict, see `CreateUserConflictResponse`), `{ "errors": "..." }` (string), or `{ "success": false }` (no `errors` field at all). Robust error-handling code should tolerate all four shapes. The `apiErr.ErrorMessages()` method does this for you, normalizing every shape to a flat `[]string` (empty when the body carries no `errors`). To branch on a specific error without hard-coding message strings, test membership against the generated [`OneSignalErrors`](https://github.com/OneSignal/onesignal-go-api/blob/main/error_catalog.go) catalog — e.g. check whether `apiErr.ErrorMessages()` contains `onesignal.NO_TARGETING_SPECIFIED`.
 
 ### Polymorphic 200 from POST /notifications
 
@@ -119,6 +128,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CancelNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -199,6 +211,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CopyTemplateToApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -281,6 +296,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateAlias``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -365,6 +383,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateAliasBySubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -446,6 +467,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -524,6 +548,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -598,6 +625,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateCustomEvents``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -707,6 +737,50 @@ func main() {
 }
 ```
 
+#### Using `CreateNotificationWithRetry` (preferred for safe, idempotent retries)
+
+The `CreateNotificationWithRetry` method mirrors `CreateNotification` but generates the `IdempotencyKey` for you, transparently retries transient failures (HTTP 429 / 503 / transport errors) with the **same** key, and reports via `WasReplayed` whether the server answered from a previously-completed request.
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api"
+)
+
+func main() {
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY")
+
+    notification := onesignal.NewNotification("YOUR_APP_ID")
+    contents := onesignal.NewLanguageStringMap()
+    contents.SetEn("Hello from OneSignal!")
+    notification.SetContents(*contents)
+    notification.SetIncludeAliases(map[string][]string{"external_id": {"YOUR_USER_EXTERNAL_ID"}})
+    notification.SetTargetChannel("push")
+    // No idempotency key set: the helper generates a UUIDv4 and reuses it across retries.
+
+    // opts is optional — pass nil for defaults (3 retries, 1s backoff base).
+    opts := &onesignal.CreateNotificationWithRetryOptions{MaxRetries: 5}
+    result, err := apiClient.DefaultApi.CreateNotificationWithRetry(restAuth, *notification, opts)
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "CreateNotificationWithRetry failed: %v\n", err)
+        return
+    }
+    if result.WasReplayed {
+        fmt.Fprintf(os.Stdout, "Server replayed a prior send (no duplicate): %s\n", result.Response.GetId())
+    } else {
+        fmt.Fprintf(os.Stdout, "Notification created: %s\n", result.Response.GetId())
+    }
+}
+```
+
 ### Path Parameters
 
 
@@ -773,6 +847,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSegment``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -854,6 +931,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -936,6 +1016,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1010,11 +1093,28 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
     // response from `CreateUser`: User
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateUser`: %v\n", resp)
+}
+```
+
+### Reading the 409 conflict metadata
+
+A `409` from this endpoint deserializes to `CreateUserConflictResponse`. `ErrorMessages()` flattens each error to its `title`/`code` and omits the structured `meta` object (currently `conflicting_aliases`); read it from the typed model via `Model()`:
+
+```go
+if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+    if conflict, ok := apiErr.Model().(onesignal.CreateUserConflictResponse); ok {
+        for _, e := range conflict.GetErrors() {
+            fmt.Println(e.GetTitle(), e.GetMeta().GetConflictingAliases())
+        }
+    }
 }
 ```
 
@@ -1091,6 +1191,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteAlias``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1175,6 +1278,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1255,6 +1361,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSegment``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1335,6 +1444,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1413,6 +1525,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1493,6 +1608,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1573,6 +1691,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportEvents``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1652,6 +1773,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportSubscriptions``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1732,6 +1856,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAliases``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1814,6 +1941,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAliasesBySubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1893,6 +2023,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -1969,6 +2102,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApps``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2039,6 +2175,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotification``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2118,6 +2257,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotificationHistory``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2199,6 +2341,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotifications``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2280,6 +2425,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetOutcomes``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2364,6 +2512,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSegments``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2445,6 +2596,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2527,6 +2681,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.RotateApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2608,6 +2765,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.StartLiveActivity``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2690,6 +2850,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TransferSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2772,6 +2935,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UnsubscribeEmailWithToken``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2854,6 +3020,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateApiKey``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -2935,6 +3104,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateApp``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3015,6 +3187,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateLiveActivity``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3097,6 +3272,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSubscription``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3178,6 +3356,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSubscriptionByToken``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3262,6 +3443,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3344,6 +3528,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3426,6 +3613,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewApiKeys``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3504,6 +3694,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewTemplate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
@@ -3585,6 +3778,9 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewTemplates``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
         if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
             fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
         }
     }
