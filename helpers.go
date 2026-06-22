@@ -117,6 +117,28 @@ func retryDelay(httpResp *http.Response, attempt int, baseDelay time.Duration) t
 	return baseDelay * (1 << uint(attempt))
 }
 
+// MessageSent and MessageNotSent name the two branches of a POST /notifications
+// 200 response, which share the CreateNotificationSuccessResponse shape:
+// MessageSent is the branch where a notification was created (non-empty Id);
+// MessageNotSent is the branch where none was (empty Id, with Errors carrying
+// the reason). Use the IsMessageSent / IsMessageNotSent guards to discriminate.
+type MessageSent = CreateNotificationSuccessResponse
+type MessageNotSent = CreateNotificationSuccessResponse
+
+// IsMessageSent reports whether a POST /notifications 200 response is the
+// "message sent" branch — a notification was created (Id is a non-empty
+// string). Prefer this over inspecting Id directly.
+func IsMessageSent(response *CreateNotificationSuccessResponse) bool {
+	return response != nil && response.GetId() != ""
+}
+
+// IsMessageNotSent reports whether a POST /notifications 200 response is the
+// "message not sent" branch — no notification was created (Id is absent or
+// empty); inspect Errors for why.
+func IsMessageNotSent(response *CreateNotificationSuccessResponse) bool {
+	return !IsMessageSent(response)
+}
+
 func newUUIDv4() (string, error) {
 	b := make([]byte, 16)
 	if _, err := rand.Read(b); err != nil {
