@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **TotalCount** | Pointer to **int32** |  | [optional] 
 **Offset** | Pointer to **int32** |  | [optional] 
 **Limit** | Pointer to **int32** |  | [optional] 
+**TimeOffset** | Pointer to **string** | The time_offset cursor specified in the request, if any. | [optional] 
+**NextTimeOffset** | Pointer to **string** | An opaque Base64 cursor token representing the next page of messages to fetch.  Present when time_offset was provided in the request.  Pass this value as time_offset on the next request to continue paginating. | [optional] 
 **Notifications** | Pointer to [**[]NotificationWithMeta**](NotificationWithMeta.md) |  | [optional] 
 
 ## Methods
@@ -102,6 +104,56 @@ SetLimit sets Limit field to given value.
 `func (o *NotificationSlice) HasLimit() bool`
 
 HasLimit returns a boolean if a field has been set.
+
+### GetTimeOffset
+
+`func (o *NotificationSlice) GetTimeOffset() string`
+
+GetTimeOffset returns the TimeOffset field if non-nil, zero value otherwise.
+
+### GetTimeOffsetOk
+
+`func (o *NotificationSlice) GetTimeOffsetOk() (*string, bool)`
+
+GetTimeOffsetOk returns a tuple with the TimeOffset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeOffset
+
+`func (o *NotificationSlice) SetTimeOffset(v string)`
+
+SetTimeOffset sets TimeOffset field to given value.
+
+### HasTimeOffset
+
+`func (o *NotificationSlice) HasTimeOffset() bool`
+
+HasTimeOffset returns a boolean if a field has been set.
+
+### GetNextTimeOffset
+
+`func (o *NotificationSlice) GetNextTimeOffset() string`
+
+GetNextTimeOffset returns the NextTimeOffset field if non-nil, zero value otherwise.
+
+### GetNextTimeOffsetOk
+
+`func (o *NotificationSlice) GetNextTimeOffsetOk() (*string, bool)`
+
+GetNextTimeOffsetOk returns a tuple with the NextTimeOffset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNextTimeOffset
+
+`func (o *NotificationSlice) SetNextTimeOffset(v string)`
+
+SetNextTimeOffset sets NextTimeOffset field to given value.
+
+### HasNextTimeOffset
+
+`func (o *NotificationSlice) HasNextTimeOffset() bool`
+
+HasNextTimeOffset returns a boolean if a field has been set.
 
 ### GetNotifications
 
