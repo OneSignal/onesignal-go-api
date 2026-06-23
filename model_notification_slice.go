@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.7.0
+API version: 5.8.0
 Contact: devrel@onesignal.com
 */
 
@@ -20,6 +20,10 @@ type NotificationSlice struct {
 	TotalCount *int32 `json:"total_count,omitempty"`
 	Offset *int32 `json:"offset,omitempty"`
 	Limit *int32 `json:"limit,omitempty"`
+	// The time_offset cursor specified in the request, if any.
+	TimeOffset *string `json:"time_offset,omitempty"`
+	// An opaque Base64 cursor token representing the next page of messages to fetch.  Present when time_offset was provided in the request.  Pass this value as time_offset on the next request to continue paginating.
+	NextTimeOffset *string `json:"next_time_offset,omitempty"`
 	Notifications []NotificationWithMeta `json:"notifications,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -139,6 +143,70 @@ func (o *NotificationSlice) SetLimit(v int32) {
 	o.Limit = &v
 }
 
+// GetTimeOffset returns the TimeOffset field value if set, zero value otherwise.
+func (o *NotificationSlice) GetTimeOffset() string {
+	if o == nil || o.TimeOffset == nil {
+		var ret string
+		return ret
+	}
+	return *o.TimeOffset
+}
+
+// GetTimeOffsetOk returns a tuple with the TimeOffset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotificationSlice) GetTimeOffsetOk() (*string, bool) {
+	if o == nil || o.TimeOffset == nil {
+		return nil, false
+	}
+	return o.TimeOffset, true
+}
+
+// HasTimeOffset returns a boolean if a field has been set.
+func (o *NotificationSlice) HasTimeOffset() bool {
+	if o != nil && o.TimeOffset != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeOffset gets a reference to the given string and assigns it to the TimeOffset field.
+func (o *NotificationSlice) SetTimeOffset(v string) {
+	o.TimeOffset = &v
+}
+
+// GetNextTimeOffset returns the NextTimeOffset field value if set, zero value otherwise.
+func (o *NotificationSlice) GetNextTimeOffset() string {
+	if o == nil || o.NextTimeOffset == nil {
+		var ret string
+		return ret
+	}
+	return *o.NextTimeOffset
+}
+
+// GetNextTimeOffsetOk returns a tuple with the NextTimeOffset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotificationSlice) GetNextTimeOffsetOk() (*string, bool) {
+	if o == nil || o.NextTimeOffset == nil {
+		return nil, false
+	}
+	return o.NextTimeOffset, true
+}
+
+// HasNextTimeOffset returns a boolean if a field has been set.
+func (o *NotificationSlice) HasNextTimeOffset() bool {
+	if o != nil && o.NextTimeOffset != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNextTimeOffset gets a reference to the given string and assigns it to the NextTimeOffset field.
+func (o *NotificationSlice) SetNextTimeOffset(v string) {
+	o.NextTimeOffset = &v
+}
+
 // GetNotifications returns the Notifications field value if set, zero value otherwise.
 func (o *NotificationSlice) GetNotifications() []NotificationWithMeta {
 	if o == nil || o.Notifications == nil {
@@ -182,6 +250,12 @@ func (o NotificationSlice) MarshalJSON() ([]byte, error) {
 	if o.Limit != nil {
 		toSerialize["limit"] = o.Limit
 	}
+	if o.TimeOffset != nil {
+		toSerialize["time_offset"] = o.TimeOffset
+	}
+	if o.NextTimeOffset != nil {
+		toSerialize["next_time_offset"] = o.NextTimeOffset
+	}
 	if o.Notifications != nil {
 		toSerialize["notifications"] = o.Notifications
 	}
@@ -206,6 +280,8 @@ func (o *NotificationSlice) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "total_count")
 		delete(additionalProperties, "offset")
 		delete(additionalProperties, "limit")
+		delete(additionalProperties, "time_offset")
+		delete(additionalProperties, "next_time_offset")
 		delete(additionalProperties, "notifications")
 		o.AdditionalProperties = additionalProperties
 	}
