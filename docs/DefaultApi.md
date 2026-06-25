@@ -110,7 +110,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -192,7 +192,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -276,7 +276,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -364,7 +364,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -449,7 +449,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -531,7 +531,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -607,7 +607,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -690,7 +690,7 @@ import (
     "os"
 
     "github.com/google/uuid"
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -749,7 +749,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -829,7 +829,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -911,7 +911,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -999,7 +999,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1075,7 +1075,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1112,7 +1112,8 @@ A `409` from this endpoint deserializes to `CreateUserConflictResponse`. `ErrorM
 if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
     if conflict, ok := apiErr.Model().(onesignal.CreateUserConflictResponse); ok {
         for _, e := range conflict.GetErrors() {
-            fmt.Println(e.GetTitle(), e.GetMeta().GetConflictingAliases())
+            meta := e.GetMeta()
+            fmt.Println(e.GetTitle(), meta.GetConflictingAliases())
         }
     }
 }
@@ -1171,7 +1172,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1260,7 +1261,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1343,7 +1344,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1426,7 +1427,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1438,7 +1439,7 @@ func main() {
 
     restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.DeleteSubscription(restAuth, appId, subscriptionId).Execute()
+    r, err := apiClient.DefaultApi.DeleteSubscription(restAuth, appId, subscriptionId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSubscription``: %v\n", err)
@@ -1507,7 +1508,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1589,7 +1590,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1602,7 +1603,7 @@ func main() {
 
     restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.DeleteUser(restAuth, appId, aliasLabel, aliasId).Execute()
+    r, err := apiClient.DefaultApi.DeleteUser(restAuth, appId, aliasLabel, aliasId).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteUser``: %v\n", err)
@@ -1673,7 +1674,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1755,7 +1756,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1837,7 +1838,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -1923,7 +1924,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2006,7 +2007,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2086,7 +2087,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2157,7 +2158,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2239,7 +2240,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2321,7 +2322,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2405,7 +2406,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2495,7 +2496,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2579,7 +2580,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2665,7 +2666,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2748,7 +2749,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2833,7 +2834,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -2918,7 +2919,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3003,7 +3004,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3088,7 +3089,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3170,7 +3171,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3255,7 +3256,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3268,7 +3269,7 @@ func main() {
 
     restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.UpdateSubscription(restAuth, appId, subscriptionId).SubscriptionBody(subscriptionBody).Execute()
+    r, err := apiClient.DefaultApi.UpdateSubscription(restAuth, appId, subscriptionId).SubscriptionBody(subscriptionBody).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSubscription``: %v\n", err)
@@ -3338,7 +3339,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3426,7 +3427,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3510,7 +3511,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3598,7 +3599,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3678,7 +3679,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {
@@ -3760,7 +3761,7 @@ import (
     "fmt"
     "os"
 
-    "github.com/OneSignal/onesignal-go-api"
+    "github.com/OneSignal/onesignal-go-api/v5"
 )
 
 func main() {

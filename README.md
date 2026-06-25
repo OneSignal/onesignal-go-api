@@ -21,7 +21,7 @@ Every SDK requires authentication via API keys. Two key types are available:
 > **Warning:** Store your API keys in environment variables or a secrets manager. Never commit them to source control.
 
 ```go
-import onesignal "github.com/OneSignal/onesignal-go-api"
+import onesignal "github.com/OneSignal/onesignal-go-api/v5"
 
 restAuth := context.WithValue(
     context.Background(),
@@ -42,14 +42,14 @@ apiClient := onesignal.NewAPIClient(onesignal.NewConfiguration())
 
 ```go
 notification := *onesignal.NewNotification("YOUR_APP_ID")
-notification.SetContents(onesignal.StringMap{En: onesignal.PtrString("Hello from OneSignal!")})
-notification.SetHeadings(onesignal.StringMap{En: onesignal.PtrString("Push Notification")})
+notification.SetContents(onesignal.LanguageStringMap{En: onesignal.PtrString("Hello from OneSignal!")})
+notification.SetHeadings(onesignal.LanguageStringMap{En: onesignal.PtrString("Push Notification")})
 notification.SetIncludedSegments([]string{"Subscribed Users"})
 
-response, _, err := apiClient.DefaultApi
-    .CreateNotification(orgAuth)
-    .Notification(notification)
-    .Execute()
+response, _, err := apiClient.DefaultApi.
+    CreateNotification(orgAuth).
+    Notification(notification).
+    Execute()
 
 if err != nil {
     log.Fatal(err)
@@ -64,27 +64,27 @@ notification := *onesignal.NewNotification("YOUR_APP_ID")
 notification.SetEmailSubject("Important Update")
 notification.SetEmailBody("<h1>Hello!</h1><p>This is an HTML email.</p>")
 notification.SetIncludedSegments([]string{"Subscribed Users"})
-notification.SetChannelForExternalUserIds("email")
+notification.SetTargetChannel("email")
 
-response, _, err := apiClient.DefaultApi
-    .CreateNotification(orgAuth)
-    .Notification(notification)
-    .Execute()
+response, _, err := apiClient.DefaultApi.
+    CreateNotification(orgAuth).
+    Notification(notification).
+    Execute()
 ```
 
 ## Send an SMS
 
 ```go
 notification := *onesignal.NewNotification("YOUR_APP_ID")
-notification.SetContents(onesignal.StringMap{En: onesignal.PtrString("Your SMS message content here")})
+notification.SetContents(onesignal.LanguageStringMap{En: onesignal.PtrString("Your SMS message content here")})
 notification.SetIncludedSegments([]string{"Subscribed Users"})
-notification.SetChannelForExternalUserIds("sms")
+notification.SetTargetChannel("sms")
 notification.SetSmsFrom("+15551234567")
 
-response, _, err := apiClient.DefaultApi
-    .CreateNotification(orgAuth)
-    .Notification(notification)
-    .Execute()
+response, _, err := apiClient.DefaultApi.
+    CreateNotification(orgAuth).
+    Notification(notification).
+    Execute()
 ```
 
 ## Full API reference
