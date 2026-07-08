@@ -5719,6 +5719,7 @@ components:
             \ the `include_unsubscribed` value from the template will be inherited.\
             \ If you are using a third-party ESP, this field requires the ESP's list\
             \ of unsubscribed emails to be cleared."
+          nullable: true
           type: boolean
           writeOnly: true
         email_bcc:

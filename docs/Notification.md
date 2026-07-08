@@ -109,7 +109,7 @@ Name | Type | Description | Notes
 **EmailReplyToAddress** | Pointer to **NullableString** | Channel: Email The email address where replies should be sent. If not specified, replies will go to the from address.  | [optional] 
 **EmailPreheader** | Pointer to **NullableString** | Channel: Email The preheader text of the email. Preheader is the preview text displayed immediately after an email subject that provides additional context about the email content. If not specified, will default to null.  | [optional] 
 **DisableEmailClickTracking** | Pointer to **NullableBool** | Channel: Email Default is &#x60;false&#x60;. If set to &#x60;true&#x60;, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked. | [optional] 
-**IncludeUnsubscribed** | Pointer to **bool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
+**IncludeUnsubscribed** | Pointer to **NullableBool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
 **EmailBcc** | Pointer to **[]string** | Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email.  | [optional] 
 **EmailSenderDomain** | Pointer to **NullableString** | Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email.  | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
@@ -3607,6 +3607,16 @@ SetIncludeUnsubscribed sets IncludeUnsubscribed field to given value.
 
 HasIncludeUnsubscribed returns a boolean if a field has been set.
 
+### SetIncludeUnsubscribedNil
+
+`func (o *Notification) SetIncludeUnsubscribedNil(b bool)`
+
+ SetIncludeUnsubscribedNil sets the value for IncludeUnsubscribed to be an explicit nil
+
+### UnsetIncludeUnsubscribed
+`func (o *Notification) UnsetIncludeUnsubscribed()`
+
+UnsetIncludeUnsubscribed ensures that no value is present for IncludeUnsubscribed, not even an explicit nil
 ### GetEmailBcc
 
 `func (o *Notification) GetEmailBcc() []string`
