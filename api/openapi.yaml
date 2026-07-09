@@ -23,7 +23,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       - description: How many notifications to return.  Max is 50.  Default is 50.
@@ -174,7 +174,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       - explode: false
@@ -229,7 +229,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       - explode: false
@@ -441,7 +441,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       responses:
@@ -483,7 +483,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       requestBody:
@@ -531,7 +531,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - description: "Segments are listed in ascending order of created_at date. offset\
@@ -599,7 +599,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       requestBody:
@@ -657,7 +657,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - description: The segment_id can be found in the URL of the segment when viewing
@@ -719,7 +719,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - description: "Required\nComma-separated list of names and the value (sum/count)\
@@ -821,7 +821,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - description: The name of the Live Activity defined in your app. This should
@@ -879,7 +879,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - description: Live Activity record ID
@@ -937,7 +937,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       requestBody:
@@ -1003,7 +1003,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1060,7 +1060,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1121,7 +1121,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1189,7 +1189,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1251,7 +1251,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1325,7 +1325,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1402,7 +1402,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1483,7 +1483,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1538,7 +1538,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1600,7 +1600,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1647,7 +1647,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1714,7 +1714,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -1782,7 +1782,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - description: The type of token to use when looking up the subscription. See
@@ -1851,7 +1851,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - description: "The id of the message found in the creation notification POST\
@@ -1954,7 +1954,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       requestBody:
@@ -2029,7 +2029,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       responses:
@@ -2077,7 +2077,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       - description: Maximum number of templates. Default and max is 50.
@@ -2196,7 +2196,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       responses:
@@ -2244,7 +2244,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       responses:
@@ -2292,7 +2292,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       requestBody:
@@ -2341,7 +2341,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: form
       requestBody:
@@ -2383,7 +2383,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       responses:
@@ -2420,7 +2420,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       requestBody:
@@ -2463,7 +2463,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -2506,7 +2506,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -2558,7 +2558,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       - explode: false
@@ -2604,7 +2604,7 @@ paths:
         name: app_id
         required: true
         schema:
-          example: 00000000-0000-0000-0000-000000000000
+          example: YOUR_APP_ID
           type: string
         style: simple
       requestBody:
@@ -3289,20 +3289,23 @@ components:
       type: object
     Purchase:
       example:
-        amount: amount
-        iso: iso
+        amount: "0.99"
+        iso: USD
         count: 2
-        sku: sku
+        sku: com.example.coins100
       properties:
         sku:
           description: The unique identifier of the purchased item.
+          example: com.example.coins100
           type: string
         amount:
           description: "The amount, in USD, spent purchasing the item."
+          example: "0.99"
           type: string
         iso:
           description: The 3-letter ISO 4217 currency code. Required for correct storage
             and conversion of amount.
+          example: USD
           type: string
         count:
           type: integer
@@ -3351,18 +3354,22 @@ components:
         field:
           description: Required. Name of the field to use as the first operand in
             the filter expression.
+          example: tag
           type: string
         key:
           description: "If `field` is `tag`, this field is *required* to specify `key`\
             \ inside the tags."
+          example: level
           type: string
         value:
           description: Constant value to use as the second operand in the filter expression.
             This value is *required* when the relation operator is a binary operator.
+          example: "10"
           type: string
         hours_ago:
           description: "If `field` is session-related, this is *required* to specify\
             \ the number of hours before or after the user's session."
+          example: "24"
           type: string
         radius:
           description: "If `field` is `location`, this will specify the radius in\
@@ -3405,17 +3412,19 @@ components:
       - $ref: '#/components/schemas/Operator'
     Segment:
       example:
-        name: name
-        id: id
+        name: Inactive 30 days
+        id: d5d4d1a8-1c9e-42fb-b3f2-56d3a5a9a8b7
         filters:
         - null
         - null
       properties:
         id:
           description: "UUID of the segment.  If left empty, it will be assigned automaticaly."
+          example: d5d4d1a8-1c9e-42fb-b3f2-56d3a5a9a8b7
           type: string
         name:
           description: Name of the segment.  You'll see this name on the Web UI.
+          example: Inactive 30 days
           type: string
         filters:
           description: "Filter or operators the segment will have.  For a list of\
@@ -3641,42 +3650,51 @@ components:
     IdentityObject:
       additionalProperties:
         type: string
+      example:
+        external_id: YOUR_USER_EXTERNAL_ID
       type: object
     PropertiesObject:
       example:
-        country: country
+        country: US
         purchases:
-        - amount: amount
-          iso: iso
+        - amount: "0.99"
+          iso: USD
           count: 2
-          sku: sku
-        - amount: amount
-          iso: iso
+          sku: com.example.coins100
+        - amount: "0.99"
+          iso: USD
           count: 2
-          sku: sku
-        ip: ip
-        timezone_id: timezone_id
-        language: language
+          sku: com.example.coins100
+        ip: 203.0.113.10
+        timezone_id: America/Los_Angeles
+        language: en
         first_active: 1
         last_active: 5
         lat: 0.8008281904610115
         long: 6.027456183070403
         tags:
-          key: ""
+          level: "10"
+          vip: "true"
         amount_spent: 5.637376656633329
       properties:
         tags:
           additionalProperties: true
+          example:
+            level: "10"
+            vip: "true"
           type: object
         language:
+          example: en
           type: string
         timezone_id:
+          example: America/Los_Angeles
           type: string
         lat:
           type: number
         long:
           type: number
         country:
+          example: US
           type: string
         first_active:
           type: integer
@@ -3689,19 +3707,20 @@ components:
             $ref: '#/components/schemas/Purchase'
           type: array
         ip:
+          example: 203.0.113.10
           type: string
       type: object
     PropertiesDeltas:
       example:
         purchases:
-        - amount: amount
-          iso: iso
+        - amount: "0.99"
+          iso: USD
           count: 2
-          sku: sku
-        - amount: amount
-          iso: iso
+          sku: com.example.coins100
+        - amount: "0.99"
+          iso: USD
           count: 2
-          sku: sku
+          sku: com.example.coins100
         session_count: 6
         session_time: 0
       properties:
@@ -3716,25 +3735,26 @@ components:
       type: object
     Subscription:
       example:
-        notification_types: 7
-        device_model: device_model
-        app_version: app_version
-        web_p256: web_p256
-        net_type: 4
+        notification_types: 1
+        device_model: "iPhone14,2"
+        app_version: 1.0.0
+        web_p256: BM5-r8DauQXOb2E-3PgLPjSvjT0Ao9v5oJhw8bZ0cW7Vh6BbmPYcqbbCEJ1P2sK0hZ7HxSh9zGyU5pQk1jJmZ8A
+        net_type: 9
         type: iOSPush
-        device_os: device_os
+        device_os: "17.1"
         enabled: true
-        session_time: 9
-        test_type: 2
-        token: token
-        carrier: carrier
-        session_count: 3
-        web_auth: web_auth
+        session_time: 60
+        test_type: 7
+        token: d5d4d1a8-1c9e-42fb-b3f2-56d3a5a9a8b7
+        carrier: Verizon
+        session_count: 1
+        web_auth: 5DUmpGmLuTxWCLj5lJpwLQ
         rooted: true
-        id: id
-        sdk: sdk
+        id: e4e87830-b954-4363-b7bc-1f01dbaee5c8
+        sdk: 5.2.0
       properties:
         id:
+          example: e4e87830-b954-4363-b7bc-1f01dbaee5c8
           type: string
         type:
           enum:
@@ -3753,95 +3773,108 @@ components:
           - SMS
           type: string
         token:
+          example: d5d4d1a8-1c9e-42fb-b3f2-56d3a5a9a8b7
           type: string
         enabled:
+          example: true
           type: boolean
         notification_types:
+          example: 1
           type: integer
         session_time:
+          example: 60
           type: integer
         session_count:
+          example: 1
           type: integer
         sdk:
+          example: 5.2.0
           type: string
         device_model:
+          example: "iPhone14,2"
           type: string
         device_os:
+          example: "17.1"
           type: string
         rooted:
           type: boolean
         test_type:
           type: integer
         app_version:
+          example: 1.0.0
           type: string
         net_type:
           type: integer
         carrier:
+          example: Verizon
           type: string
         web_auth:
+          example: 5DUmpGmLuTxWCLj5lJpwLQ
           type: string
         web_p256:
+          example: BM5-r8DauQXOb2E-3PgLPjSvjT0Ao9v5oJhw8bZ0cW7Vh6BbmPYcqbbCEJ1P2sK0hZ7HxSh9zGyU5pQk1jJmZ8A
           type: string
       type: object
     User:
       example:
         subscriptions:
-        - notification_types: 7
-          device_model: device_model
-          app_version: app_version
-          web_p256: web_p256
-          net_type: 4
+        - notification_types: 1
+          device_model: "iPhone14,2"
+          app_version: 1.0.0
+          web_p256: BM5-r8DauQXOb2E-3PgLPjSvjT0Ao9v5oJhw8bZ0cW7Vh6BbmPYcqbbCEJ1P2sK0hZ7HxSh9zGyU5pQk1jJmZ8A
+          net_type: 9
           type: iOSPush
-          device_os: device_os
+          device_os: "17.1"
           enabled: true
-          session_time: 9
-          test_type: 2
-          token: token
-          carrier: carrier
-          session_count: 3
-          web_auth: web_auth
+          session_time: 60
+          test_type: 7
+          token: d5d4d1a8-1c9e-42fb-b3f2-56d3a5a9a8b7
+          carrier: Verizon
+          session_count: 1
+          web_auth: 5DUmpGmLuTxWCLj5lJpwLQ
           rooted: true
-          id: id
-          sdk: sdk
-        - notification_types: 7
-          device_model: device_model
-          app_version: app_version
-          web_p256: web_p256
-          net_type: 4
+          id: e4e87830-b954-4363-b7bc-1f01dbaee5c8
+          sdk: 5.2.0
+        - notification_types: 1
+          device_model: "iPhone14,2"
+          app_version: 1.0.0
+          web_p256: BM5-r8DauQXOb2E-3PgLPjSvjT0Ao9v5oJhw8bZ0cW7Vh6BbmPYcqbbCEJ1P2sK0hZ7HxSh9zGyU5pQk1jJmZ8A
+          net_type: 9
           type: iOSPush
-          device_os: device_os
+          device_os: "17.1"
           enabled: true
-          session_time: 9
-          test_type: 2
-          token: token
-          carrier: carrier
-          session_count: 3
-          web_auth: web_auth
+          session_time: 60
+          test_type: 7
+          token: d5d4d1a8-1c9e-42fb-b3f2-56d3a5a9a8b7
+          carrier: Verizon
+          session_count: 1
+          web_auth: 5DUmpGmLuTxWCLj5lJpwLQ
           rooted: true
-          id: id
-          sdk: sdk
+          id: e4e87830-b954-4363-b7bc-1f01dbaee5c8
+          sdk: 5.2.0
         identity:
-          key: identity
+          external_id: YOUR_USER_EXTERNAL_ID
         properties:
-          country: country
+          country: US
           purchases:
-          - amount: amount
-            iso: iso
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
-          - amount: amount
-            iso: iso
+            sku: com.example.coins100
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
-          ip: ip
-          timezone_id: timezone_id
-          language: language
+            sku: com.example.coins100
+          ip: 203.0.113.10
+          timezone_id: America/Los_Angeles
+          language: en
           first_active: 1
           last_active: 5
           lat: 0.8008281904610115
           long: 6.027456183070403
           tags:
-            key: ""
+            level: "10"
+            vip: "true"
           amount_spent: 5.637376656633329
       properties:
         properties:
@@ -3849,6 +3882,8 @@ components:
         identity:
           additionalProperties:
             type: string
+          example:
+            external_id: YOUR_USER_EXTERNAL_ID
           type: object
         subscriptions:
           items:
@@ -3860,36 +3895,37 @@ components:
         refresh_device_metadata: false
         deltas:
           purchases:
-          - amount: amount
-            iso: iso
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
-          - amount: amount
-            iso: iso
+            sku: com.example.coins100
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
+            sku: com.example.coins100
           session_count: 6
           session_time: 0
         properties:
-          country: country
+          country: US
           purchases:
-          - amount: amount
-            iso: iso
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
-          - amount: amount
-            iso: iso
+            sku: com.example.coins100
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
-          ip: ip
-          timezone_id: timezone_id
-          language: language
+            sku: com.example.coins100
+          ip: 203.0.113.10
+          timezone_id: America/Los_Angeles
+          language: en
           first_active: 1
           last_active: 5
           lat: 0.8008281904610115
           long: 6.027456183070403
           tags:
-            key: ""
+            level: "10"
+            vip: "true"
           amount_spent: 5.637376656633329
       properties:
         properties:
@@ -4688,25 +4724,26 @@ components:
     PropertiesBody:
       example:
         properties:
-          country: country
+          country: US
           purchases:
-          - amount: amount
-            iso: iso
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
-          - amount: amount
-            iso: iso
+            sku: com.example.coins100
+          - amount: "0.99"
+            iso: USD
             count: 2
-            sku: sku
-          ip: ip
-          timezone_id: timezone_id
-          language: language
+            sku: com.example.coins100
+          ip: 203.0.113.10
+          timezone_id: America/Los_Angeles
+          language: en
           first_active: 1
           last_active: 5
           lat: 0.8008281904610115
           long: 6.027456183070403
           tags:
-            key: ""
+            level: "10"
+            vip: "true"
           amount_spent: 5.637376656633329
       properties:
         properties:
@@ -4715,23 +4752,23 @@ components:
     SubscriptionBody:
       example:
         subscription:
-          notification_types: 7
-          device_model: device_model
-          app_version: app_version
-          web_p256: web_p256
-          net_type: 4
+          notification_types: 1
+          device_model: "iPhone14,2"
+          app_version: 1.0.0
+          web_p256: BM5-r8DauQXOb2E-3PgLPjSvjT0Ao9v5oJhw8bZ0cW7Vh6BbmPYcqbbCEJ1P2sK0hZ7HxSh9zGyU5pQk1jJmZ8A
+          net_type: 9
           type: iOSPush
-          device_os: device_os
+          device_os: "17.1"
           enabled: true
-          session_time: 9
-          test_type: 2
-          token: token
-          carrier: carrier
-          session_count: 3
-          web_auth: web_auth
+          session_time: 60
+          test_type: 7
+          token: d5d4d1a8-1c9e-42fb-b3f2-56d3a5a9a8b7
+          carrier: Verizon
+          session_count: 1
+          web_auth: 5DUmpGmLuTxWCLj5lJpwLQ
           rooted: true
-          id: id
-          sdk: sdk
+          id: e4e87830-b954-4363-b7bc-1f01dbaee5c8
+          sdk: 5.2.0
       properties:
         subscription:
           $ref: '#/components/schemas/Subscription'
@@ -4751,11 +4788,13 @@ components:
     UserIdentityBody:
       example:
         identity:
-          key: identity
+          external_id: YOUR_USER_EXTERNAL_ID
       properties:
         identity:
           additionalProperties:
             type: string
+          example:
+            external_id: YOUR_USER_EXTERNAL_ID
           type: object
       type: object
     ExportEventsSuccessResponse:
@@ -5719,6 +5758,7 @@ components:
             \ the `include_unsubscribed` value from the template will be inherited.\
             \ If you are using a third-party ESP, this field requires the ESP's list\
             \ of unsubscribed emails to be cleared."
+          nullable: true
           type: boolean
           writeOnly: true
         email_bcc:

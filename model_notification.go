@@ -223,7 +223,7 @@ type Notification struct {
 	// Channel: Email Default is `false`. If set to `true`, the URLs sent within the email will not include link tracking and will be the same as originally set; otherwise, all the URLs in the email will be tracked.
 	DisableEmailClickTracking NullableBool `json:"disable_email_click_tracking,omitempty"`
 	// Channel: Email Default is `false`. This field is used to send transactional notifications. If set to `true`, this notification will also be sent to unsubscribed emails. If a `template_id` is provided, the `include_unsubscribed` value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP's list of unsubscribed emails to be cleared.
-	IncludeUnsubscribed *bool `json:"include_unsubscribed,omitempty"`
+	IncludeUnsubscribed NullableBool `json:"include_unsubscribed,omitempty"`
 	// Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email. 
 	EmailBcc []string `json:"email_bcc,omitempty"`
 	// Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email. 
@@ -4376,36 +4376,46 @@ func (o *Notification) UnsetDisableEmailClickTracking() {
 	o.DisableEmailClickTracking.Unset()
 }
 
-// GetIncludeUnsubscribed returns the IncludeUnsubscribed field value if set, zero value otherwise.
+// GetIncludeUnsubscribed returns the IncludeUnsubscribed field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Notification) GetIncludeUnsubscribed() bool {
-	if o == nil || o.IncludeUnsubscribed == nil {
+	if o == nil || o.IncludeUnsubscribed.Get() == nil {
 		var ret bool
 		return ret
 	}
-	return *o.IncludeUnsubscribed
+	return *o.IncludeUnsubscribed.Get()
 }
 
 // GetIncludeUnsubscribedOk returns a tuple with the IncludeUnsubscribed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Notification) GetIncludeUnsubscribedOk() (*bool, bool) {
-	if o == nil || o.IncludeUnsubscribed == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.IncludeUnsubscribed, true
+	return o.IncludeUnsubscribed.Get(), o.IncludeUnsubscribed.IsSet()
 }
 
 // HasIncludeUnsubscribed returns a boolean if a field has been set.
 func (o *Notification) HasIncludeUnsubscribed() bool {
-	if o != nil && o.IncludeUnsubscribed != nil {
+	if o != nil && o.IncludeUnsubscribed.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetIncludeUnsubscribed gets a reference to the given bool and assigns it to the IncludeUnsubscribed field.
+// SetIncludeUnsubscribed gets a reference to the given NullableBool and assigns it to the IncludeUnsubscribed field.
 func (o *Notification) SetIncludeUnsubscribed(v bool) {
-	o.IncludeUnsubscribed = &v
+	o.IncludeUnsubscribed.Set(&v)
+}
+// SetIncludeUnsubscribedNil sets the value for IncludeUnsubscribed to be an explicit nil
+func (o *Notification) SetIncludeUnsubscribedNil() {
+	o.IncludeUnsubscribed.Set(nil)
+}
+
+// UnsetIncludeUnsubscribed ensures that no value is present for IncludeUnsubscribed, not even an explicit nil
+func (o *Notification) UnsetIncludeUnsubscribed() {
+	o.IncludeUnsubscribed.Unset()
 }
 
 // GetEmailBcc returns the EmailBcc field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -5193,8 +5203,8 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.DisableEmailClickTracking.IsSet() {
 		toSerialize["disable_email_click_tracking"] = o.DisableEmailClickTracking.Get()
 	}
-	if o.IncludeUnsubscribed != nil {
-		toSerialize["include_unsubscribed"] = o.IncludeUnsubscribed
+	if o.IncludeUnsubscribed.IsSet() {
+		toSerialize["include_unsubscribed"] = o.IncludeUnsubscribed.Get()
 	}
 	if o.EmailBcc != nil {
 		toSerialize["email_bcc"] = o.EmailBcc
