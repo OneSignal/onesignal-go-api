@@ -21,7 +21,7 @@ type Filter struct {
 	Field *string `json:"field,omitempty"`
 	// If `field` is `tag`, this field is *required* to specify `key` inside the tags.
 	Key *string `json:"key,omitempty"`
-	// Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator.
+	// Constant value to use as the second operand in the filter expression. This value is *required* when the relation operator is a binary operator. For `in_array` and `not_in_array` relations, provide a comma-separated list of up to 20 values.
 	Value *string `json:"value,omitempty"`
 	// If `field` is session-related, this is *required* to specify the number of hours before or after the user's session.
 	HoursAgo *string `json:"hours_ago,omitempty"`

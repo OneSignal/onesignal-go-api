@@ -3362,8 +3362,10 @@ components:
           example: level
           type: string
         value:
-          description: Constant value to use as the second operand in the filter expression.
-            This value is *required* when the relation operator is a binary operator.
+          description: "Constant value to use as the second operand in the filter\
+            \ expression. This value is *required* when the relation operator is a\
+            \ binary operator. For `in_array` and `not_in_array` relations, provide\
+            \ a comma-separated list of up to 20 values."
           example: "10"
           type: string
         hours_ago:
@@ -3394,6 +3396,8 @@ components:
           - not_exists
           - time_elapsed_gt
           - time_elapsed_lt
+          - in_array
+          - not_in_array
           type: string
       type: object
     Operator:
