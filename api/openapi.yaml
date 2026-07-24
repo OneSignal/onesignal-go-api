@@ -704,6 +704,73 @@ paths:
       security:
       - rest_api_key: []
       summary: Delete Segment
+    get:
+      description: "Retrieve details for a single segment by its ID, including subscriber\
+        \ count and optionally segment metadata and filters."
+      operationId: get_segment
+      parameters:
+      - description: The OneSignal App ID for your app.  Available in Keys & IDs.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: The segment's unique identifier. Can be found using the View
+          Segments API or in the URL of the segment when viewing it in the dashboard.
+        explode: false
+        in: path
+        name: segment_id
+        required: true
+        schema:
+          example: d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e
+          type: string
+        style: simple
+      - description: Set to true to include segment metadata and filters in the response.
+        explode: true
+        in: query
+        name: include-segment-detail
+        required: false
+        schema:
+          example: true
+          type: boolean
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentSuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View Segment
   /apps/{app_id}/outcomes:
     get:
       description: "View the details of all the outcomes associated with your app\n\
@@ -3507,6 +3574,67 @@ components:
           items:
             $ref: '#/components/schemas/SegmentData'
           type: array
+      type: object
+    SegmentDetails:
+      description: Segment details. Only included when the include-segment-detail
+        query parameter is set to true.
+      example:
+        name: name
+        description: description
+        created_at: 6
+        id: id
+        source: default
+        filters:
+        - null
+        - null
+      properties:
+        id:
+          description: The unique identifier for the segment (UUID v4).
+          type: string
+        name:
+          description: The segment name.
+          type: string
+        description:
+          description: Human-readable description for the segment. `null` when unset.
+            Maximum 255 characters.
+          nullable: true
+          type: string
+        created_at:
+          description: Unix timestamp when the segment was created.
+          type: integer
+        source:
+          description: The source of the segment.
+          enum:
+          - default
+          - custom
+          - quickstart
+          type: string
+        filters:
+          description: "Array of filter and operator objects defining the segment\
+            \ criteria. Uses the same format as the Create Segment API, so filters\
+            \ can be directly used to recreate or update the segment."
+          items:
+            $ref: '#/components/schemas/FilterExpression'
+          type: array
+      type: object
+    GetSegmentSuccessResponse:
+      example:
+        payload:
+          name: name
+          description: description
+          created_at: 6
+          id: id
+          source: default
+          filters:
+          - null
+          - null
+        subscriber_count: 0
+      properties:
+        subscriber_count:
+          description: The number of subscribers matching this segment.
+          type: integer
+        payload:
+          $ref: '#/components/schemas/SegmentDetails'
       type: object
     UpdateLiveActivityRequest:
       example:

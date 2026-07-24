@@ -32,6 +32,7 @@ Method | HTTP request | Description
 [**GetNotificationHistory**](DefaultApi.md#GetNotificationHistory) | **Post** /notifications/{notification_id}/history | Notification History
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Get** /notifications | View notifications
 [**GetOutcomes**](DefaultApi.md#GetOutcomes) | **Get** /apps/{app_id}/outcomes | View Outcomes
+[**GetSegment**](DefaultApi.md#GetSegment) | **Get** /apps/{app_id}/segments/{segment_id} | View Segment
 [**GetSegments**](DefaultApi.md#GetSegments) | **Get** /apps/{app_id}/segments | Get Segments
 [**GetUser**](DefaultApi.md#GetUser) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**RotateApiKey**](DefaultApi.md#RotateApiKey) | **Post** /apps/{app_id}/auth/tokens/{token_id}/rotate | Rotate API key
@@ -2470,6 +2471,91 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OutcomesData**](OutcomesData.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## GetSegment
+
+> GetSegmentSuccessResponse GetSegment(ctx, appId, segmentId).IncludeSegmentDetail(includeSegmentDetail).Execute()
+
+View Segment
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard.
+    includeSegmentDetail := true // bool | Set to true to include segment metadata and filters in the response. (optional)
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.GetSegment(restAuth, appId, segmentId).IncludeSegmentDetail(includeSegmentDetail).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSegment``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `GetSegment`: GetSegmentSuccessResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSegment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**segmentId** | **string** | The segment&#39;s unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSegmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **includeSegmentDetail** | **bool** | Set to true to include segment metadata and filters in the response. | 
+
+### Return type
+
+[**GetSegmentSuccessResponse**](GetSegmentSuccessResponse.md)
 
 ### HTTP request headers
 
