@@ -439,6 +439,27 @@ func newStrictDecoder(data []byte) *json.Decoder {
 	return dec
 }
 
+// decodedWithoutAdditionalProperties reports whether v (a pointer to a decoded
+// model) captured no unknown JSON keys in an AdditionalProperties map field.
+// Models that decode without spilling into AdditionalProperties are considered
+// stricter matches when disambiguating oneOf candidates. Returns true for
+// models without an AdditionalProperties field.
+func decodedWithoutAdditionalProperties(v interface{}) bool {
+	rv := reflect.ValueOf(v)
+	if rv.Kind() != reflect.Ptr || rv.IsNil() {
+		return false
+	}
+	elem := rv.Elem()
+	if elem.Kind() != reflect.Struct {
+		return true
+	}
+	field := elem.FieldByName("AdditionalProperties")
+	if !field.IsValid() || field.Kind() != reflect.Map {
+		return true
+	}
+	return field.Len() == 0
+}
+
 // Set request body from an interface{}
 func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err error) {
 	if bodyBuf == nil {
