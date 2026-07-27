@@ -41,6 +41,7 @@ func OperatorAsFilterExpression(v *Operator) FilterExpression {
 func (dst *FilterExpression) UnmarshalJSON(data []byte) error {
 	var err error
 	match := 0
+	strictMatch := 0
 	// try to unmarshal data into Filter
 	err = newStrictDecoder(data).Decode(&dst.Filter)
 	if err == nil {
@@ -49,6 +50,9 @@ func (dst *FilterExpression) UnmarshalJSON(data []byte) error {
 			dst.Filter = nil
 		} else {
 			match++
+			if decodedWithoutAdditionalProperties(dst.Filter) {
+				strictMatch++
+			}
 		}
 	} else {
 		dst.Filter = nil
@@ -62,12 +66,29 @@ func (dst *FilterExpression) UnmarshalJSON(data []byte) error {
 			dst.Operator = nil
 		} else {
 			match++
+			if decodedWithoutAdditionalProperties(dst.Operator) {
+				strictMatch++
+			}
 		}
 	} else {
 		dst.Operator = nil
 	}
 
 	if match > 1 { // more than 1 match
+		// Models whose custom UnmarshalJSON collects unknown keys into an
+		// AdditionalProperties map accept any JSON object, so several
+		// candidates can match at once. Prefer the single candidate that
+		// decoded without unknown keys, if there is exactly one.
+		if strictMatch == 1 {
+			if !decodedWithoutAdditionalProperties(dst.Filter) {
+				dst.Filter = nil
+			}
+			if !decodedWithoutAdditionalProperties(dst.Operator) {
+				dst.Operator = nil
+			}
+			return nil
+		}
+
 		// reset to nil
 		dst.Filter = nil
 		dst.Operator = nil
