@@ -49,6 +49,7 @@ Name | Type | Description | Notes
 **MutableContent** | Pointer to **bool** | Channel: Push Notifications Platform: iOS 10+ Always defaults to true and cannot be turned off. Allows tracking of notification receives and changing of the notification content in your app before it is displayed. Triggers didReceive(_:withContentHandler:) on your UNNotificationServiceExtension.  | [optional] 
 **TargetContentIdentifier** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS 13+ Use to target a specific experience in your App Clip, or to target your notification to a specific window in a multi-scene App.  | [optional] 
 **BigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: Android Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
+**GlobalImage** | Pointer to **NullableString** | Channel: Push Notifications Platform: All Picture to display on all platforms that support it. Must be a URL to an image file. Platform-specific picture fields (big_picture, huawei_big_picture, adm_big_picture, chrome_web_image, ios_attachments, firefox_icon) take precedence over this value when set.  | [optional] 
 **HuaweiBigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: Huawei Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
 **AdmBigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: Amazon Picture to display in the expanded view. Can be a drawable resource name or a URL.  | [optional] 
 **ChromeBigPicture** | Pointer to **NullableString** | Channel: Push Notifications Platform: ChromeApp Large picture to display below the notification text. Must be a local URL.  | [optional] 
@@ -1541,6 +1542,41 @@ HasBigPicture returns a boolean if a field has been set.
 `func (o *BasicNotification) UnsetBigPicture()`
 
 UnsetBigPicture ensures that no value is present for BigPicture, not even an explicit nil
+### GetGlobalImage
+
+`func (o *BasicNotification) GetGlobalImage() string`
+
+GetGlobalImage returns the GlobalImage field if non-nil, zero value otherwise.
+
+### GetGlobalImageOk
+
+`func (o *BasicNotification) GetGlobalImageOk() (*string, bool)`
+
+GetGlobalImageOk returns a tuple with the GlobalImage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGlobalImage
+
+`func (o *BasicNotification) SetGlobalImage(v string)`
+
+SetGlobalImage sets GlobalImage field to given value.
+
+### HasGlobalImage
+
+`func (o *BasicNotification) HasGlobalImage() bool`
+
+HasGlobalImage returns a boolean if a field has been set.
+
+### SetGlobalImageNil
+
+`func (o *BasicNotification) SetGlobalImageNil(b bool)`
+
+ SetGlobalImageNil sets the value for GlobalImage to be an explicit nil
+
+### UnsetGlobalImage
+`func (o *BasicNotification) UnsetGlobalImage()`
+
+UnsetGlobalImage ensures that no value is present for GlobalImage, not even an explicit nil
 ### GetHuaweiBigPicture
 
 `func (o *BasicNotification) GetHuaweiBigPicture() string`

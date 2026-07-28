@@ -2727,7 +2727,7 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/notifications/{notification_id}/export_events?app_id={app_id}"
+	localVarPath := localBasePath + "/notifications/{notification_id}/export_events"
 	localVarPath = strings.Replace(localVarPath, "{"+"notification_id"+"}", url.PathEscape(parameterToString(r.notificationId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
