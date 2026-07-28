@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.10.0
+API version: 5.11.0
 Contact: devrel@onesignal.com
 */
 
@@ -43,7 +43,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the OneSignal API v5.10.0
+// APIClient manages communication with the OneSignal API v5.11.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -325,7 +325,7 @@ func (c *APIClient) prepareRequest(
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
 
     // Add the SDK version to OS-Usage header for telemetry
-    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=5.10.0")
+    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=5.11.0")
 
 	if ctx != nil {
 		// add context to the request
@@ -437,6 +437,27 @@ func newStrictDecoder(data []byte) *json.Decoder {
 	dec := json.NewDecoder(bytes.NewBuffer(data))
 	dec.DisallowUnknownFields()
 	return dec
+}
+
+// decodedWithoutAdditionalProperties reports whether v (a pointer to a decoded
+// model) captured no unknown JSON keys in an AdditionalProperties map field.
+// Models that decode without spilling into AdditionalProperties are considered
+// stricter matches when disambiguating oneOf candidates. Returns true for
+// models without an AdditionalProperties field.
+func decodedWithoutAdditionalProperties(v interface{}) bool {
+	rv := reflect.ValueOf(v)
+	if rv.Kind() != reflect.Ptr || rv.IsNil() {
+		return false
+	}
+	elem := rv.Elem()
+	if elem.Kind() != reflect.Struct {
+		return true
+	}
+	field := elem.FieldByName("AdditionalProperties")
+	if !field.IsValid() || field.Kind() != reflect.Map {
+		return true
+	}
+	return field.Len() == 0
 }
 
 // Set request body from an interface{}
