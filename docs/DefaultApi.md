@@ -32,8 +32,10 @@ Method | HTTP request | Description
 [**GetNotificationHistory**](DefaultApi.md#GetNotificationHistory) | **Post** /notifications/{notification_id}/history | Notification History
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Get** /notifications | View notifications
 [**GetOutcomes**](DefaultApi.md#GetOutcomes) | **Get** /apps/{app_id}/outcomes | View Outcomes
+[**GetSegment**](DefaultApi.md#GetSegment) | **Get** /apps/{app_id}/segments/{segment_id} | View Segment
 [**GetSegments**](DefaultApi.md#GetSegments) | **Get** /apps/{app_id}/segments | Get Segments
 [**GetUser**](DefaultApi.md#GetUser) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
+[**ListAuditLogs**](DefaultApi.md#ListAuditLogs) | **Get** /organizations/{organization_id}/audit_logs | List audit logs
 [**RotateApiKey**](DefaultApi.md#RotateApiKey) | **Post** /apps/{app_id}/auth/tokens/{token_id}/rotate | Rotate API key
 [**StartLiveActivity**](DefaultApi.md#StartLiveActivity) | **Post** /apps/{app_id}/activities/activity/{activity_type} | Start Live Activity
 [**TransferSubscription**](DefaultApi.md#TransferSubscription) | **Patch** /apps/{app_id}/subscriptions/{subscription_id}/owner | 
@@ -41,6 +43,7 @@ Method | HTTP request | Description
 [**UpdateApiKey**](DefaultApi.md#UpdateApiKey) | **Patch** /apps/{app_id}/auth/tokens/{token_id} | Update API key
 [**UpdateApp**](DefaultApi.md#UpdateApp) | **Put** /apps/{app_id} | Update an app
 [**UpdateLiveActivity**](DefaultApi.md#UpdateLiveActivity) | **Post** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
+[**UpdateSegment**](DefaultApi.md#UpdateSegment) | **Patch** /apps/{app_id}/segments/{segment_id} | Update Segment
 [**UpdateSubscription**](DefaultApi.md#UpdateSubscription) | **Patch** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**UpdateSubscriptionByToken**](DefaultApi.md#UpdateSubscriptionByToken) | **Patch** /apps/{app_id}/subscriptions_by_token/{token_type}/{token} | Update subscription by token
 [**UpdateTemplate**](DefaultApi.md#UpdateTemplate) | **Patch** /templates/{template_id} | Update template
@@ -2480,6 +2483,91 @@ Name | Type | Description  | Notes
 [[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
+## GetSegment
+
+> GetSegmentSuccessResponse GetSegment(ctx, appId, segmentId).IncludeSegmentDetail(includeSegmentDetail).Execute()
+
+View Segment
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard.
+    includeSegmentDetail := true // bool | Set to true to include segment metadata and filters in the response. (optional)
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.GetSegment(restAuth, appId, segmentId).IncludeSegmentDetail(includeSegmentDetail).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSegment``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `GetSegment`: GetSegmentSuccessResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSegment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**segmentId** | **string** | The segment&#39;s unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSegmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **includeSegmentDetail** | **bool** | Set to true to include segment metadata and filters in the response. | 
+
+### Return type
+
+[**GetSegmentSuccessResponse**](GetSegmentSuccessResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
 ## GetSegments
 
 > GetSegmentsSuccessResponse GetSegments(ctx, appId).Offset(offset).Limit(limit).Execute()
@@ -2640,6 +2728,108 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**User**](User.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## ListAuditLogs
+
+> ListAuditLogsSuccessResponse ListAuditLogs(ctx, organizationId).StartTime(startTime).EndTime(endTime).Cursor(cursor).Limit(limit).AppIds(appIds).Actions(actions).ActorIds(actorIds).ActorEmails(actorEmails).TargetTypes(targetTypes).TargetIds(targetIds).IpAddresses(ipAddresses).Execute()
+
+List audit logs
+
+
+
+### Authorization
+
+[organization_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    organizationId := "YOUR_ORG_ID" // string | The UUID of the organization to retrieve audit logs for. Must match the authenticated Organization API Key.
+    startTime := "startTime_example" // string | Start of the time range in ISO 8601 format (e.g. 2026-02-01T00:00:00Z). Required unless cursor is provided. Must be within the last 90 days. (optional)
+    endTime := "endTime_example" // string | End of the time range in ISO 8601 format. Defaults to the current time. Must be after start_time. (optional)
+    cursor := "cursor_example" // string | Pagination cursor returned in a previous response as next_cursor. When provided, start_time and end_time are ignored. (optional)
+    limit := int32(56) // int32 | Maximum number of events to return per page. Minimum 1, maximum 100. Values outside this range are clamped automatically by the server. (optional)
+    appIds := []string{"Inner_example"} // []string | Filter events by app UUID. Accepts up to 10 values. Org-level events are always included. (optional)
+    actions := []string{"Inner_example"} // []string | Filter by action type (e.g. notification.sent, segment.created). Accepts up to 20 values. (optional)
+    actorIds := []string{"Inner_example"} // []string | Filter by actor UUID (the user or service that performed the action). Accepts up to 10 values. (optional)
+    actorEmails := []string{"Inner_example"} // []string | Filter by actor email address. Accepts up to 10 values. (optional)
+    targetTypes := []string{"Inner_example"} // []string | Filter by the type of resource the action was performed on (e.g. notification, segment, journey). Accepts up to 10 values. (optional)
+    targetIds := []string{"Inner_example"} // []string | Filter by the UUID of the resource the action was performed on. Accepts up to 10 values. (optional)
+    ipAddresses := []string{"Inner_example"} // []string | Filter by the IP address the action originated from. Accepts up to 10 values. (optional)
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    orgAuth := context.WithValue(context.Background(), onesignal.OrganizationApiKey, "YOUR_ORGANIZATION_API_KEY") // Organization API key is only required for creating new apps and other top-level endpoints
+
+    resp, r, err := apiClient.DefaultApi.ListAuditLogs(orgAuth, organizationId).StartTime(startTime).EndTime(endTime).Cursor(cursor).Limit(limit).AppIds(appIds).Actions(actions).ActorIds(actorIds).ActorEmails(actorEmails).TargetTypes(targetTypes).TargetIds(targetIds).IpAddresses(ipAddresses).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ListAuditLogs``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `ListAuditLogs`: ListAuditLogsSuccessResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ListAuditLogs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**organizationId** | **string** | The UUID of the organization to retrieve audit logs for. Must match the authenticated Organization API Key. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAuditLogsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **startTime** | **string** | Start of the time range in ISO 8601 format (e.g. 2026-02-01T00:00:00Z). Required unless cursor is provided. Must be within the last 90 days. | 
+ **endTime** | **string** | End of the time range in ISO 8601 format. Defaults to the current time. Must be after start_time. | 
+ **cursor** | **string** | Pagination cursor returned in a previous response as next_cursor. When provided, start_time and end_time are ignored. | 
+ **limit** | **int32** | Maximum number of events to return per page. Minimum 1, maximum 100. Values outside this range are clamped automatically by the server. | 
+ **appIds** | **[]string** | Filter events by app UUID. Accepts up to 10 values. Org-level events are always included. | 
+ **actions** | **[]string** | Filter by action type (e.g. notification.sent, segment.created). Accepts up to 20 values. | 
+ **actorIds** | **[]string** | Filter by actor UUID (the user or service that performed the action). Accepts up to 10 values. | 
+ **actorEmails** | **[]string** | Filter by actor email address. Accepts up to 10 values. | 
+ **targetTypes** | **[]string** | Filter by the type of resource the action was performed on (e.g. notification, segment, journey). Accepts up to 10 values. | 
+ **targetIds** | **[]string** | Filter by the UUID of the resource the action was performed on. Accepts up to 10 values. | 
+ **ipAddresses** | **[]string** | Filter by the IP address the action originated from. Accepts up to 10 values. | 
+
+### Return type
+
+[**ListAuditLogsSuccessResponse**](ListAuditLogsSuccessResponse.md)
 
 ### HTTP request headers
 
@@ -3230,6 +3420,91 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdateLiveActivitySuccessResponse**](UpdateLiveActivitySuccessResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## UpdateSegment
+
+> UpdateSegmentSuccessResponse UpdateSegment(ctx, appId, segmentId).UpdateSegmentRequest(updateSegmentRequest).Execute()
+
+Update Segment
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
+    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard.
+    updateSegmentRequest := *onesignal.NewUpdateSegmentRequest("Name_example") // UpdateSegmentRequest |  (optional)
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.UpdateSegment(restAuth, appId, segmentId).UpdateSegmentRequest(updateSegmentRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSegment``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `UpdateSegment`: UpdateSegmentSuccessResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateSegment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
+**segmentId** | **string** | The segment&#39;s unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateSegmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **updateSegmentRequest** | [**UpdateSegmentRequest**](UpdateSegmentRequest.md) |  | 
+
+### Return type
+
+[**UpdateSegmentSuccessResponse**](UpdateSegmentSuccessResponse.md)
 
 ### HTTP request headers
 
