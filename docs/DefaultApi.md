@@ -22,7 +22,7 @@ Method | HTTP request | Description
 [**DeleteSubscription**](DefaultApi.md#DeleteSubscription) | **Delete** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**DeleteTemplate**](DefaultApi.md#DeleteTemplate) | **Delete** /templates/{template_id} | Delete template
 [**DeleteUser**](DefaultApi.md#DeleteUser) | **Delete** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
-[**ExportEvents**](DefaultApi.md#ExportEvents) | **Post** /notifications/{notification_id}/export_events?app_id&#x3D;{app_id} | Export CSV of Events
+[**ExportEvents**](DefaultApi.md#ExportEvents) | **Post** /notifications/{notification_id}/export_events | Export CSV of Events
 [**ExportSubscriptions**](DefaultApi.md#ExportSubscriptions) | **Post** /players/csv_export?app_id&#x3D;{app_id} | Export CSV of Subscriptions
 [**GetAliases**](DefaultApi.md#GetAliases) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity | 
 [**GetAliasesBySubscription**](DefaultApi.md#GetAliasesBySubscription) | **Get** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 

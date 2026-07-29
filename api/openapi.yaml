@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.11.0
+  version: 5.11.1
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -2145,7 +2145,7 @@ paths:
       security:
       - rest_api_key: []
       summary: Export CSV of Subscriptions
-  /notifications/{notification_id}/export_events?app_id={app_id}:
+  /notifications/{notification_id}/export_events:
     post:
       description: |-
         Generate a compressed CSV report of all of the events data for a notification.
@@ -5880,6 +5880,15 @@ components:
         big_picture:
           description: "Channel: Push Notifications\nPlatform: Android\nPicture to\
             \ display in the expanded view. Can be a drawable resource name or a URL.\n"
+          nullable: true
+          type: string
+          writeOnly: true
+        global_image:
+          description: "Channel: Push Notifications\nPlatform: All\nPicture to display\
+            \ on all platforms that support it. Must be a URL to an image file.\n\
+            Platform-specific picture fields (big_picture, huawei_big_picture, adm_big_picture,\
+            \ chrome_web_image, ios_attachments, firefox_icon) take precedence over\
+            \ this value when set.\n"
           nullable: true
           type: string
           writeOnly: true

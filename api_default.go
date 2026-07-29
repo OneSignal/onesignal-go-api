@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.11.0
+API version: 5.11.1
 Contact: devrel@onesignal.com
 */
 
@@ -127,7 +127,7 @@ func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -137,7 +137,7 @@ func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -147,7 +147,7 @@ func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationReq
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -156,7 +156,7 @@ func (a *DefaultApiService) CancelNotificationExecute(r ApiCancelNotificationReq
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -288,7 +288,7 @@ func (a *DefaultApiService) CopyTemplateToAppExecute(r ApiCopyTemplateToAppReque
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -297,7 +297,7 @@ func (a *DefaultApiService) CopyTemplateToAppExecute(r ApiCopyTemplateToAppReque
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -427,7 +427,7 @@ func (a *DefaultApiService) CreateAliasExecute(r ApiCreateAliasRequest) (*UserId
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -437,7 +437,7 @@ func (a *DefaultApiService) CreateAliasExecute(r ApiCreateAliasRequest) (*UserId
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -447,7 +447,7 @@ func (a *DefaultApiService) CreateAliasExecute(r ApiCreateAliasRequest) (*UserId
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -457,7 +457,7 @@ func (a *DefaultApiService) CreateAliasExecute(r ApiCreateAliasRequest) (*UserId
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -466,7 +466,7 @@ func (a *DefaultApiService) CreateAliasExecute(r ApiCreateAliasRequest) (*UserId
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -592,7 +592,7 @@ func (a *DefaultApiService) CreateAliasBySubscriptionExecute(r ApiCreateAliasByS
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -602,7 +602,7 @@ func (a *DefaultApiService) CreateAliasBySubscriptionExecute(r ApiCreateAliasByS
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -612,7 +612,7 @@ func (a *DefaultApiService) CreateAliasBySubscriptionExecute(r ApiCreateAliasByS
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -622,7 +622,7 @@ func (a *DefaultApiService) CreateAliasBySubscriptionExecute(r ApiCreateAliasByS
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -631,7 +631,7 @@ func (a *DefaultApiService) CreateAliasBySubscriptionExecute(r ApiCreateAliasByS
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -753,7 +753,7 @@ func (a *DefaultApiService) CreateApiKeyExecute(r ApiCreateApiKeyRequest) (*Crea
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -762,7 +762,7 @@ func (a *DefaultApiService) CreateApiKeyExecute(r ApiCreateApiKeyRequest) (*Crea
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -880,7 +880,7 @@ func (a *DefaultApiService) CreateAppExecute(r ApiCreateAppRequest) (*App, *http
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -890,7 +890,7 @@ func (a *DefaultApiService) CreateAppExecute(r ApiCreateAppRequest) (*App, *http
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -899,7 +899,7 @@ func (a *DefaultApiService) CreateAppExecute(r ApiCreateAppRequest) (*App, *http
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -1021,7 +1021,7 @@ func (a *DefaultApiService) CreateCustomEventsExecute(r ApiCreateCustomEventsReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1031,7 +1031,7 @@ func (a *DefaultApiService) CreateCustomEventsExecute(r ApiCreateCustomEventsReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1041,7 +1041,7 @@ func (a *DefaultApiService) CreateCustomEventsExecute(r ApiCreateCustomEventsReq
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1050,7 +1050,7 @@ func (a *DefaultApiService) CreateCustomEventsExecute(r ApiCreateCustomEventsReq
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -1175,7 +1175,7 @@ func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1185,7 +1185,7 @@ func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationReq
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1194,7 +1194,7 @@ func (a *DefaultApiService) CreateNotificationExecute(r ApiCreateNotificationReq
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -1318,7 +1318,7 @@ func (a *DefaultApiService) CreateSegmentExecute(r ApiCreateSegmentRequest) (*Cr
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1328,7 +1328,7 @@ func (a *DefaultApiService) CreateSegmentExecute(r ApiCreateSegmentRequest) (*Cr
 			var v CreateSegmentConflictResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1338,7 +1338,7 @@ func (a *DefaultApiService) CreateSegmentExecute(r ApiCreateSegmentRequest) (*Cr
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1347,7 +1347,7 @@ func (a *DefaultApiService) CreateSegmentExecute(r ApiCreateSegmentRequest) (*Cr
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -1477,7 +1477,7 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1487,7 +1487,7 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1497,7 +1497,7 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1507,7 +1507,7 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1516,7 +1516,7 @@ func (a *DefaultApiService) CreateSubscriptionExecute(r ApiCreateSubscriptionReq
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -1634,7 +1634,7 @@ func (a *DefaultApiService) CreateTemplateExecute(r ApiCreateTemplateRequest) (*
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1644,7 +1644,7 @@ func (a *DefaultApiService) CreateTemplateExecute(r ApiCreateTemplateRequest) (*
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1653,7 +1653,7 @@ func (a *DefaultApiService) CreateTemplateExecute(r ApiCreateTemplateRequest) (*
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -1776,7 +1776,7 @@ func (a *DefaultApiService) CreateUserExecute(r ApiCreateUserRequest) (*User, *h
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1786,7 +1786,7 @@ func (a *DefaultApiService) CreateUserExecute(r ApiCreateUserRequest) (*User, *h
 			var v CreateUserConflictResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1796,7 +1796,7 @@ func (a *DefaultApiService) CreateUserExecute(r ApiCreateUserRequest) (*User, *h
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1805,7 +1805,7 @@ func (a *DefaultApiService) CreateUserExecute(r ApiCreateUserRequest) (*User, *h
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -1928,7 +1928,7 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*UserId
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1938,7 +1938,7 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*UserId
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1948,7 +1948,7 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*UserId
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1958,7 +1958,7 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*UserId
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -1967,7 +1967,7 @@ func (a *DefaultApiService) DeleteAliasExecute(r ApiDeleteAliasRequest) (*UserId
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -2082,7 +2082,7 @@ func (a *DefaultApiService) DeleteApiKeyExecute(r ApiDeleteApiKeyRequest) (map[s
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2091,7 +2091,7 @@ func (a *DefaultApiService) DeleteApiKeyExecute(r ApiDeleteApiKeyRequest) (map[s
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -2209,7 +2209,7 @@ func (a *DefaultApiService) DeleteSegmentExecute(r ApiDeleteSegmentRequest) (*Ge
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2219,7 +2219,7 @@ func (a *DefaultApiService) DeleteSegmentExecute(r ApiDeleteSegmentRequest) (*Ge
 			var v GenericSuccessBoolResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2229,7 +2229,7 @@ func (a *DefaultApiService) DeleteSegmentExecute(r ApiDeleteSegmentRequest) (*Ge
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2238,7 +2238,7 @@ func (a *DefaultApiService) DeleteSegmentExecute(r ApiDeleteSegmentRequest) (*Ge
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -2351,7 +2351,7 @@ func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2361,7 +2361,7 @@ func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2371,7 +2371,7 @@ func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2381,7 +2381,7 @@ func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionReq
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2390,7 +2390,7 @@ func (a *DefaultApiService) DeleteSubscriptionExecute(r ApiDeleteSubscriptionReq
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -2502,7 +2502,7 @@ func (a *DefaultApiService) DeleteTemplateExecute(r ApiDeleteTemplateRequest) (*
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2512,7 +2512,7 @@ func (a *DefaultApiService) DeleteTemplateExecute(r ApiDeleteTemplateRequest) (*
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2521,7 +2521,7 @@ func (a *DefaultApiService) DeleteTemplateExecute(r ApiDeleteTemplateRequest) (*
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -2638,7 +2638,7 @@ func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Res
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2648,7 +2648,7 @@ func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Res
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2658,7 +2658,7 @@ func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Res
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2667,7 +2667,7 @@ func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Res
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -2727,7 +2727,7 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/notifications/{notification_id}/export_events?app_id={app_id}"
+	localVarPath := localBasePath + "/notifications/{notification_id}/export_events"
 	localVarPath = strings.Replace(localVarPath, "{"+"notification_id"+"}", url.PathEscape(parameterToString(r.notificationId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -2781,7 +2781,7 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2791,7 +2791,7 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2801,7 +2801,7 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2810,7 +2810,7 @@ func (a *DefaultApiService) ExportEventsExecute(r ApiExportEventsRequest) (*Expo
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -2974,7 +2974,7 @@ func (a *DefaultApiService) ExportSubscriptionsExecute(r ApiExportSubscriptionsR
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2984,7 +2984,7 @@ func (a *DefaultApiService) ExportSubscriptionsExecute(r ApiExportSubscriptionsR
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -2993,7 +2993,7 @@ func (a *DefaultApiService) ExportSubscriptionsExecute(r ApiExportSubscriptionsR
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -3112,7 +3112,7 @@ func (a *DefaultApiService) GetAliasesExecute(r ApiGetAliasesRequest) (*UserIden
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3122,7 +3122,7 @@ func (a *DefaultApiService) GetAliasesExecute(r ApiGetAliasesRequest) (*UserIden
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3132,7 +3132,7 @@ func (a *DefaultApiService) GetAliasesExecute(r ApiGetAliasesRequest) (*UserIden
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3141,7 +3141,7 @@ func (a *DefaultApiService) GetAliasesExecute(r ApiGetAliasesRequest) (*UserIden
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -3256,7 +3256,7 @@ func (a *DefaultApiService) GetAliasesBySubscriptionExecute(r ApiGetAliasesBySub
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3266,7 +3266,7 @@ func (a *DefaultApiService) GetAliasesBySubscriptionExecute(r ApiGetAliasesBySub
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3275,7 +3275,7 @@ func (a *DefaultApiService) GetAliasesBySubscriptionExecute(r ApiGetAliasesBySub
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -3386,7 +3386,7 @@ func (a *DefaultApiService) GetAppExecute(r ApiGetAppRequest) (*App, *http.Respo
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3396,7 +3396,7 @@ func (a *DefaultApiService) GetAppExecute(r ApiGetAppRequest) (*App, *http.Respo
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3405,7 +3405,7 @@ func (a *DefaultApiService) GetAppExecute(r ApiGetAppRequest) (*App, *http.Respo
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -3512,7 +3512,7 @@ func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) ([]App, *http.Re
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3522,7 +3522,7 @@ func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) ([]App, *http.Re
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3531,7 +3531,7 @@ func (a *DefaultApiService) GetAppsExecute(r ApiGetAppsRequest) ([]App, *http.Re
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -3652,7 +3652,7 @@ func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) 
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3662,7 +3662,7 @@ func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) 
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3672,7 +3672,7 @@ func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) 
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3681,7 +3681,7 @@ func (a *DefaultApiService) GetNotificationExecute(r ApiGetNotificationRequest) 
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -3803,7 +3803,7 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3813,7 +3813,7 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3823,7 +3823,7 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -3832,7 +3832,7 @@ func (a *DefaultApiService) GetNotificationHistoryExecute(r ApiGetNotificationHi
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -3990,7 +3990,7 @@ func (a *DefaultApiService) GetNotificationsExecute(r ApiGetNotificationsRequest
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4000,7 +4000,7 @@ func (a *DefaultApiService) GetNotificationsExecute(r ApiGetNotificationsRequest
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4009,7 +4009,7 @@ func (a *DefaultApiService) GetNotificationsExecute(r ApiGetNotificationsRequest
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -4180,7 +4180,7 @@ func (a *DefaultApiService) GetOutcomesExecute(r ApiGetOutcomesRequest) (*Outcom
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4190,7 +4190,7 @@ func (a *DefaultApiService) GetOutcomesExecute(r ApiGetOutcomesRequest) (*Outcom
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4199,7 +4199,7 @@ func (a *DefaultApiService) GetOutcomesExecute(r ApiGetOutcomesRequest) (*Outcom
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -4324,7 +4324,7 @@ func (a *DefaultApiService) GetSegmentExecute(r ApiGetSegmentRequest) (*GetSegme
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4334,7 +4334,7 @@ func (a *DefaultApiService) GetSegmentExecute(r ApiGetSegmentRequest) (*GetSegme
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4344,7 +4344,7 @@ func (a *DefaultApiService) GetSegmentExecute(r ApiGetSegmentRequest) (*GetSegme
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4353,7 +4353,7 @@ func (a *DefaultApiService) GetSegmentExecute(r ApiGetSegmentRequest) (*GetSegme
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -4484,7 +4484,7 @@ func (a *DefaultApiService) GetSegmentsExecute(r ApiGetSegmentsRequest) (*GetSeg
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4494,7 +4494,7 @@ func (a *DefaultApiService) GetSegmentsExecute(r ApiGetSegmentsRequest) (*GetSeg
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4503,7 +4503,7 @@ func (a *DefaultApiService) GetSegmentsExecute(r ApiGetSegmentsRequest) (*GetSeg
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -4622,7 +4622,7 @@ func (a *DefaultApiService) GetUserExecute(r ApiGetUserRequest) (*User, *http.Re
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4632,7 +4632,7 @@ func (a *DefaultApiService) GetUserExecute(r ApiGetUserRequest) (*User, *http.Re
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4642,7 +4642,7 @@ func (a *DefaultApiService) GetUserExecute(r ApiGetUserRequest) (*User, *http.Re
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4651,7 +4651,7 @@ func (a *DefaultApiService) GetUserExecute(r ApiGetUserRequest) (*User, *http.Re
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -4928,7 +4928,7 @@ func (a *DefaultApiService) ListAuditLogsExecute(r ApiListAuditLogsRequest) (*Li
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4938,7 +4938,7 @@ func (a *DefaultApiService) ListAuditLogsExecute(r ApiListAuditLogsRequest) (*Li
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4948,7 +4948,7 @@ func (a *DefaultApiService) ListAuditLogsExecute(r ApiListAuditLogsRequest) (*Li
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4958,7 +4958,7 @@ func (a *DefaultApiService) ListAuditLogsExecute(r ApiListAuditLogsRequest) (*Li
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -4967,7 +4967,7 @@ func (a *DefaultApiService) ListAuditLogsExecute(r ApiListAuditLogsRequest) (*Li
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -5082,7 +5082,7 @@ func (a *DefaultApiService) RotateApiKeyExecute(r ApiRotateApiKeyRequest) (*Crea
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5091,7 +5091,7 @@ func (a *DefaultApiService) RotateApiKeyExecute(r ApiRotateApiKeyRequest) (*Crea
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -5217,7 +5217,7 @@ func (a *DefaultApiService) StartLiveActivityExecute(r ApiStartLiveActivityReque
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5227,7 +5227,7 @@ func (a *DefaultApiService) StartLiveActivityExecute(r ApiStartLiveActivityReque
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5236,7 +5236,7 @@ func (a *DefaultApiService) StartLiveActivityExecute(r ApiStartLiveActivityReque
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -5362,7 +5362,7 @@ func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptio
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5372,7 +5372,7 @@ func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptio
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5382,7 +5382,7 @@ func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptio
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5392,7 +5392,7 @@ func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptio
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5401,7 +5401,7 @@ func (a *DefaultApiService) TransferSubscriptionExecute(r ApiTransferSubscriptio
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -5527,7 +5527,7 @@ func (a *DefaultApiService) UnsubscribeEmailWithTokenExecute(r ApiUnsubscribeEma
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5537,7 +5537,7 @@ func (a *DefaultApiService) UnsubscribeEmailWithTokenExecute(r ApiUnsubscribeEma
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5546,7 +5546,7 @@ func (a *DefaultApiService) UnsubscribeEmailWithTokenExecute(r ApiUnsubscribeEma
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -5672,7 +5672,7 @@ func (a *DefaultApiService) UpdateApiKeyExecute(r ApiUpdateApiKeyRequest) (map[s
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5681,7 +5681,7 @@ func (a *DefaultApiService) UpdateApiKeyExecute(r ApiUpdateApiKeyRequest) (map[s
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -5803,7 +5803,7 @@ func (a *DefaultApiService) UpdateAppExecute(r ApiUpdateAppRequest) (*App, *http
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5813,7 +5813,7 @@ func (a *DefaultApiService) UpdateAppExecute(r ApiUpdateAppRequest) (*App, *http
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5822,7 +5822,7 @@ func (a *DefaultApiService) UpdateAppExecute(r ApiUpdateAppRequest) (*App, *http
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -5948,7 +5948,7 @@ func (a *DefaultApiService) UpdateLiveActivityExecute(r ApiUpdateLiveActivityReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5958,7 +5958,7 @@ func (a *DefaultApiService) UpdateLiveActivityExecute(r ApiUpdateLiveActivityReq
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -5967,7 +5967,7 @@ func (a *DefaultApiService) UpdateLiveActivityExecute(r ApiUpdateLiveActivityReq
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -6090,7 +6090,7 @@ func (a *DefaultApiService) UpdateSegmentExecute(r ApiUpdateSegmentRequest) (*Up
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6100,7 +6100,7 @@ func (a *DefaultApiService) UpdateSegmentExecute(r ApiUpdateSegmentRequest) (*Up
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6110,7 +6110,7 @@ func (a *DefaultApiService) UpdateSegmentExecute(r ApiUpdateSegmentRequest) (*Up
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6120,7 +6120,7 @@ func (a *DefaultApiService) UpdateSegmentExecute(r ApiUpdateSegmentRequest) (*Up
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6129,7 +6129,7 @@ func (a *DefaultApiService) UpdateSegmentExecute(r ApiUpdateSegmentRequest) (*Up
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -6253,7 +6253,7 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6263,7 +6263,7 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6273,7 +6273,7 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6283,7 +6283,7 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6292,7 +6292,7 @@ func (a *DefaultApiService) UpdateSubscriptionExecute(r ApiUpdateSubscriptionReq
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -6413,7 +6413,7 @@ func (a *DefaultApiService) UpdateSubscriptionByTokenExecute(r ApiUpdateSubscrip
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6423,7 +6423,7 @@ func (a *DefaultApiService) UpdateSubscriptionByTokenExecute(r ApiUpdateSubscrip
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6432,7 +6432,7 @@ func (a *DefaultApiService) UpdateSubscriptionByTokenExecute(r ApiUpdateSubscrip
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -6564,7 +6564,7 @@ func (a *DefaultApiService) UpdateTemplateExecute(r ApiUpdateTemplateRequest) (*
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6573,7 +6573,7 @@ func (a *DefaultApiService) UpdateTemplateExecute(r ApiUpdateTemplateRequest) (*
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -6703,7 +6703,7 @@ func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*Properti
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6713,7 +6713,7 @@ func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*Properti
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6723,7 +6723,7 @@ func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*Properti
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6732,7 +6732,7 @@ func (a *DefaultApiService) UpdateUserExecute(r ApiUpdateUserRequest) (*Properti
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -6843,7 +6843,7 @@ func (a *DefaultApiService) ViewApiKeysExecute(r ApiViewApiKeysRequest) (*ApiKey
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6852,7 +6852,7 @@ func (a *DefaultApiService) ViewApiKeysExecute(r ApiViewApiKeysRequest) (*ApiKey
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -6973,7 +6973,7 @@ func (a *DefaultApiService) ViewTemplateExecute(r ApiViewTemplateRequest) (*Temp
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6983,7 +6983,7 @@ func (a *DefaultApiService) ViewTemplateExecute(r ApiViewTemplateRequest) (*Temp
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -6992,7 +6992,7 @@ func (a *DefaultApiService) ViewTemplateExecute(r ApiViewTemplateRequest) (*Temp
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
@@ -7140,7 +7140,7 @@ func (a *DefaultApiService) ViewTemplatesExecute(r ApiViewTemplatesRequest) (*Te
 			var v GenericError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -7150,7 +7150,7 @@ func (a *DefaultApiService) ViewTemplatesExecute(r ApiViewTemplatesRequest) (*Te
 			var v RateLimitError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
-				newErr.error = err.Error()
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
@@ -7159,7 +7159,7 @@ func (a *DefaultApiService) ViewTemplatesExecute(r ApiViewTemplatesRequest) (*Te
 		var v GenericError
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
-			newErr.error = err.Error()
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		newErr.model = v
