@@ -407,6 +407,12 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 		}
 		return nil
 	}
+	// Fall back to JSON: some responses (e.g. edge/proxy errors) declare a
+	// non-JSON content type such as text/plain while carrying a JSON body.
+	// Decoding it keeps the real API error visible in GenericOpenAPIError.
+	if err = json.Unmarshal(b, v); err == nil {
+		return nil
+	}
 	return errors.New("undefined response type")
 }
 
