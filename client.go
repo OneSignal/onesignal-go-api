@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.11.0
+API version: 5.11.1
 Contact: devrel@onesignal.com
 */
 
@@ -43,7 +43,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the OneSignal API v5.11.0
+// APIClient manages communication with the OneSignal API v5.11.1
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -325,7 +325,7 @@ func (c *APIClient) prepareRequest(
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
 
     // Add the SDK version to OS-Usage header for telemetry
-    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=5.11.0")
+    localVarRequest.Header.Add("OS-Usage-Data", "kind=sdk, sdk-name=onesignal-go, version=5.11.1")
 
 	if ctx != nil {
 		// add context to the request
@@ -405,6 +405,12 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 		} else if err = json.Unmarshal(b, v); err != nil { // simple model
 			return err
 		}
+		return nil
+	}
+	// Fall back to JSON: some responses (e.g. edge/proxy errors) declare a
+	// non-JSON content type such as text/plain while carrying a JSON body.
+	// Decoding it keeps the real API error visible in GenericOpenAPIError.
+	if err = json.Unmarshal(b, v); err == nil {
 		return nil
 	}
 	return errors.New("undefined response type")

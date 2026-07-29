@@ -3,7 +3,7 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.11.0
+API version: 5.11.1
 Contact: devrel@onesignal.com
 */
 
@@ -103,6 +103,8 @@ type Notification struct {
 	TargetContentIdentifier NullableString `json:"target_content_identifier,omitempty"`
 	// Channel: Push Notifications Platform: Android Picture to display in the expanded view. Can be a drawable resource name or a URL. 
 	BigPicture NullableString `json:"big_picture,omitempty"`
+	// Channel: Push Notifications Platform: All Picture to display on all platforms that support it. Must be a URL to an image file. Platform-specific picture fields (big_picture, huawei_big_picture, adm_big_picture, chrome_web_image, ios_attachments, firefox_icon) take precedence over this value when set. 
+	GlobalImage NullableString `json:"global_image,omitempty"`
 	// Channel: Push Notifications Platform: Huawei Picture to display in the expanded view. Can be a drawable resource name or a URL. 
 	HuaweiBigPicture NullableString `json:"huawei_big_picture,omitempty"`
 	// Channel: Push Notifications Platform: Amazon Picture to display in the expanded view. Can be a drawable resource name or a URL. 
@@ -1950,6 +1952,48 @@ func (o *Notification) SetBigPictureNil() {
 // UnsetBigPicture ensures that no value is present for BigPicture, not even an explicit nil
 func (o *Notification) UnsetBigPicture() {
 	o.BigPicture.Unset()
+}
+
+// GetGlobalImage returns the GlobalImage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Notification) GetGlobalImage() string {
+	if o == nil || o.GlobalImage.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.GlobalImage.Get()
+}
+
+// GetGlobalImageOk returns a tuple with the GlobalImage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Notification) GetGlobalImageOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GlobalImage.Get(), o.GlobalImage.IsSet()
+}
+
+// HasGlobalImage returns a boolean if a field has been set.
+func (o *Notification) HasGlobalImage() bool {
+	if o != nil && o.GlobalImage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGlobalImage gets a reference to the given NullableString and assigns it to the GlobalImage field.
+func (o *Notification) SetGlobalImage(v string) {
+	o.GlobalImage.Set(&v)
+}
+// SetGlobalImageNil sets the value for GlobalImage to be an explicit nil
+func (o *Notification) SetGlobalImageNil() {
+	o.GlobalImage.Set(nil)
+}
+
+// UnsetGlobalImage ensures that no value is present for GlobalImage, not even an explicit nil
+func (o *Notification) UnsetGlobalImage() {
+	o.GlobalImage.Unset()
 }
 
 // GetHuaweiBigPicture returns the HuaweiBigPicture field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -5023,6 +5067,9 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 	if o.BigPicture.IsSet() {
 		toSerialize["big_picture"] = o.BigPicture.Get()
 	}
+	if o.GlobalImage.IsSet() {
+		toSerialize["global_image"] = o.GlobalImage.Get()
+	}
 	if o.HuaweiBigPicture.IsSet() {
 		toSerialize["huawei_big_picture"] = o.HuaweiBigPicture.Get()
 	}
@@ -5305,6 +5352,7 @@ func (o *Notification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "mutable_content")
 		delete(additionalProperties, "target_content_identifier")
 		delete(additionalProperties, "big_picture")
+		delete(additionalProperties, "global_image")
 		delete(additionalProperties, "huawei_big_picture")
 		delete(additionalProperties, "adm_big_picture")
 		delete(additionalProperties, "chrome_big_picture")
