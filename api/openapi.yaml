@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.11.1
+  version: 5.11.2
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -2729,7 +2729,7 @@ paths:
       security:
       - organization_api_key: []
       summary: Rotate API key
-  /apps/{app_id}/integrations/custom_events:
+  /apps/{app_id}/custom_events:
     post:
       description: "The Custom Events API allows you to record user events. Custom\
         \ events can represent any action users take in your application, such as\
