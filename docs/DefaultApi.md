@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**CreateApiKey**](DefaultApi.md#CreateApiKey) | **Post** /apps/{app_id}/auth/tokens | Create API key
 [**CreateApp**](DefaultApi.md#CreateApp) | **Post** /apps | Create an app
 [**CreateCustomEvents**](DefaultApi.md#CreateCustomEvents) | **Post** /apps/{app_id}/custom_events | Create custom events
+[**CreateJourney**](DefaultApi.md#CreateJourney) | **Post** /apps/{app_id}/journeys | Create journey
 [**CreateNotification**](DefaultApi.md#CreateNotification) | **Post** /notifications | Create notification
 [**CreateSegment**](DefaultApi.md#CreateSegment) | **Post** /apps/{app_id}/segments | Create Segment
 [**CreateSubscription**](DefaultApi.md#CreateSubscription) | **Post** /apps/{app_id}/users/by/{alias_label}/{alias_id}/subscriptions | 
@@ -18,6 +19,7 @@ Method | HTTP request | Description
 [**CreateUser**](DefaultApi.md#CreateUser) | **Post** /apps/{app_id}/users | 
 [**DeleteAlias**](DefaultApi.md#DeleteAlias) | **Delete** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete} | 
 [**DeleteApiKey**](DefaultApi.md#DeleteApiKey) | **Delete** /apps/{app_id}/auth/tokens/{token_id} | Delete API key
+[**DeleteJourney**](DefaultApi.md#DeleteJourney) | **Delete** /apps/{app_id}/journeys/{journey_id} | Delete journey
 [**DeleteSegment**](DefaultApi.md#DeleteSegment) | **Delete** /apps/{app_id}/segments/{segment_id} | Delete Segment
 [**DeleteSubscription**](DefaultApi.md#DeleteSubscription) | **Delete** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**DeleteTemplate**](DefaultApi.md#DeleteTemplate) | **Delete** /templates/{template_id} | Delete template
@@ -42,6 +44,8 @@ Method | HTTP request | Description
 [**UnsubscribeEmailWithToken**](DefaultApi.md#UnsubscribeEmailWithToken) | **Post** /apps/{app_id}/notifications/{notification_id}/unsubscribe | Unsubscribe with token
 [**UpdateApiKey**](DefaultApi.md#UpdateApiKey) | **Patch** /apps/{app_id}/auth/tokens/{token_id} | Update API key
 [**UpdateApp**](DefaultApi.md#UpdateApp) | **Put** /apps/{app_id} | Update an app
+[**UpdateJourney**](DefaultApi.md#UpdateJourney) | **Patch** /apps/{app_id}/journeys/{journey_id} | Update journey
+[**UpdateJourneyNode**](DefaultApi.md#UpdateJourneyNode) | **Patch** /apps/{app_id}/journeys/{journey_id}/nodes/{node_id} | Update journey node
 [**UpdateLiveActivity**](DefaultApi.md#UpdateLiveActivity) | **Post** /apps/{app_id}/live_activities/{activity_id}/notifications | Update a Live Activity via Push
 [**UpdateSegment**](DefaultApi.md#UpdateSegment) | **Patch** /apps/{app_id}/segments/{segment_id} | Update Segment
 [**UpdateSubscription**](DefaultApi.md#UpdateSubscription) | **Patch** /apps/{app_id}/subscriptions/{subscription_id} | 
@@ -49,6 +53,9 @@ Method | HTTP request | Description
 [**UpdateTemplate**](DefaultApi.md#UpdateTemplate) | **Patch** /templates/{template_id} | Update template
 [**UpdateUser**](DefaultApi.md#UpdateUser) | **Patch** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
 [**ViewApiKeys**](DefaultApi.md#ViewApiKeys) | **Get** /apps/{app_id}/auth/tokens | View API keys
+[**ViewJourney**](DefaultApi.md#ViewJourney) | **Get** /apps/{app_id}/journeys/{journey_id} | View journey
+[**ViewJourneyStats**](DefaultApi.md#ViewJourneyStats) | **Get** /apps/{app_id}/journeys/{journey_id}/stats | View journey stats
+[**ViewJourneys**](DefaultApi.md#ViewJourneys) | **Get** /apps/{app_id}/journeys | View journeys
 [**ViewTemplate**](DefaultApi.md#ViewTemplate) | **Get** /templates/{template_id} | View template
 [**ViewTemplates**](DefaultApi.md#ViewTemplates) | **Get** /templates | View templates
 
@@ -660,6 +667,88 @@ Name | Type | Description  | Notes
 ### Return type
 
 **map[string]interface{}**
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## CreateJourney
+
+> Journey CreateJourney(ctx, appId).CreateJourneyRequest(createJourneyRequest).Execute()
+
+Create journey
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    createJourneyRequest := *onesignal.NewCreateJourneyRequest("Name_example") // CreateJourneyRequest | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.CreateJourney(restAuth, appId).CreateJourneyRequest(createJourneyRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateJourney``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `CreateJourney`: Journey
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateJourney`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateJourneyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **createJourneyRequest** | [**CreateJourneyRequest**](CreateJourneyRequest.md) |  | 
+
+### Return type
+
+[**Journey**](Journey.md)
 
 ### HTTP request headers
 
@@ -1321,6 +1410,89 @@ Name | Type | Description  | Notes
 ### Return type
 
 **map[string]interface{}**
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## DeleteJourney
+
+> GenericSuccessBoolResponse DeleteJourney(ctx, appId, journeyId).Execute()
+
+Delete journey
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    journeyId := "YOUR_JOURNEY_ID" // string | UUID of the journey to delete.
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.DeleteJourney(restAuth, appId, journeyId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteJourney``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `DeleteJourney`: GenericSuccessBoolResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DeleteJourney`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+**journeyId** | **string** | UUID of the journey to delete. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteJourneyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**GenericSuccessBoolResponse**](GenericSuccessBoolResponse.md)
 
 ### HTTP request headers
 
@@ -3345,6 +3517,179 @@ Name | Type | Description  | Notes
 [[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
+## UpdateJourney
+
+> Journey UpdateJourney(ctx, appId, journeyId).UpdateJourneyRequest(updateJourneyRequest).Execute()
+
+Update journey
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    journeyId := "YOUR_JOURNEY_ID" // string | UUID of the journey to update.
+    updateJourneyRequest := *onesignal.NewUpdateJourneyRequest() // UpdateJourneyRequest | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.UpdateJourney(restAuth, appId, journeyId).UpdateJourneyRequest(updateJourneyRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateJourney``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `UpdateJourney`: Journey
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateJourney`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+**journeyId** | **string** | UUID of the journey to update. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateJourneyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **updateJourneyRequest** | [**UpdateJourneyRequest**](UpdateJourneyRequest.md) |  | 
+
+### Return type
+
+[**Journey**](Journey.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## UpdateJourneyNode
+
+> Journey UpdateJourneyNode(ctx, appId, journeyId, nodeId).UpdateJourneyNodeRequest(updateJourneyNodeRequest).Execute()
+
+Update journey node
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    journeyId := "YOUR_JOURNEY_ID" // string | UUID of the journey that owns the node.
+    nodeId := "YOUR_NODE_ID" // string | Server-assigned UUID of the node to update, from a prior View journey fetch.
+    updateJourneyNodeRequest := *onesignal.NewUpdateJourneyNodeRequest() // UpdateJourneyNodeRequest | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.UpdateJourneyNode(restAuth, appId, journeyId, nodeId).UpdateJourneyNodeRequest(updateJourneyNodeRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateJourneyNode``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `UpdateJourneyNode`: Journey
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateJourneyNode`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+**journeyId** | **string** | UUID of the journey that owns the node. | 
+**nodeId** | **string** | Server-assigned UUID of the node to update, from a prior View journey fetch. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateJourneyNodeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **updateJourneyNodeRequest** | [**UpdateJourneyNodeRequest**](UpdateJourneyNodeRequest.md) |  | 
+
+### Return type
+
+[**Journey**](Journey.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
 ## UpdateLiveActivity
 
 > UpdateLiveActivitySuccessResponse UpdateLiveActivity(ctx, appId, activityId).UpdateLiveActivityRequest(updateLiveActivityRequest).Execute()
@@ -3928,6 +4273,256 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ApiKeyTokensListResponse**](ApiKeyTokensListResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## ViewJourney
+
+> Journey ViewJourney(ctx, appId, journeyId).Execute()
+
+View journey
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    journeyId := "YOUR_JOURNEY_ID" // string | UUID of the journey to retrieve.
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.ViewJourney(restAuth, appId, journeyId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewJourney``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `ViewJourney`: Journey
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ViewJourney`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+**journeyId** | **string** | UUID of the journey to retrieve. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiViewJourneyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**Journey**](Journey.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## ViewJourneyStats
+
+> JourneyStats ViewJourneyStats(ctx, appId, journeyId).Execute()
+
+View journey stats
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    journeyId := "YOUR_JOURNEY_ID" // string | UUID of the journey to retrieve stats for.
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.ViewJourneyStats(restAuth, appId, journeyId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewJourneyStats``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `ViewJourneyStats`: JourneyStats
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ViewJourneyStats`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+**journeyId** | **string** | UUID of the journey to retrieve stats for. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiViewJourneyStatsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**JourneyStats**](JourneyStats.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## ViewJourneys
+
+> JourneyListResponse ViewJourneys(ctx, appId).Cursor(cursor).Limit(limit).Execute()
+
+View journeys
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    cursor := "cursor_example" // string | Opaque pagination token from a previous response's next_cursor. Omit for the first page. (optional)
+    limit := int32(50) // int32 | Maximum journeys to return per page. Minimum 1, maximum 50. (optional) (default to 50)
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.ViewJourneys(restAuth, appId).Cursor(cursor).Limit(limit).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewJourneys``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `ViewJourneys`: JourneyListResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ViewJourneys`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiViewJourneysRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | Opaque pagination token from a previous response&#39;s next_cursor. Omit for the first page. | 
+ **limit** | **int32** | Maximum journeys to return per page. Minimum 1, maximum 50. | [default to 50]
+
+### Return type
+
+[**JourneyListResponse**](JourneyListResponse.md)
 
 ### HTTP request headers
 

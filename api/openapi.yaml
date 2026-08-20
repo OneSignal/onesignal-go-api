@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.11.2
+  version: 5.12.0
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -2785,6 +2785,482 @@ paths:
       security:
       - rest_api_key: []
       summary: Create custom events
+  /apps/{app_id}/journeys:
+    get:
+      description: The Journeys API is in beta. Endpoints and response fields can
+        still change. Retrieve a paginated list of journeys for an app. Returns a
+        summary representation of each journey; use View journey for the full configuration.
+        Uses forward-only cursor-based pagination.
+      operationId: view_journeys
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: Opaque pagination token from a previous response's next_cursor.
+          Omit for the first page.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Maximum journeys to return per page. Minimum 1, maximum 50."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          example: 50
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JourneyListResponse'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Forbidden
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View journeys
+    post:
+      description: The Journeys API is in beta. Endpoints and response fields can
+        still change. Create a new journey with an audience and a node graph. Journeys
+        are always created in the draft state. The authenticated App API key must
+        have permission to create journeys.
+      operationId: create_journey
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJourneyRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+          description: Created
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Forbidden
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Create journey
+  /apps/{app_id}/journeys/{journey_id}:
+    delete:
+      description: "The Journeys API is in beta. Endpoints and response fields can\
+        \ still change. Permanently delete a journey by its UUID. Returns { \"success\"\
+        : true } on success. The authenticated App API key must have permission to\
+        \ delete journeys. Deleting a journey stops any in-flight users and cannot\
+        \ be undone. Archive a running journey instead if you need to keep its data."
+      operationId: delete_journey
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: UUID of the journey to delete.
+        explode: false
+        in: path
+        name: journey_id
+        required: true
+        schema:
+          example: YOUR_JOURNEY_ID
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessBoolResponse'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Delete journey
+    get:
+      description: "The Journeys API is in beta. Endpoints and response fields can\
+        \ still change. Retrieve the full configuration of a single journey by its\
+        \ UUID, including its audience and node graph."
+      operationId: view_journey
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: UUID of the journey to retrieve.
+        explode: false
+        in: path
+        name: journey_id
+        required: true
+        schema:
+          example: YOUR_JOURNEY_ID
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View journey
+    patch:
+      description: "The Journeys API is in beta. Endpoints and response fields can\
+        \ still change. Apply a partial update to a journey using JSON Merge Patch\
+        \ (RFC 7396). Send only the fields you want to change; omitted fields are\
+        \ left unchanged. A null value clears a nullable field, and arrays such as\
+        \ nodes are replaced wholesale. Set state to active to activate a draft journey."
+      operationId: update_journey
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: UUID of the journey to update.
+        explode: false
+        in: path
+        name: journey_id
+        required: true
+        schema:
+          example: YOUR_JOURNEY_ID
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateJourneyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unprocessable Entity
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Update journey
+  /apps/{app_id}/journeys/{journey_id}/stats:
+    get:
+      description: "The Journeys API is in beta. Endpoints and response fields can\
+        \ still change. Retrieve performance stats for a single journey: journey-level\
+        \ entry and exit counts, per-node counts keyed by node id, per-branch counts\
+        \ keyed by branch id, and channel delivery stats for message-sending nodes.\
+        \ The response carries no definition detail, so join it by id against the\
+        \ journey from View journey."
+      operationId: view_journey_stats
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: UUID of the journey to retrieve stats for.
+        explode: false
+        in: path
+        name: journey_id
+        required: true
+        schema:
+          example: YOUR_JOURNEY_ID
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JourneyStats'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: View journey stats
+  /apps/{app_id}/journeys/{journey_id}/nodes/{node_id}:
+    patch:
+      description: "The Journeys API is in beta. Endpoints and response fields can\
+        \ still change. Apply a partial update to a single node, located by its server-assigned\
+        \ id, using JSON Merge Patch (RFC 7396). Send only the node fields you want\
+        \ to change; the rest of the node and the rest of the journey graph are left\
+        \ untouched. Returns the full updated journey."
+      operationId: update_journey_node
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: UUID of the journey that owns the node.
+        explode: false
+        in: path
+        name: journey_id
+        required: true
+        schema:
+          example: YOUR_JOURNEY_ID
+          type: string
+        style: simple
+      - description: "Server-assigned UUID of the node to update, from a prior View\
+          \ journey fetch."
+        explode: false
+        in: path
+        name: node_id
+        required: true
+        schema:
+          example: YOUR_NODE_ID
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateJourneyNodeRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Conflict
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unprocessable Entity
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Update journey node
   /organizations/{organization_id}/audit_logs:
     get:
       description: "Retrieve a paginated, time-scoped list of audit log events for\
@@ -5595,6 +6071,1834 @@ components:
             when has_more is true.
           type: string
       type: object
+    JourneySchedule:
+      description: Optional future start and/or stop time. null means no scheduled
+        activation.
+      example:
+        start_at: start_at
+        error: error
+        stop_at: stop_at
+      nullable: true
+      properties:
+        start_at:
+          description: ISO 8601 start time. Use UTC (Z or +00:00). Must be at least
+            5 minutes in the future.
+          nullable: true
+          type: string
+        stop_at:
+          description: ISO 8601 stop time. Use UTC (Z or +00:00). Must be in the future
+            and later than start_at.
+          nullable: true
+          type: string
+        error:
+          description: Read-only. Present when a scheduling error occurred.
+          nullable: true
+          type: string
+      type: object
+    JourneyReentryRules:
+      description: Controls whether and how soon a user can re-enter the journey.
+        null means re-entry is not allowed.
+      example:
+        duration_seconds: 600
+      nullable: true
+      properties:
+        duration_seconds:
+          description: Minimum seconds before a user can re-enter. Must be at least
+            600 (10 minutes).
+          minimum: 600
+          nullable: true
+          type: integer
+      type: object
+    JourneyEventAttribute:
+      example:
+        value: value
+        key: key
+        operator: equal
+      properties:
+        key:
+          description: Event attribute key.
+          type: string
+        operator:
+          description: Comparison operator.
+          enum:
+          - equal
+          - not_equal
+          - less
+          - less_or_equal
+          - greater_or_equal
+          - greater
+          - is
+          - is_not
+          - exists
+          - not_exists
+          - before
+          - after
+          type: string
+        value:
+          description: Value to compare against. Not required for exists and not_exists.
+          type: string
+      required:
+      - key
+      - operator
+      type: object
+    JourneyEventTriggerAttributes:
+      description: "Event attribute matchers, as a list of condition groups. Send\
+        \ a single group whose conditions are AND'd together. More than one group\
+        \ is rejected."
+      items:
+        items:
+          $ref: '#/components/schemas/JourneyEventAttribute'
+        type: array
+      type: array
+    JourneyAudience:
+      description: The journey entry audience. The kind field selects which other
+        fields apply.
+      example:
+        future_additions_only: true
+        kind: segment
+        included_segment_ids:
+        - included_segment_ids
+        - included_segment_ids
+        excluded_segment_ids:
+        - excluded_segment_ids
+        - excluded_segment_ids
+        name: name
+        attributes:
+        - - value: value
+            key: key
+            operator: equal
+          - value: value
+            key: key
+            operator: equal
+        - - value: value
+            key: key
+            operator: equal
+          - value: value
+            key: key
+            operator: equal
+      properties:
+        kind:
+          description: Audience kind. Selects which other fields apply.
+          enum:
+          - segment
+          - event_trigger
+          type: string
+        included_segment_ids:
+          description: "segment audiences: Segment UUIDs whose users enter the journey."
+          items:
+            type: string
+          type: array
+        excluded_segment_ids:
+          description: "segment audiences: Segment UUIDs whose users are excluded."
+          items:
+            type: string
+          type: array
+        future_additions_only:
+          description: "segment audiences: when true, only users who newly match the\
+            \ segment after activation enter the journey. Defaults to false."
+          nullable: true
+          type: boolean
+        name:
+          description: "event_trigger audiences: event name that triggers entry, up\
+            \ to 255 characters."
+          type: string
+        attributes:
+          description: "Event attribute matchers, as a list of condition groups. Send\
+            \ a single group whose conditions are AND'd together. More than one group\
+            \ is rejected."
+          items:
+            items:
+              $ref: '#/components/schemas/JourneyEventAttribute'
+            type: array
+          type: array
+      required:
+      - kind
+      type: object
+    JourneyEarlyExit:
+      description: Conditions that remove a user from the journey before it completes.
+        At least one rule must be set under rules. Send null to remove early exit
+        entirely.
+      example:
+        rules:
+          on_segment:
+            included_segment_ids:
+            - included_segment_ids
+            - included_segment_ids
+          on_event:
+            name: name
+          when_not_in_audience: true
+          on_session: true
+        tag_on_early_exit:
+          key: tag_on_early_exit
+      nullable: true
+      properties:
+        rules:
+          $ref: '#/components/schemas/JourneyEarlyExit_rules'
+        tag_on_early_exit:
+          additionalProperties:
+            type: string
+          description: Tag key-value pairs applied when a user exits early.
+          type: object
+      type: object
+    JourneyTimePoint:
+      properties:
+        hour:
+          description: "Hour of day, 0-23."
+          maximum: 23
+          minimum: 0
+          type: integer
+        minute:
+          description: "Minute of hour, 0-59. Defaults to 0."
+          maximum: 59
+          minimum: 0
+          type: integer
+      type: object
+    JourneyTimeWindow:
+      description: A wall-clock window. Each window must span at least 15 minutes.
+      example:
+        start: ""
+        end: ""
+        day_of_week: 4
+      properties:
+        start:
+          allOf:
+          - $ref: '#/components/schemas/JourneyTimePoint'
+          description: When the window opens.
+        end:
+          allOf:
+          - $ref: '#/components/schemas/JourneyTimePoint'
+          description: When the window closes.
+        day_of_week:
+          description: "Day of week, 1 = Monday. Omit to apply the window to every\
+            \ day."
+          maximum: 7
+          minimum: 1
+          type: integer
+      type: object
+    JourneyCondition:
+      description: A branch condition. The kind field selects which other fields apply.
+      example:
+        kind: segment_membership
+        entry_event_match_attributes:
+        - "{}"
+        - "{}"
+        included_segment_ids:
+        - included_segment_ids
+        - included_segment_ids
+        excluded_segment_ids:
+        - excluded_segment_ids
+        - excluded_segment_ids
+        name: name
+        action: received
+        attributes:
+        - - value: value
+            key: key
+            operator: equal
+          - value: value
+            key: key
+            operator: equal
+        - - value: value
+            key: key
+            operator: equal
+          - value: value
+            key: key
+            operator: equal
+        sending_node_id: sending_node_id
+        client_node_id: client_node_id
+      properties:
+        kind:
+          description: Condition kind. Selects which other fields apply.
+          enum:
+          - segment_membership
+          - on_notification_action
+          - event_trigger
+          type: string
+        included_segment_ids:
+          description: "segment_membership conditions: Segment UUIDs the user must\
+            \ belong to."
+          items:
+            type: string
+          type: array
+        excluded_segment_ids:
+          description: "segment_membership conditions: Segment UUIDs the user must\
+            \ not belong to."
+          items:
+            type: string
+          type: array
+        action:
+          description: "on_notification_action conditions: the notification action\
+            \ to branch on. Which actions apply depends on the sending node's channel."
+          enum:
+          - received
+          - clicked
+          - opened
+          type: string
+        sending_node_id:
+          description: "on_notification_action conditions: id of the sending node\
+            \ this action refers to. Returned on reads; accepted on write."
+          type: string
+        client_node_id:
+          description: "on_notification_action conditions: write-only alternative\
+            \ to sending_node_id. References the sending node by its client_node_id."
+          type: string
+        name:
+          description: "event_trigger conditions: event name, up to 255 characters."
+          type: string
+        attributes:
+          description: "Event attribute matchers, as a list of condition groups. Send\
+            \ a single group whose conditions are AND'd together. More than one group\
+            \ is rejected."
+          items:
+            items:
+              $ref: '#/components/schemas/JourneyEventAttribute'
+            type: array
+          type: array
+        entry_event_match_attributes:
+          description: "event_trigger conditions: match incoming event properties\
+            \ against the journey's entry event. Only valid on event-triggered journeys."
+          items:
+            type: object
+          nullable: true
+          type: array
+      required:
+      - kind
+      type: object
+    JourneyWaitUntilExpiration:
+      description: Optional expiration timer. null waits indefinitely.
+      example:
+        duration_seconds: 17789868
+        exits: true
+      nullable: true
+      properties:
+        duration_seconds:
+          description: "Seconds to wait before the timer fires. Minimum 60, maximum\
+            \ 31556952 (1 year)."
+          maximum: 31556952
+          minimum: 60
+          nullable: true
+          type: integer
+        exits:
+          description: "When true, the user exits the journey when the timer fires;\
+            \ when false, the user continues to convergence."
+          nullable: true
+          type: boolean
+      type: object
+    JourneyNode:
+      description: "A journey node. The kind field selects which other fields apply.\
+        \ Branching nodes (split_range, yes_no, wait_until) nest their sub-graphs\
+        \ inline via branches[].nodes."
+      example:
+        annotation: annotation
+        duration_seconds: 2527224
+        relative_to: schedule_in_timezone
+        assignments:
+          key: assignments
+        kind: wait
+        windows:
+        - start: ""
+          end: ""
+          day_of_week: 4
+        - start: ""
+          end: ""
+          day_of_week: 4
+        time_zone: time_zone
+        use_user_time_zone: true
+        branches:
+        - condition:
+            kind: segment_membership
+            entry_event_match_attributes:
+            - "{}"
+            - "{}"
+            included_segment_ids:
+            - included_segment_ids
+            - included_segment_ids
+            excluded_segment_ids:
+            - excluded_segment_ids
+            - excluded_segment_ids
+            name: name
+            action: received
+            attributes:
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            sending_node_id: sending_node_id
+            client_node_id: client_node_id
+          nodes:
+          - null
+          - null
+          weight: 5.962133916683182
+          id: id
+        - condition:
+            kind: segment_membership
+            entry_event_match_attributes:
+            - "{}"
+            - "{}"
+            included_segment_ids:
+            - included_segment_ids
+            - included_segment_ids
+            excluded_segment_ids:
+            - excluded_segment_ids
+            - excluded_segment_ids
+            name: name
+            action: received
+            attributes:
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            sending_node_id: sending_node_id
+            client_node_id: client_node_id
+          nodes:
+          - null
+          - null
+          weight: 5.962133916683182
+          id: id
+        client_node_id: client_node_id
+        iam_id: iam_id
+        randomize_on_entry: true
+        webhook_id: webhook_id
+        template_id: template_id
+        expiration:
+          duration_seconds: 17789868
+          exits: true
+        id: id
+        user_ttl_seconds: 1
+      properties:
+        id:
+          description: Server-assigned node UUID. Returned on reads. Required on update
+            to keep an existing node. Rejected on create with a 400 validation error.
+          type: string
+        kind:
+          description: Node kind. Selects which other fields apply.
+          enum:
+          - wait
+          - time_window
+          - send_push
+          - send_email
+          - send_sms
+          - send_iam
+          - send_webhook
+          - tag
+          - split_range
+          - yes_no
+          - wait_until
+          type: string
+        client_node_id:
+          description: "Optional client-assigned identifier, unique within the journey.\
+            \ Use it to reference this node from elsewhere in the same request. Persisted\
+            \ and returned on reads."
+          type: string
+        annotation:
+          description: "Optional free-text label, up to 255 characters. Stored and\
+            \ returned as-is with no effect on journey behavior."
+          type: string
+        duration_seconds:
+          description: "wait nodes: seconds to hold the user. Minimum 60, maximum\
+            \ 31556952 (1 year)."
+          maximum: 31556952
+          minimum: 60
+          nullable: true
+          type: integer
+        relative_to:
+          description: "time_window nodes: schedule_in_timezone uses the configured\
+            \ windows; last_active_time holds relative to the user's last active time."
+          enum:
+          - schedule_in_timezone
+          - last_active_time
+          type: string
+        windows:
+          description: "time_window nodes: one or more time windows. A window with\
+            \ no day_of_week applies to every day. Required when relative_to is schedule_in_timezone;\
+            \ omit when it is last_active_time."
+          items:
+            $ref: '#/components/schemas/JourneyTimeWindow'
+          type: array
+        time_zone:
+          description: "time_window nodes: IANA timezone identifier used when the\
+            \ user's timezone is unavailable."
+          type: string
+        use_user_time_zone:
+          description: "time_window nodes: when true, uses the user's timezone if\
+            \ available."
+          nullable: true
+          type: boolean
+        template_id:
+          description: "send_push, send_email, and send_sms nodes: UUID of the template\
+            \ to send."
+          type: string
+        iam_id:
+          description: "send_iam nodes: UUID of the in-app message to send."
+          type: string
+        user_ttl_seconds:
+          description: "send_iam nodes: optional time-to-live for the in-app message,\
+            \ in seconds."
+          minimum: 1
+          nullable: true
+          type: integer
+        webhook_id:
+          description: "send_webhook nodes: UUID of the webhook to send."
+          type: string
+        assignments:
+          additionalProperties:
+            type: string
+          description: "tag nodes: tag key-value pairs to assign. An empty string\
+            \ value removes the tag. Keys are limited to 255 characters and values\
+            \ to 1024."
+          type: object
+        randomize_on_entry:
+          description: "split_range nodes: when true, assigns each user to a branch\
+            \ at random on entry. Defaults to false."
+          nullable: true
+          type: boolean
+        branches:
+          description: "Branching nodes: nested branches. split_range requires 2-20\
+            \ weighted branches that sum to 100. yes_no requires exactly 2 branches.\
+            \ wait_until requires 1-10 condition branches."
+          items:
+            $ref: '#/components/schemas/JourneyBranch'
+          type: array
+        expiration:
+          $ref: '#/components/schemas/JourneyWaitUntilExpiration'
+      required:
+      - kind
+      type: object
+    JourneyBranch:
+      example:
+        condition:
+          kind: segment_membership
+          entry_event_match_attributes:
+          - "{}"
+          - "{}"
+          included_segment_ids:
+          - included_segment_ids
+          - included_segment_ids
+          excluded_segment_ids:
+          - excluded_segment_ids
+          - excluded_segment_ids
+          name: name
+          action: received
+          attributes:
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+          sending_node_id: sending_node_id
+          client_node_id: client_node_id
+        nodes:
+        - null
+        - null
+        weight: 5.962133916683182
+        id: id
+      properties:
+        id:
+          description: Server-assigned branch identifier. Read-only on create; echo
+            it on update to keep the branch.
+          type: string
+        condition:
+          $ref: '#/components/schemas/JourneyCondition'
+        weight:
+          description: Branch weight for split_range nodes. Weights across a node's
+            branches must sum to 100.
+          type: number
+        nodes:
+          description: "Nodes run when this branch is taken, before flow converges\
+            \ to the next sibling node."
+          items:
+            $ref: '#/components/schemas/JourneyNode'
+          type: array
+      type: object
+    Journey:
+      description: "Full journey representation returned by the detail, create, and\
+        \ update endpoints."
+      example:
+        audience:
+          future_additions_only: true
+          kind: segment
+          included_segment_ids:
+          - included_segment_ids
+          - included_segment_ids
+          excluded_segment_ids:
+          - excluded_segment_ids
+          - excluded_segment_ids
+          name: name
+          attributes:
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+        archived_at: archived_at
+        description: description
+        created_at: created_at
+        early_exit:
+          rules:
+            on_segment:
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+            on_event:
+              name: name
+            when_not_in_audience: true
+            on_session: true
+          tag_on_early_exit:
+            key: tag_on_early_exit
+        created_source: created_source
+        schedule:
+          start_at: start_at
+          error: error
+          stop_at: stop_at
+        concurrency_key: concurrency_key
+        nodes:
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        updated_at: updated_at
+        name: name
+        started_at: started_at
+        id: id
+        state: draft
+        reentry_rules:
+          duration_seconds: 600
+        app_id: app_id
+      properties:
+        id:
+          description: Journey UUID. Read-only.
+          type: string
+        app_id:
+          description: UUID of the app the journey belongs to. Read-only.
+          type: string
+        name:
+          description: "Journey name, up to 300 characters."
+          type: string
+        description:
+          description: "Journey description, up to 1024 characters. Defaults to an\
+            \ empty string."
+          nullable: true
+          type: string
+        state:
+          description: Journey state. New journeys are created as draft. processing
+            is transient while activation is in progress. archived is a journey that
+            has been stopped. Change it through the state field on Update journey.
+          enum:
+          - draft
+          - scheduled
+          - processing
+          - active
+          - archived
+          type: string
+        created_at:
+          description: ISO 8601 creation time. Read-only.
+          type: string
+        updated_at:
+          description: ISO 8601 last-update time. Read-only.
+          type: string
+        started_at:
+          description: "ISO 8601 time the journey was activated, or null. Read-only.\
+            \ May stay null briefly after you set state to active: activation is enqueued,\
+            \ and started_at populates once the journey finishes processing."
+          nullable: true
+          type: string
+        archived_at:
+          description: "ISO 8601 time the journey was archived, or null. Read-only."
+          nullable: true
+          type: string
+        created_source:
+          description: "Origin of the journey, for example public_api or dashboard.\
+            \ Read-only."
+          nullable: true
+          type: string
+        audience:
+          $ref: '#/components/schemas/JourneyAudience'
+        early_exit:
+          $ref: '#/components/schemas/JourneyEarlyExit'
+        reentry_rules:
+          $ref: '#/components/schemas/JourneyReentryRules'
+        schedule:
+          $ref: '#/components/schemas/JourneySchedule'
+        nodes:
+          description: Ordered list of journey nodes.
+          items:
+            $ref: '#/components/schemas/JourneyNode'
+          type: array
+        concurrency_key:
+          description: Opaque optimistic-concurrency token. Read-only. Pass it back
+            on update to guard against overwriting a concurrent change (409). Send
+            it back exactly as read; do not construct or parse it.
+          type: string
+      type: object
+    JourneyListAudience:
+      description: Entry audience reduced to its kind. Use View journey for the full
+        audience configuration.
+      example:
+        kind: segment
+      properties:
+        kind:
+          description: Audience kind.
+          enum:
+          - segment
+          - event_trigger
+          type: string
+      type: object
+    JourneyListItem:
+      description: "Summary journey representation returned by the list endpoint.\
+        \ Excludes description, nodes, early-exit configuration, and concurrency_key."
+      example:
+        schedule:
+          start_at: start_at
+          error: error
+          stop_at: stop_at
+        audience:
+          kind: segment
+        updated_at: updated_at
+        archived_at: archived_at
+        name: name
+        created_at: created_at
+        started_at: started_at
+        created_source: created_source
+        id: id
+        state: draft
+        reentry_rules:
+          duration_seconds: 600
+        app_id: app_id
+      properties:
+        id:
+          description: Journey UUID. Read-only.
+          type: string
+        app_id:
+          description: UUID of the app the journey belongs to. Read-only.
+          type: string
+        name:
+          description: "Journey name, up to 300 characters."
+          type: string
+        state:
+          description: Journey state. New journeys are created as draft. processing
+            is transient while activation is in progress. archived is a journey that
+            has been stopped. Change it through the state field on Update journey.
+          enum:
+          - draft
+          - scheduled
+          - processing
+          - active
+          - archived
+          type: string
+        created_at:
+          description: ISO 8601 creation time. Read-only.
+          type: string
+        updated_at:
+          description: ISO 8601 last-update time. Read-only.
+          type: string
+        started_at:
+          description: "ISO 8601 time the journey was activated, or null. Read-only."
+          nullable: true
+          type: string
+        archived_at:
+          description: "ISO 8601 time the journey was archived, or null. Read-only."
+          nullable: true
+          type: string
+        created_source:
+          description: "Origin of the journey, for example public_api or dashboard.\
+            \ Read-only."
+          nullable: true
+          type: string
+        schedule:
+          $ref: '#/components/schemas/JourneySchedule'
+        audience:
+          $ref: '#/components/schemas/JourneyListAudience'
+        reentry_rules:
+          $ref: '#/components/schemas/JourneyReentryRules'
+      type: object
+    JourneyListResponse:
+      example:
+        journeys:
+        - schedule:
+            start_at: start_at
+            error: error
+            stop_at: stop_at
+          audience:
+            kind: segment
+          updated_at: updated_at
+          archived_at: archived_at
+          name: name
+          created_at: created_at
+          started_at: started_at
+          created_source: created_source
+          id: id
+          state: draft
+          reentry_rules:
+            duration_seconds: 600
+          app_id: app_id
+        - schedule:
+            start_at: start_at
+            error: error
+            stop_at: stop_at
+          audience:
+            kind: segment
+          updated_at: updated_at
+          archived_at: archived_at
+          name: name
+          created_at: created_at
+          started_at: started_at
+          created_source: created_source
+          id: id
+          state: draft
+          reentry_rules:
+            duration_seconds: 600
+          app_id: app_id
+        next_cursor: next_cursor
+        has_more: true
+      properties:
+        journeys:
+          description: "Journeys ordered by creation time, newest first."
+          items:
+            $ref: '#/components/schemas/JourneyListItem'
+          type: array
+        has_more:
+          description: true if more journeys exist beyond this page.
+          type: boolean
+        next_cursor:
+          description: Cursor for the next page. Present only when has_more is true.
+          type: string
+      type: object
+    CreateJourneyRequest:
+      description: Writable fields for Create journey. Journeys are always created
+        in the draft state. Server-controlled fields such as state or id are rejected.
+      example:
+        schedule:
+          start_at: start_at
+          error: error
+          stop_at: stop_at
+        audience:
+          future_additions_only: true
+          kind: segment
+          included_segment_ids:
+          - included_segment_ids
+          - included_segment_ids
+          excluded_segment_ids:
+          - excluded_segment_ids
+          - excluded_segment_ids
+          name: name
+          attributes:
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+        nodes:
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        name: name
+        description: description
+        early_exit:
+          rules:
+            on_segment:
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+            on_event:
+              name: name
+            when_not_in_audience: true
+            on_session: true
+          tag_on_early_exit:
+            key: tag_on_early_exit
+        reentry_rules:
+          duration_seconds: 600
+      properties:
+        name:
+          description: "Journey name, up to 300 characters."
+          type: string
+        description:
+          description: "Optional journey description, up to 1024 characters."
+          nullable: true
+          type: string
+        audience:
+          $ref: '#/components/schemas/JourneyAudience'
+        early_exit:
+          $ref: '#/components/schemas/JourneyEarlyExit'
+        reentry_rules:
+          $ref: '#/components/schemas/JourneyReentryRules'
+        schedule:
+          $ref: '#/components/schemas/JourneySchedule'
+        nodes:
+          description: Ordered list of journey nodes. Server-assigned id fields are
+            rejected on create.
+          items:
+            $ref: '#/components/schemas/JourneyNode'
+          type: array
+      required:
+      - name
+      type: object
+    UpdateJourneyRequest:
+      description: Partial update applied with JSON Merge Patch (RFC 7396). Send only
+        the fields you want to change. A null value clears a nullable field. Arrays
+        such as nodes are replaced wholesale.
+      example:
+        schedule:
+          start_at: start_at
+          error: error
+          stop_at: stop_at
+        audience:
+          future_additions_only: true
+          kind: segment
+          included_segment_ids:
+          - included_segment_ids
+          - included_segment_ids
+          excluded_segment_ids:
+          - excluded_segment_ids
+          - excluded_segment_ids
+          name: name
+          attributes:
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+        concurrency_key: concurrency_key
+        nodes:
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        name: name
+        description: description
+        early_exit:
+          rules:
+            on_segment:
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+            on_event:
+              name: name
+            when_not_in_audience: true
+            on_session: true
+          tag_on_early_exit:
+            key: tag_on_early_exit
+        reentry_rules:
+          duration_seconds: 600
+        state: draft
+      properties:
+        name:
+          description: Journey name.
+          type: string
+        description:
+          description: Journey description. Send null to clear it.
+          nullable: true
+          type: string
+        audience:
+          $ref: '#/components/schemas/JourneyAudience'
+        early_exit:
+          $ref: '#/components/schemas/JourneyEarlyExit'
+        reentry_rules:
+          $ref: '#/components/schemas/JourneyReentryRules'
+        schedule:
+          $ref: '#/components/schemas/JourneySchedule'
+        nodes:
+          description: "Full ordered list of nodes, which replaces the existing graph\
+            \ wholesale. Preserve each node's server-assigned id from a prior fetch\
+            \ to keep in-flight users on that node; omit id to add a new node."
+          items:
+            $ref: '#/components/schemas/JourneyNode'
+          type: array
+        state:
+          description: "Target state. Set active to activate a draft journey, or scheduled\
+            \ together with a future schedule.start_at to activate it later. Set archived\
+            \ to stop a running journey; archiving is permanent. Only scheduled and\
+            \ processing journeys can return to draft."
+          enum:
+          - draft
+          - scheduled
+          - active
+          - archived
+          type: string
+        concurrency_key:
+          description: Optional optimistic-concurrency token. Pass the concurrency_key
+            from a prior fetch to reject the update with 409 if the journey changed.
+            Omit to skip the check.
+          nullable: true
+          type: string
+      type: object
+    UpdateJourneyNodeRequest:
+      description: "Node fields to change, merged onto the current node. Send only\
+        \ the fields you want to change. The node's kind and id cannot be changed.\
+        \ Send null to clear a nullable field. Which other fields apply depends on\
+        \ the node's kind, matching JourneyNode."
+      example:
+        annotation: annotation
+        duration_seconds: 2527224
+        relative_to: schedule_in_timezone
+        assignments:
+          key: assignments
+        windows:
+        - start: ""
+          end: ""
+          day_of_week: 4
+        - start: ""
+          end: ""
+          day_of_week: 4
+        time_zone: time_zone
+        use_user_time_zone: true
+        branches:
+        - condition:
+            kind: segment_membership
+            entry_event_match_attributes:
+            - "{}"
+            - "{}"
+            included_segment_ids:
+            - included_segment_ids
+            - included_segment_ids
+            excluded_segment_ids:
+            - excluded_segment_ids
+            - excluded_segment_ids
+            name: name
+            action: received
+            attributes:
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            sending_node_id: sending_node_id
+            client_node_id: client_node_id
+          nodes:
+          - null
+          - null
+          weight: 5.962133916683182
+          id: id
+        - condition:
+            kind: segment_membership
+            entry_event_match_attributes:
+            - "{}"
+            - "{}"
+            included_segment_ids:
+            - included_segment_ids
+            - included_segment_ids
+            excluded_segment_ids:
+            - excluded_segment_ids
+            - excluded_segment_ids
+            name: name
+            action: received
+            attributes:
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            sending_node_id: sending_node_id
+            client_node_id: client_node_id
+          nodes:
+          - null
+          - null
+          weight: 5.962133916683182
+          id: id
+        client_node_id: client_node_id
+        concurrency_key: concurrency_key
+        iam_id: iam_id
+        randomize_on_entry: true
+        webhook_id: webhook_id
+        template_id: template_id
+        expiration:
+          duration_seconds: 17789868
+          exits: true
+        user_ttl_seconds: 1
+      properties:
+        client_node_id:
+          description: "Optional client-assigned identifier, unique within the journey.\
+            \ Use it to reference this node from elsewhere in the same request. Persisted\
+            \ and returned on reads."
+          type: string
+        annotation:
+          description: "Optional free-text label, up to 255 characters. Stored and\
+            \ returned as-is with no effect on journey behavior."
+          type: string
+        duration_seconds:
+          description: "wait nodes: seconds to hold the user. Minimum 60, maximum\
+            \ 31556952 (1 year)."
+          maximum: 31556952
+          minimum: 60
+          nullable: true
+          type: integer
+        relative_to:
+          description: "time_window nodes: schedule_in_timezone uses the configured\
+            \ windows; last_active_time holds relative to the user's last active time."
+          enum:
+          - schedule_in_timezone
+          - last_active_time
+          type: string
+        windows:
+          description: "time_window nodes: one or more time windows. A window with\
+            \ no day_of_week applies to every day. Required when relative_to is schedule_in_timezone;\
+            \ omit when it is last_active_time."
+          items:
+            $ref: '#/components/schemas/JourneyTimeWindow'
+          type: array
+        time_zone:
+          description: "time_window nodes: IANA timezone identifier used when the\
+            \ user's timezone is unavailable."
+          type: string
+        use_user_time_zone:
+          description: "time_window nodes: when true, uses the user's timezone if\
+            \ available."
+          nullable: true
+          type: boolean
+        template_id:
+          description: "send_push, send_email, and send_sms nodes: UUID of the template\
+            \ to send."
+          type: string
+        iam_id:
+          description: "send_iam nodes: UUID of the in-app message to send."
+          type: string
+        user_ttl_seconds:
+          description: "send_iam nodes: optional time-to-live for the in-app message,\
+            \ in seconds."
+          minimum: 1
+          nullable: true
+          type: integer
+        webhook_id:
+          description: "send_webhook nodes: UUID of the webhook to send."
+          type: string
+        assignments:
+          additionalProperties:
+            type: string
+          description: "tag nodes: tag key-value pairs to assign. An empty string\
+            \ value removes the tag. Keys are limited to 255 characters and values\
+            \ to 1024."
+          type: object
+        randomize_on_entry:
+          description: "split_range nodes: when true, assigns each user to a branch\
+            \ at random on entry. Defaults to false."
+          nullable: true
+          type: boolean
+        branches:
+          description: "Branching nodes: nested branches. split_range requires 2-20\
+            \ weighted branches that sum to 100. yes_no requires exactly 2 branches.\
+            \ wait_until requires 1-10 condition branches."
+          items:
+            $ref: '#/components/schemas/JourneyBranch'
+          type: array
+        expiration:
+          $ref: '#/components/schemas/JourneyWaitUntilExpiration'
+        concurrency_key:
+          description: Optional optimistic-concurrency token. Pass the concurrency_key
+            from a prior fetch to reject the update with 409 if the journey changed.
+            Omit to skip the check. It is not merged onto the node.
+          nullable: true
+          type: string
+      type: object
+    JourneyMessageStats:
+      description: "Delivery stats for a message-sending node. Present only on send_push,\
+        \ send_email, send_sms, send_iam, and send_webhook nodes. The keys inside\
+        \ totals depend on the node's channel."
+      example:
+        totals:
+          key: 7.061401241503109
+      properties:
+        totals:
+          additionalProperties:
+            type: number
+          description: "All-time totals for this node, keyed by channel-specific stat\
+            \ name."
+          type: object
+      type: object
+    JourneyNodeStats:
+      description: Stats for a single node. Keyed in the response by the node's server-assigned
+        id.
+      example:
+        waiting: 5
+        kind: wait
+        exited_early: 2
+        message_stats:
+          totals:
+            key: 7.061401241503109
+        completed: 5
+      properties:
+        kind:
+          description: "Node kind, repeated here so stats can be read without joining\
+            \ against the journey definition."
+          enum:
+          - wait
+          - time_window
+          - send_push
+          - send_email
+          - send_sms
+          - send_iam
+          - send_webhook
+          - tag
+          - split_range
+          - yes_no
+          - wait_until
+          type: string
+        waiting:
+          description: Users currently held at this node.
+          type: integer
+        completed:
+          description: Users who advanced past this node normally.
+          type: integer
+        exited_early:
+          description: Users who left the journey from this node through an early
+            exit rule.
+          type: integer
+        message_stats:
+          $ref: '#/components/schemas/JourneyMessageStats'
+      type: object
+    JourneyBranchStats:
+      description: Stats for a single branch of a branching node. Keyed in the response
+        by the branch's server-assigned id.
+      example:
+        completed: 9
+      properties:
+        completed:
+          description: Users who took this branch.
+          type: integer
+      type: object
+    JourneyStats:
+      description: "Journey-level counts plus flat, id-keyed maps of node and branch\
+        \ stats. Contains no definition detail; join it by id against the journey\
+        \ from View journey."
+      example:
+        nodes:
+          key:
+            waiting: 5
+            kind: wait
+            exited_early: 2
+            message_stats:
+              totals:
+                key: 7.061401241503109
+            completed: 5
+        started: 0
+        exited_early: 1
+        id: id
+        completed: 6
+        branches:
+          key:
+            completed: 9
+      properties:
+        id:
+          description: UUID of the journey these stats belong to.
+          type: string
+        started:
+          description: Users who entered the journey.
+          type: integer
+        completed:
+          description: Users who reached the end of the journey normally.
+          type: integer
+        exited_early:
+          description: Users who left the journey through an early exit rule.
+          type: integer
+        nodes:
+          additionalProperties:
+            $ref: '#/components/schemas/JourneyNodeStats'
+          description: "Node stats keyed by node id. Includes every node in the graph,\
+            \ at any nesting depth."
+          type: object
+        branches:
+          additionalProperties:
+            $ref: '#/components/schemas/JourneyBranchStats'
+          description: Branch stats keyed by branch id. Empty for a journey with no
+            branching nodes.
+          type: object
+      type: object
     get_notification_history_request_body:
       properties:
         events:
@@ -6630,6 +8934,55 @@ components:
           type: string
         meta:
           $ref: '#/components/schemas/CreateUserConflictResponse_errorsItems_meta'
+      type: object
+    JourneyEarlyExit_rules_on_segment:
+      example:
+        included_segment_ids:
+        - included_segment_ids
+        - included_segment_ids
+      nullable: true
+      properties:
+        included_segment_ids:
+          description: Exit when the user enters any of these segments.
+          items:
+            type: string
+          type: array
+      type: object
+    JourneyEarlyExit_rules_on_event:
+      example:
+        name: name
+      nullable: true
+      properties:
+        name:
+          description: Exit when this event occurs. Up to 255 characters.
+          type: string
+      required:
+      - name
+      type: object
+    JourneyEarlyExit_rules:
+      example:
+        on_segment:
+          included_segment_ids:
+          - included_segment_ids
+          - included_segment_ids
+        on_event:
+          name: name
+        when_not_in_audience: true
+        on_session: true
+      properties:
+        on_segment:
+          $ref: '#/components/schemas/JourneyEarlyExit_rules_on_segment'
+        when_not_in_audience:
+          description: Exit when the user no longer matches the journey audience.
+            Defaults to false.
+          nullable: true
+          type: boolean
+        on_session:
+          description: Exit on a new session start. Defaults to false.
+          nullable: true
+          type: boolean
+        on_event:
+          $ref: '#/components/schemas/JourneyEarlyExit_rules_on_event'
       type: object
   securitySchemes:
     rest_api_key:
