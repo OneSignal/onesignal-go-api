@@ -32,7 +32,7 @@ type StartLiveActivityRequest struct {
 	StaleDate *int32 `json:"stale_date,omitempty"`
 	// Delivery priority through the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user's device. If not set, defaults to 10.
 	Priority *int32 `json:"priority,omitempty"`
-	// iOS 15+. A score to indicate how a notification should be displayed when grouped. Use a float between 0-1.
+	// A value between 0 and 1. When more than one Live Activity is active for your app, the one with the highest relevance score shows in the Dynamic Island. If the scores are equal, the system shows the Live Activity that started first. The score also sets the order of Live Activities on the Lock Screen. Only available on iOS 16.2 and later.
 	IosRelevanceScore NullableFloat32 `json:"ios_relevance_score,omitempty"`
 	// Correlation and idempotency key. A request received with this parameter will first look for another notification with the same idempotency key. If one exists, a notification will not be sent, and result of the previous operation will instead be returned. Therefore, if you plan on using this feature, it's important to use a good source of randomness to generate the UUID passed here. This key is only idempotent for 30 days. After 30 days, the notification could be removed from our system and a notification with the same idempotency key will be sent again.   See Idempotent Notification Requests for more details writeOnly: true 
 	IdempotencyKey NullableString `json:"idempotency_key,omitempty"`

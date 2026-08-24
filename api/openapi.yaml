@@ -4449,6 +4449,7 @@ components:
           tr: tr
         sound: sound
         name: name
+        ios_sound: ios_sound
         headings:
           de: de
           hi: hi
@@ -4496,6 +4497,7 @@ components:
         dismissal_date: 6
         event: update
         priority: 1
+        ios_relevance_score: 5.962133916683182
       properties:
         name:
           description: An internal name to assist with your campaign organization.
@@ -4515,9 +4517,15 @@ components:
         headings:
           $ref: '#/components/schemas/LanguageStringMap'
         sound:
-          description: Sound file that is included in your app to play instead of
-            the default device notification sound. Omit to disable vibration and sound
-            for the notification.
+          deprecated: true
+          description: Deprecated. The API ignores this field. Use `ios_sound`.
+          type: string
+        ios_sound:
+          description: "Sound file that is included in your app to play instead of\
+            \ the default device notification sound. Omit to disable vibration and\
+            \ sound for the notification. Requires `headings` on the same request:\
+            \ ActivityKit ignores an update whose alert has no title, which silently\
+            \ drops the sound. Supersedes the deprecated `sound` field.\n"
           type: string
         stale_date:
           description: "Accepts Unix timestamp in seconds. When time reaches the configured\
@@ -4529,14 +4537,22 @@ components:
             "end"
           type: integer
         priority:
-          description: "Delivery priority through the the push provider (APNs). Pass\
-            \ 10 for higher priority notifications, or 5 for lower priority notifications.\
+          description: "Delivery priority through the push provider (APNs). Pass 10\
+            \ for higher priority notifications, or 5 for lower priority notifications.\
             \ Lower priority notifications are sent based on the power considerations\
             \ of the end user's device. If not set, defaults to 10. Some providers\
             \ (APNs) allow for a limited budget of high priority notifications per\
             \ hour, and if that budget is exceeded, the provider may throttle notification\
             \ delivery."
           type: integer
+        ios_relevance_score:
+          description: "A value between 0 and 1. When more than one Live Activity\
+            \ is active for your app, the one with the highest relevance score shows\
+            \ in the Dynamic Island. If the scores are equal, the system shows the\
+            \ Live Activity that started first. The score also sets the order of Live\
+            \ Activities on the Lock Screen. Only available on iOS 16.2 and later."
+          nullable: true
+          type: number
       required:
       - event
       - event_updates
@@ -5060,8 +5076,11 @@ components:
             \ of the end user's device. If not set, defaults to 10."
           type: integer
         ios_relevance_score:
-          description: iOS 15+. A score to indicate how a notification should be displayed
-            when grouped. Use a float between 0-1.
+          description: "A value between 0 and 1. When more than one Live Activity\
+            \ is active for your app, the one with the highest relevance score shows\
+            \ in the Dynamic Island. If the scores are equal, the system shows the\
+            \ Live Activity that started first. The score also sets the order of Live\
+            \ Activities on the Lock Screen. Only available on iOS 16.2 and later."
           nullable: true
           type: number
         idempotency_key:

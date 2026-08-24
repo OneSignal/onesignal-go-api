@@ -24,14 +24,19 @@ type UpdateLiveActivityRequest struct {
 	EventUpdates map[string]interface{} `json:"event_updates"`
 	Contents *LanguageStringMap `json:"contents,omitempty"`
 	Headings *LanguageStringMap `json:"headings,omitempty"`
-	// Sound file that is included in your app to play instead of the default device notification sound. Omit to disable vibration and sound for the notification.
+	// Deprecated. The API ignores this field. Use `ios_sound`.
+	// Deprecated
 	Sound *string `json:"sound,omitempty"`
+	// Sound file that is included in your app to play instead of the default device notification sound. Omit to disable vibration and sound for the notification. Requires `headings` on the same request: ActivityKit ignores an update whose alert has no title, which silently drops the sound. Supersedes the deprecated `sound` field. 
+	IosSound *string `json:"ios_sound,omitempty"`
 	// Accepts Unix timestamp in seconds. When time reaches the configured stale date, the system considers the Live Activity out of date, and the ActivityState of the Live Activity changes to ActivityState.stale.
 	StaleDate *int32 `json:"stale_date,omitempty"`
 	// Accepts Unix timestamp in seconds; only allowed if event is \"end\"
 	DismissalDate *int32 `json:"dismissal_date,omitempty"`
-	// Delivery priority through the the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user's device. If not set, defaults to 10. Some providers (APNs) allow for a limited budget of high priority notifications per hour, and if that budget is exceeded, the provider may throttle notification delivery.
+	// Delivery priority through the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user's device. If not set, defaults to 10. Some providers (APNs) allow for a limited budget of high priority notifications per hour, and if that budget is exceeded, the provider may throttle notification delivery.
 	Priority *int32 `json:"priority,omitempty"`
+	// A value between 0 and 1. When more than one Live Activity is active for your app, the one with the highest relevance score shows in the Dynamic Island. If the scores are equal, the system shows the Live Activity that started first. The score also sets the order of Live Activities on the Lock Screen. Only available on iOS 16.2 and later.
+	IosRelevanceScore NullableFloat32 `json:"ios_relevance_score,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -194,6 +199,7 @@ func (o *UpdateLiveActivityRequest) SetHeadings(v LanguageStringMap) {
 }
 
 // GetSound returns the Sound field value if set, zero value otherwise.
+// Deprecated
 func (o *UpdateLiveActivityRequest) GetSound() string {
 	if o == nil || o.Sound == nil {
 		var ret string
@@ -204,6 +210,7 @@ func (o *UpdateLiveActivityRequest) GetSound() string {
 
 // GetSoundOk returns a tuple with the Sound field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *UpdateLiveActivityRequest) GetSoundOk() (*string, bool) {
 	if o == nil || o.Sound == nil {
 		return nil, false
@@ -221,8 +228,41 @@ func (o *UpdateLiveActivityRequest) HasSound() bool {
 }
 
 // SetSound gets a reference to the given string and assigns it to the Sound field.
+// Deprecated
 func (o *UpdateLiveActivityRequest) SetSound(v string) {
 	o.Sound = &v
+}
+
+// GetIosSound returns the IosSound field value if set, zero value otherwise.
+func (o *UpdateLiveActivityRequest) GetIosSound() string {
+	if o == nil || o.IosSound == nil {
+		var ret string
+		return ret
+	}
+	return *o.IosSound
+}
+
+// GetIosSoundOk returns a tuple with the IosSound field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateLiveActivityRequest) GetIosSoundOk() (*string, bool) {
+	if o == nil || o.IosSound == nil {
+		return nil, false
+	}
+	return o.IosSound, true
+}
+
+// HasIosSound returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasIosSound() bool {
+	if o != nil && o.IosSound != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIosSound gets a reference to the given string and assigns it to the IosSound field.
+func (o *UpdateLiveActivityRequest) SetIosSound(v string) {
+	o.IosSound = &v
 }
 
 // GetStaleDate returns the StaleDate field value if set, zero value otherwise.
@@ -321,6 +361,48 @@ func (o *UpdateLiveActivityRequest) SetPriority(v int32) {
 	o.Priority = &v
 }
 
+// GetIosRelevanceScore returns the IosRelevanceScore field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateLiveActivityRequest) GetIosRelevanceScore() float32 {
+	if o == nil || o.IosRelevanceScore.Get() == nil {
+		var ret float32
+		return ret
+	}
+	return *o.IosRelevanceScore.Get()
+}
+
+// GetIosRelevanceScoreOk returns a tuple with the IosRelevanceScore field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateLiveActivityRequest) GetIosRelevanceScoreOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IosRelevanceScore.Get(), o.IosRelevanceScore.IsSet()
+}
+
+// HasIosRelevanceScore returns a boolean if a field has been set.
+func (o *UpdateLiveActivityRequest) HasIosRelevanceScore() bool {
+	if o != nil && o.IosRelevanceScore.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIosRelevanceScore gets a reference to the given NullableFloat32 and assigns it to the IosRelevanceScore field.
+func (o *UpdateLiveActivityRequest) SetIosRelevanceScore(v float32) {
+	o.IosRelevanceScore.Set(&v)
+}
+// SetIosRelevanceScoreNil sets the value for IosRelevanceScore to be an explicit nil
+func (o *UpdateLiveActivityRequest) SetIosRelevanceScoreNil() {
+	o.IosRelevanceScore.Set(nil)
+}
+
+// UnsetIosRelevanceScore ensures that no value is present for IosRelevanceScore, not even an explicit nil
+func (o *UpdateLiveActivityRequest) UnsetIosRelevanceScore() {
+	o.IosRelevanceScore.Unset()
+}
+
 func (o UpdateLiveActivityRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -341,6 +423,9 @@ func (o UpdateLiveActivityRequest) MarshalJSON() ([]byte, error) {
 	if o.Sound != nil {
 		toSerialize["sound"] = o.Sound
 	}
+	if o.IosSound != nil {
+		toSerialize["ios_sound"] = o.IosSound
+	}
 	if o.StaleDate != nil {
 		toSerialize["stale_date"] = o.StaleDate
 	}
@@ -349,6 +434,9 @@ func (o UpdateLiveActivityRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.Priority != nil {
 		toSerialize["priority"] = o.Priority
+	}
+	if o.IosRelevanceScore.IsSet() {
+		toSerialize["ios_relevance_score"] = o.IosRelevanceScore.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -374,9 +462,11 @@ func (o *UpdateLiveActivityRequest) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "contents")
 		delete(additionalProperties, "headings")
 		delete(additionalProperties, "sound")
+		delete(additionalProperties, "ios_sound")
 		delete(additionalProperties, "stale_date")
 		delete(additionalProperties, "dismissal_date")
 		delete(additionalProperties, "priority")
+		delete(additionalProperties, "ios_relevance_score")
 		o.AdditionalProperties = additionalProperties
 	}
 
