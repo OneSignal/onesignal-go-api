@@ -9,10 +9,12 @@ Name | Type | Description | Notes
 **EventUpdates** | **map[string]interface{}** | This must match the ContentState interface you have defined within your Live Activity in your app. | 
 **Contents** | Pointer to [**LanguageStringMap**](LanguageStringMap.md) |  | [optional] 
 **Headings** | Pointer to [**LanguageStringMap**](LanguageStringMap.md) |  | [optional] 
-**Sound** | Pointer to **string** | Sound file that is included in your app to play instead of the default device notification sound. Omit to disable vibration and sound for the notification. | [optional] 
+**Sound** | Pointer to **string** | Deprecated. The API ignores this field. Use &#x60;ios_sound&#x60;. | [optional] 
+**IosSound** | Pointer to **string** | Sound file that is included in your app to play instead of the default device notification sound. Omit to disable vibration and sound for the notification. Requires &#x60;headings&#x60; on the same request: ActivityKit ignores an update whose alert has no title, which silently drops the sound. Supersedes the deprecated &#x60;sound&#x60; field.  | [optional] 
 **StaleDate** | Pointer to **int32** | Accepts Unix timestamp in seconds. When time reaches the configured stale date, the system considers the Live Activity out of date, and the ActivityState of the Live Activity changes to ActivityState.stale. | [optional] 
 **DismissalDate** | Pointer to **int32** | Accepts Unix timestamp in seconds; only allowed if event is \&quot;end\&quot; | [optional] 
-**Priority** | Pointer to **int32** | Delivery priority through the the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user&#39;s device. If not set, defaults to 10. Some providers (APNs) allow for a limited budget of high priority notifications per hour, and if that budget is exceeded, the provider may throttle notification delivery. | [optional] 
+**Priority** | Pointer to **int32** | Delivery priority through the push provider (APNs). Pass 10 for higher priority notifications, or 5 for lower priority notifications. Lower priority notifications are sent based on the power considerations of the end user&#39;s device. If not set, defaults to 10. Some providers (APNs) allow for a limited budget of high priority notifications per hour, and if that budget is exceeded, the provider may throttle notification delivery. | [optional] 
+**IosRelevanceScore** | Pointer to **NullableFloat32** | A value between 0 and 1. When more than one Live Activity is active for your app, the one with the highest relevance score shows in the Dynamic Island. If the scores are equal, the system shows the Live Activity that started first. The score also sets the order of Live Activities on the Lock Screen. Only available on iOS 16.2 and later. | [optional] 
 
 ## Methods
 
@@ -168,6 +170,31 @@ SetSound sets Sound field to given value.
 
 HasSound returns a boolean if a field has been set.
 
+### GetIosSound
+
+`func (o *UpdateLiveActivityRequest) GetIosSound() string`
+
+GetIosSound returns the IosSound field if non-nil, zero value otherwise.
+
+### GetIosSoundOk
+
+`func (o *UpdateLiveActivityRequest) GetIosSoundOk() (*string, bool)`
+
+GetIosSoundOk returns a tuple with the IosSound field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIosSound
+
+`func (o *UpdateLiveActivityRequest) SetIosSound(v string)`
+
+SetIosSound sets IosSound field to given value.
+
+### HasIosSound
+
+`func (o *UpdateLiveActivityRequest) HasIosSound() bool`
+
+HasIosSound returns a boolean if a field has been set.
+
 ### GetStaleDate
 
 `func (o *UpdateLiveActivityRequest) GetStaleDate() int32`
@@ -243,6 +270,41 @@ SetPriority sets Priority field to given value.
 
 HasPriority returns a boolean if a field has been set.
 
+### GetIosRelevanceScore
+
+`func (o *UpdateLiveActivityRequest) GetIosRelevanceScore() float32`
+
+GetIosRelevanceScore returns the IosRelevanceScore field if non-nil, zero value otherwise.
+
+### GetIosRelevanceScoreOk
+
+`func (o *UpdateLiveActivityRequest) GetIosRelevanceScoreOk() (*float32, bool)`
+
+GetIosRelevanceScoreOk returns a tuple with the IosRelevanceScore field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIosRelevanceScore
+
+`func (o *UpdateLiveActivityRequest) SetIosRelevanceScore(v float32)`
+
+SetIosRelevanceScore sets IosRelevanceScore field to given value.
+
+### HasIosRelevanceScore
+
+`func (o *UpdateLiveActivityRequest) HasIosRelevanceScore() bool`
+
+HasIosRelevanceScore returns a boolean if a field has been set.
+
+### SetIosRelevanceScoreNil
+
+`func (o *UpdateLiveActivityRequest) SetIosRelevanceScoreNil(b bool)`
+
+ SetIosRelevanceScoreNil sets the value for IosRelevanceScore to be an explicit nil
+
+### UnsetIosRelevanceScore
+`func (o *UpdateLiveActivityRequest) UnsetIosRelevanceScore()`
+
+UnsetIosRelevanceScore ensures that no value is present for IosRelevanceScore, not even an explicit nil
 
 [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
