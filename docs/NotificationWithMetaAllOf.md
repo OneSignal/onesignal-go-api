@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **Canceled** | Pointer to **bool** | Indicates whether the notification was canceled before it could be sent. | [optional] 
 **EmailBcc** | Pointer to **[]string** | BCC recipients that were set on this email notification. | [optional] 
 **BccSent** | Pointer to **NullableInt32** | Number of BCC copies successfully sent for this notification. | [optional] 
+**EmailWarmUp** | Pointer to [**EmailWarmUp**](EmailWarmUp.md) |  | [optional] 
 
 ## Methods
 
@@ -448,6 +449,31 @@ HasBccSent returns a boolean if a field has been set.
 `func (o *NotificationWithMetaAllOf) UnsetBccSent()`
 
 UnsetBccSent ensures that no value is present for BccSent, not even an explicit nil
+### GetEmailWarmUp
+
+`func (o *NotificationWithMetaAllOf) GetEmailWarmUp() EmailWarmUp`
+
+GetEmailWarmUp returns the EmailWarmUp field if non-nil, zero value otherwise.
+
+### GetEmailWarmUpOk
+
+`func (o *NotificationWithMetaAllOf) GetEmailWarmUpOk() (*EmailWarmUp, bool)`
+
+GetEmailWarmUpOk returns a tuple with the EmailWarmUp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailWarmUp
+
+`func (o *NotificationWithMetaAllOf) SetEmailWarmUp(v EmailWarmUp)`
+
+SetEmailWarmUp sets EmailWarmUp field to given value.
+
+### HasEmailWarmUp
+
+`func (o *NotificationWithMetaAllOf) HasEmailWarmUp() bool`
+
+HasEmailWarmUp returns a boolean if a field has been set.
+
 
 [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference) [[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 

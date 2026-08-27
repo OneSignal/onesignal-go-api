@@ -3789,6 +3789,98 @@ components:
       - $ref: '#/components/schemas/BasicNotification_allOf'
       - required:
         - app_id
+    EmailWarmUpStage:
+      description: "Channel: Email\nOne stage of an Auto Warm Up campaign's sending\
+        \ schedule."
+      properties:
+        start:
+          description: ISO 8601 timestamp for the start of this stage. Sending for
+            this stage will not begin before this time.
+          format: date-time
+          type: string
+        end:
+          description: ISO 8601 timestamp for the end of this stage. This stage's
+            quota is expected to be sent by this time.
+          format: date-time
+          type: string
+        quota:
+          description: Number of emails to send during this stage.
+          minimum: 0
+          type: integer
+        acked:
+          description: Whether this stage has been picked up and acknowledged by the
+            warm-up scheduler. Not accepted on create. This is only present when reading
+            back a campaign.
+          readOnly: true
+          type: boolean
+      required:
+      - end
+      - quota
+      - start
+      type: object
+    EmailWarmUpRequest:
+      description: "Channel: Email\nRequired when `kind` is \"warmup\". The gradual\
+        \ sending schedule for the Auto Warm Up campaign."
+      nullable: true
+      properties:
+        stages:
+          description: Required. The ordered stages that make up the campaign's sending
+            schedule.
+          items:
+            $ref: '#/components/schemas/EmailWarmUpStage'
+          type: array
+        strategy:
+          description: "How the stage schedule should be treated:\n  * `recommended`\
+            \ - (Default) OneSignal may adjust the provided stages based on past delivery\
+            \ volumes, scheduled Auto Warm Up emails, and the size of the current\
+            \ audience.\n  * `custom` - The stages provided are sent as-is.\n"
+          enum:
+          - recommended
+          - custom
+          nullable: true
+          type: string
+      required:
+      - stages
+      type: object
+    EmailWarmUp:
+      description: "Channel: Email\nPresent only when this notification's `kind` is\
+        \ \"warmup\". The Auto Warm Up campaign's stage schedule, scheduling strategy,\
+        \ and live status."
+      properties:
+        stages:
+          description: "The campaign's sending schedule, stage by stage."
+          items:
+            $ref: '#/components/schemas/EmailWarmUpStage'
+          type: array
+        strategy:
+          description: "How the stage schedule was produced:\n  * `recommended` -\
+            \ OneSignal generated (and may still adjust) the schedule based on past\
+            \ delivery volumes, scheduled Auto Warm Up emails, and the size of the\
+            \ current audience.\n  * `custom` - The stages were provided as-is in\
+            \ the create request.\n"
+          enum:
+          - recommended
+          - custom
+          type: string
+        status:
+          description: |
+            Current status of the campaign:
+              * `initializing` - The stages have been submitted and the schedule is being set up.
+              * `draft` - The campaign has been created but has not started sending.
+              * `active` - The campaign is currently working through its stages.
+              * `finished` - All stages have completed.
+              * `canceled` - The campaign was canceled before finishing.
+          enum:
+          - initializing
+          - draft
+          - active
+          - finished
+          - canceled
+          type: string
+        is_live:
+          description: Whether the campaign is currently live (actively sending).
+          type: boolean
+      type: object
     Notification:
       allOf:
       - $ref: '#/components/schemas/BasicNotification'
@@ -8663,7 +8755,7 @@ components:
           type: string
           writeOnly: true
         email_subject:
-          description: "Channel: Email\nRequired.  The subject of the email.\n"
+          description: "Channel: Email\nRequired. The subject of the email.\n"
           nullable: true
           type: string
           writeOnly: true
@@ -8736,6 +8828,23 @@ components:
           nullable: true
           type: string
           writeOnly: true
+        kind:
+          description: "Channel: Email\nSet to \"warmup\" to send this as an Auto\
+            \ Warm Up campaign: a single campaign delivered gradually to your audience\
+            \ over several days, so you don't have to pace sends manually. OneSignal\
+            \ generates a sending schedule based on your past delivery volumes, scheduled\
+            \ Auto Warm Up emails, and the size of your current audience.\nWhen set,\
+            \ `email_warm_up` is required and describes the campaign's stages and\
+            \ (optionally) its scheduling strategy. `send_after` cannot be combined\
+            \ with `kind: \"warmup\"`. The campaign will be scheduled to begin at\
+            \ its first stage's `start` time.\nOnly supported for Email notifications.\n"
+          enum:
+          - warmup
+          nullable: true
+          type: string
+          writeOnly: true
+        email_warm_up:
+          $ref: '#/components/schemas/EmailWarmUpRequest'
         sms_from:
           description: "Channel: SMS\nPhone Number used to send SMS. Should be a registered\
             \ Twilio phone number in E.164 format.\n"
@@ -8889,6 +8998,8 @@ components:
           description: Number of BCC copies successfully sent for this notification.
           nullable: true
           type: integer
+        email_warm_up:
+          $ref: '#/components/schemas/EmailWarmUp'
       type: object
     PlatformDeliveryData_sms_allOf:
       properties:
