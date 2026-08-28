@@ -89,7 +89,7 @@ Name | Type | Description | Notes
 **SummaryArgCount** | Pointer to **int32** | Channel: Push Notifications Platform: iOS 12+ When using thread_id, you can also control the count of the number of notifications in the group. For example, if the group already has 12 notifications, and you send a new notification with summary_arg_count &#x3D; 2, the new total will be 14 and the summary will be \&quot;14 more notifications from summary_arg\&quot;  | [optional] 
 **IosRelevanceScore** | Pointer to **NullableFloat32** | Channel: Push Notifications Platform: iOS 15+ A score to be set per notification to indicate how it should be displayed when grouped. Use a float between 0-1.  | [optional] 
 **IosInterruptionLevel** | Pointer to **NullableString** | Channel: Push Notifications Platform: iOS 15+ Focus Modes and Interruption Levels indicate the priority and delivery timing of a notification, to \&quot;interrupt\&quot; the user. Can choose from options: [&#39;active&#39;, &#39;passive&#39;, &#39;time_sensitive&#39;, &#39;critical&#39;]. Default is active.  | [optional] 
-**EmailSubject** | Pointer to **NullableString** | Channel: Email Required.  The subject of the email.  | [optional] 
+**EmailSubject** | Pointer to **NullableString** | Channel: Email Required. The subject of the email.  | [optional] 
 **EmailBody** | Pointer to **string** | Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an &lt;a&gt; tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid.  | [optional] 
 **EmailFromName** | Pointer to **NullableString** | Channel: Email The name the email is from. If not specified, will default to \&quot;from name\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
 **EmailFromAddress** | Pointer to **NullableString** | Channel: Email The email address the email is from. If not specified, will default to \&quot;from email\&quot; set in the OneSignal Dashboard Email Settings.  | [optional] 
@@ -99,6 +99,8 @@ Name | Type | Description | Notes
 **IncludeUnsubscribed** | Pointer to **NullableBool** | Channel: Email Default is &#x60;false&#x60;. This field is used to send transactional notifications. If set to &#x60;true&#x60;, this notification will also be sent to unsubscribed emails. If a &#x60;template_id&#x60; is provided, the &#x60;include_unsubscribed&#x60; value from the template will be inherited. If you are using a third-party ESP, this field requires the ESP&#39;s list of unsubscribed emails to be cleared. | [optional] 
 **EmailBcc** | Pointer to **[]string** | Channel: Email BCC recipients for the email. Maximum 5 addresses. Only supported when the email service provider is OneSignal Email.  | [optional] 
 **EmailSenderDomain** | Pointer to **NullableString** | Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email.  | [optional] 
+**Kind** | Pointer to **NullableString** | Channel: Email Set to \&quot;warmup\&quot; to send this as an Auto Warm Up campaign: a single campaign delivered gradually to your audience over several days, so you don&#39;t have to pace sends manually. OneSignal generates a sending schedule based on your past delivery volumes, scheduled Auto Warm Up emails, and the size of your current audience. When set, &#x60;email_warm_up&#x60; is required and describes the campaign&#39;s stages and (optionally) its scheduling strategy. &#x60;send_after&#x60; cannot be combined with &#x60;kind: \&quot;warmup\&quot;&#x60;. The campaign will be scheduled to begin at its first stage&#39;s &#x60;start&#x60; time. Only supported for Email notifications.  | [optional] 
+**EmailWarmUp** | Pointer to [**NullableEmailWarmUpRequest**](EmailWarmUpRequest.md) |  | [optional] 
 **SmsFrom** | Pointer to **NullableString** | Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format.  | [optional] 
 **SmsMediaUrls** | Pointer to **[]string** | Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs.  | [optional] 
 **Filters** | Pointer to [**[]FilterExpression**](FilterExpression.md) |  | [optional] 
@@ -3343,6 +3345,76 @@ HasEmailSenderDomain returns a boolean if a field has been set.
 `func (o *BasicNotificationAllOf) UnsetEmailSenderDomain()`
 
 UnsetEmailSenderDomain ensures that no value is present for EmailSenderDomain, not even an explicit nil
+### GetKind
+
+`func (o *BasicNotificationAllOf) GetKind() string`
+
+GetKind returns the Kind field if non-nil, zero value otherwise.
+
+### GetKindOk
+
+`func (o *BasicNotificationAllOf) GetKindOk() (*string, bool)`
+
+GetKindOk returns a tuple with the Kind field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetKind
+
+`func (o *BasicNotificationAllOf) SetKind(v string)`
+
+SetKind sets Kind field to given value.
+
+### HasKind
+
+`func (o *BasicNotificationAllOf) HasKind() bool`
+
+HasKind returns a boolean if a field has been set.
+
+### SetKindNil
+
+`func (o *BasicNotificationAllOf) SetKindNil(b bool)`
+
+ SetKindNil sets the value for Kind to be an explicit nil
+
+### UnsetKind
+`func (o *BasicNotificationAllOf) UnsetKind()`
+
+UnsetKind ensures that no value is present for Kind, not even an explicit nil
+### GetEmailWarmUp
+
+`func (o *BasicNotificationAllOf) GetEmailWarmUp() EmailWarmUpRequest`
+
+GetEmailWarmUp returns the EmailWarmUp field if non-nil, zero value otherwise.
+
+### GetEmailWarmUpOk
+
+`func (o *BasicNotificationAllOf) GetEmailWarmUpOk() (*EmailWarmUpRequest, bool)`
+
+GetEmailWarmUpOk returns a tuple with the EmailWarmUp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmailWarmUp
+
+`func (o *BasicNotificationAllOf) SetEmailWarmUp(v EmailWarmUpRequest)`
+
+SetEmailWarmUp sets EmailWarmUp field to given value.
+
+### HasEmailWarmUp
+
+`func (o *BasicNotificationAllOf) HasEmailWarmUp() bool`
+
+HasEmailWarmUp returns a boolean if a field has been set.
+
+### SetEmailWarmUpNil
+
+`func (o *BasicNotificationAllOf) SetEmailWarmUpNil(b bool)`
+
+ SetEmailWarmUpNil sets the value for EmailWarmUp to be an explicit nil
+
+### UnsetEmailWarmUp
+`func (o *BasicNotificationAllOf) UnsetEmailWarmUp()`
+
+UnsetEmailWarmUp ensures that no value is present for EmailWarmUp, not even an explicit nil
 ### GetSmsFrom
 
 `func (o *BasicNotificationAllOf) GetSmsFrom() string`

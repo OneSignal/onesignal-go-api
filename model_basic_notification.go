@@ -3,7 +3,6 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.13.0
 Contact: devrel@onesignal.com
 */
 
@@ -209,7 +208,7 @@ type BasicNotification struct {
 	IosRelevanceScore NullableFloat32 `json:"ios_relevance_score,omitempty"`
 	// Channel: Push Notifications Platform: iOS 15+ Focus Modes and Interruption Levels indicate the priority and delivery timing of a notification, to \"interrupt\" the user. Can choose from options: ['active', 'passive', 'time_sensitive', 'critical']. Default is active. 
 	IosInterruptionLevel NullableString `json:"ios_interruption_level,omitempty"`
-	// Channel: Email Required.  The subject of the email. 
+	// Channel: Email Required. The subject of the email. 
 	EmailSubject NullableString `json:"email_subject,omitempty"`
 	// Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an <a> tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid. 
 	EmailBody *string `json:"email_body,omitempty"`
@@ -229,6 +228,9 @@ type BasicNotification struct {
 	EmailBcc []string `json:"email_bcc,omitempty"`
 	// Channel: Email Sender domain to use for the email message. Overrides the default sender domain configured for the app. Only supported when the email service provider is OneSignal Email. 
 	EmailSenderDomain NullableString `json:"email_sender_domain,omitempty"`
+	// Channel: Email Set to \"warmup\" to send this as an Auto Warm Up campaign: a single campaign delivered gradually to your audience over several days, so you don't have to pace sends manually. OneSignal generates a sending schedule based on your past delivery volumes, scheduled Auto Warm Up emails, and the size of your current audience. When set, `email_warm_up` is required and describes the campaign's stages and (optionally) its scheduling strategy. `send_after` cannot be combined with `kind: \"warmup\"`. The campaign will be scheduled to begin at its first stage's `start` time. Only supported for Email notifications. 
+	Kind NullableString `json:"kind,omitempty"`
+	EmailWarmUp NullableEmailWarmUpRequest `json:"email_warm_up,omitempty"`
 	// Channel: SMS Phone Number used to send SMS. Should be a registered Twilio phone number in E.164 format. 
 	SmsFrom NullableString `json:"sms_from,omitempty"`
 	// Channel: SMS URLs for the media files to be attached to the SMS content. Limit: 10 media urls with a total max. size of 5MBs. 
@@ -4534,6 +4536,90 @@ func (o *BasicNotification) UnsetEmailSenderDomain() {
 	o.EmailSenderDomain.Unset()
 }
 
+// GetKind returns the Kind field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotification) GetKind() string {
+	if o == nil || o.Kind.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.Kind.Get()
+}
+
+// GetKindOk returns a tuple with the Kind field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotification) GetKindOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Kind.Get(), o.Kind.IsSet()
+}
+
+// HasKind returns a boolean if a field has been set.
+func (o *BasicNotification) HasKind() bool {
+	if o != nil && o.Kind.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetKind gets a reference to the given NullableString and assigns it to the Kind field.
+func (o *BasicNotification) SetKind(v string) {
+	o.Kind.Set(&v)
+}
+// SetKindNil sets the value for Kind to be an explicit nil
+func (o *BasicNotification) SetKindNil() {
+	o.Kind.Set(nil)
+}
+
+// UnsetKind ensures that no value is present for Kind, not even an explicit nil
+func (o *BasicNotification) UnsetKind() {
+	o.Kind.Unset()
+}
+
+// GetEmailWarmUp returns the EmailWarmUp field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BasicNotification) GetEmailWarmUp() EmailWarmUpRequest {
+	if o == nil || o.EmailWarmUp.Get() == nil {
+		var ret EmailWarmUpRequest
+		return ret
+	}
+	return *o.EmailWarmUp.Get()
+}
+
+// GetEmailWarmUpOk returns a tuple with the EmailWarmUp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BasicNotification) GetEmailWarmUpOk() (*EmailWarmUpRequest, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EmailWarmUp.Get(), o.EmailWarmUp.IsSet()
+}
+
+// HasEmailWarmUp returns a boolean if a field has been set.
+func (o *BasicNotification) HasEmailWarmUp() bool {
+	if o != nil && o.EmailWarmUp.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailWarmUp gets a reference to the given NullableEmailWarmUpRequest and assigns it to the EmailWarmUp field.
+func (o *BasicNotification) SetEmailWarmUp(v EmailWarmUpRequest) {
+	o.EmailWarmUp.Set(&v)
+}
+// SetEmailWarmUpNil sets the value for EmailWarmUp to be an explicit nil
+func (o *BasicNotification) SetEmailWarmUpNil() {
+	o.EmailWarmUp.Set(nil)
+}
+
+// UnsetEmailWarmUp ensures that no value is present for EmailWarmUp, not even an explicit nil
+func (o *BasicNotification) UnsetEmailWarmUp() {
+	o.EmailWarmUp.Unset()
+}
+
 // GetSmsFrom returns the SmsFrom field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BasicNotification) GetSmsFrom() string {
 	if o == nil || o.SmsFrom.Get() == nil {
@@ -5214,6 +5300,12 @@ func (o BasicNotification) MarshalJSON() ([]byte, error) {
 	if o.EmailSenderDomain.IsSet() {
 		toSerialize["email_sender_domain"] = o.EmailSenderDomain.Get()
 	}
+	if o.Kind.IsSet() {
+		toSerialize["kind"] = o.Kind.Get()
+	}
+	if o.EmailWarmUp.IsSet() {
+		toSerialize["email_warm_up"] = o.EmailWarmUp.Get()
+	}
 	if o.SmsFrom.IsSet() {
 		toSerialize["sms_from"] = o.SmsFrom.Get()
 	}
@@ -5368,6 +5460,8 @@ func (o *BasicNotification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "include_unsubscribed")
 		delete(additionalProperties, "email_bcc")
 		delete(additionalProperties, "email_sender_domain")
+		delete(additionalProperties, "kind")
+		delete(additionalProperties, "email_warm_up")
 		delete(additionalProperties, "sms_from")
 		delete(additionalProperties, "sms_media_urls")
 		delete(additionalProperties, "filters")

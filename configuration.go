@@ -3,7 +3,6 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.13.0
 Contact: devrel@onesignal.com
 */
 
@@ -105,7 +104,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "OpenAPI-Generator/5.14.0/go",
+		UserAgent:        "OpenAPI-Generator/5.15.0/go",
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{

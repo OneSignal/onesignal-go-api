@@ -3,7 +3,6 @@ OneSignal
 
 A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com
 
-API version: 5.13.0
 Contact: devrel@onesignal.com
 */
 
@@ -44,6 +43,7 @@ type NotificationWithMetaAllOf struct {
 	EmailBcc []string `json:"email_bcc,omitempty"`
 	// Number of BCC copies successfully sent for this notification.
 	BccSent NullableInt32 `json:"bcc_sent,omitempty"`
+	EmailWarmUp *EmailWarmUp `json:"email_warm_up,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -565,6 +565,38 @@ func (o *NotificationWithMetaAllOf) UnsetBccSent() {
 	o.BccSent.Unset()
 }
 
+// GetEmailWarmUp returns the EmailWarmUp field value if set, zero value otherwise.
+func (o *NotificationWithMetaAllOf) GetEmailWarmUp() EmailWarmUp {
+	if o == nil || o.EmailWarmUp == nil {
+		var ret EmailWarmUp
+		return ret
+	}
+	return *o.EmailWarmUp
+}
+
+// GetEmailWarmUpOk returns a tuple with the EmailWarmUp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotificationWithMetaAllOf) GetEmailWarmUpOk() (*EmailWarmUp, bool) {
+	if o == nil || o.EmailWarmUp == nil {
+		return nil, false
+	}
+	return o.EmailWarmUp, true
+}
+
+// HasEmailWarmUp returns a boolean if a field has been set.
+func (o *NotificationWithMetaAllOf) HasEmailWarmUp() bool {
+	if o != nil && o.EmailWarmUp != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailWarmUp gets a reference to the given EmailWarmUp and assigns it to the EmailWarmUp field.
+func (o *NotificationWithMetaAllOf) SetEmailWarmUp(v EmailWarmUp) {
+	o.EmailWarmUp = &v
+}
+
 func (o NotificationWithMetaAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Remaining != nil {
@@ -609,6 +641,9 @@ func (o NotificationWithMetaAllOf) MarshalJSON() ([]byte, error) {
 	if o.BccSent.IsSet() {
 		toSerialize["bcc_sent"] = o.BccSent.Get()
 	}
+	if o.EmailWarmUp != nil {
+		toSerialize["email_warm_up"] = o.EmailWarmUp
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -641,6 +676,7 @@ func (o *NotificationWithMetaAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "canceled")
 		delete(additionalProperties, "email_bcc")
 		delete(additionalProperties, "bcc_sent")
+		delete(additionalProperties, "email_warm_up")
 		o.AdditionalProperties = additionalProperties
 	}
 
