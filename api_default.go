@@ -2971,6 +2971,146 @@ func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Res
 	return localVarHTTPResponse, nil
 }
 
+type ApiEstimateNotificationRecipientsRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	estimateNotificationRecipientsRequest *EstimateNotificationRecipientsRequest
+}
+
+func (r ApiEstimateNotificationRecipientsRequest) EstimateNotificationRecipientsRequest(estimateNotificationRecipientsRequest EstimateNotificationRecipientsRequest) ApiEstimateNotificationRecipientsRequest {
+	r.estimateNotificationRecipientsRequest = &estimateNotificationRecipientsRequest
+	return r
+}
+
+func (r ApiEstimateNotificationRecipientsRequest) Execute() (*EstimateNotificationRecipientsSuccessResponse, *http.Response, error) {
+	return r.ApiService.EstimateNotificationRecipientsExecute(r)
+}
+
+/*
+EstimateNotificationRecipients Estimate notification recipients
+
+Returns the estimated number of recipients for a notification's targeting, without creating or sending anything.
+The returned `count` reflects the same audience-size estimate you would see under "Choose your target audience" when composing a message. It is based on the user targeting method you've set and the specific platforms the message is targeted to send to.
+This endpoint only supports a subset of targeting parameters: `included_segments` is required (its `"All"` shorthand targets every subscriber), and `excluded_segments`, `filters`, `include_aliases`, and `target_channel` narrow that audience further. Use `target_channel` to select platforms. `include_subscription_ids` and the other raw subscription id/token fields, and the individual `isIos` / `isAndroid` / etc. platform flags, are not supported. All other notification fields (content, delivery options, and so on) are accepted, but ignored.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiEstimateNotificationRecipientsRequest
+*/
+func (a *DefaultApiService) EstimateNotificationRecipients(ctx context.Context) ApiEstimateNotificationRecipientsRequest {
+	return ApiEstimateNotificationRecipientsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return EstimateNotificationRecipientsSuccessResponse
+func (a *DefaultApiService) EstimateNotificationRecipientsExecute(r ApiEstimateNotificationRecipientsRequest) (*EstimateNotificationRecipientsSuccessResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *EstimateNotificationRecipientsSuccessResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.EstimateNotificationRecipients")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/notifications/count-unsaved"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.estimateNotificationRecipientsRequest == nil {
+		return localVarReturnValue, nil, reportError("estimateNotificationRecipientsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.estimateNotificationRecipientsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		var v GenericError
+		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+		if err != nil {
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiExportEventsRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService

@@ -2204,6 +2204,55 @@ paths:
       security:
       - rest_api_key: []
       summary: Export CSV of Events
+  /notifications/count-unsaved:
+    post:
+      description: "Returns the estimated number of recipients for a notification's\
+        \ targeting, without creating or sending anything.\nThe returned `count` reflects\
+        \ the same audience-size estimate you would see under \"Choose your target\
+        \ audience\" when composing a message. It is based on the user targeting method\
+        \ you've set and the specific platforms the message is targeted to send to.\n\
+        This endpoint only supports a subset of targeting parameters: `included_segments`\
+        \ is required (its `\"All\"` shorthand targets every subscriber), and `excluded_segments`,\
+        \ `filters`, `include_aliases`, and `target_channel` narrow that audience\
+        \ further. Use `target_channel` to select platforms. `include_subscription_ids`\
+        \ and the other raw subscription id/token fields, and the individual `isIos`\
+        \ / `isAndroid` / etc. platform flags, are not supported. All other notification\
+        \ fields (content, delivery options, and so on) are accepted, but ignored.\n"
+      operationId: estimate_notification_recipients
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstimateNotificationRecipientsRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateNotificationRecipientsSuccessResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Estimate notification recipients
   /templates:
     get:
       description: List templates for an app.
@@ -3648,7 +3697,9 @@ components:
           description: "The segment names you want to target. Users in these segments\
             \ will receive a notification. This targeting parameter is only compatible\
             \ with excluded_segments.\nExample: [\"Active Users\", \"Inactive Users\"\
-            ]\n"
+            ]\n`\"All\"` is a shorthand for every subscribed user: if the array includes\
+            \ the string `\"All\"` and the app has no segment actually named `All`,\
+            \ it targets all subscribers instead of a literal segment lookup.\n"
           items:
             type: string
           type: array
@@ -4965,6 +5016,55 @@ components:
             \ or `invalid_player_ids`) depending on the API response; HTTP may still\
             \ be 200 with partial success. Typed SDKs model this loosely so both shapes\
             \ deserialize."
+      type: object
+    EstimateNotificationRecipientsRequest:
+      allOf:
+      - $ref: '#/components/schemas/SegmentNotificationTarget'
+      - $ref: '#/components/schemas/EstimateNotificationRecipientsRequest_allOf'
+      - required:
+        - app_id
+      description: "The targeting subset of notification fields this endpoint honors.\
+        \ `included_segments` (or its `\"All\"` shorthand) is required. `excluded_segments`,\
+        \ `filters`, `include_aliases`, and `target_channel` narrow that segment-based\
+        \ audience further when present. Use `target_channel` to select which platforms\
+        \ to count. Other notification targeting fields (`include_subscription_ids`\
+        \ and the other raw subscription id/token fields, and the individual `isIos`\
+        \ / `isAndroid` / etc. platform flags) are not read by this endpoint. All\
+        \ non-targeting notification fields (content, delivery options, and so on)\
+        \ are accepted, but ignored.\n"
+    EstimateNotificationRecipientsSuccessResponse:
+      example:
+        mobile_suppressed: true
+        uncapped_count: 6
+        count: 0
+        mobile_excluded_count: 1
+        cap_applied: true
+      properties:
+        count:
+          description: "The estimated audience size based on the user targeting method\
+            \ you've set on the message, and the specific platforms the message is\
+            \ targeted to send to."
+          type: integer
+        uncapped_count:
+          description: The estimated audience size before the plan's web push subscriber
+            cap is applied. Present only when `cap_applied` is `true`; `null` otherwise.
+          nullable: true
+          type: integer
+        cap_applied:
+          description: Whether `count` was reduced because the app is on a plan that
+            caps the number of web push subscribers it can send to.
+          type: boolean
+        mobile_suppressed:
+          description: The mobile equivalent of `cap_applied`. Whether mobile push
+            deliveries will be dropped for this send because the org is over its plan's
+            mobile push subscriber cap. `false` when the notification doesn't target
+            any mobile push platforms.
+          type: boolean
+        mobile_excluded_count:
+          description: How many mobile push recipients the `count` excludes due to
+            the plan's mobile push subscriber cap. `0` when `mobile_suppressed` is
+            `false`.
+          type: integer
       type: object
     GenericSuccessBoolResponse:
       example:
@@ -9051,6 +9151,47 @@ components:
             unsubscribe link in this email.
           nullable: true
           type: integer
+    EstimateNotificationRecipientsRequest_allOf:
+      properties:
+        app_id:
+          description: "The OneSignal App ID for your app, which can be found in Keys\
+            \ & IDs."
+          type: string
+        filters:
+          items:
+            $ref: '#/components/schemas/FilterExpression'
+          nullable: true
+          type: array
+        include_aliases:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: "Target specific users by aliases assigned via API. An alias\
+            \ can be an external_id, onesignal_id, or a custom alias.\nAccepts an\
+            \ object where keys are alias labels and values are arrays of alias IDs\
+            \ to include\nExample usage: { \"external_id\": [\"exId1\", \"extId2\"\
+            ], \"internal_label\": [\"id1\", \"id2\"] }\nKeys must match API spellings\
+            \ exactly (for example the label for External ID is the string `external_id`;\
+            \ arbitrary keys such as camelCase variants are not aliases and may yield\
+            \ no recipients).\nNot compatible with any other targeting parameters.\n\
+            REQUIRED: REST API Key Authentication\nLimit of 2,000 entries per REST\
+            \ API call\nNote: If targeting push, email, or sms subscribers with same\
+            \ ids, use with target_channel to indicate you are sending a push or email\
+            \ or sms."
+          nullable: true
+          type: object
+        target_channel:
+          description: "Which platforms to count recipients for. Selects the same\
+            \ default platforms Create notification would use for the channel. Individual\
+            \ platform flags (`isIos`, `isAndroid`, etc.) are not supported by this\
+            \ endpoint."
+          enum:
+          - push
+          - email
+          - sms
+          type: string
+      type: object
     CreateUserConflictResponse_errorsItems_meta:
       properties:
         conflicting_aliases:
