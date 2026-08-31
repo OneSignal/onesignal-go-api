@@ -24,6 +24,7 @@ Method | HTTP request | Description
 [**DeleteSubscription**](DefaultApi.md#DeleteSubscription) | **Delete** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**DeleteTemplate**](DefaultApi.md#DeleteTemplate) | **Delete** /templates/{template_id} | Delete template
 [**DeleteUser**](DefaultApi.md#DeleteUser) | **Delete** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
+[**EstimateNotificationRecipients**](DefaultApi.md#EstimateNotificationRecipients) | **Post** /notifications/count-unsaved | Estimate notification recipients
 [**ExportEvents**](DefaultApi.md#ExportEvents) | **Post** /notifications/{notification_id}/export_events | Export CSV of Events
 [**ExportSubscriptions**](DefaultApi.md#ExportSubscriptions) | **Post** /players/csv_export?app_id&#x3D;{app_id} | Export CSV of Subscriptions
 [**GetAliases**](DefaultApi.md#GetAliases) | **Get** /apps/{app_id}/users/by/{alias_label}/{alias_id}/identity | 
@@ -1827,6 +1828,82 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## EstimateNotificationRecipients
+
+> EstimateNotificationRecipientsSuccessResponse EstimateNotificationRecipients(ctx).EstimateNotificationRecipientsRequest(estimateNotificationRecipientsRequest).Execute()
+
+Estimate notification recipients
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    estimateNotificationRecipientsRequest := *onesignal.NewEstimateNotificationRecipientsRequest("AppId_example") // EstimateNotificationRecipientsRequest | 
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.EstimateNotificationRecipients(restAuth).EstimateNotificationRecipientsRequest(estimateNotificationRecipientsRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.EstimateNotificationRecipients``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `EstimateNotificationRecipients`: EstimateNotificationRecipientsSuccessResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.EstimateNotificationRecipients`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiEstimateNotificationRecipientsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **estimateNotificationRecipientsRequest** | [**EstimateNotificationRecipientsRequest**](EstimateNotificationRecipientsRequest.md) |  | 
+
+### Return type
+
+[**EstimateNotificationRecipientsSuccessResponse**](EstimateNotificationRecipientsSuccessResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
