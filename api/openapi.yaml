@@ -947,6 +947,58 @@ paths:
       security:
       - rest_api_key: []
       summary: View Outcomes
+  /apps/{app_id}/email_analytics/delivery_metrics:
+    get:
+      description: "The email bounce and spam complaint rates received for the app\
+        \ over the last 24 hours, 7 days, and 30 days.\nRates are expressed as fractions\
+        \ of successfully delivered emails (for example, `0.02` means 2%). A window\
+        \ reports `0` for both rates when the app has not successfully delivered any\
+        \ email in that period.\n"
+      operationId: get_email_reputation
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailReputationResponse'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Get email reputation statistics
   /apps/{app_id}/activities/activity/{activity_type}:
     post:
       description: Remotely start a Live Activity on iOS devices via OneSignal’s REST
@@ -5065,6 +5117,48 @@ components:
             the plan's mobile push subscriber cap. `0` when `mobile_suppressed` is
             `false`.
           type: integer
+      type: object
+    EmailReputationResponse:
+      description: "App-wide email bounce and spam complaint rates, broken out by\
+        \ time window."
+      example:
+        last_7_days: ""
+        last_24_hours: ""
+        last_30_days: ""
+      properties:
+        last_24_hours:
+          allOf:
+          - $ref: '#/components/schemas/EmailReputationWindow'
+          description: Bounce and complaint rates for email delivered over the last
+            24 hours.
+        last_7_days:
+          allOf:
+          - $ref: '#/components/schemas/EmailReputationWindow'
+          description: Bounce and complaint rates for email delivered over the last
+            7 days.
+        last_30_days:
+          allOf:
+          - $ref: '#/components/schemas/EmailReputationWindow'
+          description: Bounce and complaint rates for email delivered over the last
+            30 days.
+      type: object
+    EmailReputationWindow:
+      description: "Email reputation rates for a single time window. Each rate is\
+        \ a fraction of successfully delivered emails (for example, `0.02` means 2%).\
+        \ Both rates are `0` when no email was successfully delivered in the window."
+      properties:
+        bounce_rate:
+          description: The fraction of successfully delivered emails that hard or
+            soft bounced during the window.
+          example: 0.02
+          format: double
+          type: number
+        complaint_rate:
+          description: The fraction of successfully delivered emails that recipients
+            reported as spam during the window.
+          example: 0.001
+          format: double
+          type: number
       type: object
     GenericSuccessBoolResponse:
       example:
