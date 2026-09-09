@@ -31,6 +31,7 @@ Method | HTTP request | Description
 [**GetAliasesBySubscription**](DefaultApi.md#GetAliasesBySubscription) | **Get** /apps/{app_id}/subscriptions/{subscription_id}/user/identity | 
 [**GetApp**](DefaultApi.md#GetApp) | **Get** /apps/{app_id} | View an app
 [**GetApps**](DefaultApi.md#GetApps) | **Get** /apps | View apps
+[**GetEmailReputation**](DefaultApi.md#GetEmailReputation) | **Get** /apps/{app_id}/email_analytics/delivery_metrics | Get email reputation statistics
 [**GetNotification**](DefaultApi.md#GetNotification) | **Get** /notifications/{notification_id} | View notification
 [**GetNotificationHistory**](DefaultApi.md#GetNotificationHistory) | **Post** /notifications/{notification_id}/history | Notification History
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Get** /notifications | View notifications
@@ -2384,6 +2385,86 @@ Other parameters are passed through a pointer to a apiGetAppsRequest struct via 
 ### Return type
 
 [**[]App**](App.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## GetEmailReputation
+
+> EmailReputationResponse GetEmailReputation(ctx, appId).Execute()
+
+Get email reputation statistics
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.GetEmailReputation(restAuth, appId).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetEmailReputation``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `GetEmailReputation`: EmailReputationResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetEmailReputation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEmailReputationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**EmailReputationResponse**](EmailReputationResponse.md)
 
 ### HTTP request headers
 
