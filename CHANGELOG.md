@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.17.0](https://github.com/OneSignal/onesignal-go-api/compare/v5.16.0...v5.17.0) (2026-09-09)
+
+### Features
+
+* add v5.17.0 package updates ([f80bcad](https://github.com/OneSignal/onesignal-go-api/commit/f80bcad3298c0fa3409a05654ddfea383a2fe20b))
+* add v5.17.0 package updates ([#131](https://github.com/OneSignal/onesignal-go-api/issues/131)) ([564c752](https://github.com/OneSignal/onesignal-go-api/commit/564c75208cebd9d4c0907250ecf03f069484a5a1)), closes [OneSignal/api-client-libraries#464](https://github.com/OneSignal/api-client-libraries/issues/464) [OneSignal/api-client-libraries#465](https://github.com/OneSignal/api-client-libraries/issues/465)
+
 ## [5.16.0](https://github.com/OneSignal/onesignal-go-api/compare/v5.15.0...v5.16.0) (2026-08-31)
 
 ### Features
