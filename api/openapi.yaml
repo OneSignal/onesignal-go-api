@@ -3211,6 +3211,82 @@ paths:
       security:
       - rest_api_key: []
       summary: Update journey
+  /apps/{app_id}/journeys/{journey_id}/duplicate:
+    post:
+      description: "The Journeys API is in beta. Endpoints and response fields can\
+        \ still change. Copy an existing journey into a new draft. The source does\
+        \ not change. The copy is always a draft, and started_at and archived_at are\
+        \ null. If you omit the body, or omit overrides, the copy keeps the source\
+        \ description, audience, nodes, early_exit, and reentry_rules. The copy takes\
+        \ the source name plus \" (Copy)\". The copy does not keep schedule. Send\
+        \ schedule under overrides to set it. Server-controlled fields are rejected\
+        \ with 400. The authenticated App API key must have permission to create journeys."
+      operationId: duplicate_journey
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: UUID of the journey to copy.
+        explode: false
+        in: path
+        name: journey_id
+        required: true
+        schema:
+          example: YOUR_JOURNEY_ID
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DuplicateJourneyRequest'
+        required: false
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+          description: Created
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Duplicate journey
   /apps/{app_id}/journeys/{journey_id}/stats:
     get:
       description: "The Journeys API is in beta. Endpoints and response fields can\
@@ -6939,8 +7015,8 @@ components:
           type: array
       type: object
     Journey:
-      description: "Full journey representation returned by the detail, create, and\
-        \ update endpoints."
+      description: "Full journey representation returned by the detail, create, update,\
+        \ and duplicate endpoints."
       example:
         audience:
           future_additions_only: true
@@ -7634,6 +7710,506 @@ components:
           type: array
       required:
       - name
+      type: object
+    DuplicateJourneyOverrides:
+      description: "Journey fields to apply over the copy as a JSON Merge Patch (RFC\
+        \ 7396). Accepts the same writable fields as Create journey, and none of them\
+        \ are required. The patch merges into the copy, not the source. The copy starts\
+        \ without a schedule, so an omitted schedule leaves the copy unscheduled.\
+        \ An object merges key by key. A null value clears a nullable field. An array\
+        \ such as nodes replaces the copied array. Server-controlled fields such as\
+        \ id or state are rejected."
+      example:
+        schedule:
+          start_at: start_at
+          error: error
+          stop_at: stop_at
+        audience:
+          future_additions_only: true
+          kind: segment
+          included_segment_ids:
+          - included_segment_ids
+          - included_segment_ids
+          excluded_segment_ids:
+          - excluded_segment_ids
+          - excluded_segment_ids
+          name: name
+          attributes:
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+          - - value: value
+              key: key
+              operator: equal
+            - value: value
+              key: key
+              operator: equal
+        nodes:
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        - annotation: annotation
+          duration_seconds: 2527224
+          relative_to: schedule_in_timezone
+          assignments:
+            key: assignments
+          kind: wait
+          windows:
+          - start: ""
+            end: ""
+            day_of_week: 4
+          - start: ""
+            end: ""
+            day_of_week: 4
+          time_zone: time_zone
+          use_user_time_zone: true
+          branches:
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          - condition:
+              kind: segment_membership
+              entry_event_match_attributes:
+              - "{}"
+              - "{}"
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+              excluded_segment_ids:
+              - excluded_segment_ids
+              - excluded_segment_ids
+              name: name
+              action: received
+              attributes:
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              - - value: value
+                  key: key
+                  operator: equal
+                - value: value
+                  key: key
+                  operator: equal
+              sending_node_id: sending_node_id
+              client_node_id: client_node_id
+            nodes:
+            - null
+            - null
+            weight: 5.962133916683182
+            id: id
+          client_node_id: client_node_id
+          iam_id: iam_id
+          randomize_on_entry: true
+          webhook_id: webhook_id
+          template_id: template_id
+          expiration:
+            duration_seconds: 17789868
+            exits: true
+          id: id
+          user_ttl_seconds: 1
+        name: name
+        description: description
+        early_exit:
+          rules:
+            on_segment:
+              included_segment_ids:
+              - included_segment_ids
+              - included_segment_ids
+            on_event:
+              name: name
+            when_not_in_audience: true
+            on_session: true
+          tag_on_early_exit:
+            key: tag_on_early_exit
+        reentry_rules:
+          duration_seconds: 600
+      properties:
+        name:
+          description: "Name for the copy, up to 300 characters. If you omit it, the\
+            \ copy takes the name of the source plus \" (Copy)\"."
+          type: string
+        description:
+          description: "Optional journey description, up to 1024 characters. If you\
+            \ omit it, the copy takes the description of the source. Send null to\
+            \ clear it."
+          nullable: true
+          type: string
+        audience:
+          $ref: '#/components/schemas/JourneyAudience'
+        early_exit:
+          $ref: '#/components/schemas/JourneyEarlyExit'
+        reentry_rules:
+          $ref: '#/components/schemas/JourneyReentryRules'
+        schedule:
+          $ref: '#/components/schemas/JourneySchedule'
+        nodes:
+          description: Full ordered list of nodes. Replaces the copied graph. Server-assigned
+            id fields are rejected.
+          items:
+            $ref: '#/components/schemas/JourneyNode'
+          type: array
+      type: object
+    DuplicateJourneyRequest:
+      description: Optional body for Duplicate journey. Only overrides is applied.
+        A journey field sent at the top level is ignored.
+      example:
+        overrides:
+          schedule:
+            start_at: start_at
+            error: error
+            stop_at: stop_at
+          audience:
+            future_additions_only: true
+            kind: segment
+            included_segment_ids:
+            - included_segment_ids
+            - included_segment_ids
+            excluded_segment_ids:
+            - excluded_segment_ids
+            - excluded_segment_ids
+            name: name
+            attributes:
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+            - - value: value
+                key: key
+                operator: equal
+              - value: value
+                key: key
+                operator: equal
+          nodes:
+          - annotation: annotation
+            duration_seconds: 2527224
+            relative_to: schedule_in_timezone
+            assignments:
+              key: assignments
+            kind: wait
+            windows:
+            - start: ""
+              end: ""
+              day_of_week: 4
+            - start: ""
+              end: ""
+              day_of_week: 4
+            time_zone: time_zone
+            use_user_time_zone: true
+            branches:
+            - condition:
+                kind: segment_membership
+                entry_event_match_attributes:
+                - "{}"
+                - "{}"
+                included_segment_ids:
+                - included_segment_ids
+                - included_segment_ids
+                excluded_segment_ids:
+                - excluded_segment_ids
+                - excluded_segment_ids
+                name: name
+                action: received
+                attributes:
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                sending_node_id: sending_node_id
+                client_node_id: client_node_id
+              nodes:
+              - null
+              - null
+              weight: 5.962133916683182
+              id: id
+            - condition:
+                kind: segment_membership
+                entry_event_match_attributes:
+                - "{}"
+                - "{}"
+                included_segment_ids:
+                - included_segment_ids
+                - included_segment_ids
+                excluded_segment_ids:
+                - excluded_segment_ids
+                - excluded_segment_ids
+                name: name
+                action: received
+                attributes:
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                sending_node_id: sending_node_id
+                client_node_id: client_node_id
+              nodes:
+              - null
+              - null
+              weight: 5.962133916683182
+              id: id
+            client_node_id: client_node_id
+            iam_id: iam_id
+            randomize_on_entry: true
+            webhook_id: webhook_id
+            template_id: template_id
+            expiration:
+              duration_seconds: 17789868
+              exits: true
+            id: id
+            user_ttl_seconds: 1
+          - annotation: annotation
+            duration_seconds: 2527224
+            relative_to: schedule_in_timezone
+            assignments:
+              key: assignments
+            kind: wait
+            windows:
+            - start: ""
+              end: ""
+              day_of_week: 4
+            - start: ""
+              end: ""
+              day_of_week: 4
+            time_zone: time_zone
+            use_user_time_zone: true
+            branches:
+            - condition:
+                kind: segment_membership
+                entry_event_match_attributes:
+                - "{}"
+                - "{}"
+                included_segment_ids:
+                - included_segment_ids
+                - included_segment_ids
+                excluded_segment_ids:
+                - excluded_segment_ids
+                - excluded_segment_ids
+                name: name
+                action: received
+                attributes:
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                sending_node_id: sending_node_id
+                client_node_id: client_node_id
+              nodes:
+              - null
+              - null
+              weight: 5.962133916683182
+              id: id
+            - condition:
+                kind: segment_membership
+                entry_event_match_attributes:
+                - "{}"
+                - "{}"
+                included_segment_ids:
+                - included_segment_ids
+                - included_segment_ids
+                excluded_segment_ids:
+                - excluded_segment_ids
+                - excluded_segment_ids
+                name: name
+                action: received
+                attributes:
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                - - value: value
+                    key: key
+                    operator: equal
+                  - value: value
+                    key: key
+                    operator: equal
+                sending_node_id: sending_node_id
+                client_node_id: client_node_id
+              nodes:
+              - null
+              - null
+              weight: 5.962133916683182
+              id: id
+            client_node_id: client_node_id
+            iam_id: iam_id
+            randomize_on_entry: true
+            webhook_id: webhook_id
+            template_id: template_id
+            expiration:
+              duration_seconds: 17789868
+              exits: true
+            id: id
+            user_ttl_seconds: 1
+          name: name
+          description: description
+          early_exit:
+            rules:
+              on_segment:
+                included_segment_ids:
+                - included_segment_ids
+                - included_segment_ids
+              on_event:
+                name: name
+              when_not_in_audience: true
+              on_session: true
+            tag_on_early_exit:
+              key: tag_on_early_exit
+          reentry_rules:
+            duration_seconds: 600
+      properties:
+        overrides:
+          $ref: '#/components/schemas/DuplicateJourneyOverrides'
       type: object
     UpdateJourneyRequest:
       description: Partial update applied with JSON Merge Patch (RFC 7396). Send only
