@@ -1441,7 +1441,9 @@ func (a *DefaultApiService) CreateSegmentExecute(r ApiCreateSegmentRequest) (*Cr
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.segment
+	if r.segment != nil {
+		localVarPostBody = r.segment
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2425,7 +2427,7 @@ The segment_id can be found in the URL of the segment when viewing it in the das
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
- @param segmentId The segment_id can be found in the URL of the segment when viewing it in the dashboard.
+ @param segmentId The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard.
  @return ApiDeleteSegmentRequest
 */
 func (a *DefaultApiService) DeleteSegment(ctx context.Context, appId string, segmentId string) ApiDeleteSegmentRequest {
@@ -2971,6 +2973,170 @@ func (a *DefaultApiService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Res
 	return localVarHTTPResponse, nil
 }
 
+type ApiDuplicateJourneyRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	appId string
+	journeyId string
+	duplicateJourneyRequest *DuplicateJourneyRequest
+}
+
+func (r ApiDuplicateJourneyRequest) DuplicateJourneyRequest(duplicateJourneyRequest DuplicateJourneyRequest) ApiDuplicateJourneyRequest {
+	r.duplicateJourneyRequest = &duplicateJourneyRequest
+	return r
+}
+
+func (r ApiDuplicateJourneyRequest) Execute() (*Journey, *http.Response, error) {
+	return r.ApiService.DuplicateJourneyExecute(r)
+}
+
+/*
+DuplicateJourney Duplicate journey
+
+The Journeys API is in beta. Endpoints and response fields can still change. Copy an existing journey into a new draft. The source does not change. The copy is always a draft, and started_at and archived_at are null. If you omit the body, or omit overrides, the copy keeps the source description, audience, nodes, early_exit, and reentry_rules. The copy takes the source name plus " (Copy)". The copy does not keep schedule. Send schedule under overrides to set it. Server-controlled fields are rejected with 400. The authenticated App API key must have permission to create journeys.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId Your OneSignal App ID in UUID v4 format.
+ @param journeyId UUID of the journey to copy.
+ @return ApiDuplicateJourneyRequest
+*/
+func (a *DefaultApiService) DuplicateJourney(ctx context.Context, appId string, journeyId string) ApiDuplicateJourneyRequest {
+	return ApiDuplicateJourneyRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		journeyId: journeyId,
+	}
+}
+
+// Execute executes the request
+//  @return Journey
+func (a *DefaultApiService) DuplicateJourneyExecute(r ApiDuplicateJourneyRequest) (*Journey, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Journey
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DuplicateJourney")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/apps/{app_id}/journeys/{journey_id}/duplicate"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterToString(r.appId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"journey_id"+"}", url.PathEscape(parameterToString(r.journeyId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	if r.duplicateJourneyRequest != nil {
+		localVarPostBody = r.duplicateJourneyRequest
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GenericError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		var v GenericError
+		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+		if err != nil {
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiEstimateNotificationRecipientsRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
@@ -3381,7 +3547,9 @@ func (a *DefaultApiService) ExportSubscriptionsExecute(r ApiExportSubscriptionsR
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.exportSubscriptionsRequestBody
+	if r.exportSubscriptionsRequestBody != nil {
+		localVarPostBody = r.exportSubscriptionsRequestBody
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -4819,7 +4987,7 @@ Retrieve details for a single segment by its ID, including subscriber count and 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
- @param segmentId The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard.
+ @param segmentId The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard.
  @return ApiGetSegmentRequest
 */
 func (a *DefaultApiService) GetSegment(ctx context.Context, appId string, segmentId string) ApiGetSegmentRequest {
@@ -6960,7 +7128,7 @@ Update an existing segment's name and/or filters. The name parameter is always r
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId The OneSignal App ID for your app.  Available in Keys & IDs.
- @param segmentId The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard.
+ @param segmentId The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard.
  @return ApiUpdateSegmentRequest
 */
 func (a *DefaultApiService) UpdateSegment(ctx context.Context, appId string, segmentId string) ApiUpdateSegmentRequest {
@@ -7013,7 +7181,9 @@ func (a *DefaultApiService) UpdateSegmentExecute(r ApiUpdateSegmentRequest) (*Up
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateSegmentRequest
+	if r.updateSegmentRequest != nil {
+		localVarPostBody = r.updateSegmentRequest
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
