@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-// Journey Full journey representation returned by the detail, create, and update endpoints.
+// Journey Full journey representation returned by the detail, create, update, and duplicate endpoints.
 type Journey struct {
 	// Journey UUID. Read-only.
 	Id *string `json:"id,omitempty"`
