@@ -24,6 +24,7 @@ Method | HTTP request | Description
 [**DeleteSubscription**](DefaultApi.md#DeleteSubscription) | **Delete** /apps/{app_id}/subscriptions/{subscription_id} | 
 [**DeleteTemplate**](DefaultApi.md#DeleteTemplate) | **Delete** /templates/{template_id} | Delete template
 [**DeleteUser**](DefaultApi.md#DeleteUser) | **Delete** /apps/{app_id}/users/by/{alias_label}/{alias_id} | 
+[**DuplicateJourney**](DefaultApi.md#DuplicateJourney) | **Post** /apps/{app_id}/journeys/{journey_id}/duplicate | Duplicate journey
 [**EstimateNotificationRecipients**](DefaultApi.md#EstimateNotificationRecipients) | **Post** /notifications/count-unsaved | Estimate notification recipients
 [**ExportEvents**](DefaultApi.md#ExportEvents) | **Post** /notifications/{notification_id}/export_events | Export CSV of Events
 [**ExportSubscriptions**](DefaultApi.md#ExportSubscriptions) | **Post** /players/csv_export?app_id&#x3D;{app_id} | Export CSV of Subscriptions
@@ -1532,7 +1533,7 @@ import (
 
 func main() {
     appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment_id can be found in the URL of the segment when viewing it in the dashboard.
+    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard.
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1563,7 +1564,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
 **appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
-**segmentId** | **string** | The segment_id can be found in the URL of the segment when viewing it in the dashboard. | 
+**segmentId** | **string** | The segment&#39;s unique identifier. In the dashboard, go to Audience &gt; Segments, open the segment&#39;s options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment&#39;s URL in the dashboard. | 
 
 ### Other Parameters
 
@@ -1829,6 +1830,91 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
+## DuplicateJourney
+
+> Journey DuplicateJourney(ctx, appId, journeyId).DuplicateJourneyRequest(duplicateJourneyRequest).Execute()
+
+Duplicate journey
+
+
+
+### Authorization
+
+[rest_api_key](https://github.com/OneSignal/onesignal-go-api#configuration)
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
+    journeyId := "YOUR_JOURNEY_ID" // string | UUID of the journey to copy.
+    duplicateJourneyRequest := *onesignal.NewDuplicateJourneyRequest() // DuplicateJourneyRequest |  (optional)
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+    restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
+
+    resp, r, err := apiClient.DefaultApi.DuplicateJourney(restAuth, appId, journeyId).DuplicateJourneyRequest(duplicateJourneyRequest).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DuplicateJourney``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `DuplicateJourney`: Journey
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.DuplicateJourney`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** | Your OneSignal App ID in UUID v4 format. | 
+**journeyId** | **string** | UUID of the journey to copy. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDuplicateJourneyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **duplicateJourneyRequest** | [**DuplicateJourneyRequest**](DuplicateJourneyRequest.md) |  | 
+
+### Return type
+
+[**Journey**](Journey.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
@@ -2840,7 +2926,7 @@ import (
 
 func main() {
     appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard.
+    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard.
     includeSegmentDetail := true // bool | Set to true to include segment metadata and filters in the response. (optional)
 
     configuration := onesignal.NewConfiguration()
@@ -2872,7 +2958,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
 **appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
-**segmentId** | **string** | The segment&#39;s unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | 
+**segmentId** | **string** | The segment&#39;s unique identifier. In the dashboard, go to Audience &gt; Segments, open the segment&#39;s options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment&#39;s URL in the dashboard. | 
 
 ### Other Parameters
 
@@ -3960,7 +4046,7 @@ import (
 
 func main() {
     appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
-    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard.
+    segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard.
     updateSegmentRequest := *onesignal.NewUpdateSegmentRequest("Name_example") // UpdateSegmentRequest |  (optional)
 
     configuration := onesignal.NewConfiguration()
@@ -3992,7 +4078,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
 **appId** | **string** | The OneSignal App ID for your app.  Available in Keys &amp; IDs. | 
-**segmentId** | **string** | The segment&#39;s unique identifier. Can be found using the View Segments API or in the URL of the segment when viewing it in the dashboard. | 
+**segmentId** | **string** | The segment&#39;s unique identifier. In the dashboard, go to Audience &gt; Segments, open the segment&#39;s options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment&#39;s URL in the dashboard. | 
 
 ### Other Parameters
 
