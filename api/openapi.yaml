@@ -2916,6 +2916,7 @@ paths:
         name: cursor
         required: false
         schema:
+          example: YOUR_NEXT_CURSOR
           type: string
         style: form
       - description: "Maximum journeys to return per page. Minimum 1, maximum 50."
@@ -3468,6 +3469,7 @@ paths:
         name: start_time
         required: false
         schema:
+          example: 2026-02-01T00:00:00Z
           type: string
         style: form
       - description: End of the time range in ISO 8601 format. Defaults to the current
@@ -3477,6 +3479,7 @@ paths:
         name: end_time
         required: false
         schema:
+          example: 2026-02-02T00:00:00Z
           type: string
         style: form
       - description: "Pagination cursor returned in a previous response as next_cursor.\
@@ -3486,6 +3489,7 @@ paths:
         name: cursor
         required: false
         schema:
+          example: YOUR_NEXT_CURSOR
           type: string
         style: form
       - description: "Maximum number of events to return per page. Minimum 1, maximum\
@@ -3495,6 +3499,7 @@ paths:
         name: limit
         required: false
         schema:
+          example: 50
           type: integer
         style: form
       - description: Filter events by app UUID. Accepts up to 10 values. Org-level
@@ -3505,6 +3510,7 @@ paths:
         required: false
         schema:
           items:
+            example: YOUR_APP_ID
             type: string
           maxItems: 10
           type: array
@@ -3517,6 +3523,7 @@ paths:
         required: false
         schema:
           items:
+            example: notification.sent
             type: string
           maxItems: 20
           type: array
@@ -3529,6 +3536,7 @@ paths:
         required: false
         schema:
           items:
+            example: YOUR_ACTOR_ID
             type: string
           maxItems: 10
           type: array
@@ -3540,6 +3548,7 @@ paths:
         required: false
         schema:
           items:
+            example: admin@example.com
             type: string
           maxItems: 10
           type: array
@@ -3552,6 +3561,7 @@ paths:
         required: false
         schema:
           items:
+            example: notification
             type: string
           maxItems: 10
           type: array
@@ -3564,6 +3574,7 @@ paths:
         required: false
         schema:
           items:
+            example: YOUR_TARGET_ID
             type: string
           maxItems: 10
           type: array
@@ -3576,6 +3587,7 @@ paths:
         required: false
         schema:
           items:
+            example: 203.0.113.42
             type: string
           maxItems: 10
           type: array
