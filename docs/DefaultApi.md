@@ -211,7 +211,7 @@ import (
 func main() {
     templateId := "e4d3c2b1-a09f-4f1e-8d7c-6b5a4f3e2d1c" // string | 
     appId := "YOUR_APP_ID" // string | 
-    copyTemplateRequest := *onesignal.NewCopyTemplateRequest("TargetAppId_example") // CopyTemplateRequest | 
+    copyTemplateRequest := *onesignal.NewCopyTemplateRequest("YOUR_TARGET_APP_ID") // CopyTemplateRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -625,7 +625,7 @@ import (
 
 func main() {
     appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
-    customEventsRequest := *onesignal.NewCustomEventsRequest([]onesignal.CustomEvent{*onesignal.NewCustomEvent("Name_example")}) // CustomEventsRequest | 
+    customEventsRequest := *onesignal.NewCustomEventsRequest([]onesignal.CustomEvent{*onesignal.NewCustomEvent("YOUR_NAME")}) // CustomEventsRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -707,7 +707,7 @@ import (
 
 func main() {
     appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
-    createJourneyRequest := *onesignal.NewCreateJourneyRequest("Name_example") // CreateJourneyRequest | 
+    createJourneyRequest := *onesignal.NewCreateJourneyRequest("YOUR_NAME") // CreateJourneyRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1104,7 +1104,7 @@ import (
 )
 
 func main() {
-    createTemplateRequest := *onesignal.NewCreateTemplateRequest("AppId_example", "Name_example", *onesignal.NewLanguageStringMap()) // CreateTemplateRequest | 
+    createTemplateRequest := *onesignal.NewCreateTemplateRequest("YOUR_APP_ID", "YOUR_NAME", *onesignal.NewLanguageStringMap()) // CreateTemplateRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -1947,7 +1947,7 @@ import (
 )
 
 func main() {
-    estimateNotificationRecipientsRequest := *onesignal.NewEstimateNotificationRecipientsRequest("AppId_example") // EstimateNotificationRecipientsRequest | 
+    estimateNotificationRecipientsRequest := *onesignal.NewEstimateNotificationRecipientsRequest("YOUR_APP_ID") // EstimateNotificationRecipientsRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -3181,17 +3181,17 @@ import (
 
 func main() {
     organizationId := "YOUR_ORG_ID" // string | The UUID of the organization to retrieve audit logs for. Must match the authenticated Organization API Key.
-    startTime := "startTime_example" // string | Start of the time range in ISO 8601 format (e.g. 2026-02-01T00:00:00Z). Required unless cursor is provided. Must be within the last 90 days. (optional)
-    endTime := "endTime_example" // string | End of the time range in ISO 8601 format. Defaults to the current time. Must be after start_time. (optional)
-    cursor := "cursor_example" // string | Pagination cursor returned in a previous response as next_cursor. When provided, start_time and end_time are ignored. (optional)
-    limit := int32(56) // int32 | Maximum number of events to return per page. Minimum 1, maximum 100. Values outside this range are clamped automatically by the server. (optional)
-    appIds := []string{"Inner_example"} // []string | Filter events by app UUID. Accepts up to 10 values. Org-level events are always included. (optional)
-    actions := []string{"Inner_example"} // []string | Filter by action type (e.g. notification.sent, segment.created). Accepts up to 20 values. (optional)
-    actorIds := []string{"Inner_example"} // []string | Filter by actor UUID (the user or service that performed the action). Accepts up to 10 values. (optional)
-    actorEmails := []string{"Inner_example"} // []string | Filter by actor email address. Accepts up to 10 values. (optional)
-    targetTypes := []string{"Inner_example"} // []string | Filter by the type of resource the action was performed on (e.g. notification, segment, journey). Accepts up to 10 values. (optional)
-    targetIds := []string{"Inner_example"} // []string | Filter by the UUID of the resource the action was performed on. Accepts up to 10 values. (optional)
-    ipAddresses := []string{"Inner_example"} // []string | Filter by the IP address the action originated from. Accepts up to 10 values. (optional)
+    startTime := "2026-02-01T00:00:00Z" // string | Start of the time range in ISO 8601 format (e.g. 2026-02-01T00:00:00Z). Required unless cursor is provided. Must be within the last 90 days. (optional)
+    endTime := "2026-02-02T00:00:00Z" // string | End of the time range in ISO 8601 format. Defaults to the current time. Must be after start_time. (optional)
+    cursor := "YOUR_NEXT_CURSOR" // string | Pagination cursor returned in a previous response as next_cursor. When provided, start_time and end_time are ignored. (optional)
+    limit := int32(50) // int32 | Maximum number of events to return per page. Minimum 1, maximum 100. Values outside this range are clamped automatically by the server. (optional)
+    appIds := []string{"YOUR_APP_ID"} // []string | Filter events by app UUID. Accepts up to 10 values. Org-level events are always included. (optional)
+    actions := []string{"notification.sent"} // []string | Filter by action type (e.g. notification.sent, segment.created). Accepts up to 20 values. (optional)
+    actorIds := []string{"YOUR_ACTOR_ID"} // []string | Filter by actor UUID (the user or service that performed the action). Accepts up to 10 values. (optional)
+    actorEmails := []string{"admin@example.com"} // []string | Filter by actor email address. Accepts up to 10 values. (optional)
+    targetTypes := []string{"notification"} // []string | Filter by the type of resource the action was performed on (e.g. notification, segment, journey). Accepts up to 10 values. (optional)
+    targetIds := []string{"YOUR_TARGET_ID"} // []string | Filter by the UUID of the resource the action was performed on. Accepts up to 10 values. (optional)
+    ipAddresses := []string{"203.0.113.42"} // []string | Filter by the IP address the action originated from. Accepts up to 10 values. (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -3367,7 +3367,7 @@ import (
 func main() {
     appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
     activityType := "order_status" // string | The name of the Live Activity defined in your app. This should match the attributes struct used in your app's Live Activity implementation.
-    startLiveActivityRequest := *onesignal.NewStartLiveActivityRequest("Name_example", "Event_example", "ActivityId_example", map[string]interface{}{"key": "value"}, map[string]interface{}{"key": "value"}, *onesignal.NewLanguageStringMap(), *onesignal.NewLanguageStringMap()) // StartLiveActivityRequest | 
+    startLiveActivityRequest := *onesignal.NewStartLiveActivityRequest("YOUR_NAME", "start", "YOUR_ACTIVITY_ID", map[string]interface{}{"key": "value"}, map[string]interface{}{"key": "value"}, *onesignal.NewLanguageStringMap(), *onesignal.NewLanguageStringMap()) // StartLiveActivityRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -3962,7 +3962,7 @@ import (
 func main() {
     appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
     activityId := "12345" // string | Live Activity record ID
-    updateLiveActivityRequest := *onesignal.NewUpdateLiveActivityRequest("Name_example", "Event_example", map[string]interface{}{"key": "value"}) // UpdateLiveActivityRequest | 
+    updateLiveActivityRequest := *onesignal.NewUpdateLiveActivityRequest("YOUR_NAME", "update", map[string]interface{}{"key": "value"}) // UpdateLiveActivityRequest | 
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -4047,7 +4047,7 @@ import (
 func main() {
     appId := "YOUR_APP_ID" // string | The OneSignal App ID for your app.  Available in Keys & IDs.
     segmentId := "d6c5a3e1-9f17-44a1-9d10-7c0e4a2b1c8e" // string | The segment's unique identifier. In the dashboard, go to Audience > Segments, open the segment's options menu, and select Copy segment ID. You can also get it from the View Segments API or the segment's URL in the dashboard.
-    updateSegmentRequest := *onesignal.NewUpdateSegmentRequest("Name_example") // UpdateSegmentRequest |  (optional)
+    updateSegmentRequest := *onesignal.NewUpdateSegmentRequest("YOUR_NAME") // UpdateSegmentRequest |  (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
@@ -4720,7 +4720,7 @@ import (
 
 func main() {
     appId := "YOUR_APP_ID" // string | Your OneSignal App ID in UUID v4 format.
-    cursor := "cursor_example" // string | Opaque pagination token from a previous response's next_cursor. Omit for the first page. (optional)
+    cursor := "YOUR_NEXT_CURSOR" // string | Opaque pagination token from a previous response's next_cursor. Omit for the first page. (optional)
     limit := int32(50) // int32 | Maximum journeys to return per page. Minimum 1, maximum 50. (optional) (default to 50)
 
     configuration := onesignal.NewConfiguration()
