@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.17.0
+  version: 5.18.0
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -1005,6 +1005,208 @@ paths:
       security:
       - rest_api_key: []
       summary: Get email reputation statistics
+  /apps/{app_id}/email_analytics/provider_metrics:
+    get:
+      description: "Email delivery, opens, clicks, bounces, failures, and spam complaints\
+        \ broken down by inbox provider (Gmail, Outlook, Yahoo, Apple, and more) to\
+        \ pinpoint where deliverability problems are coming from.\nMetrics are reported\
+        \ for a single sending domain over the requested time range. `start` must\
+        \ be before `end` and no more than 365 days ago. `providers` is empty when\
+        \ the domain is not found for the app or is not currently active for sending.\n"
+      operationId: get_email_provider_metrics
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: The sending domain to report on. Must be an email domain configured
+          for this app.
+        explode: true
+        in: query
+        name: domain
+        required: true
+        schema:
+          example: mail.example.com
+          type: string
+        style: form
+      - description: "Start of the reporting window, as an ISO 8601 timestamp (for\
+          \ example, `2026-08-01T00:00:00Z`)."
+        explode: true
+        in: query
+        name: start
+        required: true
+        schema:
+          example: 2026-08-01T00:00:00Z
+          format: date-time
+          type: string
+        style: form
+      - description: "End of the reporting window, as an ISO 8601 timestamp (for example,\
+          \ `2026-08-08T00:00:00Z`)."
+        explode: true
+        in: query
+        name: end
+        required: true
+        schema:
+          example: 2026-08-08T00:00:00Z
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailProviderMetricsResponse'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Get email inbox provider metrics
+  /apps/{app_id}/email_analytics/provider_metrics_timeseries:
+    get:
+      description: "Email delivery, opens, clicks, bounces, failures, and spam complaints\
+        \ for a sending domain over time, bucketed by hour, day, or month. Use `providers[]`\
+        \ to narrow the totals to specific inbox providers (Gmail, Outlook, Yahoo,\
+        \ Apple, and more) and track how deliverability to them changes.\nEach event's\
+        \ metrics are totaled across the requested providers, or across all providers\
+        \ when none are given. `start` must be before `end` and no more than 365 days\
+        \ ago, or 60 days ago for `hourly` granularity. `events` is empty when the\
+        \ domain is not found for the app or is not currently active for sending.\n"
+      operationId: get_email_provider_metrics_timeseries
+      parameters:
+      - description: Your OneSignal App ID in UUID v4 format.
+        explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          example: YOUR_APP_ID
+          type: string
+        style: simple
+      - description: The sending domain to report on. Must be an email domain configured
+          for this app.
+        explode: true
+        in: query
+        name: domain
+        required: true
+        schema:
+          example: mail.example.com
+          type: string
+        style: form
+      - description: "Start of the reporting window, as an ISO 8601 timestamp (for\
+          \ example, `2026-08-01T00:00:00Z`)."
+        explode: true
+        in: query
+        name: start
+        required: true
+        schema:
+          example: 2026-08-01T00:00:00Z
+          format: date-time
+          type: string
+        style: form
+      - description: "End of the reporting window, as an ISO 8601 timestamp (for example,\
+          \ `2026-08-08T00:00:00Z`)."
+        explode: true
+        in: query
+        name: end
+        required: true
+        schema:
+          example: 2026-08-08T00:00:00Z
+          format: date-time
+          type: string
+        style: form
+      - description: The size of each time bucket. Hourly data is only available for
+          the last 60 days.
+        explode: true
+        in: query
+        name: granularity
+        required: true
+        schema:
+          enum:
+          - hourly
+          - daily
+          - monthly
+          example: daily
+          type: string
+        style: form
+      - description: "Inbox providers to include in the totals. Omit to include all\
+          \ providers. Accepted values: `apple`, `att`, `canadian`, `chinese`, `comcast`,\
+          \ `free_fr`, `french`, `german`, `gmail`, `google_workspace`, `googlers`,\
+          \ `inbox_lv`, `italian`, `japanese`, `outlook_365`, `outlook_eu`, `outlook_us`,\
+          \ `proton`, `rackspace`, `russian`, `uk`, `united_online`, `yahoo_eu`, `yahoo_us`,\
+          \ `other_eu`, `other_us`, and `other`.\nExample: providers[]=gmail&providers[]=yahoo_us\n"
+        explode: true
+        in: query
+        name: "providers[]"
+        required: false
+        schema:
+          items:
+            example: gmail
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailProviderMetricsTimeseriesResponse'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security:
+      - rest_api_key: []
+      summary: Get email inbox provider metrics over time
   /apps/{app_id}/activities/activity/{activity_type}:
     post:
       description: Remotely start a Live Activity on iOS devices via OneSignal’s REST
@@ -5254,6 +5456,190 @@ components:
           example: 0.001
           format: double
           type: number
+      type: object
+    EmailProviderMetricsResponse:
+      description: "Email metrics for a sending domain, broken down by inbox provider."
+      example:
+        providers:
+        - provider: gmail
+          metrics:
+            unique_opened: 35
+            complained: 1
+            delivered: 95
+            opened: 40
+            failed: 5
+            bounced: 3
+            sent: 100
+            clicked: 10
+            unique_clicked: 8
+        - provider: gmail
+          metrics:
+            unique_opened: 35
+            complained: 1
+            delivered: 95
+            opened: 40
+            failed: 5
+            bounced: 3
+            sent: 100
+            clicked: 10
+            unique_clicked: 8
+      properties:
+        providers:
+          description: One entry per inbox provider that received email from the domain
+            during the reporting window. Empty when the domain is not found for the
+            app or is not currently active for sending.
+          items:
+            $ref: '#/components/schemas/EmailProviderMetrics'
+          type: array
+      type: object
+    EmailProviderMetrics:
+      description: Email metrics for a single inbox provider.
+      example:
+        provider: gmail
+        metrics:
+          unique_opened: 35
+          complained: 1
+          delivered: 95
+          opened: 40
+          failed: 5
+          bounced: 3
+          sent: 100
+          clicked: 10
+          unique_clicked: 8
+      properties:
+        provider:
+          description: "The inbox provider. Known values include `apple`, `att`, `canadian`,\
+            \ `chinese`, `comcast`, `free_fr`, `french`, `german`, `gmail`, `google_workspace`,\
+            \ `googlers`, `inbox_lv`, `italian`, `japanese`, `outlook_365`, `outlook_eu`,\
+            \ `outlook_us`, `proton`, `rackspace`, `russian`, `uk`, `united_online`,\
+            \ `yahoo_eu`, `yahoo_us`, `other_eu`, `other_us`, and `other`. New providers\
+            \ may be added over time."
+          example: gmail
+          type: string
+        metrics:
+          $ref: '#/components/schemas/EmailMetrics'
+      type: object
+    EmailMetrics:
+      description: Email delivery and engagement counts for the reporting window.
+      example:
+        unique_opened: 35
+        complained: 1
+        delivered: 95
+        opened: 40
+        failed: 5
+        bounced: 3
+        sent: 100
+        clicked: 10
+        unique_clicked: 8
+      properties:
+        sent:
+          description: The number of emails sent.
+          example: 100
+          format: int64
+          type: integer
+        delivered:
+          description: The number of emails successfully delivered.
+          example: 95
+          format: int64
+          type: integer
+        opened:
+          description: "The total number of email opens, including repeat opens by\
+            \ the same recipient."
+          example: 40
+          format: int64
+          type: integer
+        clicked:
+          description: "The total number of email link clicks, including repeat clicks\
+            \ by the same recipient."
+          example: 10
+          format: int64
+          type: integer
+        unique_opened:
+          description: The number of emails opened at least once.
+          example: 35
+          format: int64
+          type: integer
+        unique_clicked:
+          description: The number of emails with at least one link click.
+          example: 8
+          format: int64
+          type: integer
+        failed:
+          description: The number of emails that failed to send.
+          example: 5
+          format: int64
+          type: integer
+        bounced:
+          description: The number of emails that bounced.
+          example: 3
+          format: int64
+          type: integer
+        complained:
+          description: The number of emails that recipients reported as spam.
+          example: 1
+          format: int64
+          type: integer
+      type: object
+    EmailProviderMetricsTimeseriesResponse:
+      description: Email metrics for a sending domain over time.
+      example:
+        events:
+        - date: 2026-08-01T00:00:00Z
+          metrics:
+            unique_opened: 35
+            complained: 1
+            delivered: 95
+            opened: 40
+            failed: 5
+            bounced: 3
+            sent: 100
+            clicked: 10
+            unique_clicked: 8
+        - date: 2026-08-01T00:00:00Z
+          metrics:
+            unique_opened: 35
+            complained: 1
+            delivered: 95
+            opened: 40
+            failed: 5
+            bounced: 3
+            sent: 100
+            clicked: 10
+            unique_clicked: 8
+      properties:
+        events:
+          description: "One entry for every time bucket in the reporting window, oldest\
+            \ first. Buckets with no email activity are included with all metrics\
+            \ set to `0`. Empty when the domain is not found for the app or is not\
+            \ currently active for sending."
+          items:
+            $ref: '#/components/schemas/EmailProviderMetricsEvent'
+          type: array
+      type: object
+    EmailProviderMetricsEvent:
+      description: "Email metrics for a single time bucket, totaled across the requested\
+        \ inbox providers."
+      example:
+        date: 2026-08-01T00:00:00Z
+        metrics:
+          unique_opened: 35
+          complained: 1
+          delivered: 95
+          opened: 40
+          failed: 5
+          bounced: 3
+          sent: 100
+          clicked: 10
+          unique_clicked: 8
+      properties:
+        date:
+          description: "The start of the time bucket, aligned to the hour, day, or\
+            \ month in UTC."
+          example: 2026-08-01T00:00:00Z
+          format: date-time
+          type: string
+        metrics:
+          $ref: '#/components/schemas/EmailMetrics'
       type: object
     GenericSuccessBoolResponse:
       example:
