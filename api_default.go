@@ -4674,6 +4674,143 @@ func (a *DefaultApiService) GetEmailReputationExecute(r ApiGetEmailReputationReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetJourneySchemaRequest struct {
+	ctx context.Context
+	ApiService *DefaultApiService
+	operation *string
+}
+
+// The authoring operation whose schema you need.
+func (r ApiGetJourneySchemaRequest) Operation(operation string) ApiGetJourneySchemaRequest {
+	r.operation = &operation
+	return r
+}
+
+func (r ApiGetJourneySchemaRequest) Execute() (*JourneySchemaResponse, *http.Response, error) {
+	return r.ApiService.GetJourneySchemaExecute(r)
+}
+
+/*
+GetJourneySchema Get Journey schema
+
+Retrieve the JSON Schema for a Journey authoring operation without authentication or app context. The response identifies the document to validate. Schema retrieval does not validate permissions or business rules for a later write.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetJourneySchemaRequest
+*/
+func (a *DefaultApiService) GetJourneySchema(ctx context.Context) ApiGetJourneySchemaRequest {
+	return ApiGetJourneySchemaRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return JourneySchemaResponse
+func (a *DefaultApiService) GetJourneySchemaExecute(r ApiGetJourneySchemaRequest) (*JourneySchemaResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *JourneySchemaResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetJourneySchema")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/journeys/schema"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.operation == nil {
+		return localVarReturnValue, nil, reportError("operation is required and must be specified")
+	}
+
+	localVarQueryParams.Add("operation", parameterToString(*r.operation, ""))
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v JourneyValidationErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v RateLimitError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		var v GenericError
+		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+		if err != nil {
+			newErr.error = localVarHTTPResponse.Status + ": " + err.Error()
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetNotificationRequest struct {
 	ctx context.Context
 	ApiService *DefaultApiService
@@ -8946,6 +9083,7 @@ type ApiViewTemplatesRequest struct {
 	limit *int32
 	offset *int32
 	channel *string
+	name *string
 }
 
 // Your OneSignal App ID in UUID v4 format.
@@ -8969,6 +9107,12 @@ func (r ApiViewTemplatesRequest) Offset(offset int32) ApiViewTemplatesRequest {
 // Filter by delivery channel.
 func (r ApiViewTemplatesRequest) Channel(channel string) ApiViewTemplatesRequest {
 	r.channel = &channel
+	return r
+}
+
+// Return only templates whose name contains this text, ignoring case.
+func (r ApiViewTemplatesRequest) Name(name string) ApiViewTemplatesRequest {
+	r.name = &name
 	return r
 }
 
@@ -9024,6 +9168,9 @@ func (a *DefaultApiService) ViewTemplatesExecute(r ApiViewTemplatesRequest) (*Te
 	}
 	if r.channel != nil {
 		localVarQueryParams.Add("channel", parameterToString(*r.channel, ""))
+	}
+	if r.name != nil {
+		localVarQueryParams.Add("name", parameterToString(*r.name, ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
