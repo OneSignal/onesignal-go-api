@@ -8,7 +8,7 @@ info:
     customer engagement strategies. Learn more at onesignal.com
   termsOfService: https://onesignal.com/tos
   title: OneSignal
-  version: 5.18.0
+  version: 5.19.0
 servers:
 - url: https://api.onesignal.com
 paths:
@@ -2560,6 +2560,16 @@ paths:
           example: push
           type: string
         style: form
+      - description: "Return only templates whose name contains this text, ignoring\
+          \ case."
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          example: Welcome
+          type: string
+        style: form
       responses:
         default:
           content:
@@ -3647,6 +3657,55 @@ paths:
       security:
       - rest_api_key: []
       summary: Update journey node
+  /journeys/schema:
+    get:
+      description: Retrieve the JSON Schema for a Journey authoring operation without
+        authentication or app context. The response identifies the document to validate.
+        Schema retrieval does not validate permissions or business rules for a later
+        write.
+      operationId: get_journey_schema
+      parameters:
+      - description: The authoring operation whose schema you need.
+        explode: true
+        in: query
+        name: operation
+        required: true
+        schema:
+          enum:
+          - create
+          - duplicate
+          - update
+          - update_node
+          example: create
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JourneySchemaResponse'
+          description: The schema and its applicability.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: Unexpected error
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JourneyValidationErrorResponse'
+          description: Missing or unsupported operation.
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          description: Rate Limit Exceeded
+      security: []
+      summary: Get Journey schema
   /organizations/{organization_id}/audit_logs:
     get:
       description: "Retrieve a paginated, time-scoped list of audit log events for\
@@ -9184,6 +9243,65 @@ components:
           description: Branch stats keyed by branch id. Empty for a journey with no
             branching nodes.
           type: object
+      type: object
+    JourneySchemaResponse:
+      example:
+        schema:
+          key: ""
+        document: body
+        operation: create
+      properties:
+        operation:
+          description: The requested operation.
+          enum:
+          - create
+          - duplicate
+          - update
+          - update_node
+          type: string
+        document:
+          description: "The document that the schema describes. For update_node, merged_node\
+            \ is the complete node after applying the patch."
+          enum:
+          - body
+          - overrides
+          - patch
+          - merged_node
+          type: string
+        schema:
+          additionalProperties: true
+          description: A self-contained JSON Schema Draft 6 document with local $defs
+            references.
+          type: object
+      required:
+      - document
+      - operation
+      - schema
+      type: object
+    JourneyValidationError:
+      properties:
+        code:
+          description: "Stable, kebab-case error identifier. Always `invalid-payload`\
+            \ for validation failures."
+          type: string
+        title:
+          description: Human-readable message. Wording may change between releases.
+          type: string
+        meta:
+          additionalProperties: true
+          description: "Structured context. Always includes `attribute` (the field,\
+            \ or `base` for request-level errors); may also include `path`, `node_id`,\
+            \ or `client_node_id`."
+          type: object
+      type: object
+    JourneyValidationErrorResponse:
+      description: Validation error response. The failing field and any positional
+        detail are in `meta`.
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/JourneyValidationError'
+          type: array
       type: object
     get_notification_history_request_body:
       properties:

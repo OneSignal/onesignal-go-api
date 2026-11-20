@@ -35,6 +35,7 @@ Method | HTTP request | Description
 [**GetEmailProviderMetrics**](DefaultApi.md#GetEmailProviderMetrics) | **Get** /apps/{app_id}/email_analytics/provider_metrics | Get email inbox provider metrics
 [**GetEmailProviderMetricsTimeseries**](DefaultApi.md#GetEmailProviderMetricsTimeseries) | **Get** /apps/{app_id}/email_analytics/provider_metrics_timeseries | Get email inbox provider metrics over time
 [**GetEmailReputation**](DefaultApi.md#GetEmailReputation) | **Get** /apps/{app_id}/email_analytics/delivery_metrics | Get email reputation statistics
+[**GetJourneySchema**](DefaultApi.md#GetJourneySchema) | **Get** /journeys/schema | Get Journey schema
 [**GetNotification**](DefaultApi.md#GetNotification) | **Get** /notifications/{notification_id} | View notification
 [**GetNotificationHistory**](DefaultApi.md#GetNotificationHistory) | **Post** /notifications/{notification_id}/history | Notification History
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Get** /notifications | View notifications
@@ -2739,6 +2740,81 @@ Name | Type | Description  | Notes
 [[Back to README]](https://github.com/OneSignal/onesignal-go-api)
 
 
+## GetJourneySchema
+
+> JourneySchemaResponse GetJourneySchema(ctx).Operation(operation).Execute()
+
+Get Journey schema
+
+
+
+### Authorization
+
+No authorization required
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    "github.com/OneSignal/onesignal-go-api/v5"
+)
+
+func main() {
+    operation := "create" // string | The authoring operation whose schema you need.
+
+    configuration := onesignal.NewConfiguration()
+    apiClient := onesignal.NewAPIClient(configuration)
+
+
+    resp, r, err := apiClient.DefaultApi.GetJourneySchema().Operation(operation).Execute()
+
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetJourneySchema``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+        if apiErr, ok := err.(*onesignal.GenericOpenAPIError); ok {
+            // ErrorMessages() flattens any error-envelope shape to a []string;
+            // the raw body remains on Body().
+            fmt.Fprintf(os.Stderr, "Error Messages: %v\n", apiErr.ErrorMessages())
+            fmt.Fprintf(os.Stderr, "Response Body: %s\n", apiErr.Body())
+        }
+    }
+    // response from `GetJourneySchema`: JourneySchemaResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetJourneySchema`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetJourneySchemaRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **operation** | **string** | The authoring operation whose schema you need. | 
+
+### Return type
+
+[**JourneySchemaResponse**](JourneySchemaResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](https://github.com/OneSignal/onesignal-go-api#full-api-reference)
+[[Back to README]](https://github.com/OneSignal/onesignal-go-api)
+
+
 ## GetNotification
 
 > NotificationWithMeta GetNotification(ctx, notificationId).AppId(appId).Execute()
@@ -5039,7 +5115,7 @@ Name | Type | Description  | Notes
 
 ## ViewTemplates
 
-> TemplatesListResponse ViewTemplates(ctx).AppId(appId).Limit(limit).Offset(offset).Channel(channel).Execute()
+> TemplatesListResponse ViewTemplates(ctx).AppId(appId).Limit(limit).Offset(offset).Channel(channel).Name(name).Execute()
 
 View templates
 
@@ -5067,13 +5143,14 @@ func main() {
     limit := int32(10) // int32 | Maximum number of templates. Default and max is 50. (optional) (default to 50)
     offset := int32(0) // int32 | Pagination offset. (optional) (default to 0)
     channel := "push" // string | Filter by delivery channel. (optional)
+    name := "Welcome" // string | Return only templates whose name contains this text, ignoring case. (optional)
 
     configuration := onesignal.NewConfiguration()
     apiClient := onesignal.NewAPIClient(configuration)
 
     restAuth := context.WithValue(context.Background(), onesignal.RestApiKey, "YOUR_REST_API_KEY") // App REST API key required for most endpoints
 
-    resp, r, err := apiClient.DefaultApi.ViewTemplates(restAuth).AppId(appId).Limit(limit).Offset(offset).Channel(channel).Execute()
+    resp, r, err := apiClient.DefaultApi.ViewTemplates(restAuth).AppId(appId).Limit(limit).Offset(offset).Channel(channel).Name(name).Execute()
 
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ViewTemplates``: %v\n", err)
@@ -5105,6 +5182,7 @@ Name | Type | Description  | Notes
  **limit** | **int32** | Maximum number of templates. Default and max is 50. | [default to 50]
  **offset** | **int32** | Pagination offset. | [default to 0]
  **channel** | **string** | Filter by delivery channel. | 
+ **name** | **string** | Return only templates whose name contains this text, ignoring case. | 
 
 ### Return type
 
